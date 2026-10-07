@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Paleta APROXIMADA tomada de las capturas del diseño.
+         Sustituir por los HEX exactos de Canva. -->
+    <color name="buti_crema">#FFFBF0E8</color>
+    <color name="buti_marron">#FF7A1F14</color>
+    <color name="buti_naranja">#FFC8571F</color>
+    <color name="buti_verde">#FF8A9A6E</color>
+    <color name="buti_verde_oscuro">#FF4F5E3A</color>
+    <color name="buti_azul">#FF1E3A5F</color>
+    <color name="buti_blanco">#FFFFFFFF</color>
 </resources>

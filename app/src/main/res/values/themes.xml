@@ -1,9 +1,19 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Buti" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.Theme.Buti" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/buti_naranja</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/buti_verde</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSurface">@color/buti_blanco</item>
+        <item name="colorOnSurface">@color/buti_azul</item>
+        <item name="android:colorBackground">@color/buti_crema</item>
     </style>
 
     <style name="Theme.Buti" parent="Base.Theme.Buti" />
+
+    <style name="TextAppearance.Buti.Titulo" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
