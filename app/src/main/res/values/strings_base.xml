@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_titulo">B\'úti</string>
+    <string name="drawer_subtitulo">Cultura y lengua hñäñu</string>
+
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_lecciones">Lecciones</string>
+    <string name="menu_perfil">Perfil</string>
+    <string name="menu_ixmiquilpan">Ixmiquilpan</string>
+    <string name="menu_vocabulario">Vocabulario</string>
+    <string name="menu_practicar">Practicar</string>
+    <string name="menu_progreso">Mi progreso</string>
+    <string name="menu_configuracion">Configuración</string>
+    <string name="menu_cerrar_sesion">Cerrar sesión</string>
+
+    <!-- Textos de relleno: cada módulo los reemplaza al llenar su pantalla -->
+    <string name="placeholder_inicio">Inicio (pendiente)</string>
+    <string name="placeholder_lecciones">Lecciones (pendiente)</string>
+    <string name="placeholder_perfil">Perfil (pendiente)</string>
+    <string name="placeholder_cultura">Ixmiquilpan (pendiente)</string>
+    <string name="placeholder_vocabulario">Vocabulario (pendiente)</string>
+    <string name="placeholder_practicar">Practicar (pendiente)</string>
+    <string name="placeholder_progreso">Mi progreso (pendiente)</string>
+</resources>

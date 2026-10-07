@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/inicioFragment">
+
+    <fragment
+        android:id="@+id/inicioFragment"
+        android:name="com.itsoeh.sbsc.buti.inicio.InicioFragment"
+        android:label="@string/menu_inicio"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/leccionesFragment"
+        android:name="com.itsoeh.sbsc.buti.lecciones.LeccionesFragment"
+        android:label="@string/menu_lecciones"
+        tools:layout="@layout/fragment_lecciones" />
+
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.itsoeh.sbsc.buti.perfil.PerfilFragment"
+        android:label="@string/menu_perfil"
+        tools:layout="@layout/fragment_perfil" />
+
+    <fragment
+        android:id="@+id/culturaFragment"
+        android:name="com.itsoeh.sbsc.buti.cultura.CulturaFragment"
+        android:label="@string/menu_ixmiquilpan"
+        tools:layout="@layout/fragment_cultura" />
+
+    <fragment
+        android:id="@+id/vocabularioFragment"
+        android:name="com.itsoeh.sbsc.buti.vocabulario.VocabularioFragment"
+        android:label="@string/menu_vocabulario"
+        tools:layout="@layout/fragment_vocabulario" />
+
+    <fragment
+        android:id="@+id/practicarFragment"
+        android:name="com.itsoeh.sbsc.buti.lecciones.PracticarFragment"
+        android:label="@string/menu_practicar"
+        tools:layout="@layout/fragment_practicar" />
+
+    <fragment
+        android:id="@+id/progresoFragment"
+        android:name="com.itsoeh.sbsc.buti.progreso.ProgresoFragment"
+        android:label="@string/menu_progreso"
+        tools:layout="@layout/fragment_progreso" />
+
+</navigation>

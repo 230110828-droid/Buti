@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/grupo_principal"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/inicioFragment"
+            android:icon="@drawable/ic_inicio"
+            android:title="@string/menu_inicio" />
+        <item
+            android:id="@+id/culturaFragment"
+            android:icon="@drawable/ic_ixmiquilpan"
+            android:title="@string/menu_ixmiquilpan" />
+        <item
+            android:id="@+id/vocabularioFragment"
+            android:icon="@drawable/ic_vocabulario"
+            android:title="@string/menu_vocabulario" />
+        <item
+            android:id="@+id/practicarFragment"
+            android:icon="@drawable/ic_practicar"
+            android:title="@string/menu_practicar" />
+        <item
+            android:id="@+id/progresoFragment"
+            android:icon="@drawable/ic_progreso"
+            android:title="@string/menu_progreso" />
+    </group>
+
+    <group
+        android:id="@+id/grupo_cuenta"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/itemConfiguracion"
+            android:icon="@drawable/ic_configuracion"
+            android:title="@string/menu_configuracion" />
+        <item
+            android:id="@+id/itemCerrarSesion"
+            android:icon="@drawable/ic_cerrar_sesion"
+            android:title="@string/menu_cerrar_sesion" />
+    </group>
+
+</menu>
