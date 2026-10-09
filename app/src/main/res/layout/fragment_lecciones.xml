@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="lecciones (pendientes)"
+        android:text="lecciones (pendientes brizet)"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
         android:textColor="@color/buti_marron" />
 
