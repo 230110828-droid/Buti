@@ -9,6 +9,6 @@
         android:layout_gravity="center"
         android:text="@string/placeholder_perfil"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
-        android:textColor="@color/buti_marron" />
+        android:textColor="@color/buti_azul" />
 
 </FrameLayout>
