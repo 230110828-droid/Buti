@@ -3,13 +3,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Paleta APROXIMADA tomada de las capturas del diseño.
-         Sustituir por los HEX exactos de Canva. -->
-    <color name="buti_crema">#FFFBF0E8</color>
-    <color name="buti_marron">#FF7A1F14</color>
-    <color name="buti_naranja">#FFC8571F</color>
-    <color name="buti_verde">#FF8A9A6E</color>
-    <color name="buti_verde_oscuro">#FF4F5E3A</color>
-    <color name="buti_azul">#FF1E3A5F</color>
-    <color name="buti_blanco">#FFFFFFFF</color>
+    <!-- Flor de maguey -->
+    <color name="buti_rosa">#D6336C</color>
+    <color name="buti_dorado">#F2A900</color>
+    <color name="buti_vino">#4F000B</color>
+    <color name="buti_negro">#1E1D22</color>
+    <color name="buti_cafe">#3C2815</color>
+
+    <!-- Atardecer Mezquital -->
+    <color name="buti_naranja">#C97A2B</color>
+    <color name="buti_siena">#8C4A2F</color>
+    <color name="buti_verde">#6B7A4F</color>
+    <color name="buti_azul">#3E5266</color>
+    <color name="buti_crema">#F5EFE3</color>
+
+    <!-- Derivado para fondo de la barra de carga -->
+    <color name="buti_crema_oscuro">#E4DAC6</color>
+
+    <!-- Alias: nombres que ya usa tu app, apuntando a la paleta -->
+    <color name="buti_marron">@color/buti_cafe</color>
+    <color name="buti_blanco">@color/buti_crema</color>
 </resources>

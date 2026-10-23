@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fondo crema con degradado cálido de atardecer -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:centerColor="@color/buti_crema"
+        android:endColor="@color/buti_crema_oscuro"
+        android:startColor="@color/buti_crema"
+        android:type="linear" />
+</shape>

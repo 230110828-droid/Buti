@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Buti</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="splash_logo_desc">Logo de B\'ÚTI</string>
+    <string name="splash_nombre">B’ÚTI</string>
+    <string name="splash_lema">Cultura y lengua hñáhñu</string>
+    <string name="splash_lugar">de Ixmiquilpan, Hidalgo</string>
+    <string name="splash_cargando">Preparando tu aventura…</string>
 </resources>

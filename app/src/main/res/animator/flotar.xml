@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Flotado suave arriba y abajo (se asigna con AnimatorInflater) -->
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1500"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+    android:propertyName="translationY"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse"
+    android:valueFrom="0dp"
+    android:valueTo="-8dp"
+    android:valueType="floatType" />

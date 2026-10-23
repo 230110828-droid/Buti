@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/buti_crema"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="22dp"
+        android:paddingBottom="24dp">
+
+        <!-- Logo cultural -->
+        <ImageView
+            android:id="@+id/imgLogoLogin"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:src="@drawable/principla_logo"
+            android:scaleType="fitCenter"
+            android:contentDescription="Logo de B'ÚTI" />
+
+        <!-- Detalle decorativo -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="────────  ◆  ────────"
+            android:textColor="@color/buti_verde"
+            android:textSize="15sp" />
+
+        <!-- Nombre de la aplicación -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="B’ÚTI"
+            android:textColor="@color/buti_vino"
+            android:textSize="42sp"
+            android:textStyle="bold"
+            android:fontFamily="sans" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Inicia sesión"
+            android:textColor="@color/buti_cafe"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="◇ Continúa tu aprendizaje de otomí ◇"
+            android:textColor="@color/buti_cafe"
+            android:textSize="14sp" />
+
+        <!-- Correo electrónico -->
+        <EditText
+            android:id="@+id/edtCorreoLogin"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_campo_correo"
+            android:drawableStart="@android:drawable/ic_dialog_email"
+            android:drawablePadding="14dp"
+            android:hint="Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="@color/buti_negro"
+            android:textColorHint="@color/buti_cafe"
+            android:textSize="15sp" />
+
+        <!-- Contraseña -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_campo_contrasena"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="18dp"
+            android:paddingEnd="14dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@android:drawable/ic_lock_lock"
+                android:contentDescription="Contraseña" />
+
+            <EditText
+                android:id="@+id/edtContrasenaLogin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingStart="14dp"
+                android:paddingEnd="8dp"
+                android:textColor="@color/buti_negro"
+                android:textColorHint="@color/buti_cafe"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txtMostrarContrasena"
+                android:layout_width="38dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="◉"
+                android:textColor="@color/buti_cafe"
+                android:textSize="22sp"
+                android:contentDescription="Mostrar u ocultar contraseña" />
+
+        </LinearLayout>
+
+        <!-- Recuperar contraseña -->
+        <TextView
+            android:id="@+id/txtOlvideContrasena"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:padding="4dp"
+            android:text="¿Olvidaste tu contraseña?"
+            android:textColor="@color/buti_rosa"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Botón iniciar sesión -->
+        <Button
+            android:id="@+id/btnIniciarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_boton_login"
+            android:backgroundTint="@null"
+            android:text="Iniciar sesión"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Separador -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/buti_crema_oscuro" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="18dp"
+                android:text="◆"
+                android:textColor="@color/buti_cafe"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/buti_crema_oscuro" />
+        </LinearLayout>
+
+        <!-- Continuar con Google -->
+        <Button
+            android:id="@+id/btnGoogleLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_boton_google"
+            android:backgroundTint="@null"
+            android:text="G    Continuar con Google"
+            android:textAllCaps="false"
+            android:textColor="@color/buti_cafe"
+            android:textSize="16sp" />
+
+        <!-- Registro -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿No tienes una cuenta? "
+                android:textColor="@color/buti_cafe"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtRegistrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="Regístrate"
+                android:textColor="@color/buti_rosa"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Bordado decorativo inferior -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:gravity="center"
+            android:text="⌁ ◆ ⌁ ◇ ⌁ ◆ ⌁ ◇ ⌁ ◆ ⌁"
+            android:textColor="@color/buti_verde"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+</ScrollView>

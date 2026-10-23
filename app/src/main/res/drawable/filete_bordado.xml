@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Filete con rombo central estilo punto de cruz -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="18dp"
+    android:viewportWidth="61"
+    android:viewportHeight="9">
+    <path
+        android:fillColor="@color/buti_verde"
+        android:pathData="M0,4h25v1h-25z
+M35,4h26v1h-26z
+M30,0h1v1h-1z
+M29,1h1v1h-1z M31,1h1v1h-1z
+M28,2h1v1h-1z M32,2h1v1h-1z
+M27,3h1v1h-1z M33,3h1v1h-1z
+M26,4h1v1h-1z M34,4h1v1h-1z
+M27,5h1v1h-1z M33,5h1v1h-1z
+M28,6h1v1h-1z M32,6h1v1h-1z
+M29,7h1v1h-1z M31,7h1v1h-1z
+M30,8h1v1h-1z" />
+    <path
+        android:fillColor="@color/buti_dorado"
+        android:pathData="M29,3h3v3h-3z" />
+</vector>

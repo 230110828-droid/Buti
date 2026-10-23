@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/raiz"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_splash"
+    android:clipChildren="false"
+    tools:context=".splash">
+
+    <!-- Margen bordado superior (la imagen es cuadrada: se recorta al centro) -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="36dp"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_margen2" />
+
+    <!-- Margen bordado inferior -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="28dp"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_margen2" />
+
+    <!-- Personajes -->
+    <ImageView
+        android:id="@+id/imgNino"
+        android:layout_width="116dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="72dp"
+        android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_nino1" />
+
+    <ImageView
+        android:id="@+id/imgNina"
+        android:layout_width="116dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="72dp"
+        android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_nina1" />
+
+    <!-- Velo vino inicial: se desvanece en el impacto -->
+    <View
+        android:id="@+id/velo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/buti_vino" />
+
+    <!-- Contenido principal -->
+    <LinearLayout
+        android:id="@+id/contenidoSplash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="88dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="100dp">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Logo con rayos, halo, ondas y estrellas -->
+        <FrameLayout
+            android:id="@+id/logoContenedor"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <ImageView
+                android:id="@+id/imgRayos"
+                android:layout_width="520dp"
+                android:layout_height="520dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/rayos_sol"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/imgHalo"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/halo_logo"
+                android:visibility="invisible" />
+
+            <!-- Ondas expansivas -->
+            <ImageView
+                android:id="@+id/onda1"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/anillo_onda"
+                android:visibility="invisible"
+                app:tint="@color/buti_dorado" />
+
+            <ImageView
+                android:id="@+id/onda2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/anillo_onda"
+                android:visibility="invisible"
+                app:tint="@color/buti_rosa" />
+
+            <ImageView
+                android:id="@+id/onda3"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/anillo_onda"
+                android:visibility="invisible"
+                app:tint="@color/buti_naranja" />
+
+            <ImageView
+                android:id="@+id/imgLogoSplash"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/splash_logo_desc"
+                android:scaleType="fitCenter"
+                android:src="@drawable/principla_logo" />
+
+            <!-- Estrellas decorativas -->
+            <ImageView
+                android:id="@+id/estrella1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/deco_estrella"
+                app:tint="@color/buti_dorado" />
+
+            <ImageView
+                android:id="@+id/estrella2"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="18dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/deco_estrella"
+                app:tint="@color/buti_rosa" />
+
+            <ImageView
+                android:id="@+id/estrella3"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/deco_estrella"
+                app:tint="@color/buti_naranja" />
+
+            <ImageView
+                android:id="@+id/estrella4"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="90dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/deco_estrella"
+                app:tint="@color/buti_dorado" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txtLema"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/splash_lema"
+            android:textColor="@color/buti_vino"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtLugar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:text="@string/splash_lugar"
+            android:textColor="@color/buti_siena"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/filete"
+            android:layout_width="120dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="14dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/filete_bordado" />
+
+        <!-- Postales de Ixmiquilpan -->
+        <LinearLayout
+            android:id="@+id/filaRombos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/rombo1"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="6dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo1" />
+
+            <ImageView
+                android:id="@+id/rombo2"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="6dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+            <ImageView
+                android:id="@+id/rombo3"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="6dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo3" />
+
+            <ImageView
+                android:id="@+id/rombo4"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo4" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Barra de carga -->
+        <ProgressBar
+            android:id="@+id/progresoSplash"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="120dp"
+            android:layout_height="10dp"
+            android:indeterminate="false"
+            android:max="1000"
+            android:progress="0"
+            android:progressDrawable="@drawable/barra_carga" />
+
+        <TextView
+            android:id="@+id/txtCargando"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/splash_cargando"
+            android:textColor="@color/buti_azul"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!-- Destello del impacto (arriba de todo) -->
+    <View
+        android:id="@+id/flash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/buti_crema"
+        android:visibility="invisible" />
+
+</FrameLayout>
