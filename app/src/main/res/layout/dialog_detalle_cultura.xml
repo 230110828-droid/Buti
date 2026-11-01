@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialogo_cultura"
+    android:clipToOutline="true"
+    android:outlineProvider="background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Foto de la comunidad: botón volver arriba y categoría abajo -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="260dp">
+
+            <ImageView
+                android:id="@+id/imgDetalleCultura"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/buti_crema_oscuro"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/milpa_atardecer_nube" />
+
+            <!-- Degradado para dar profundidad a la foto -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bg_degradado_foto" />
+
+            <ImageView
+                android:id="@+id/btnCerrarDetalleCultura"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_circulo_atras"
+                android:clickable="true"
+                android:contentDescription="Volver"
+                android:elevation="6dp"
+                android:focusable="true"
+                android:padding="11dp"
+                android:src="@drawable/ic_fleizquierda"
+                app:tint="@color/buti_siena" />
+
+            <!-- Categoría como etiqueta sobre la foto -->
+            <TextView
+                android:id="@+id/txtCategoriaDetalleCultura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="44dp"
+                android:background="@drawable/bg_tag_naranja"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp"
+                android:text="Tradición textil"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Hoja que sube sobre la foto -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-28dp"
+            app:cardBackgroundColor="@color/buti_crema"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/txtTituloDetalleCultura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="El Dexthi"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <!-- Adorno: línea, rombo y línea -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_plandaverde" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1.5dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@color/buti_verde" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtDescripcionDetalleCultura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="Comunidad de Ixmiquilpan, Hidalgo. Se caracteriza por su clima semiseco, su flora y fauna adaptadas a la región, y por conservar tradiciones y costumbres locales."
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="16sp" />
+
+                <!-- Tags / Categorías -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_tag_naranja"
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="8dp"
+                        android:text="Cultura"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_tag_verde"
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="8dp"
+                        android:text="Tradiciones"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_tag_siena"
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="8dp"
+                        android:text="Ubicación"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnEscucharOtomi"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="22dp"
+                    android:backgroundTint="@color/buti_siena"
+                    android:elevation="6dp"
+                    android:text="Escuchar en otomí"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="22dp"
+                    app:icon="@drawable/ic_sonando"
+                    app:iconGravity="textStart"
+                    app:iconPadding="12dp"
+                    app:iconSize="26dp"
+                    app:iconTint="@color/white" />
+
+                <!-- Cenefa final -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="20dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_margen2" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

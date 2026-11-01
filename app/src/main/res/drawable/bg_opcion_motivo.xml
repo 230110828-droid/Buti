@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Opción del motivo: borde suave normal, borde naranja punteado cuando está seleccionada -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFF6EC" />
+            <stroke
+                android:width="2dp"
+                android:color="#E9A15F"
+                android:dashGap="5dp"
+                android:dashWidth="9dp" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FBF1E8" />
+            <stroke
+                android:width="1.5dp"
+                android:color="#E8D9C5" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+
+</selector>

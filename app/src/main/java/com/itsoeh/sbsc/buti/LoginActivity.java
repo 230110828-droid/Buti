@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtCorreoLogin;
     private EditText edtContrasenaLogin;
 
-    private TextView txtMostrarContrasena;
+    // Ahora es una imagen (ojo abierto / ojo cerrado)
+    private ImageView txtMostrarContrasena;
     private TextView txtOlvideContrasena;
     private TextView txtRegistrate;
 
@@ -58,8 +60,16 @@ public class LoginActivity extends AppCompatActivity {
                 cambiarVisibilidadContrasena());
 
         // Recuperar contraseña
-        txtOlvideContrasena.setOnClickListener(v ->
-                recuperarContrasena());
+        txtOlvideContrasena.setOnClickListener(v -> recuperarContrasena());
+
+        // Continuar con Google / Onboarding
+        btnGoogleLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    LoginActivity.this,
+                    GoogleOnboardingActivity.class
+            );
+            startActivity(intent);
+        });
 
         // Ir al registro
         txtRegistrate.setOnClickListener(v -> {
@@ -159,20 +169,22 @@ public class LoginActivity extends AppCompatActivity {
 
         if (contrasenaVisible) {
 
+            // Ocultar contraseña: se muestra el ojo abierto
             edtContrasenaLogin.setTransformationMethod(
                     PasswordTransformationMethod.getInstance()
             );
 
-            txtMostrarContrasena.setText("Mostrar");
+            txtMostrarContrasena.setImageResource(R.drawable.ic_ojoabierto);
             contrasenaVisible = false;
 
         } else {
 
+            // Mostrar contraseña: se muestra el ojo cerrado
             edtContrasenaLogin.setTransformationMethod(
                     HideReturnsTransformationMethod.getInstance()
             );
 
-            txtMostrarContrasena.setText("Ocultar");
+            txtMostrarContrasena.setImageResource(R.drawable.ic_ojocerrado);
             contrasenaVisible = true;
         }
 
@@ -188,46 +200,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void recuperarContrasena() {
-
         String correo = edtCorreoLogin.getText().toString().trim();
-
-        if (TextUtils.isEmpty(correo)) {
-            edtCorreoLogin.setError(
-                    "Escribe tu correo para recuperar la contraseña"
-            );
-            edtCorreoLogin.requestFocus();
-            return;
+        Intent intent = new Intent(
+                LoginActivity.this,
+                RecuperarContrasenaActivity.class
+        );
+        if (!correo.isEmpty()) {
+            intent.putExtra("correo", correo);
         }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
-            edtCorreoLogin.setError("Ingresa un correo válido");
-            edtCorreoLogin.requestFocus();
-            return;
-        }
-
-        txtOlvideContrasena.setEnabled(false);
-
-        mAuth.sendPasswordResetEmail(correo)
-                .addOnCompleteListener(task -> {
-
-                    txtOlvideContrasena.setEnabled(true);
-
-                    if (task.isSuccessful()) {
-
-                        Toast.makeText(
-                                LoginActivity.this,
-                                "Si el correo corresponde a una cuenta, recibirás instrucciones para restablecer la contraseña.",
-                                Toast.LENGTH_LONG
-                        ).show();
-
-                    } else {
-
-                        Toast.makeText(
-                                LoginActivity.this,
-                                "No se pudo procesar la solicitud. Revisa tu conexión e inténtalo de nuevo.",
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                });
+        startActivity(intent);
     }
 }

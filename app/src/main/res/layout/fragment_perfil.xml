@@ -1,14 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/buti_crema"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/placeholder_perfil"
-        android:textAppearance="?attr/textAppearanceHeadlineSmall"
-        android:textColor="@color/buti_marron" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="28dp">
 
-</FrameLayout>
+        <!-- Título -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Mi perfil"
+            android:textColor="@color/buti_naranja"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <!-- Avatar con insignia de editar foto -->
+        <FrameLayout
+            android:layout_width="124dp"
+            android:layout_height="124dp"
+            android:layout_marginTop="20dp">
+
+            <!-- Avatar: fotografía o iniciales -->
+            <FrameLayout
+                android:id="@+id/contenedorAvatarPerfil"
+                android:layout_width="112dp"
+                android:layout_height="112dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_perfil_avatar"
+                android:clickable="true"
+                android:clipToOutline="true"
+                android:contentDescription="Cambiar fotografía de perfil"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/imgFotoPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Fotografía de perfil"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtInicialesPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="MG"
+                    android:textColor="@color/buti_naranja"
+                    android:textSize="42sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+            <!-- Insignia decorativa (el toque lo recibe el avatar) -->
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/bg_badge_actual"
+                android:elevation="4dp"
+                android:importantForAccessibility="no"
+                android:padding="8dp"
+                android:src="@drawable/ic_editar"
+                app:tint="@color/white" />
+        </FrameLayout>
+
+        <!-- Nombre del usuario -->
+        <TextView
+            android:id="@+id/txtNombrePerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="María González"
+            android:textColor="@color/buti_cafe"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- Saludo en tarjeta suave -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_saludo_perfil"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hola, aprendiz"
+                android:textColor="@color/buti_vino"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="¡Qué bueno verte de nuevo!"
+                android:textColor="@color/buti_siena"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Acciones del perfil -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="10dp"
+                android:letterSpacing="0.08"
+                android:text="MI CUENTA"
+                android:textColor="@color/buti_siena"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- Editar perfil -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEditarPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/white"
+                    android:elevation="2dp"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="48dp"
+                    android:text="Editar perfil"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="22dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Iconos decorativos: no reciben toques, el botón de abajo sí -->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_icono_perfil_verde"
+                    android:importantForAccessibility="no"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_editar"
+                    app:tint="#6B7F4A" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_flederecha"
+                    app:tint="@color/buti_siena" />
+            </FrameLayout>
+
+            <!-- Cambiar contraseña -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCambiarContrasenaPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/white"
+                    android:elevation="2dp"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="48dp"
+                    android:text="Cambiar contraseña"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="22dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Iconos decorativos: no reciben toques, el botón de abajo sí -->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_icono_perfil_naranja"
+                    android:importantForAccessibility="no"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_candado4"
+                    app:tint="@color/buti_naranja" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_flederecha"
+                    app:tint="@color/buti_siena" />
+            </FrameLayout>
+
+            <!-- Configuración -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnConfiguracionPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/white"
+                    android:elevation="2dp"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="48dp"
+                    android:text="Configuración"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="22dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Iconos decorativos: no reciben toques, el botón de abajo sí -->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_icono_perfil_siena"
+                    android:importantForAccessibility="no"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_estrella"
+                    app:tint="@color/buti_siena" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_flederecha"
+                    app:tint="@color/buti_siena" />
+            </FrameLayout>
+
+            <!-- Separación antes de cerrar sesión -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <!-- Cerrar sesión -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCerrarSesionPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/white"
+                    android:elevation="2dp"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="48dp"
+                    android:text="Cerrar sesión"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="22dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Iconos decorativos: no reciben toques, el botón de abajo sí -->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_icono_perfil_rosa"
+                    android:importantForAccessibility="no"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_salida"
+                    app:tint="#D12B5F" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_flederecha"
+                    app:tint="@color/buti_siena" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

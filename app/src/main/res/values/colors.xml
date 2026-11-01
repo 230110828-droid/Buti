@@ -23,4 +23,14 @@
     <!-- Alias: nombres que ya usa tu app, apuntando a la paleta -->
     <color name="buti_marron">@color/buti_cafe</color>
     <color name="buti_blanco">@color/buti_crema</color>
+
+
+    <color name="prog_naranja">#C4560F</color>
+    <color name="prog_marron">#5A2A12</color>
+    <color name="prog_azul">#1E3A5F</color>
+    <color name="prog_oliva">#8A9A5B</color>
+    <color name="prog_tarjeta">#FBF1E3</color>
+    <color name="prog_borde">#F0DDBF</color>
+    <color name="prog_durazno">#F2D3A8</color>
+    <color name="prog_ripple">#33C4560F</color>
 </resources>

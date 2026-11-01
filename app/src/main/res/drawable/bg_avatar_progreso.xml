@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/bg_avatar_progreso.xml : circulo durazno con borde -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/prog_durazno" />
+    <stroke android:width="3dp" android:color="#F0B97C" />
+</shape>

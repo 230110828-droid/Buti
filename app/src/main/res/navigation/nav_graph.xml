@@ -47,4 +47,10 @@
         android:label="@string/menu_progreso"
         tools:layout="@layout/fragment_progreso" />
 
+    <fragment
+        android:id="@+id/editarPerfilFragment"
+        android:name="com.itsoeh.sbsc.buti.perfil.EditarPerfilFragment"
+        android:label="Editar perfil"
+        tools:layout="@layout/fragment_editar_perfil" />
+
 </navigation>

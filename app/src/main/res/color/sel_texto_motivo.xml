@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Color del texto de la opción: naranja si está seleccionada, café si no -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#D9722E" android:state_checked="true" />
+    <item android:color="@color/buti_cafe" />
+</selector>

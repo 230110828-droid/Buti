@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Casilla de términos: vacía (sin marcar) / paloma (marcada) -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true">
+        <layer-list>
+            <item
+                android:width="26dp"
+                android:height="26dp"
+                android:drawable="@drawable/ic_paloma"
+                android:gravity="center" />
+        </layer-list>
+    </item>
+
+    <item>
+        <layer-list>
+            <item
+                android:width="26dp"
+                android:height="26dp"
+                android:drawable="@drawable/ic_vacio"
+                android:gravity="center" />
+        </layer-list>
+    </item>
+
+</selector>
