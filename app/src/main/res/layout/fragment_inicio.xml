@@ -3,51 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/buti_crema"
-    android:fillViewport="true">
+    android:background="@android:color/transparent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:overScrollMode="never">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingStart="20dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="28dp">
 
-        <!-- Saludo (el menú, B’úti y el logo están en activity_main) -->
+        <!-- Saludo -->
         <TextView
             android:id="@+id/txtNombreUsuarioInicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:text="Hola, aprendiz"
             android:textColor="@color/buti_vino"
-            android:textSize="32sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
             android:text="¡Qué bueno verte de nuevo!"
             android:textColor="@color/buti_siena"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
 
-        <!-- Tarjeta Tu progreso -->
+        <!-- Tarjeta: Tu progreso -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="24dp"
-            app:cardElevation="3dp"
-            app:strokeWidth="0dp">
+            app:cardElevation="5dp"
+            app:strokeColor="#EFE4D7"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="18dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -56,11 +61,13 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
                         android:background="@drawable/bg_circulo_verde"
+                        android:contentDescription="@null"
                         android:importantForAccessibility="no"
-                        android:padding="16dp"
+                        android:padding="15dp"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/ic_plandaverde" />
 
                     <LinearLayout
@@ -91,7 +98,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="9dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -99,7 +106,7 @@
                                 android:id="@+id/pbProgresoInicio"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="0dp"
-                                android:layout_height="10dp"
+                                android:layout_height="11dp"
                                 android:layout_weight="1"
                                 android:max="100"
                                 android:progress="20"
@@ -118,18 +125,19 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnContinuarLeccion"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/buti_naranja"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="18dp"
                     android:text="Continuar lección"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:cornerRadius="16dp" />
+                    app:backgroundTint="@color/buti_naranja"
+                    app:cornerRadius="17dp"
+                    app:elevation="2dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -137,40 +145,43 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="26dp"
             android:text="Aprende hoy"
             android:textColor="@color/buti_vino"
-            android:textSize="20sp"
+            android:textSize="21sp"
             android:textStyle="bold" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="24dp"
-            app:cardElevation="3dp"
-            app:strokeWidth="0dp">
+            app:cardElevation="5dp"
+            app:strokeColor="#EFE4D7"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="14dp">
+                android:padding="16dp">
 
                 <ImageView
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
+                    android:layout_width="104dp"
+                    android:layout_height="104dp"
                     android:background="@drawable/bg_cuadro_verde"
+                    android:contentDescription="@null"
                     android:importantForAccessibility="no"
-                    android:padding="12dp"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_manitas" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="15dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -185,7 +196,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="5dp"
                         android:text="Aprende a saludar y responder de forma amable."
                         android:textColor="@color/buti_cafe"
                         android:textSize="14sp" />
@@ -193,59 +204,66 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="9dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="19dp"
+                            android:layout_height="19dp"
+                            android:contentDescription="@null"
                             android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
                             android:src="@drawable/ic_reloj" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
+                            android:layout_marginStart="5dp"
                             android:text="5 min"
                             android:textColor="@color/buti_verde"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="7dp"
+                    android:contentDescription="@null"
                     android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_flederecha" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Tarjeta Racha -->
+        <!-- Tarjeta: Racha -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="17dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="24dp"
-            app:cardElevation="3dp"
-            app:strokeWidth="0dp">
+            app:cardElevation="5dp"
+            app:strokeColor="#EFE4D7"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="17dp">
 
                 <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
                     android:background="@drawable/bg_circulo_durazno"
+                    android:contentDescription="@null"
                     android:importantForAccessibility="no"
                     android:padding="12dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_maguey" />
 
                 <LinearLayout
@@ -261,62 +279,72 @@
                         android:layout_height="wrap_content"
                         android:text="Racha de 3 días"
                         android:textColor="@color/buti_vino"
-                        android:textSize="16sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="¡Sigue así, lo estás haciendo genial!"
                         android:textColor="@color/buti_cafe"
                         android:textSize="13sp" />
                 </LinearLayout>
 
-                <!-- Puntos decorativos de la racha -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="9dp"
+                        android:layout_height="9dp"
                         android:background="@drawable/bg_punto_verde" />
 
                     <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="9dp"
+                        android:layout_height="9dp"
                         android:layout_marginStart="4dp"
                         android:background="@drawable/bg_punto_verde" />
 
                     <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="9dp"
+                        android:layout_height="9dp"
                         android:layout_marginStart="4dp"
                         android:background="@drawable/bg_punto_verde" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Sección Accesos Rápidos -->
+        <!-- Accesos rápidos -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="27dp"
             android:text="¿Qué quieres explorar hoy?"
             android:textColor="@color/buti_vino"
-            android:textSize="20sp"
+            android:textSize="21sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Descubre, aprende y conoce nuestras raíces."
+            android:textColor="@color/buti_siena"
+            android:textSize="13sp" />
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:alignmentMode="alignMargins"
             android:columnCount="2"
+            android:columnOrderPreserved="false"
             android:useDefaultMargins="true">
 
-            <!-- Card Ixmiquilpan -->
+            <!-- Ixmiquilpan -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardNavIxmiquilpan"
                 android:layout_width="0dp"
@@ -324,28 +352,34 @@
                 android:layout_columnWeight="1"
                 android:clickable="true"
                 android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
-                app:strokeWidth="0dp">
+                app:cardCornerRadius="22dp"
+                app:cardElevation="4dp"
+                app:strokeColor="#EFE4D7"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:minHeight="154dp"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="17dp">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:contentDescription="@null"
                         android:importantForAccessibility="no"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/ic_iglesia2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="11dp"
+                        android:gravity="center"
                         android:text="Ixmiquilpan"
                         android:textColor="@color/buti_vino"
                         android:textSize="15sp"
@@ -354,13 +388,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
                         android:text="Cultura e historia"
                         android:textColor="@color/buti_siena"
                         android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card Vocabulario -->
+            <!-- Vocabulario -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardNavVocabulario"
                 android:layout_width="0dp"
@@ -368,28 +404,34 @@
                 android:layout_columnWeight="1"
                 android:clickable="true"
                 android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
-                app:strokeWidth="0dp">
+                app:cardCornerRadius="22dp"
+                app:cardElevation="4dp"
+                app:strokeColor="#EFE4D7"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:minHeight="154dp"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="17dp">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:contentDescription="@null"
                         android:importantForAccessibility="no"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/ic_libro1" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="11dp"
+                        android:gravity="center"
                         android:text="Vocabulario"
                         android:textColor="@color/buti_vino"
                         android:textSize="15sp"
@@ -398,13 +440,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
                         android:text="10 categorías"
                         android:textColor="@color/buti_siena"
                         android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card Practicar -->
+            <!-- Practicar -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardNavPracticar"
                 android:layout_width="0dp"
@@ -412,28 +456,34 @@
                 android:layout_columnWeight="1"
                 android:clickable="true"
                 android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
-                app:strokeWidth="0dp">
+                app:cardCornerRadius="22dp"
+                app:cardElevation="4dp"
+                app:strokeColor="#EFE4D7"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:minHeight="154dp"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="17dp">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:contentDescription="@null"
                         android:importantForAccessibility="no"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/ic_trofeo" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="11dp"
+                        android:gravity="center"
                         android:text="Practicar"
                         android:textColor="@color/buti_vino"
                         android:textSize="15sp"
@@ -442,13 +492,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
                         android:text="Niveles y retos"
                         android:textColor="@color/buti_siena"
                         android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card Mi progreso -->
+            <!-- Mi progreso -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardNavProgreso"
                 android:layout_width="0dp"
@@ -456,28 +508,34 @@
                 android:layout_columnWeight="1"
                 android:clickable="true"
                 android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
-                app:strokeWidth="0dp">
+                app:cardCornerRadius="22dp"
+                app:cardElevation="4dp"
+                app:strokeColor="#EFE4D7"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:minHeight="154dp"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="17dp">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:contentDescription="@null"
                         android:importantForAccessibility="no"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/ic_estrella" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="11dp"
+                        android:gravity="center"
                         android:text="Mi progreso"
                         android:textColor="@color/buti_vino"
                         android:textSize="15sp"
@@ -486,11 +544,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
                         android:text="Racha y puntos"
                         android:textColor="@color/buti_siena"
                         android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
         </GridLayout>
 
     </LinearLayout>

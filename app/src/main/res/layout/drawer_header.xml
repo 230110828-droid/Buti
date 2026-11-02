@@ -36,10 +36,12 @@
     <!-- Cenefa separadora -->
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="36dp"
         android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
         android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_margen3" />
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_margen_otomi_verde" />
 
 </LinearLayout>

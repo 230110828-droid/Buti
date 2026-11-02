@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Flujo de Google B'ÚTI (4 pasos). Todos los ids y tipos de vista se conservan igual. -->
+<!-- Flujo de Google B'ÚTI (4 pasos). -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/buti_crema">
 
-    <!-- Fondo con maguey y mezquite (cambia ic_fondo1 por ic_fondo2..5 si prefieres otro) -->
+    <!-- Fondo -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,454 +14,448 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_fondo1" />
 
-    <!-- Cenefa superior (fija, se ve en los 4 pasos) -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_gravity="top"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="12dp"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_margen2" />
-
-    <!-- Cenefa inferior (fija) -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_gravity="bottom"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="12dp"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_margen3" />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:fillViewport="true"
-        android:paddingTop="56dp"
-        android:paddingBottom="56dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- Cenefa superior (fija, fuera del ScrollView) -->
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingHorizontal="28dp"
-            android:paddingVertical="12dp">
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_margen_otomi_verde" />
 
-            <!-- PASO 1: Elegir cuenta de Google -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="true"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
             <LinearLayout
-                android:id="@+id/layoutGooglePaso1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:paddingHorizontal="28dp"
+                android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:contentDescription="Logo de B'ÚTI"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/principla_logo" />
-
-                <!-- Si tu principla_logo ya trae «B’úti» escrito, borra este TextView -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="sans-serif-black"
-                    android:text="B’ÚTI"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="46sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:text="Inicia sesión"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
-
-                <!-- Encabezado "Elige una cuenta".
-                     Cuando tengas el logo oficial de Google, quita los comentarios del ImageView. -->
+                <!-- PASO 1: Elegir cuenta de Google -->
                 <LinearLayout
+                    android:id="@+id/layoutGooglePaso1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_plandaverde" />
-
-                    <!--
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:contentDescription="Google"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:contentDescription="Logo de B'ÚTI"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_google" />
-                    -->
+                        android:src="@drawable/principla_logo" />
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Elige una cuenta"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="18sp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="B’ÚTI"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="46sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_plandaverde" />
-                </LinearLayout>
-
-                <!-- Cuenta de María -->
-                <LinearLayout
-                    android:id="@+id/cardCuentaGoogle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/bg_tarjeta_cuenta"
-                    android:clickable="true"
-                    android:elevation="3dp"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="14dp">
-
                     <TextView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:background="@drawable/bg_avatar_naranja"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
                         android:gravity="center"
-                        android:text="M"
-                        android:textColor="@color/white"
+                        android:text="Inicia sesión"
+                        android:textColor="@color/buti_vino"
                         android:textSize="26sp"
                         android:textStyle="bold" />
 
+                    <!-- Encabezado "Elige una cuenta" -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginTop="22dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_plandaverde" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="María González"
-                            android:textColor="@color/buti_vino"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Elige una cuenta"
+                            android:textColor="@color/buti_cafe"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="maria.g@gmail.com"
-                            android:textColor="@color/buti_siena"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_plandaverde" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_flederecha"
-                        app:tint="@color/buti_siena" />
-                </LinearLayout>
-
-                <!-- Usar otra cuenta (el TextView ocupa toda la tarjeta para que todo sea clicable) -->
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="68dp"
-                    android:layout_marginTop="12dp"
-                    android:elevation="3dp">
-
-                    <TextView
-                        android:id="@+id/txtUsarOtraCuenta"
+                    <!-- Cuenta de María -->
+                    <LinearLayout
+                        android:id="@+id/cardCuentaGoogle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
                         android:background="@drawable/bg_tarjeta_cuenta"
                         android:clickable="true"
+                        android:elevation="3dp"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:paddingStart="84dp"
-                        android:text="Usar otra cuenta"
-                        android:textColor="@color/buti_vino"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal"
+                        android:padding="14dp">
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="25dp"
-                        android:importantForAccessibility="no"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_vacio" />
-                </FrameLayout>
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_avatar_naranja"
+                            android:gravity="center"
+                            android:text="M"
+                            android:textColor="@color/white"
+                            android:textSize="26sp"
+                            android:textStyle="bold" />
 
-            <!-- PASO 2: Conectando -->
-            <LinearLayout
-                android:id="@+id/layoutGooglePaso2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:visibility="gone">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:contentDescription="Logo de B'ÚTI"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/principla_logo" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="María González"
+                                android:textColor="@color/buti_vino"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="sans-serif-black"
-                    android:text="B’ÚTI"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="46sp"
-                    android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="maria.g@gmail.com"
+                                android:textColor="@color/buti_siena"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
-                <ProgressBar
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="36dp"
-                    android:indeterminateTint="@color/buti_naranja" />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_flederecha"
+                            app:tint="@color/buti_siena" />
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center"
-                    android:text="Conectando con Google..."
-                    android:textColor="@color/buti_vino"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    <!-- Usar otra cuenta -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="68dp"
+                        android:layout_marginTop="12dp"
+                        android:elevation="3dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="Verificando tu cuenta"
-                    android:textColor="@color/buti_siena"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/txtUsarOtraCuenta"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_tarjeta_cuenta"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:paddingStart="84dp"
+                            android:text="Usar otra cuenta"
+                            android:textColor="@color/buti_vino"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
 
-            <!-- PASO 3: ¿Por qué quieres aprender otomí? -->
-            <LinearLayout
-                android:id="@+id/layoutGooglePaso3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                    android:background="@drawable/bg_avatar_crema"
-                    android:gravity="center"
-                    android:text="MG"
-                    android:textColor="#D9722E"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:gravity="center"
-                    android:text="¡Ya casi, María!"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="Cuéntanos un poco más para personalizar tu aprendizaje"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="16sp" />
-
-                <!-- Pregunta con rombos verdes -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_plandaverde" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingHorizontal="8dp"
-                        android:text="¿Por qué quieres aprender otomí?"
-                        android:textColor="@color/buti_siena"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_plandaverde" />
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="25dp"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_vacio" />
+                    </FrameLayout>
                 </LinearLayout>
 
-                <RadioGroup
-                    android:id="@+id/rgMotivoAprendizaje"
+                <!-- PASO 2: Conectando -->
+                <LinearLayout
+                    android:id="@+id/layoutGooglePaso2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp">
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <RadioButton
-                        android:id="@+id/rbRaices"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:contentDescription="Logo de B'ÚTI"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/principla_logo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:background="@drawable/bg_opcion_motivo"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:padding="18dp"
-                        android:text="Raíces familiares"
-                        android:textColor="@color/sel_texto_motivo"
-                        android:textSize="17sp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="B’ÚTI"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="46sp"
                         android:textStyle="bold" />
 
-                    <RadioButton
-                        android:id="@+id/rbCuriosidad"
+                    <ProgressBar
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="36dp"
+                        android:indeterminateTint="@color/buti_naranja" />
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:background="@drawable/bg_opcion_motivo"
-                        android:button="@null"
+                        android:layout_marginTop="24dp"
                         android:gravity="center"
-                        android:padding="18dp"
-                        android:text="Curiosidad cultural"
-                        android:textColor="@color/sel_texto_motivo"
-                        android:textSize="17sp"
+                        android:text="Conectando con Google..."
+                        android:textColor="@color/buti_vino"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
-                    <RadioButton
-                        android:id="@+id/rbTrabajo"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_opcion_motivo"
-                        android:button="@null"
+                        android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:padding="18dp"
-                        android:text="Trabajo o escuela"
-                        android:textColor="@color/sel_texto_motivo"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-                </RadioGroup>
+                        android:text="Verificando tu cuenta"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnContinuarMotivo"
+                <!-- PASO 3: ¿Por qué quieres aprender otomí? -->
+                <LinearLayout
+                    android:id="@+id/layoutGooglePaso3"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="24dp"
-                    android:backgroundTint="@color/buti_siena"
-                    android:text="Continuar"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="16dp" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/bg_avatar_crema"
+                        android:gravity="center"
+                        android:text="MG"
+                        android:textColor="#D9722E"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:gravity="center"
+                        android:text="¡Ya casi, María!"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="Cuéntanos un poco más para personalizar tu aprendizaje"
+                        android:textColor="@color/buti_cafe"
+                        android:textSize="16sp" />
+
+                    <!-- Pregunta con rombos verdes -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_plandaverde" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingHorizontal="8dp"
+                            android:text="¿Por qué quieres aprender otomí?"
+                            android:textColor="@color/buti_siena"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_plandaverde" />
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/rgMotivoAprendizaje"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp">
+
+                        <RadioButton
+                            android:id="@+id/rbRaices"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/bg_opcion_motivo"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="Raíces familiares"
+                            android:textColor="@color/sel_texto_motivo"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rbCuriosidad"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/bg_opcion_motivo"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="Curiosidad cultural"
+                            android:textColor="@color/sel_texto_motivo"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rbTrabajo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_opcion_motivo"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="Trabajo o escuela"
+                            android:textColor="@color/sel_texto_motivo"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+                    </RadioGroup>
+
+                    <Button
+                        android:id="@+id/btnContinuarMotivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="24dp"
+                        android:backgroundTint="@color/buti_siena"
+                        android:text="Continuar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="16dp" />
+                </LinearLayout>
+
+                <!-- PASO 4: ¡Bienvenida, María! -->
+                <LinearLayout
+                    android:id="@+id/layoutGooglePaso4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_fiesta" />
+
+                    <TextView
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_avatar_crema"
+                        android:gravity="center"
+                        android:text="MG"
+                        android:textColor="#D9722E"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:gravity="center"
+                        android:text="¡Bienvenida, María!"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="Tu cuenta ya está lista. Empecemos tu primera lección de otomí"
+                        android:textColor="@color/buti_cafe"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/btnComenzarLeccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="36dp"
+                        android:backgroundTint="@color/buti_siena"
+                        android:text="Comenzar lección"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="16dp" />
+                </LinearLayout>
+
             </LinearLayout>
+        </ScrollView>
 
-            <!-- PASO 4: ¡Bienvenida, María! -->
-            <LinearLayout
-                android:id="@+id/layoutGooglePaso4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:visibility="gone">
+        <!-- Cenefa inferior (fija, fuera del ScrollView) -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_margen_otomi_verde" />
 
-                <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_fiesta" />
-
-                <TextView
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_avatar_crema"
-                    android:gravity="center"
-                    android:text="MG"
-                    android:textColor="#D9722E"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:gravity="center"
-                    android:text="¡Bienvenida, María!"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:text="Tu cuenta ya está lista. Empecemos tu primera lección de otomí"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/btnComenzarLeccion"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="36dp"
-                    android:backgroundTint="@color/buti_siena"
-                    android:text="Comenzar lección"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="16dp" />
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 </FrameLayout>

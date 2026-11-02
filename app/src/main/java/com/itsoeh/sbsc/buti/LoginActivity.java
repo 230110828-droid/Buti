@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,10 +17,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
+    // Campos
     private EditText edtCorreoLogin;
     private EditText edtContrasenaLogin;
 
-    // Ahora es una imagen (ojo abierto / ojo cerrado)
+    // Controles
     private ImageView txtMostrarContrasena;
     private TextView txtOlvideContrasena;
     private TextView txtRegistrate;
@@ -29,139 +29,297 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnIniciarSesion;
     private Button btnGoogleLogin;
 
+    // Firebase
     private FirebaseAuth mAuth;
 
+    // Estado de contraseña
     private boolean contrasenaVisible = false;
+
+    // Animaciones
+    private LoginAnimador loginAnimador;
+
+    // Mensajes personalizados
+    private ButiDialogo butiDialogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Inicializar Firebase Authentication
+        // Inicializar Firebase
         mAuth = FirebaseAuth.getInstance();
 
-        // Relacionar los componentes del XML
+        // Inicializar animadores
+        loginAnimador = new LoginAnimador();
+
+        // Inicializar mensajes personalizados
+        butiDialogo = new ButiDialogo(this);
+
+        // Relacionar campos
         edtCorreoLogin = findViewById(R.id.edtCorreoLogin);
         edtContrasenaLogin = findViewById(R.id.edtContrasenaLogin);
 
-        txtMostrarContrasena = findViewById(R.id.txtMostrarContrasena);
-        txtOlvideContrasena = findViewById(R.id.txtOlvideContrasena);
-        txtRegistrate = findViewById(R.id.txtRegistrate);
+        // Relacionar controles
+        txtMostrarContrasena = findViewById(
+                R.id.txtMostrarContrasena
+        );
 
-        btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
-        btnGoogleLogin = findViewById(R.id.btnGoogleLogin);
+        txtOlvideContrasena = findViewById(
+                R.id.txtOlvideContrasena
+        );
+
+        txtRegistrate = findViewById(
+                R.id.txtRegistrate
+        );
+
+        btnIniciarSesion = findViewById(
+                R.id.btnIniciarSesion
+        );
+
+        btnGoogleLogin = findViewById(
+                R.id.btnGoogleLogin
+        );
+
+        // Reproducir animaciones de entrada
+        reproducirAnimaciones();
 
         // Iniciar sesión
-        btnIniciarSesion.setOnClickListener(v -> iniciarSesion());
+        btnIniciarSesion.setOnClickListener(v -> {
+
+            LoginAnimador.animarPresion(v);
+            iniciarSesion();
+        });
 
         // Mostrar u ocultar contraseña
-        txtMostrarContrasena.setOnClickListener(v ->
-                cambiarVisibilidadContrasena());
+        txtMostrarContrasena.setOnClickListener(v -> {
+
+            LoginAnimador.animarPresion(v);
+            cambiarVisibilidadContrasena();
+        });
 
         // Recuperar contraseña
-        txtOlvideContrasena.setOnClickListener(v -> recuperarContrasena());
+        txtOlvideContrasena.setOnClickListener(v ->
+                recuperarContrasena()
+        );
 
         // Continuar con Google / Onboarding
         btnGoogleLogin.setOnClickListener(v -> {
+
+            LoginAnimador.animarPresion(v);
+
             Intent intent = new Intent(
                     LoginActivity.this,
                     GoogleOnboardingActivity.class
             );
+
             startActivity(intent);
         });
 
         // Ir al registro
         txtRegistrate.setOnClickListener(v -> {
+
+            LoginAnimador.animarPresion(v);
+
             Intent intent = new Intent(
                     LoginActivity.this,
                     RegistroActivity.class
             );
+
             startActivity(intent);
         });
     }
 
+    // =========================================
+    // ANIMACIONES DE ENTRADA
+    // =========================================
+
+    private void reproducirAnimaciones() {
+
+        loginAnimador.reproducir(
+
+                findViewById(R.id.imgLogoLogin),
+                findViewById(R.id.tvNombreLogin),
+                findViewById(R.id.tvBienvenidaLogin),
+
+                findViewById(R.id.cardLogin),
+                findViewById(R.id.tvTituloLogin),
+                findViewById(R.id.tvDescripcionLogin),
+
+                findViewById(R.id.contenedorCorreoLogin),
+                findViewById(R.id.contenedorContrasenaLogin),
+
+                findViewById(R.id.txtOlvideContrasena),
+                findViewById(R.id.btnIniciarSesion),
+
+                findViewById(R.id.separadorLogin),
+                findViewById(R.id.btnGoogleLogin),
+                findViewById(R.id.contenedorRegistroLogin)
+        );
+    }
+
+    // =========================================
+    // INICIAR SESIÓN CON FIREBASE
+    // =========================================
+
     private void iniciarSesion() {
 
-        String correo = edtCorreoLogin.getText().toString().trim();
-        String contrasena =
-                edtContrasenaLogin.getText().toString();
+        String correo = edtCorreoLogin.getText()
+                .toString()
+                .trim();
 
-        // Validar correo
+        String contrasena = edtContrasenaLogin.getText()
+                .toString();
+
+        // Validar correo vacío
         if (TextUtils.isEmpty(correo)) {
-            edtCorreoLogin.setError("Ingresa tu correo electrónico");
+
+            edtCorreoLogin.setError(
+                    "Ingresa tu correo electrónico"
+            );
+
             edtCorreoLogin.requestFocus();
             return;
         }
 
+        // Validar formato de correo
         if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
-            edtCorreoLogin.setError("Ingresa un correo válido");
+
+            edtCorreoLogin.setError(
+                    "Ingresa un correo válido"
+            );
+
             edtCorreoLogin.requestFocus();
             return;
         }
 
-        // Validar contraseña
+        // Validar contraseña vacía
         if (TextUtils.isEmpty(contrasena)) {
-            edtContrasenaLogin.setError("Ingresa tu contraseña");
+
+            edtContrasenaLogin.setError(
+                    "Ingresa tu contraseña"
+            );
+
             edtContrasenaLogin.requestFocus();
             return;
         }
 
-        // Evitar pulsaciones repetidas durante la petición
+        // Evitar pulsaciones repetidas
         btnIniciarSesion.setEnabled(false);
 
+        // Mostrar mensaje de carga personalizado
+        butiDialogo.mostrarCargando(
+                "¡Un momento!",
+                "Estamos preparando tu camino para aprender hñähñu.\n\n"
+                        + "Verificando tus datos..."
+        );
+
+        // Verificar cuenta con Firebase
         mAuth.signInWithEmailAndPassword(correo, contrasena)
                 .addOnCompleteListener(this, task -> {
 
                     btnIniciarSesion.setEnabled(true);
 
+                    if (isFinishing() || isDestroyed()) {
+                        butiDialogo.cerrar();
+                        return;
+                    }
+
                     if (task.isSuccessful()) {
 
-                        Toast.makeText(
-                                LoginActivity.this,
-                                "¡Bienvenido a B'ÜTI!",
-                                Toast.LENGTH_SHORT
-                        ).show();
-
-                        // Abrir la pantalla principal
-                        Intent intent = new Intent(
-                                LoginActivity.this,
-                                MainActivity.class
+                        // Mensaje personalizado de bienvenida
+                        butiDialogo.mostrarExito(
+                                "¡Qué alegría tenerte de vuelta!",
+                                "Has iniciado sesión correctamente.\n\n"
+                                        + "Tu camino para aprender hñähñu "
+                                        + "y descubrir nuestra cultura "
+                                        + "continúa aquí.",
+                                this::abrirPantallaPrincipal
                         );
-
-                        intent.addFlags(
-                                Intent.FLAG_ACTIVITY_NEW_TASK
-                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        );
-
-                        startActivity(intent);
-                        finish();
 
                     } else {
 
-                        String mensaje =
-                                "No se pudo iniciar sesión. Verifica tu correo y contraseña.";
+                        String mensaje = obtenerMensajeError(
+                                task.getException()
+                        );
 
-                        if (task.getException() != null) {
-                            String error = task.getException()
-                                    .getMessage();
-
-                            if (error != null
-                                    && error.toLowerCase().contains(
-                                    "network")) {
-                                mensaje =
-                                        "Comprueba tu conexión a internet.";
-                            }
-                        }
-
-                        Toast.makeText(
-                                LoginActivity.this,
-                                mensaje,
-                                Toast.LENGTH_LONG
-                        ).show();
+                        butiDialogo.mostrarError(
+                                "No pudimos iniciar sesión",
+                                mensaje
+                        );
                     }
                 });
     }
+
+    // =========================================
+    // MENSAJES DE ERROR
+    // =========================================
+
+    private String obtenerMensajeError(Exception error) {
+
+        if (error == null) {
+
+            return "Ocurrió un problema inesperado. "
+                    + "Inténtalo nuevamente.";
+        }
+
+        String codigo = error.getMessage() == null
+                ? ""
+                : error.getMessage().toLowerCase();
+
+        if (codigo.contains("network")) {
+
+            return "Parece que no tienes una conexión estable.\n\n"
+                    + "Revisa tu internet e inténtalo nuevamente.";
+        }
+
+        if (codigo.contains("user-not-found")
+                || codigo.contains("invalid-credential")
+                || codigo.contains("wrong-password")
+                || codigo.contains("invalid-login-credentials")) {
+
+            return "El correo o la contraseña no son correctos.\n\n"
+                    + "Verifica tus datos e inténtalo nuevamente.";
+        }
+
+        if (codigo.contains("too-many-requests")) {
+
+            return "Se han realizado demasiados intentos.\n\n"
+                    + "Espera un momento antes de volver a intentarlo.";
+        }
+
+        if (codigo.contains("user-disabled")) {
+
+            return "Esta cuenta se encuentra deshabilitada.\n\n"
+                    + "Comunícate con el administrador.";
+        }
+
+        return "No pudimos verificar tus datos en este momento.\n\n"
+                + "Inténtalo nuevamente.";
+    }
+
+    // =========================================
+    // ABRIR PANTALLA PRINCIPAL
+    // =========================================
+
+    private void abrirPantallaPrincipal() {
+
+        Intent intent = new Intent(
+                LoginActivity.this,
+                MainActivity.class
+        );
+
+        intent.addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
+        );
+
+        startActivity(intent);
+        finish();
+    }
+
+    // =========================================
+    // MOSTRAR U OCULTAR CONTRASEÑA
+    // =========================================
 
     private void cambiarVisibilidadContrasena() {
 
@@ -169,27 +327,34 @@ public class LoginActivity extends AppCompatActivity {
 
         if (contrasenaVisible) {
 
-            // Ocultar contraseña: se muestra el ojo abierto
+            // Ocultar contraseña
             edtContrasenaLogin.setTransformationMethod(
                     PasswordTransformationMethod.getInstance()
             );
 
-            txtMostrarContrasena.setImageResource(R.drawable.ic_ojoabierto);
+            txtMostrarContrasena.setImageResource(
+                    R.drawable.ic_ojocerrado
+            );
+
             contrasenaVisible = false;
 
         } else {
 
-            // Mostrar contraseña: se muestra el ojo cerrado
+            // Mostrar contraseña
             edtContrasenaLogin.setTransformationMethod(
                     HideReturnsTransformationMethod.getInstance()
             );
 
-            txtMostrarContrasena.setImageResource(R.drawable.ic_ojocerrado);
+            txtMostrarContrasena.setImageResource(
+                    R.drawable.ic_ojoabierto
+            );
+
             contrasenaVisible = true;
         }
 
-        // Mantener la posición del cursor
+        // Mantener posición del cursor
         if (posicion >= 0) {
+
             edtContrasenaLogin.setSelection(
                     Math.min(
                             posicion,
@@ -199,15 +364,43 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // =========================================
+    // RECUPERAR CONTRASEÑA
+    // =========================================
+
     private void recuperarContrasena() {
-        String correo = edtCorreoLogin.getText().toString().trim();
+
+        String correo = edtCorreoLogin.getText()
+                .toString()
+                .trim();
+
         Intent intent = new Intent(
                 LoginActivity.this,
                 RecuperarContrasenaActivity.class
         );
+
         if (!correo.isEmpty()) {
             intent.putExtra("correo", correo);
         }
+
         startActivity(intent);
+    }
+
+    // =========================================
+    // DETENER ANIMACIONES
+    // =========================================
+
+    @Override
+    protected void onDestroy() {
+
+        if (loginAnimador != null) {
+            loginAnimador.detener();
+        }
+
+        if (butiDialogo != null) {
+            butiDialogo.cerrar();
+        }
+
+        super.onDestroy();
     }
 }

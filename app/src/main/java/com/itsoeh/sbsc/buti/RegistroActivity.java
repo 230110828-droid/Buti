@@ -1,5 +1,8 @@
 package com.itsoeh.sbsc.buti;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +10,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -26,7 +31,9 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegistroActivity extends AppCompatActivity {
@@ -48,6 +55,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     private ProgressBar barraSeguridad;
     private Button btnCrearCuenta;
+    private TextView txtIniciarSesion;
 
     private FirebaseAuth mAuth;
     private DatabaseReference referenciaUsuarios;
@@ -57,6 +65,9 @@ public class RegistroActivity extends AppCompatActivity {
     private boolean minusculaValida;
     private boolean numeroValido;
     private boolean especialValido;
+
+    // Animaciones
+    private RegistroAnimador registroAnimador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,36 +79,82 @@ public class RegistroActivity extends AppCompatActivity {
         referenciaUsuarios = FirebaseDatabase.getInstance()
                 .getReference("usuarios");
 
+        // Inicializar animador
+        registroAnimador = new RegistroAnimador();
+
+        // Campos del formulario
         edtNombre = findViewById(R.id.edtNombreRegistro);
         edtCorreo = findViewById(R.id.edtCorreoRegistro);
-        edtContrasena = findViewById(R.id.edtContrasenaRegistro);
-        edtConfirmarContrasena =
-                findViewById(R.id.edtConfirmarContrasenaRegistro);
+
+        edtContrasena = findViewById(
+                R.id.edtContrasenaRegistro
+        );
+
+        edtConfirmarContrasena = findViewById(
+                R.id.edtConfirmarContrasenaRegistro
+        );
 
         chkTerminos = findViewById(R.id.chkTerminos);
-        btnCrearCuenta = findViewById(R.id.btnCrearCuentaRegistro);
 
-        TextView txtIniciarSesion =
-                findViewById(R.id.txtIniciarSesionRegistro);
+        btnCrearCuenta = findViewById(
+                R.id.btnCrearCuentaRegistro
+        );
 
-        txtNivelContrasena = findViewById(R.id.txtNivelContrasena);
-        barraSeguridad = findViewById(R.id.barraSeguridad);
+        txtIniciarSesion = findViewById(
+                R.id.txtIniciarSesionRegistro
+        );
 
-        txtReqLongitud = findViewById(R.id.txtReqLongitud);
-        txtReqMayuscula = findViewById(R.id.txtReqMayuscula);
-        txtReqMinuscula = findViewById(R.id.txtReqMinuscula);
-        txtReqNumero = findViewById(R.id.txtReqNumero);
-        txtReqEspecial = findViewById(R.id.txtReqEspecial);
+        // Seguridad de contraseña
+        txtNivelContrasena = findViewById(
+                R.id.txtNivelContrasena
+        );
 
+        barraSeguridad = findViewById(
+                R.id.barraSeguridad
+        );
+
+        txtReqLongitud = findViewById(
+                R.id.txtReqLongitud
+        );
+
+        txtReqMayuscula = findViewById(
+                R.id.txtReqMayuscula
+        );
+
+        txtReqMinuscula = findViewById(
+                R.id.txtReqMinuscula
+        );
+
+        txtReqNumero = findViewById(
+                R.id.txtReqNumero
+        );
+
+        txtReqEspecial = findViewById(
+                R.id.txtReqEspecial
+        );
+
+        // Reproducir animaciones de entrada
+        reproducirAnimaciones();
+
+        // Observar cambios en la contraseña
         edtContrasena.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(
-                    CharSequence s, int start, int count, int after) {
+                    CharSequence s,
+                    int start,
+                    int count,
+                    int after
+            ) {
             }
 
             @Override
             public void onTextChanged(
-                    CharSequence s, int start, int before, int count) {
+                    CharSequence s,
+                    int start,
+                    int before,
+                    int count
+            ) {
                 actualizarSeguridad(s.toString());
             }
 
@@ -108,37 +165,144 @@ public class RegistroActivity extends AppCompatActivity {
 
         actualizarSeguridad("");
 
-        btnCrearCuenta.setOnClickListener(v -> crearCuenta());
-        txtIniciarSesion.setOnClickListener(v -> finish());
+        // Crear cuenta
+        btnCrearCuenta.setOnClickListener(v -> {
+            RegistroAnimador.animarPresion(v);
+            crearCuenta();
+        });
+
+        // Regresar al inicio de sesión
+        txtIniciarSesion.setOnClickListener(v -> {
+            RegistroAnimador.animarPresion(v);
+            finish();
+        });
     }
 
+    // ------------------------------------------------
+    // ANIMACIONES DE LA PANTALLA
+    // ------------------------------------------------
+
+    private void reproducirAnimaciones() {
+
+        View imgLogo = findViewById(R.id.imgLogoRegistro);
+        View tvNombre = findViewById(R.id.tvNombreRegistro);
+        View tvTitulo = findViewById(R.id.tvTituloRegistro);
+
+        View contenedorSubtitulo = findViewById(
+                R.id.contenedorSubtituloRegistro
+        );
+
+        View tvSubtitulo = findViewById(
+                R.id.tvSubtituloRegistro
+        );
+
+        View cardRegistro = findViewById(
+                R.id.cardRegistro
+        );
+
+        View contenedorNombre = findViewById(
+                R.id.contenedorNombreRegistro
+        );
+
+        View contenedorCorreo = findViewById(
+                R.id.contenedorCorreoRegistro
+        );
+
+        View contenedorContrasena = findViewById(
+                R.id.contenedorContrasenaRegistro
+        );
+
+        View cardSeguridad = findViewById(
+                R.id.cardSeguridadRegistro
+        );
+
+        View contenedorConfirmar = findViewById(
+                R.id.contenedorConfirmarContrasenaRegistro
+        );
+
+        View contenedorLogin = findViewById(
+                R.id.contenedorLoginRegistro
+        );
+
+        View tvFrase = findViewById(
+                R.id.tvFraseRegistro
+        );
+
+        registroAnimador.reproducir(
+                imgLogo,
+                tvNombre,
+                tvTitulo,
+                contenedorSubtitulo,
+                tvSubtitulo,
+                cardRegistro,
+                contenedorNombre,
+                contenedorCorreo,
+                contenedorContrasena,
+                cardSeguridad,
+                contenedorConfirmar,
+                chkTerminos,
+                btnCrearCuenta,
+                contenedorLogin,
+                tvFrase
+        );
+    }
+
+    // ------------------------------------------------
+    // SEGURIDAD DE CONTRASEÑA
+    // ------------------------------------------------
+
     private void actualizarSeguridad(String contrasena) {
+
         longitudValida = contrasena.length() >= 8;
-        mayusculaValida = contrasena.matches("(?s).*\\p{Lu}.*");
-        minusculaValida = contrasena.matches("(?s).*\\p{Ll}.*");
-        numeroValido = contrasena.matches("(?s).*\\d.*");
-        especialValido =
-                contrasena.matches("(?s).*[\\p{P}\\p{S}].*");
+
+        mayusculaValida = contrasena.matches(
+                "(?s).*\\p{Lu}.*"
+        );
+
+        minusculaValida = contrasena.matches(
+                "(?s).*\\p{Ll}.*"
+        );
+
+        numeroValido = contrasena.matches(
+                "(?s).*\\d.*"
+        );
+
+        especialValido = contrasena.matches(
+                "(?s).*[\\p{P}\\p{S}].*"
+        );
 
         actualizarRequisito(
-                txtReqLongitud, longitudValida, "Mínimo 8 caracteres");
+                txtReqLongitud,
+                longitudValida,
+                "Mínimo 8 caracteres"
+        );
 
         actualizarRequisito(
-                txtReqMayuscula, mayusculaValida,
-                "Una letra mayúscula (A-Z)");
+                txtReqMayuscula,
+                mayusculaValida,
+                "Una letra mayúscula (A-Z)"
+        );
 
         actualizarRequisito(
-                txtReqMinuscula, minusculaValida,
-                "Una letra minúscula (a-z)");
+                txtReqMinuscula,
+                minusculaValida,
+                "Una letra minúscula (a-z)"
+        );
 
         actualizarRequisito(
-                txtReqNumero, numeroValido, "Un número (0-9)");
+                txtReqNumero,
+                numeroValido,
+                "Un número (0-9)"
+        );
 
         actualizarRequisito(
-                txtReqEspecial, especialValido,
-                "Un carácter especial (!@#$...)");
+                txtReqEspecial,
+                especialValido,
+                "Un carácter especial (!@#$...)"
+        );
 
         int puntos = 0;
+
         if (longitudValida) puntos++;
         if (mayusculaValida) puntos++;
         if (minusculaValida) puntos++;
@@ -151,38 +315,54 @@ public class RegistroActivity extends AppCompatActivity {
         String nivel;
 
         if (contrasena.isEmpty()) {
+
             nivel = "Seguridad de la contraseña";
             color = Color.GRAY;
+
         } else if (puntos <= 2) {
+
             nivel = "Seguridad: débil";
             color = Color.rgb(217, 83, 79);
+
         } else if (puntos <= 4) {
+
             nivel = "Seguridad: media";
             color = Color.rgb(230, 160, 40);
+
         } else {
+
             nivel = "Seguridad: fuerte";
             color = Color.rgb(46, 160, 95);
         }
 
         txtNivelContrasena.setText(nivel);
         txtNivelContrasena.setTextColor(color);
+
         barraSeguridad.setProgressTintList(
-                ColorStateList.valueOf(color));
+                ColorStateList.valueOf(color)
+        );
     }
 
     private void actualizarRequisito(
-            TextView vista, boolean cumplido, String texto) {
+            TextView vista,
+            boolean cumplido,
+            String texto
+    ) {
 
         if (cumplido) {
+
             vista.setText("✓ " + texto);
             vista.setTextColor(Color.rgb(46, 160, 95));
+
         } else {
+
             vista.setText("○ " + texto);
             vista.setTextColor(Color.GRAY);
         }
     }
 
     private boolean contrasenaSegura() {
+
         return longitudValida
                 && mayusculaValida
                 && minusculaValida
@@ -190,52 +370,76 @@ public class RegistroActivity extends AppCompatActivity {
                 && especialValido;
     }
 
+    // ------------------------------------------------
+    // CREAR CUENTA
+    // ------------------------------------------------
+
     private void crearCuenta() {
+
         String nombre = edtNombre.getText().toString().trim();
+
         String correo = edtCorreo.getText().toString().trim();
+
         String contrasena = edtContrasena.getText().toString();
+
         String confirmar = edtConfirmarContrasena.getText().toString();
 
         if (nombre.isEmpty()) {
+
             edtNombre.setError("Escribe tu nombre completo");
             edtNombre.requestFocus();
             return;
         }
 
         if (correo.isEmpty()) {
+
             edtCorreo.setError("Escribe tu correo electrónico");
             edtCorreo.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
+
             edtCorreo.setError("Escribe un correo válido");
             edtCorreo.requestFocus();
             return;
         }
 
         if (!contrasenaSegura()) {
+
             edtContrasena.setError(
-                    "Completa todos los requisitos de seguridad");
+                    "Completa todos los requisitos de seguridad"
+            );
+
             edtContrasena.requestFocus();
 
-            Toast.makeText(this,
+            Toast.makeText(
+                    this,
                     "Tu contraseña debe cumplir los 5 requisitos.",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG
+            ).show();
+
             return;
         }
 
         if (!contrasena.equals(confirmar)) {
+
             edtConfirmarContrasena.setError(
-                    "Las contraseñas no coinciden");
+                    "Las contraseñas no coinciden"
+            );
+
             edtConfirmarContrasena.requestFocus();
             return;
         }
 
         if (!chkTerminos.isChecked()) {
-            Toast.makeText(this,
+
+            Toast.makeText(
+                    this,
                     "Debes aceptar los términos y condiciones",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG
+            ).show();
+
             return;
         }
 
@@ -245,37 +449,46 @@ public class RegistroActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
 
                     if (!task.isSuccessful()) {
+
                         btnCrearCuenta.setEnabled(true);
 
                         Exception error = task.getException();
+
                         String mensaje = obtenerMensajeError(error);
 
-                        Log.e(TAG,
-                                "Error al crear la cuenta. Correo: "
-                                        + correo,
-                                error);
+                        Log.e(
+                                TAG,
+                                "Error al crear la cuenta. Correo: " + correo,
+                                error
+                        );
 
                         Toast.makeText(
                                 RegistroActivity.this,
                                 mensaje,
                                 Toast.LENGTH_LONG
                         ).show();
+
                         return;
                     }
 
                     FirebaseUser usuario = mAuth.getCurrentUser();
 
                     if (usuario == null) {
+
                         btnCrearCuenta.setEnabled(true);
-                        Log.e(TAG,
+
+                        Log.e(
+                                TAG,
                                 "La autenticación fue exitosa, "
-                                        + "pero getCurrentUser() devolvió null.");
+                                        + "pero getCurrentUser() devolvió null."
+                        );
 
                         Toast.makeText(
                                 RegistroActivity.this,
                                 "No se pudo obtener el usuario creado.",
                                 Toast.LENGTH_LONG
                         ).show();
+
                         return;
                     }
 
@@ -283,23 +496,32 @@ public class RegistroActivity extends AppCompatActivity {
                 });
     }
 
+    // ------------------------------------------------
+    // MENSAJES DE ERROR DE FIREBASE
+    // ------------------------------------------------
+
     private String obtenerMensajeError(Exception error) {
+
         if (error instanceof FirebaseAuthUserCollisionException) {
+
             return "Este correo ya tiene una cuenta. "
                     + "Intenta iniciar sesión.";
         }
 
         if (error instanceof FirebaseAuthInvalidCredentialsException) {
+
             return "Firebase rechazó los datos de acceso. "
                     + "Verifica el correo y vuelve a intentarlo.";
         }
 
         if (error instanceof FirebaseNetworkException) {
+
             return "No hay conexión estable. "
                     + "Revisa tu internet e inténtalo otra vez.";
         }
 
         if (error != null && error.getMessage() != null) {
+
             return "No se pudo crear la cuenta: "
                     + error.getMessage();
         }
@@ -308,25 +530,38 @@ public class RegistroActivity extends AppCompatActivity {
                 + "Revisa Logcat para ver el error.";
     }
 
+    // ------------------------------------------------
+    // GUARDAR DATOS EN FIREBASE
+    // ------------------------------------------------
 
     private void guardarDatosUsuario(
-            FirebaseUser usuario, String nombre, String correo) {
+            FirebaseUser usuario,
+            String nombre,
+            String correo
+    ) {
 
         btnCrearCuenta.setEnabled(false);
 
         Map<String, Object> datosUsuario = new HashMap<>();
+
         datosUsuario.put("uid", usuario.getUid());
         datosUsuario.put("nombre", nombre);
         datosUsuario.put("correo", correo);
-        datosUsuario.put("fechaRegistro", System.currentTimeMillis());
+        datosUsuario.put(
+                "fechaRegistro",
+                System.currentTimeMillis()
+        );
 
         referenciaUsuarios.child(usuario.getUid())
                 .setValue(datosUsuario)
                 .addOnCompleteListener(task -> {
 
                     if (task.isSuccessful()) {
-                        Log.d(TAG,
-                                "Usuario guardado en Realtime Database.");
+
+                        Log.d(
+                                TAG,
+                                "Usuario guardado en Realtime Database."
+                        );
 
                         UserProfileChangeRequest perfil =
                                 new UserProfileChangeRequest.Builder()
@@ -335,9 +570,12 @@ public class RegistroActivity extends AppCompatActivity {
 
                         usuario.updateProfile(perfil)
                                 .addOnFailureListener(e ->
-                                        Log.w(TAG,
+                                        Log.w(
+                                                TAG,
                                                 "No se pudo actualizar el perfil.",
-                                                e));
+                                                e
+                                        )
+                                );
 
                         Toast.makeText(
                                 RegistroActivity.this,
@@ -348,19 +586,23 @@ public class RegistroActivity extends AppCompatActivity {
                         finish();
 
                     } else {
+
                         btnCrearCuenta.setEnabled(true);
 
                         Exception error = task.getException();
 
-                        Log.e(TAG,
+                        Log.e(
+                                TAG,
                                 "Error al guardar en Realtime Database.",
-                                error);
+                                error
+                        );
 
                         String mensaje =
                                 "La cuenta existe, pero no se guardaron los datos.";
 
                         if (error != null
                                 && error.getLocalizedMessage() != null) {
+
                             mensaje += " " + error.getLocalizedMessage();
                         }
 
@@ -373,4 +615,102 @@ public class RegistroActivity extends AppCompatActivity {
                 });
     }
 
+    // ------------------------------------------------
+    // DETENER ANIMACIONES
+    // ------------------------------------------------
+
+    @Override
+    protected void onDestroy() {
+
+        if (registroAnimador != null) {
+            registroAnimador.detener();
+        }
+
+        super.onDestroy();
+    }
+
+    // ------------------------------------------------
+    // CLASE INTERNA PARA LAS ANIMACIONES
+    // ------------------------------------------------
+
+    public static class RegistroAnimador {
+
+        private AnimatorSet animaciones;
+
+        public void reproducir(View... vistas) {
+
+            detener();
+
+            List<Animator> lista = new ArrayList<>();
+
+            long retraso = 0;
+
+            for (View vista : vistas) {
+
+                if (vista == null) {
+                    continue;
+                }
+
+                vista.setAlpha(0f);
+                vista.setTranslationY(22f);
+
+                ObjectAnimator aparecer = ObjectAnimator.ofFloat(
+                        vista,
+                        View.ALPHA,
+                        0f,
+                        1f
+                );
+
+                ObjectAnimator deslizar = ObjectAnimator.ofFloat(
+                        vista,
+                        View.TRANSLATION_Y,
+                        22f,
+                        0f
+                );
+
+                AnimatorSet entrada = new AnimatorSet();
+
+                entrada.playTogether(aparecer, deslizar);
+                entrada.setDuration(400);
+                entrada.setStartDelay(retraso);
+
+                entrada.setInterpolator(
+                        new AccelerateDecelerateInterpolator()
+                );
+
+                lista.add(entrada);
+
+                retraso += 100;
+            }
+
+            animaciones = new AnimatorSet();
+            animaciones.playTogether(lista);
+            animaciones.start();
+        }
+
+        public void detener() {
+
+            if (animaciones != null) {
+
+                animaciones.cancel();
+                animaciones = null;
+            }
+        }
+
+        public static void animarPresion(View vista) {
+
+            vista.animate()
+                    .scaleX(0.96f)
+                    .scaleY(0.96f)
+                    .setDuration(100)
+                    .withEndAction(() ->
+                            vista.animate()
+                                    .scaleX(1f)
+                                    .scaleY(1f)
+                                    .setDuration(120)
+                                    .start()
+                    )
+                    .start();
+        }
+    }
 }

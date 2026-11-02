@@ -1,173 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootBienvenida"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBF3EA"
-    android:fillViewport="true"
-    android:overScrollMode="never">
+    android:background="@drawable/bg_bienvenida"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!-- Bordado superior -->
+    <ImageView
+        android:id="@+id/margenSuperior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="24dp"
-        android:paddingBottom="24dp">
+        android:layout_height="56dp"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_margen_otomi_verde" />
 
-        <!-- Bordado superior -->
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_margen2" />
+    <!-- Contenido desplazable -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="24dp" />
-
-        <!-- Logo de B'ÜTI -->
-        <ImageView
-            android:id="@+id/imgLogoBienvenida"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:contentDescription="Logo de B'ÜTI"
-            android:scaleType="fitCenter"
-            android:src="@drawable/principla_logo" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="¡Bienvenido a B'ÜTI!"
-            android:textColor="#70252B"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:lineSpacingExtra="5dp"
-            android:text="Descubre la riqueza de nuestra cultura y aprende la lengua hñähñu de Ixmiquilpan."
-            android:textColor="#654B42"
-            android:textSize="17sp" />
-
-        <!-- Ilustraciones culturales existentes -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="20dp">
 
-            <ImageView
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginEnd="10dp"
-                android:contentDescription="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_rombo1" />
+            <!-- Logo -->
+            <FrameLayout
+                android:layout_width="230dp"
+                android:layout_height="230dp">
 
-            <ImageView
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:contentDescription="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_rombo2" />
+                <View
+                    android:id="@+id/viewHalo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_halo_logo" />
 
-            <ImageView
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="10dp"
-                android:contentDescription="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_rombo3" />
+                <ImageView
+                    android:id="@+id/imgLogoBienvenida"
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="Logo de B'ÜTI"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/principla_logo" />
+
+            </FrameLayout>
+
+            <!-- Mensaje principal -->
+            <TextView
+                android:id="@+id/tvTituloBienvenida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:letterSpacing="0.01"
+                android:text="¡Bienvenido a B'ÜTI!"
+                android:textColor="#70252B"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <!-- Detalle decorativo -->
+            <View
+                android:id="@+id/lineaAcento"
+                android:layout_width="58dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_linea_acento" />
+
+            <!-- Texto de bienvenida -->
+            <TextView
+                android:id="@+id/tvDescripcionBienvenida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:lineSpacingExtra="5dp"
+                android:text="Descubre, aprende y conecta con la riqueza de la lengua hñähñu y la cultura de Ixmiquilpan."
+                android:textColor="#654B42"
+                android:textSize="16sp" />
+
+            <!-- Invitación a explorar -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:letterSpacing="0.08"
+                android:text="UN VIAJE A NUESTRAS RAÍCES"
+                android:textColor="#936C50"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <!-- Tarjeta cultural -->
+            <LinearLayout
+                android:id="@+id/cardCultura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card_cultura"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="13dp">
+
+                <ImageView
+                    android:id="@+id/imgRombo1"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_rombo1" />
+
+                <ImageView
+                    android:id="@+id/imgRombo2"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_rombo2" />
+
+                <ImageView
+                    android:id="@+id/imgRombo3"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_rombo3" />
+
+            </LinearLayout>
+
+            <!-- Lema -->
+            <TextView
+                android:id="@+id/tvLemaBienvenida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:text="Nuestra lengua, nuestras raíces,\nnuestra identidad."
+                android:textColor="#70252B"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+            <!-- Indicadores -->
+            <LinearLayout
+                android:id="@+id/llIndicadores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/indicador1"
+                    android:layout_width="24dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/indicador_activo" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/indicador_inactivo" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/indicador_inactivo" />
+
+            </LinearLayout>
+
+            <!-- Botón principal -->
+            <Button
+                android:id="@+id/btnComenzar"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/btn_comenzar"
+                android:elevation="5dp"
+                android:text="Comenzar"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Texto inferior -->
+            <TextView
+                android:id="@+id/tvPieBienvenida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="Cultura y lengua hñähñu de Ixmiquilpan"
+                android:textColor="#80685B"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:gravity="center"
-            android:text="Nuestra lengua, nuestras raíces, nuestra identidad."
-            android:textColor="#70252B"
-            android:textSize="15sp"
-            android:textStyle="italic" />
+    </ScrollView>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="24dp" />
+    <!-- Bordado inferior -->
+    <ImageView
+        android:id="@+id/margenInferior"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_margen_otomi_verde" />
 
-        <!-- Indicadores de bienvenida -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="24dp"
-                android:layout_height="8dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/indicador_activo" />
-
-            <View
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/indicador_inactivo" />
-
-            <View
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/indicador_inactivo" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="24dp" />
-
-        <!-- Botón para continuar -->
-        <Button
-            android:id="@+id/btnComenzar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/btn_comenzar"
-            android:elevation="3dp"
-            android:text="Comenzar"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="Cultura y lengua hñähñu de Ixmiquilpan"
-            android:textColor="#80685B"
-            android:textSize="12sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <!-- Bordado inferior -->
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_margen2" />
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

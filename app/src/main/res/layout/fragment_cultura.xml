@@ -4,91 +4,216 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/buti_crema"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="32dp">
 
-        <!-- Encabezado Ixmiquilpan -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Ixmiquilpan"
-            android:textColor="@color/buti_negro"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center_horizontal"
-            android:text="El corazón cultural de la región del Valle del Mezquital, cuna de la cultura hñáhñu."
-            android:textColor="@color/buti_cafe"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <!-- Espacio del mapa (por ahora marcador de posición).
-             Después aquí va el mapa de Google Maps de Ixmiquilpan. -->
+        <!-- ENCABEZADO PRINCIPAL -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/buti_crema_oscuro"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/buti_vino"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="5dp"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VALLE DEL MEZQUITAL  •  HIDALGO"
+                    android:textColor="@color/buti_dorado"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:text="Ixmiquilpan"
+                    android:textColor="@color/buti_crema"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans" />
+
+                <View
+                    android:layout_width="68dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="13dp"
+                    android:background="@color/buti_dorado" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="El corazón cultural de la región del Valle del Mezquital, cuna de la cultura hñáhñu."
+                    android:textColor="@color/buti_crema"
+                    android:textSize="16sp"
+                    android:lineSpacingExtra="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:background="@drawable/bg_buti_pastilla"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:text="IDENTIDAD  •  CULTURA  •  TRADICIÓN"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- MAPA DESTACADO -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginTop="18dp"
+            app:cardBackgroundColor="@color/buti_crema_oscuro"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/buti_siena"
             app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="20dp">
 
-                <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_ubicacion" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Mapa de Ixmiquilpan"
-                    android:textColor="@color/buti_siena"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UBICACIÓN"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.12" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Explora Ixmiquilpan"
+                        android:textColor="@color/buti_negro"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Descubre la riqueza de nuestra región."
+                        android:textColor="@color/buti_cafe"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    app:cardBackgroundColor="@color/buti_vino"
+                    app:cardCornerRadius="26dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="19dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_ubicacion"
+                        android:scaleType="fitCenter"
+                        app:tint="@color/buti_crema" />
+
+                </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Sección Pueblos y Colonias -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- SECCIÓN PUEBLOS -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Pueblos y colonias"
-            android:textColor="@color/buti_siena"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <!-- Card El Dexthi -->
+            <View
+                android:layout_width="5dp"
+                android:layout_height="34dp"
+                android:background="@color/buti_dorado" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pueblos y colonias"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Lugares que conservan nuestra identidad."
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- EL DEXTHI -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardPuebloDexthi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="@color/buti_crema_oscuro"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp">
+            app:cardCornerRadius="22dp"
+            app:cardElevation="3dp"
+            app:rippleColor="@color/buti_dorado"
+            app:strokeColor="@color/buti_crema_oscuro"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,8 +223,8 @@
                 android:padding="12dp">
 
                 <ImageView
-                    android:layout_width="96dp"
-                    android:layout_height="68dp"
+                    android:layout_width="112dp"
+                    android:layout_height="104dp"
                     android:importantForAccessibility="no"
                     android:scaleType="centerCrop"
                     android:src="@drawable/dexthi_letrero_cerros" />
@@ -107,48 +232,65 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="15dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="01  /  COMUNIDAD"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
                         android:text="El Dexthi"
                         android:textColor="@color/buti_negro"
-                        android:textSize="18sp"
+                        android:textSize="19sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="5dp"
                         android:text="Tradición textil"
                         android:textColor="@color/buti_cafe"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="Conocer lugar  →"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_flederecha"
-                    app:tint="@color/buti_siena" />
             </LinearLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Card El Nith -->
+        <!-- EL NITH -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardPuebloNith"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="@color/buti_crema_oscuro"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp">
+            app:cardCornerRadius="22dp"
+            app:cardElevation="3dp"
+            app:rippleColor="@color/buti_dorado"
+            app:strokeColor="@color/buti_crema_oscuro"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -158,8 +300,8 @@
                 android:padding="12dp">
 
                 <ImageView
-                    android:layout_width="96dp"
-                    android:layout_height="68dp"
+                    android:layout_width="112dp"
+                    android:layout_height="104dp"
                     android:importantForAccessibility="no"
                     android:scaleType="centerCrop"
                     android:src="@drawable/nith_iglesia" />
@@ -167,48 +309,65 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="15dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="02  /  COMUNIDAD"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
                         android:text="El Nith"
                         android:textColor="@color/buti_negro"
-                        android:textSize="18sp"
+                        android:textSize="19sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="5dp"
                         android:text="Idioma vivo"
                         android:textColor="@color/buti_cafe"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="Conocer lugar  →"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_flederecha"
-                    app:tint="@color/buti_siena" />
             </LinearLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Card Panales -->
+        <!-- PANALES -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardPuebloPanales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="@color/buti_crema_oscuro"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp">
+            app:cardCornerRadius="22dp"
+            app:cardElevation="3dp"
+            app:rippleColor="@color/buti_dorado"
+            app:strokeColor="@color/buti_crema_oscuro"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -218,8 +377,8 @@
                 android:padding="12dp">
 
                 <ImageView
-                    android:layout_width="96dp"
-                    android:layout_height="68dp"
+                    android:layout_width="112dp"
+                    android:layout_height="104dp"
                     android:importantForAccessibility="no"
                     android:scaleType="centerCrop"
                     android:src="@drawable/panales_valle_agricola" />
@@ -227,225 +386,399 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="15dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="03  /  COMUNIDAD"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
                         android:text="Panales"
                         android:textColor="@color/buti_negro"
-                        android:textSize="18sp"
+                        android:textSize="19sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="5dp"
                         android:text="Gastronomía"
                         android:textColor="@color/buti_cafe"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="Conocer lugar  →"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_flederecha"
-                    app:tint="@color/buti_siena" />
             </LinearLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Sección Lo que la distingue -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- SECCIÓN CULTURAL -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Lo que la distingue"
-            android:textColor="@color/buti_siena"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="32dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <View
+                android:layout_width="5dp"
+                android:layout_height="34dp"
+                android:background="@color/buti_dorado" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lo que la distingue"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="La esencia de nuestras raíces y tradiciones."
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- CUADRÍCULA CULTURAL -->
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:columnCount="2"
-            android:useDefaultMargins="true">
+            android:useDefaultMargins="false">
 
+            <!-- MAGUEY -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardTemaMaguey"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/buti_crema_oscuro"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
+                app:rippleColor="@color/buti_dorado"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:padding="17dp">
 
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_maguey2" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        app:cardBackgroundColor="@color/buti_crema"
+                        app:cardCornerRadius="19dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_maguey2"
+                            android:scaleType="fitCenter" />
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="14dp"
                         android:text="El maguey"
-                        android:textColor="@color/buti_negro"
-                        android:textSize="16sp"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="7dp"
                         android:text="Da aguamiel, pulque y fibra de ixtle."
                         android:textColor="@color/buti_cafe"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:lineSpacingExtra="3dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="DESCUBRIR  →"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- BORDADOS -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardTemaBordados"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/buti_crema_oscuro"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
+                app:rippleColor="@color/buti_dorado"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:padding="17dp">
 
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_bordado3" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        app:cardBackgroundColor="@color/buti_crema"
+                        app:cardCornerRadius="19dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_bordado3"
+                            android:scaleType="fitCenter" />
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="14dp"
                         android:text="Bordados"
-                        android:textColor="@color/buti_negro"
-                        android:textSize="16sp"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="7dp"
                         android:text="Aves, flores y rombos hechos a mano."
                         android:textColor="@color/buti_cafe"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:lineSpacingExtra="3dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="DESCUBRIR  →"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- GASTRONOMÍA -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardTemaGastronomia"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/buti_crema_oscuro"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
+                app:rippleColor="@color/buti_dorado"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:padding="17dp">
 
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_teflauta" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        app:cardBackgroundColor="@color/buti_crema"
+                        app:cardCornerRadius="19dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_teflauta"
+                            android:scaleType="fitCenter" />
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="14dp"
                         android:text="Gastronomía"
-                        android:textColor="@color/buti_negro"
-                        android:textSize="16sp"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="7dp"
                         android:text="Barbacoa, mixiotes, escamoles y gusanos."
                         android:textColor="@color/buti_cafe"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:lineSpacingExtra="3dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="DESCUBRIR  →"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- SAN MIGUEL -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardTemaSanMiguel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/buti_crema_oscuro"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
+                app:rippleColor="@color/buti_dorado"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:padding="17dp">
 
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_iglesia2" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        app:cardBackgroundColor="@color/buti_crema"
+                        app:cardCornerRadius="19dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_iglesia2"
+                            android:scaleType="fitCenter" />
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="14dp"
                         android:text="San Miguel"
-                        android:textColor="@color/buti_negro"
-                        android:textSize="16sp"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="7dp"
                         android:text="Templo y exconvento del siglo XVI."
                         android:textColor="@color/buti_cafe"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:lineSpacingExtra="3dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="DESCUBRIR  →"
+                        android:textColor="@color/buti_siena"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
+
         </GridLayout>
 
+        <!-- CIERRE DECORATIVO -->
+        <View
+            android:layout_width="70dp"
+            android:layout_height="3dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="28dp"
+            android:background="@color/buti_dorado" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Nuestras raíces viven en cada tradición."
+            android:textColor="@color/buti_siena"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+
     </LinearLayout>
+
 </ScrollView>

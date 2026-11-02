@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialogo_cultura"
+    android:padding="24dp">
+
+    <!-- ICONO DECORATIVO -->
+    <TextView
+        android:id="@+id/txtIconoInfo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_tag_naranja"
+        android:gravity="center"
+        android:text="✿"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <!-- TÍTULO -->
+    <TextView
+        android:id="@+id/txtTituloInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="Nuestra cultura"
+        android:textColor="@color/buti_vino"
+        android:textSize="23sp"
+        android:textStyle="bold" />
+
+    <!-- DETALLE DECORATIVO -->
+    <View
+        android:layout_width="70dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="13dp"
+        android:background="@color/buti_dorado" />
+
+    <!-- DESCRIPCIÓN -->
+    <TextView
+        android:id="@+id/txtDescripcionInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="5dp"
+        android:gravity="center"
+        android:text="Información sobre la cultura de Ixmiquilpan."
+        android:textColor="@color/buti_cafe"
+        android:textSize="16sp" />
+
+    <!-- BOTÓN CERRAR -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCerrarInfo"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/buti_siena"
+        android:text="Cerrar"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:cornerRadius="16dp" />
+
+</LinearLayout>

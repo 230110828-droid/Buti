@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Diseño de Registro B'ÚTI. Los ids y los tipos de vista se conservan igual que antes. -->
+<!-- Diseño de Registro B'ÜTI -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:background="@color/buti_crema"
     android:fitsSystemWindows="true">
 
-    <!-- Fondo (cambia ic_fondo1 por ic_fondo2..5 si prefieres otro) -->
+    <!-- Fondo cultural -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,395 +15,488 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_fondo1" />
 
-    <!-- Cenefa superior (fija) -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_gravity="top"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="12dp"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_margen2" />
-
-    <!-- Cenefa inferior (fija) -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_gravity="bottom"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="12dp"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_margen3" />
-
-    <ScrollView
+    <!-- Capa suave -->
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:fillViewport="true"
-        android:paddingTop="56dp"
-        android:paddingBottom="56dp">
+        android:background="#EAFBF3EA" />
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Cenefa superior -->
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingHorizontal="28dp"
-            android:paddingVertical="12dp">
+            android:layout_height="56dp"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_margen_otomi_verde" />
 
-            <!-- Logo -->
-            <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:contentDescription="Logo de B'ÚTI"
-                android:scaleType="fitCenter"
-                android:src="@drawable/principla_logo" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="true"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
-            <!-- Si tu principla_logo ya trae «B’úti» escrito, borra este TextView -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="sans-serif-black"
-                android:text="B’ÚTI"
-                android:textColor="@color/buti_vino"
-                android:textSize="40sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Crea tu cuenta"
-                android:textColor="@color/buti_vino"
-                android:textSize="26sp"
-                android:textStyle="bold" />
-
-            <!-- Subtítulo con rombos verdes -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_plandaverde" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:paddingHorizontal="8dp"
-                    android:text="Empieza a aprender otomí"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_plandaverde" />
-            </LinearLayout>
-
-            <!-- Nombre completo -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="22dp"
-                android:background="@drawable/bg_campo_contrasena"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="Nombre"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_usuario" />
-
-                <EditText
-                    android:id="@+id/edtNombreRegistro"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:hint="Nombre completo"
-                    android:inputType="textPersonName|textCapWords"
-                    android:maxLines="1"
-                    android:textColor="@color/buti_negro"
-                    android:textColorHint="#8A7B66"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <!-- Correo electrónico -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_campo_contrasena"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="Correo electrónico"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_msg" />
-
-                <EditText
-                    android:id="@+id/edtCorreoRegistro"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:hint="Correo electrónico"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:textColor="@color/buti_negro"
-                    android:textColorHint="#8A7B66"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <!-- Contraseña (ojo abierto / cerrado con tus iconos) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_campo_contrasena"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="6dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="Contraseña"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_candado2" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutContrasenaRegistro"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    app:boxBackgroundMode="none"
-                    app:endIconDrawable="@drawable/ic_ojo_toggle"
-                    app:endIconMode="password_toggle"
-                    app:endIconTint="@null"
-                    app:hintEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtContrasenaRegistro"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:autofillHints="newPassword"
-                        android:background="@android:color/transparent"
-                        android:hint="Contraseña"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="8dp"
-                        android:textColor="@color/buti_negro"
-                        android:textColorHint="#8A7B66"
-                        android:textSize="15sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <!-- Seguridad de la contraseña (el código de RegistroActivity usa estas vistas;
-                 si no las quieres ver, pon android:visibility="gone" y seguirá funcionando) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_requisitos_contrasena"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="24dp">
 
-                <TextView
-                    android:id="@+id/txtNivelContrasena"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Seguridad de la contraseña"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <ProgressBar
-                    android:id="@+id/barraSeguridad"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:max="5"
-                    android:progress="0"
-                    android:progressBackgroundTint="#E8E8E8"
-                    android:progressTint="#D9534F" />
-
-                <TextView
-                    android:id="@+id/txtReqLongitud"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="○ Mínimo 8 caracteres"
-                    android:textColor="#777777"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/txtReqMayuscula"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="○ Una letra mayúscula (A-Z)"
-                    android:textColor="#777777"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/txtReqMinuscula"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="○ Una letra minúscula (a-z)"
-                    android:textColor="#777777"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/txtReqNumero"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="○ Un número (0-9)"
-                    android:textColor="#777777"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/txtReqEspecial"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="○ Un carácter especial (!@#$...)"
-                    android:textColor="#777777"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- Confirmar contraseña -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_campo_contrasena"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="6dp">
-
+                <!-- Logo -->
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="Confirmar contraseña"
+                    android:id="@+id/imgLogoRegistro"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:contentDescription="Logo de B'ÜTI"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_candado2" />
+                    android:src="@drawable/principla_logo" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutConfirmarContrasenaRegistro"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    app:boxBackgroundMode="none"
-                    app:endIconDrawable="@drawable/ic_ojo_toggle"
-                    app:endIconMode="password_toggle"
-                    app:endIconTint="@null"
-                    app:hintEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtConfirmarContrasenaRegistro"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:autofillHints="newPassword"
-                        android:background="@android:color/transparent"
-                        android:hint="Confirmar contraseña"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="8dp"
-                        android:textColor="@color/buti_negro"
-                        android:textColorHint="#8A7B66"
-                        android:textSize="15sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <!-- Aceptar términos (vacío / paloma con tus iconos) -->
-            <CheckBox
-                android:id="@+id/chkTerminos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:button="@drawable/ic_check_terminos"
-                android:paddingStart="12dp"
-                android:text="Acepto los términos y condiciones"
-                android:textColor="@color/buti_cafe"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <!-- Crear cuenta -->
-            <Button
-                android:id="@+id/btnCrearCuentaRegistro"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="14dp"
-                android:backgroundTint="@color/buti_siena"
-                android:text="Crear cuenta"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:cornerRadius="16dp" />
-
-            <!-- Volver al inicio de sesión -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
+                <!-- Nombre de la aplicación -->
                 <TextView
+                    android:id="@+id/tvNombreRegistro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="¿Ya tienes una cuenta? "
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/txtIniciarSesionRegistro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="4dp"
-                    android:text="Inicia sesión"
-                    android:textColor="@color/buti_siena"
-                    android:textSize="14sp"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="B’ÜTI"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="36sp"
                     android:textStyle="bold" />
-            </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
+                <!-- Título -->
+                <TextView
+                    android:id="@+id/tvTituloRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Crea tu cuenta"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <!-- Subtítulo -->
+                <LinearLayout
+                    android:id="@+id/contenedorSubtituloRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_plandaverde" />
+
+                    <TextView
+                        android:id="@+id/tvSubtituloRegistro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingHorizontal="8dp"
+                        android:text="Empieza a aprender otomí"
+                        android:textColor="@color/buti_cafe"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_plandaverde" />
+                </LinearLayout>
+
+                <!-- Formulario -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="#FFFEFC"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="5dp"
+                    app:strokeColor="#E8DCD0"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <!-- Nombre completo -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nombre completo"
+                            android:textColor="@color/buti_cafe"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/contenedorNombreRegistro"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_campo_contrasena"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="16dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="@null"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_usuario" />
+
+                            <EditText
+                                android:id="@+id/edtNombreRegistro"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:background="@android:color/transparent"
+                                android:hint="Escribe tu nombre completo"
+                                android:inputType="textPersonName|textCapWords"
+                                android:maxLines="1"
+                                android:textColor="@color/buti_negro"
+                                android:textColorHint="#8A7B66"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <!-- Correo electrónico -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Correo electrónico"
+                            android:textColor="@color/buti_cafe"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/contenedorCorreoRegistro"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_campo_contrasena"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="16dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="@null"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_msg" />
+
+                            <EditText
+                                android:id="@+id/edtCorreoRegistro"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:background="@android:color/transparent"
+                                android:hint="Correo electrónico"
+                                android:inputType="textEmailAddress"
+                                android:maxLines="1"
+                                android:textColor="@color/buti_negro"
+                                android:textColorHint="#8A7B66"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <!-- Contraseña -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Contraseña"
+                            android:textColor="@color/buti_cafe"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/contenedorContrasenaRegistro"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_campo_contrasena"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="6dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="@null"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_candado2" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutContrasenaRegistro"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_weight="1"
+                                app:boxBackgroundMode="none"
+                                app:endIconDrawable="@drawable/ic_ojo_toggle"
+                                app:endIconMode="password_toggle"
+                                app:endIconTint="@null"
+                                app:hintEnabled="false">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edtContrasenaRegistro"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="56dp"
+                                    android:autofillHints="newPassword"
+                                    android:background="@android:color/transparent"
+                                    android:hint="Crea una contraseña"
+                                    android:inputType="textPassword"
+                                    android:maxLines="1"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="8dp"
+                                    android:textColor="@color/buti_negro"
+                                    android:textColorHint="#8A7B66"
+                                    android:textSize="14sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <!-- Seguridad de la contraseña -->
+                        <LinearLayout
+                            android:id="@+id/cardSeguridadRegistro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_requisitos_contrasena"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <TextView
+                                android:id="@+id/txtNivelContrasena"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Seguridad de la contraseña"
+                                android:textColor="@color/buti_cafe"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <ProgressBar
+                                android:id="@+id/barraSeguridad"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:max="5"
+                                android:progress="0"
+                                android:progressBackgroundTint="#E8E8E8"
+                                android:progressTint="#D9534F" />
+
+                            <TextView
+                                android:id="@+id/txtReqLongitud"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="○ Mínimo 8 caracteres"
+                                android:textColor="#777777"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtReqMayuscula"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="○ Una letra mayúscula (A-Z)"
+                                android:textColor="#777777"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtReqMinuscula"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="○ Una letra minúscula (a-z)"
+                                android:textColor="#777777"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtReqNumero"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="○ Un número (0-9)"
+                                android:textColor="#777777"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtReqEspecial"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="○ Un carácter especial (!@#$...)"
+                                android:textColor="#777777"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <!-- Confirmar contraseña -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Confirmar contraseña"
+                            android:textColor="@color/buti_cafe"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/contenedorConfirmarContrasenaRegistro"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_campo_contrasena"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="6dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="@null"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_candado2" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutConfirmarContrasenaRegistro"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_weight="1"
+                                app:boxBackgroundMode="none"
+                                app:endIconDrawable="@drawable/ic_ojo_toggle"
+                                app:endIconMode="password_toggle"
+                                app:endIconTint="@null"
+                                app:hintEnabled="false">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edtConfirmarContrasenaRegistro"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="56dp"
+                                    android:autofillHints="newPassword"
+                                    android:background="@android:color/transparent"
+                                    android:hint="Repite tu contraseña"
+                                    android:inputType="textPassword"
+                                    android:maxLines="1"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="8dp"
+                                    android:textColor="@color/buti_negro"
+                                    android:textColorHint="#8A7B66"
+                                    android:textSize="14sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <!-- Términos y condiciones -->
+                        <CheckBox
+                            android:id="@+id/chkTerminos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:button="@drawable/ic_check_terminos"
+                            android:paddingStart="12dp"
+                            android:text="Acepto los términos y condiciones"
+                            android:textColor="@color/buti_cafe"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <!-- Crear cuenta -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCrearCuentaRegistro"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="14dp"
+                            android:text="Crear cuenta"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:backgroundTint="@color/buti_siena"
+                            app:cornerRadius="16dp"
+                            app:elevation="3dp" />
+
+                        <!-- Volver al inicio de sesión -->
+                        <LinearLayout
+                            android:id="@+id/contenedorLoginRegistro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="¿Ya tienes una cuenta?"
+                                android:textColor="@color/buti_cafe"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/txtIniciarSesionRegistro"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:padding="5dp"
+                                android:text="Inicia sesión"
+                                android:textColor="@color/buti_siena"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Frase inferior -->
+                <TextView
+                    android:id="@+id/tvFraseRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="Tu lengua, tu cultura, tus raíces."
+                    android:textColor="@color/buti_vino"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Cenefa inferior -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_margen_otomi_verde" />
+
+    </LinearLayout>
+
 </FrameLayout>

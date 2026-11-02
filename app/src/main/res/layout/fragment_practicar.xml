@@ -1,199 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollPracticar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/buti_crema"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:scrollbars="none">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <!-- CUESTIONARIO / PREGUNTAS -->
+        <!-- =============================== -->
+        <!-- PANTALLA DEL CUESTIONARIO       -->
+        <!-- =============================== -->
+
         <LinearLayout
             android:id="@+id/layoutCuestionario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp"
             android:visibility="visible">
 
-            <!-- Header con Salir y Contador -->
+            <!-- Encabezado: salir y puntos -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="4dp"
+                android:paddingBottom="12dp">
 
                 <ImageView
                     android:id="@+id/btnCerrarQuiz"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/bg_circulo_atras"
                     android:clickable="true"
-                    android:contentDescription="Salir"
+                    android:contentDescription="Salir del cuestionario"
                     android:focusable="true"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_equis"
-                    app:tint="@color/buti_negro" />
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_equis" />
 
-                <ProgressBar
-                    android:id="@+id/pbPreguntas"
-                    style="?android:attr/progressBarStyleHorizontal"
+                <View
                     android:layout_width="0dp"
-                    android:layout_height="14dp"
-                    android:layout_marginHorizontal="14dp"
-                    android:layout_weight="1"
-                    android:max="10"
-                    android:progress="1"
-                    android:progressDrawable="@drawable/barra_carga" />
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/txtContadorPreguntas"
+                    android:id="@+id/txtPuntosActuales"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1/10"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="16sp" />
+                    android:background="@drawable/bg_circulo_durazno"
+                    android:gravity="center"
+                    android:paddingStart="17dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="17dp"
+                    android:paddingBottom="12dp"
+                    android:text="★ 0 puntos"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
-            <!-- Card de Pregunta -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- Colibrí arriba de la barra -->
+
+            <ImageView
+                android:id="@+id/imgColibri"
+                android:layout_width="76dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Colibrí de progreso"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_colibri_normal" />
+
+            <!-- Barra de progreso -->
+
+            <ProgressBar
+                android:id="@+id/pbPreguntas"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="13dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:max="10"
+                android:progress="0"
+                android:progressBackgroundTint="@color/buti_crema_oscuro"
+                android:progressTint="@color/buti_verde"
+                android:indeterminate="false" />
+
+            <TextView
+                android:id="@+id/txtContadorPreguntas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="28dp"
-                app:cardElevation="2dp"
-                app:strokeWidth="0dp">
+                android:gravity="end"
+                android:text="Pregunta 1/10"
+                android:textColor="@color/buti_cafe"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="28dp">
+            <!-- Personaje -->
 
-                    <TextView
-                        android:id="@+id/txtPreguntaQuiz"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="¿Cómo se dice ‘Rojo’?"
-                        android:textColor="@color/buti_negro"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/imgPersonaje"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="14dp"
+                android:contentDescription="Personaje acompañante"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_nina_pensando" />
 
-                    <!-- Botón de audio (id nuevo: btnAudioPregunta) -->
-                    <ImageView
-                        android:id="@+id/btnAudioPregunta"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/bg_circulo_durazno"
-                        android:clickable="true"
-                        android:contentDescription="Escuchar"
-                        android:focusable="true"
-                        android:padding="16dp"
-                        android:src="@drawable/ic_sonando"
-                        app:tint="@color/buti_naranja" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            <!-- Tarjeta de pregunta -->
 
-            <!-- Opciones de Respuesta -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:orientation="vertical">
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_tarjeta_blanca"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="22dp">
 
-                <Button
-                    android:id="@+id/btnOpcionA"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginBottom="14dp"
-                    android:backgroundTint="@color/white"
-                    android:text="Kꞌangi"
-                    android:textAllCaps="false"
-                    android:textColor="@color/buti_negro"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="20dp"
-                    app:strokeColor="@color/buti_crema_oscuro"
-                    app:strokeWidth="1.5dp" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="PON A PRUEBA LO QUE SABES"
+                    android:textColor="@color/buti_naranja"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnOpcionB"
+                <TextView
+                    android:id="@+id/txtPreguntaQuiz"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginBottom="14dp"
-                    android:backgroundTint="@color/white"
-                    android:text="The̱ni"
-                    android:textAllCaps="false"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="5dp"
+                    android:text="¿Cómo se dice hola?"
                     android:textColor="@color/buti_negro"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="20dp"
-                    app:strokeColor="@color/buti_crema_oscuro"
-                    app:strokeWidth="1.5dp" />
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnOpcionC"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginBottom="14dp"
-                    android:backgroundTint="@color/white"
-                    android:text="Tꞌaxi"
-                    android:textAllCaps="false"
-                    android:textColor="@color/buti_negro"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="20dp"
-                    app:strokeColor="@color/buti_crema_oscuro"
-                    app:strokeWidth="1.5dp" />
+                <ImageView
+                    android:id="@+id/btnAudioPregunta"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_circulo_durazno"
+                    android:clickable="true"
+                    android:contentDescription="Escuchar pronunciación"
+                    android:focusable="true"
+                    android:padding="11dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_sonando" />
+
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnSiguientePregunta"
+            <!-- Texto de opciones -->
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="@color/buti_naranja"
-                android:text="Siguiente"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"
+                android:text="Elige la respuesta correcta"
+                android:textColor="@color/buti_cafe"
                 android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <!-- Opción A -->
+
+            <Button
+                android:id="@+id/btnOpcionA"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@android:color/white"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:padding="12dp"
+                android:text="Opción A"
+                android:textAllCaps="false"
+                android:textColor="@color/buti_negro"
+                android:textSize="16sp" />
+
+            <!-- Opción B -->
+
+            <Button
+                android:id="@+id/btnOpcionB"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@android:color/white"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:padding="12dp"
+                android:text="Opción B"
+                android:textAllCaps="false"
+                android:textColor="@color/buti_negro"
+                android:textSize="16sp" />
+
+            <!-- Opción C -->
+
+            <Button
+                android:id="@+id/btnOpcionC"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@android:color/white"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:padding="12dp"
+                android:text="Opción C"
+                android:textAllCaps="false"
+                android:textColor="@color/buti_negro"
+                android:textSize="16sp" />
+
+            <!-- Retroalimentación debajo de opciones -->
+
+            <TextView
+                android:id="@+id/txtRetroalimentacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_tarjeta_blanca"
+                android:gravity="center"
+                android:padding="18dp"
+                android:text="¡Muy bien!"
+                android:textColor="@color/buti_verde"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                app:cornerRadius="20dp" />
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center"
+                android:text="🌱 Cada palabra nueva es un logro."
+                android:textColor="@color/buti_siena"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
         </LinearLayout>
 
-        <!-- RESULTADO / NIVEL SUPERADO -->
+        <!-- =============================== -->
+        <!-- PANTALLA DE RESULTADOS          -->
+        <!-- =============================== -->
+
         <LinearLayout
             android:id="@+id/layoutResultado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="vertical"
-            android:padding="24dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="24dp"
             android:visibility="gone">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="¡MISIÓN COMPLETADA!"
+                android:textColor="@color/buti_naranja"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <ImageView
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_marginTop="32dp"
-                android:importantForAccessibility="no"
-                android:src="@drawable/deco_estrella"
-                app:tint="@color/buti_dorado" />
+                android:id="@+id/imgPersonajeResultado"
+                android:layout_width="205dp"
+                android:layout_height="205dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="Personaje celebrando"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_nina_victoria" />
 
             <TextView
                 android:id="@+id/txtTituloResultado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="¡Muy bien!"
-                android:textColor="@color/buti_vino"
+                android:text="¡Increíble!"
+                android:textColor="@color/buti_verde"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -201,104 +305,116 @@
                 android:id="@+id/txtSubtituloResultado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="¡Terminaste tu práctica!"
-                android:textColor="@color/buti_siena"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:lineSpacingExtra="5dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Terminaste tu práctica."
+                android:textColor="@color/buti_cafe"
+                android:textSize="16sp" />
 
-            <!-- Card de Puntuación -->
+            <!-- Tarjeta de aciertos -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginTop="26dp"
+                android:background="@drawable/bg_tarjeta_blanca"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_tarjeta_blanca"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="18dp">
+                    android:text="RESPUESTAS CORRECTAS"
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txtCorrectasResultado"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="8/10"
-                        android:textColor="@color/buti_verde"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="correctas"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="13sp" />
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/txtCorrectasResultado"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_tarjeta_blanca"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="18dp">
+                    android:text="0/10"
+                    android:textColor="@color/buti_verde"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txtPuntosResultado"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+40"
-                        android:textColor="@color/buti_naranja"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@color/buti_crema_oscuro" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="puntos"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="13sp" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="PUNTOS OBTENIDOS"
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPuntosResultado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="+0"
+                    android:textColor="@color/buti_naranja"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="Colibrí de meta"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_colibri_meta" />
+
+            <!-- Volver al inicio -->
 
             <Button
                 android:id="@+id/btnContinuarRacha"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="32dp"
-                android:backgroundTint="@color/buti_naranja"
-                android:text="Continuar"
+                android:layout_height="58dp"
+                android:layout_marginTop="22dp"
+                android:backgroundTint="@color/buti_verde"
+                android:minHeight="0dp"
+                android:text="Volver al inicio"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:cornerRadius="20dp" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Seguir aprendiendo -->
 
             <Button
                 android:id="@+id/btnSeguirAprendiendo"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="58dp"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="@color/buti_crema_oscuro"
+                android:backgroundTint="@color/buti_naranja"
+                android:minHeight="0dp"
                 android:text="Seguir aprendiendo"
                 android:textAllCaps="false"
-                android:textColor="@color/buti_vino"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:cornerRadius="20dp" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
+
 </ScrollView>
+

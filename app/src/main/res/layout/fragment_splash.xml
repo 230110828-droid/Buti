@@ -9,25 +9,29 @@
     android:clipChildren="false"
     tools:context=".splash">
 
-    <!-- Margen bordado superior (la imagen es cuadrada: se recorta al centro) -->
+    <!-- Margen bordado superior (fijo, de borde a borde) -->
     <ImageView
+        android:id="@+id/margenSup"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="56dp"
         android:layout_gravity="top"
-        android:layout_marginTop="36dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
         android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_margen2" />
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_margen_otomi_verde" />
 
-    <!-- Margen bordado inferior -->
+    <!-- Margen bordado inferior (fijo, de borde a borde) -->
     <ImageView
+        android:id="@+id/margenInf"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="56dp"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="28dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
         android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_margen2" />
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_margen_otomi_verde" />
 
     <!-- Personajes -->
     <ImageView
@@ -36,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="60dp"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
         android:src="@drawable/ic_nino1" />
@@ -47,10 +51,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="60dp"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_nina1" />
+        android:src="@drawable/ic_nina1_espejo" />
 
     <!-- Velo vino inicial: se desvanece en el impacto -->
     <View
@@ -69,9 +73,9 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingStart="24dp"
-        android:paddingTop="88dp"
+        android:paddingTop="64dp"
         android:paddingEnd="24dp"
-        android:paddingBottom="100dp">
+        android:paddingBottom="72dp">
 
         <Space
             android:layout_width="match_parent"
@@ -101,7 +105,7 @@
                 android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:importantForAccessibility="no"
-                android:src="@drawable/halo_logo"
+                android:src="@drawable/bg_halo_logo"
                 android:visibility="invisible" />
 
             <!-- Ondas expansivas -->
