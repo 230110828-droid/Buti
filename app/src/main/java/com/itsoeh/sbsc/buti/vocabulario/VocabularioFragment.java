@@ -29,7 +29,6 @@ public class VocabularioFragment extends Fragment {
     ) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Referencias a los elementos para mostrar más categorías.
         TextView btnVerMas =
                 view.findViewById(R.id.btnVerMasCategorias);
 
@@ -45,6 +44,7 @@ public class VocabularioFragment extends Fragment {
                 && gridGrupo2 != null) {
 
             btnVerMas.setOnClickListener(v -> {
+
                 masCategoriasVisibles = !masCategoriasVisibles;
 
                 int visibilidad = masCategoriasVisibles
@@ -63,83 +63,30 @@ public class VocabularioFragment extends Fragment {
         }
 
         // Categorías principales.
-        configurarTarjeta(
-                view,
-                R.id.cardCatColores,
-                "Colores"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatNumeros,
-                "Números"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatSaludos,
-                "Saludos"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatTiempo,
-                "Tiempo"
-        );
+        configurarTarjeta(view, R.id.cardCatColores, "Colores");
+        configurarTarjeta(view, R.id.cardCatNumeros, "Números");
+        configurarTarjeta(view, R.id.cardCatSaludos, "Saludos");
+        configurarTarjeta(view, R.id.cardCatTiempo, "Tiempo");
 
         // Categorías adicionales.
-        configurarTarjeta(
-                view,
-                R.id.cardCatPlantas,
-                "Plantas"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatAnimales,
-                "Animales"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatObjetos,
-                "Objetos"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatCuerpo,
-                "Cuerpo"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatComida,
-                "Comida"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatNaturaleza,
-                "Naturaleza"
-        );
-
-        configurarTarjeta(
-                view,
-                R.id.cardCatLugares,
-                "Lugares"
-        );
+        configurarTarjeta(view, R.id.cardCatPlantas, "Plantas");
+        configurarTarjeta(view, R.id.cardCatAnimales, "Animales");
+        configurarTarjeta(view, R.id.cardCatObjetos, "Objetos");
+        configurarTarjeta(view, R.id.cardCatCuerpo, "Cuerpo");
+        configurarTarjeta(view, R.id.cardCatComida, "Comida");
+        configurarTarjeta(view, R.id.cardCatNaturaleza, "Naturaleza");
+        configurarTarjeta(view, R.id.cardCatLugares, "Lugares");
     }
 
     /**
-     * Configura una tarjeta para abrir el cuestionario
-     * con la categoría que seleccionó el usuario.
+     * Abre la pantalla de palabras de la categoría seleccionada.
      */
     private void configurarTarjeta(
             View view,
             int idTarjeta,
             String categoria
     ) {
+
         MaterialCardView tarjeta =
                 view.findViewById(idTarjeta);
 
@@ -149,25 +96,20 @@ public class VocabularioFragment extends Fragment {
 
         tarjeta.setOnClickListener(v -> {
 
-            // Enviar la categoría seleccionada.
             Bundle argumentos = new Bundle();
-            argumentos.putString(
-                    "temaSeleccionado",
-                    categoria
-            );
 
-            // Obtener el controlador de navegación.
+            argumentos.putString("temaSeleccionado", categoria);
+            argumentos.putString("categoriaSeleccionada", categoria);
+
             NavController navController =
                     Navigation.findNavController(v);
 
-            // Evitar navegar si el destino no existe
-            // desde el destino actual.
             if (navController.getCurrentDestination() != null
-                    && navController.getCurrentDestination()
-                    .getId() == R.id.vocabularioFragment) {
+                    && navController.getCurrentDestination().getId()
+                    == R.id.vocabularioFragment) {
 
                 navController.navigate(
-                        R.id.practicarFragment,
+                        R.id.palabrasVocabularioFragment,
                         argumentos
                 );
             }

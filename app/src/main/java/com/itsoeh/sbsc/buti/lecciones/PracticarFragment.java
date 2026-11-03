@@ -5,12 +5,14 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -31,6 +33,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.vocabulario.AudiosVocabulario;
 import com.itsoeh.sbsc.buti.vocabulario.VocabularioDatos;
 
 import java.text.Normalizer;
@@ -42,10 +45,25 @@ import java.util.Random;
 
 public class PracticarFragment extends Fragment {
 
+    // =========================================
+    // PANTALLAS
+    // =========================================
+
+    private LinearLayout layoutSeleccionPractica;
+    private LinearLayout layoutCategoriasPractica;
+    private LinearLayout contenedorCategoriasPractica;
+
     private LinearLayout layoutCuestionario;
     private LinearLayout layoutResultado;
 
+    private LinearLayout btnRetoGeneral;
+    private LinearLayout btnRetoCategoria;
+
     private ScrollView scrollPracticar;
+
+    // =========================================
+    // ELEMENTOS DEL CUESTIONARIO
+    // =========================================
 
     private ProgressBar pbPreguntas;
 
@@ -64,6 +82,10 @@ public class PracticarFragment extends Fragment {
     private ImageView imgColibri;
     private ImageView imgPersonajeResultado;
 
+    // =========================================
+    // RESULTADOS
+    // =========================================
+
     private TextView txtCorrectasResultado;
     private TextView txtPuntosResultado;
     private TextView txtTituloResultado;
@@ -71,6 +93,10 @@ public class PracticarFragment extends Fragment {
 
     private Button btnContinuarRacha;
     private Button btnSeguirAprendiendo;
+
+    // =========================================
+    // VARIABLES DE LA PRÁCTICA
+    // =========================================
 
     private int preguntaActual = 0;
 
@@ -81,7 +107,13 @@ public class PracticarFragment extends Fragment {
     private int totalPreguntasIniciales = 0;
 
     private String opcionSeleccionada = "";
-    private String temaSeleccionado = "Saludos";
+
+    private String temaSeleccionado = "Reto general";
+
+    private String palabraActualAudio = "";
+    private String categoriaAudioActual = "";
+
+    private MediaPlayer reproductorAudio;
 
     private boolean respuestaEvaluada = false;
     private boolean rondaRepaso = false;
@@ -89,15 +121,22 @@ public class PracticarFragment extends Fragment {
 
     private String[][] preguntas = new String[0][0];
 
-    private final List<String[]> preguntasRepaso = new ArrayList<>();
+    private final List<String[]> preguntasRepaso =
+            new ArrayList<>();
 
     private final Random random = new Random();
 
-    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler =
+            new Handler(Looper.getMainLooper());
 
     private Runnable avanzarRunnable;
+    private Runnable siguientePreguntaRunnable;
 
     private Dialog dialogResultadoRespuesta;
+
+    // =========================================
+    // PERSONAJES
+    // =========================================
 
     private final int[] personajesPensando = {
             R.drawable.ic_nina_pensando,
@@ -119,9 +158,17 @@ public class PracticarFragment extends Fragment {
             R.drawable.ic_nino_victoria
     };
 
+    // =========================================
+    // CONSTRUCTOR
+    // =========================================
+
     public PracticarFragment() {
         super(R.layout.fragment_practicar);
     }
+
+    // =========================================
+    // INICIO
+    // =========================================
 
     @Override
     public void onViewCreated(
@@ -132,51 +179,15 @@ public class PracticarFragment extends Fragment {
 
         enlazarVistas(view);
 
+        configurarSeleccionRetos();
+
         NavController navController =
                 Navigation.findNavController(view);
 
-        Bundle argumentos = getArguments();
-
-        if (argumentos != null) {
-            temaSeleccionado = argumentos.getString(
-                    "temaSeleccionado",
-                    "Saludos"
-            );
-        }
-
-        String[][] palabras = obtenerPalabras(temaSeleccionado);
-
-        if (palabras == null || palabras.length < 3) {
-            Toast.makeText(
-                    requireContext(),
-                    "No hay suficientes palabras para esta categoría.",
-                    Toast.LENGTH_LONG
-            ).show();
-
-            navController.navigateUp();
-            return;
-        }
-
-        preguntas = generarPreguntas(palabras);
-
-        if (preguntas.length == 0) {
-            Toast.makeText(
-                    requireContext(),
-                    "No se pudieron generar las preguntas.",
-                    Toast.LENGTH_LONG
-            ).show();
-
-            navController.navigateUp();
-            return;
-        }
-
-        totalPreguntasIniciales = preguntas.length;
-
-        personajeNina = random.nextBoolean();
-
         btnCerrarQuiz.setOnClickListener(v -> {
             cancelarAvanceAutomatico();
-            navController.navigateUp();
+            liberarReproductor();
+            mostrarSeleccionPractica();
         });
 
         btnOpcionA.setOnClickListener(v ->
@@ -191,45 +202,65 @@ public class PracticarFragment extends Fragment {
                 seleccionarOpcion(btnOpcionC)
         );
 
-        btnContinuarRacha.setOnClickListener(v ->
-                navController.navigate(R.id.inicioFragment)
-        );
+        btnContinuarRacha.setOnClickListener(v -> {
+            cancelarAvanceAutomatico();
+            liberarReproductor();
+            navController.navigate(R.id.inicioFragment);
+        });
 
-        btnSeguirAprendiendo.setOnClickListener(v ->
-                navController.navigate(R.id.leccionesFragment)
-        );
+        btnSeguirAprendiendo.setOnClickListener(v -> {
+            cancelarAvanceAutomatico();
+            liberarReproductor();
+            navController.navigate(R.id.leccionesFragment);
+        });
 
         btnAudioPregunta.setOnClickListener(v ->
-                Toast.makeText(
-                        requireContext(),
-                        "Próximamente: pronunciación grabada en Hñähñu.",
-                        Toast.LENGTH_SHORT
-                ).show()
+                reproducirAudioPregunta()
         );
 
-        preguntaActual = 0;
-        correctasPrimeraRonda = 0;
-        palabrasReforzadas = 0;
-        puntos = 0;
+        Bundle argumentos = getArguments();
 
-        opcionSeleccionada = "";
-        respuestaEvaluada = false;
-        rondaRepaso = false;
+        if (argumentos != null) {
 
-        preguntasRepaso.clear();
+            String temaRecibido = argumentos.getString(
+                    "temaSeleccionado",
+                    ""
+            );
 
-        cancelarAvanceAutomatico();
+            if (temaRecibido != null
+                    && !temaRecibido.trim().isEmpty()) {
 
-        layoutCuestionario.setVisibility(View.VISIBLE);
-        layoutResultado.setVisibility(View.GONE);
+                iniciarPracticaCategoria(temaRecibido);
+                return;
+            }
+        }
 
-        actualizarPuntos();
-        cargarPregunta();
+        mostrarSeleccionPractica();
     }
+
+    // =========================================
+    // ENLAZAR VISTAS
+    // =========================================
 
     private void enlazarVistas(View view) {
 
-        scrollPracticar = view.findViewById(R.id.scrollPracticar);
+        scrollPracticar =
+                view.findViewById(R.id.scrollPracticar);
+
+        layoutSeleccionPractica =
+                view.findViewById(R.id.layoutSeleccionPractica);
+
+        layoutCategoriasPractica =
+                view.findViewById(R.id.layoutCategoriasPractica);
+
+        contenedorCategoriasPractica =
+                view.findViewById(R.id.contenedorCategoriasPractica);
+
+        btnRetoGeneral =
+                view.findViewById(R.id.btnRetoGeneral);
+
+        btnRetoCategoria =
+                view.findViewById(R.id.btnRetoCategoria);
 
         layoutCuestionario =
                 view.findViewById(R.id.layoutCuestionario);
@@ -295,6 +326,490 @@ public class PracticarFragment extends Fragment {
                 view.findViewById(R.id.btnSeguirAprendiendo);
     }
 
+    // =========================================
+    // SELECCIÓN DE RETOS
+    // =========================================
+
+    private void configurarSeleccionRetos() {
+
+        btnRetoGeneral.setOnClickListener(v ->
+                iniciarPracticaGeneral()
+        );
+
+        btnRetoCategoria.setOnClickListener(v -> {
+
+            if (layoutCategoriasPractica.getVisibility()
+                    == View.VISIBLE) {
+
+                layoutCategoriasPractica.setVisibility(View.GONE);
+
+            } else {
+
+                crearCategorias();
+
+                layoutCategoriasPractica.setVisibility(View.VISIBLE);
+
+                scrollPracticar.post(() ->
+                        scrollPracticar.smoothScrollTo(
+                                0,
+                                layoutCategoriasPractica.getTop()
+                        )
+                );
+            }
+        });
+    }
+
+    private void mostrarSeleccionPractica() {
+
+        cancelarAvanceAutomatico();
+        liberarReproductor();
+
+        layoutSeleccionPractica.setVisibility(View.VISIBLE);
+        layoutCuestionario.setVisibility(View.GONE);
+        layoutResultado.setVisibility(View.GONE);
+
+        layoutCategoriasPractica.setVisibility(View.GONE);
+
+        temaSeleccionado = "Reto general";
+
+        palabraActualAudio = "";
+        categoriaAudioActual = "";
+
+        if (scrollPracticar != null) {
+            scrollPracticar.post(() ->
+                    scrollPracticar.smoothScrollTo(0, 0)
+            );
+        }
+    }
+
+    // =========================================
+    // CREAR CATEGORÍAS
+    // =========================================
+
+    private void crearCategorias() {
+
+        contenedorCategoriasPractica.removeAllViews();
+
+        agregarTarjetaCategoria(
+                "Saludos",
+                R.drawable.img_cat_saludos,
+                "Palabras y expresiones para saludar."
+        );
+
+        agregarTarjetaCategoria(
+                "Números",
+                R.drawable.img_cat_numeros,
+                "Aprende a contar en Hñähñu."
+        );
+
+        agregarTarjetaCategoria(
+                "Colores",
+                R.drawable.img_cat_colores,
+                "Identifica los colores."
+        );
+
+        agregarTarjetaCategoria(
+                "Animales",
+                R.drawable.img_cat_animales,
+                "Conoce los nombres de los animales."
+        );
+
+        agregarTarjetaCategoria(
+                "Plantas",
+                R.drawable.img_cat_plantas,
+                "Descubre palabras relacionadas con plantas."
+        );
+
+        agregarTarjetaCategoria(
+                "Objetos",
+                R.drawable.img_cat_objetos,
+                "Aprende los nombres de objetos."
+        );
+
+        agregarTarjetaCategoria(
+                "Alimentos",
+                R.drawable.img_cat_comida,
+                "Practica palabras de comida."
+        );
+
+        agregarTarjetaCategoria(
+                "Cuerpo",
+                R.drawable.img_cat_cuerpo,
+                "Conoce las partes del cuerpo."
+        );
+
+        agregarTarjetaCategoria(
+                "Tiempo",
+                R.drawable.img_cat_tiempo,
+                "Aprende palabras relacionadas con el tiempo."
+        );
+
+        agregarTarjetaCategoria(
+                "Naturaleza",
+                R.drawable.img_cat_naturaleza,
+                "Descubre palabras de nuestro entorno."
+        );
+
+        agregarTarjetaCategoria(
+                "Lugares",
+                R.drawable.img_cat_lugares,
+                "Conoce diferentes lugares."
+        );
+    }
+
+    // =========================================
+    // TARJETAS DE CATEGORÍAS CON ILUSTRACIONES
+    // =========================================
+
+    private void agregarTarjetaCategoria(
+            String nombre,
+            int imagen,
+            String descripcion
+    ) {
+
+        LinearLayout tarjeta = new LinearLayout(requireContext());
+
+        tarjeta.setOrientation(LinearLayout.HORIZONTAL);
+        tarjeta.setGravity(Gravity.CENTER_VERTICAL);
+
+        tarjeta.setPadding(
+                dp(15),
+                dp(13),
+                dp(15),
+                dp(13)
+        );
+
+        tarjeta.setBackground(crearFondo(
+                Color.WHITE,
+                18,
+                Color.parseColor("#E8D5C3")
+        ));
+
+        tarjeta.setClickable(true);
+        tarjeta.setFocusable(true);
+
+        LinearLayout.LayoutParams tarjetaParams =
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+
+        tarjetaParams.bottomMargin = dp(10);
+
+        // ILUSTRACIÓN DE CATEGORÍA
+
+        ImageView icono = new ImageView(requireContext());
+
+        icono.setImageResource(imagen);
+        icono.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+        GradientDrawable fondoIcono = crearFondo(
+                Color.parseColor("#F8EBDD"),
+                15,
+                Color.TRANSPARENT
+        );
+
+        icono.setBackground(fondoIcono);
+
+        icono.setPadding(
+                dp(5),
+                dp(5),
+                dp(5),
+                dp(5)
+        );
+
+        LinearLayout.LayoutParams iconoParams =
+                new LinearLayout.LayoutParams(
+                        dp(65),
+                        dp(65)
+                );
+
+        tarjeta.addView(icono, iconoParams);
+
+        // CONTENIDO
+
+        LinearLayout contenido =
+                new LinearLayout(requireContext());
+
+        contenido.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout.LayoutParams contenidoParams =
+                new LinearLayout.LayoutParams(
+                        0,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1
+                );
+
+        contenidoParams.leftMargin = dp(13);
+
+        TextView titulo = new TextView(requireContext());
+
+        titulo.setText(nombre);
+        titulo.setTextColor(Color.parseColor("#4F000B"));
+        titulo.setTextSize(16);
+        titulo.setTypeface(null, Typeface.BOLD);
+
+        TextView subtitulo = new TextView(requireContext());
+
+        subtitulo.setText(descripcion);
+        subtitulo.setTextColor(Color.parseColor("#8C4A2F"));
+        subtitulo.setTextSize(12);
+
+        LinearLayout.LayoutParams subtituloParams =
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+
+        subtituloParams.topMargin = dp(4);
+
+        contenido.addView(titulo);
+        contenido.addView(subtitulo, subtituloParams);
+
+        tarjeta.addView(contenido, contenidoParams);
+
+        // FLECHA
+
+        ImageView flecha = new ImageView(requireContext());
+
+        flecha.setImageResource(R.drawable.ic_flederecha);
+        flecha.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+        LinearLayout.LayoutParams flechaParams =
+                new LinearLayout.LayoutParams(
+                        dp(25),
+                        dp(25)
+                );
+
+        tarjeta.addView(flecha, flechaParams);
+
+        // ACCIÓN
+
+        tarjeta.setOnClickListener(v ->
+                iniciarPracticaCategoria(nombre)
+        );
+
+        contenedorCategoriasPractica.addView(
+                tarjeta,
+                tarjetaParams
+        );
+    }
+
+    // =========================================
+    // INICIAR RETO GENERAL
+    // =========================================
+
+    private void iniciarPracticaGeneral() {
+
+        List<String[]> palabras = new ArrayList<>();
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.SALUDOS,
+                "Saludos"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.NUMEROS,
+                "Números"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.COLORES,
+                "Colores"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.ANIMALES,
+                "Animales"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.PLANTAS,
+                "Plantas"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.OBJETOS,
+                "Objetos"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.COMIDA,
+                "Alimentos"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.CUERPO,
+                "Cuerpo"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.TIEMPO,
+                "Tiempo"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.NATURALEZA,
+                "Naturaleza"
+        );
+
+        agregarPalabras(
+                palabras,
+                VocabularioDatos.LUGARES,
+                "Lugares"
+        );
+
+        temaSeleccionado = "Reto general";
+
+        iniciarCuestionario(palabras);
+    }
+
+    // =========================================
+    // INICIAR RETO POR CATEGORÍA
+    // =========================================
+
+    private void iniciarPracticaCategoria(String categoria) {
+
+        String[][] datos = obtenerPalabras(categoria);
+
+        if (datos == null || datos.length < 3) {
+
+            Toast.makeText(
+                    requireContext(),
+                    "No hay suficientes palabras para esta categoría.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            return;
+        }
+
+        List<String[]> palabras = new ArrayList<>();
+
+        agregarPalabras(
+                palabras,
+                datos,
+                categoria
+        );
+
+        temaSeleccionado = categoria;
+
+        iniciarCuestionario(palabras);
+    }
+
+    // =========================================
+    // PREPARAR CUESTIONARIO
+    // =========================================
+
+    private void iniciarCuestionario(List<String[]> datos) {
+
+        if (datos == null || datos.size() < 3) {
+
+            Toast.makeText(
+                    requireContext(),
+                    "No hay suficientes palabras para crear el reto.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            return;
+        }
+
+        cancelarAvanceAutomatico();
+        liberarReproductor();
+
+        preguntas = generarPreguntas(datos);
+
+        if (preguntas.length == 0) {
+
+            Toast.makeText(
+                    requireContext(),
+                    "No se pudieron generar las preguntas.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            return;
+        }
+
+        totalPreguntasIniciales = preguntas.length;
+
+        personajeNina = random.nextBoolean();
+
+        preguntaActual = 0;
+
+        correctasPrimeraRonda = 0;
+        palabrasReforzadas = 0;
+
+        puntos = 0;
+
+        opcionSeleccionada = "";
+        palabraActualAudio = "";
+        categoriaAudioActual = "";
+
+        respuestaEvaluada = false;
+        rondaRepaso = false;
+
+        preguntasRepaso.clear();
+
+        layoutSeleccionPractica.setVisibility(View.GONE);
+        layoutCuestionario.setVisibility(View.VISIBLE);
+        layoutResultado.setVisibility(View.GONE);
+
+        actualizarPuntos();
+
+        cargarPregunta();
+
+        if (scrollPracticar != null) {
+            scrollPracticar.post(() ->
+                    scrollPracticar.smoothScrollTo(0, 0)
+            );
+        }
+    }
+
+    // =========================================
+    // AGREGAR PALABRAS CON SU CATEGORÍA
+    // =========================================
+
+    private void agregarPalabras(
+            List<String[]> destino,
+            String[][] datos,
+            String categoria
+    ) {
+
+        if (datos == null) {
+            return;
+        }
+
+        for (String[] fila : datos) {
+
+            if (fila != null
+                    && fila.length >= 2
+                    && fila[0] != null
+                    && fila[1] != null
+                    && !fila[0].trim().isEmpty()
+                    && !fila[1].trim().isEmpty()) {
+
+                destino.add(new String[]{
+                        fila[0].trim(),
+                        fila[1].trim(),
+                        categoria
+                });
+            }
+        }
+    }
+
+    // =========================================
+    // OBTENER PALABRAS POR CATEGORÍA
+    // =========================================
+
     private String[][] obtenerPalabras(String tema) {
 
         String nombre = normalizar(tema);
@@ -356,22 +871,29 @@ public class PracticarFragment extends Fragment {
                 .toLowerCase(Locale.ROOT);
     }
 
-    private String[][] generarPreguntas(String[][] datos) {
+    // =========================================
+    // GENERAR PREGUNTAS
+    // =========================================
+
+    private String[][] generarPreguntas(List<String[]> datos) {
 
         List<String[]> validas = new ArrayList<>();
 
         for (String[] fila : datos) {
 
             if (fila != null
-                    && fila.length >= 2
+                    && fila.length >= 3
                     && fila[0] != null
                     && fila[1] != null
+                    && fila[2] != null
                     && !fila[0].trim().isEmpty()
-                    && !fila[1].trim().isEmpty()) {
+                    && !fila[1].trim().isEmpty()
+                    && !fila[2].trim().isEmpty()) {
 
                 validas.add(new String[]{
                         fila[0].trim(),
-                        fila[1].trim()
+                        fila[1].trim(),
+                        fila[2].trim()
                 });
             }
         }
@@ -392,8 +914,10 @@ public class PracticarFragment extends Fragment {
 
             String espanol = palabra[0];
             String correcta = palabra[1];
+            String categoria = palabra[2];
 
             List<String> opciones = new ArrayList<>();
+
             opciones.add(correcta);
 
             List<String> distractores = new ArrayList<>();
@@ -431,12 +955,18 @@ public class PracticarFragment extends Fragment {
                     opciones.get(0),
                     opciones.get(1),
                     opciones.get(2),
-                    correcta
+                    correcta,
+                    espanol,
+                    categoria
             });
         }
 
         return resultado.toArray(new String[0][0]);
     }
+
+    // =========================================
+    // CARGAR PREGUNTA
+    // =========================================
 
     private void cargarPregunta() {
 
@@ -468,7 +998,17 @@ public class PracticarFragment extends Fragment {
 
         txtRetroalimentacion.setVisibility(View.GONE);
 
+        liberarReproductor();
+
         String[] pregunta = preguntas[preguntaActual];
+
+        palabraActualAudio = pregunta.length > 5
+                ? pregunta[5]
+                : "";
+
+        categoriaAudioActual = pregunta.length > 6
+                ? pregunta[6]
+                : temaSeleccionado;
 
         txtPreguntaQuiz.setText(pregunta[0]);
 
@@ -479,10 +1019,13 @@ public class PracticarFragment extends Fragment {
         int total = preguntas.length;
 
         if (rondaRepaso) {
+
             txtContadorPreguntas.setText(
                     "Repaso " + (preguntaActual + 1) + "/" + total
             );
+
         } else {
+
             txtContadorPreguntas.setText(
                     "Pregunta " + (preguntaActual + 1) + "/" + total
             );
@@ -498,11 +1041,122 @@ public class PracticarFragment extends Fragment {
         actualizarColibri();
 
         if (scrollPracticar != null && preguntaActual == 0) {
+
             scrollPracticar.post(() ->
                     scrollPracticar.smoothScrollTo(0, 0)
             );
         }
     }
+
+    // =========================================
+    // REPRODUCCIÓN DE AUDIO
+    // =========================================
+
+    private void reproducirAudioPregunta() {
+
+        if (!isAdded() || getContext() == null) {
+            return;
+        }
+
+        if (palabraActualAudio == null
+                || palabraActualAudio.trim().isEmpty()) {
+
+            Toast.makeText(
+                    requireContext(),
+                    "No hay una palabra para reproducir.",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        liberarReproductor();
+
+        int audioId = AudiosVocabulario.obtenerAudio(
+                requireContext(),
+                categoriaAudioActual,
+                palabraActualAudio
+        );
+
+        if (audioId == 0) {
+
+            Toast.makeText(
+                    requireContext(),
+                    "No se encontró el audio de: " + palabraActualAudio,
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        try {
+
+            reproductorAudio = MediaPlayer.create(
+                    requireContext(),
+                    audioId
+            );
+
+            if (reproductorAudio != null) {
+
+                MediaPlayer reproductorActual = reproductorAudio;
+
+                reproductorActual.setOnCompletionListener(mp -> {
+
+                    mp.release();
+
+                    if (reproductorAudio == mp) {
+                        reproductorAudio = null;
+                    }
+                });
+
+                reproductorActual.start();
+
+            } else {
+
+                Toast.makeText(
+                        requireContext(),
+                        "No se pudo reproducir el audio.",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+
+        } catch (Exception e) {
+
+            liberarReproductor();
+
+            Toast.makeText(
+                    requireContext(),
+                    "Ocurrió un error al reproducir el audio.",
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    private void liberarReproductor() {
+
+        if (reproductorAudio != null) {
+
+            try {
+
+                reproductorAudio.setOnCompletionListener(null);
+
+                if (reproductorAudio.isPlaying()) {
+                    reproductorAudio.stop();
+                }
+
+                reproductorAudio.release();
+
+            } catch (Exception e) {
+                // Evitar errores al liberar el reproductor.
+            }
+
+            reproductorAudio = null;
+        }
+    }
+
+    // =========================================
+    // SELECCIONAR Y EVALUAR RESPUESTA
+    // =========================================
 
     private void seleccionarOpcion(Button boton) {
 
@@ -638,10 +1292,8 @@ public class PracticarFragment extends Fragment {
 
         pbPreguntas.setProgress(preguntaActual + 1);
 
-        // Mostrar ventana emergente con puntos y acumulado
         mostrarVentanaRespuesta(acierto, puntosGanados);
 
-        // Avanzar automáticamente después de la animación
         programarAvanceAutomatico(acierto);
     }
 
@@ -686,9 +1338,9 @@ public class PracticarFragment extends Fragment {
         }
     }
 
-    // ------------------------------------------------
-    // VENTANA EMERGENTE ANIMADA
-    // ------------------------------------------------
+    // =========================================
+    // VENTANA EMERGENTE DE RESPUESTA
+    // =========================================
 
     private void mostrarVentanaRespuesta(
             boolean acierto,
@@ -703,57 +1355,108 @@ public class PracticarFragment extends Fragment {
 
         dialogResultadoRespuesta = dialog;
 
+        int vino = Color.parseColor("#4F000B");
+        int vinoClaro = Color.parseColor("#812B36");
+        int crema = Color.parseColor("#F5EFE3");
+        int blanco = Color.parseColor("#FFF9F1");
+        int dorado = Color.parseColor("#D9A441");
+        int naranja = Color.parseColor("#C97A2B");
+        int verde = Color.parseColor("#6B7A4F");
+        int cafe = Color.parseColor("#3C2815");
+
+        int colorPrincipal = acierto ? verde : naranja;
+
         LinearLayout tarjeta = new LinearLayout(requireContext());
 
         tarjeta.setOrientation(LinearLayout.VERTICAL);
         tarjeta.setGravity(Gravity.CENTER);
+
         tarjeta.setPadding(
-                dp(24),
-                dp(25),
-                dp(24),
-                dp(25)
+                dp(20),
+                dp(20),
+                dp(20),
+                dp(22)
         );
 
-        int verde = ContextCompat.getColor(
-                requireContext(),
-                R.color.buti_verde
+        GradientDrawable fondo = new GradientDrawable();
+
+        fondo.setColor(blanco);
+        fondo.setCornerRadius(dp(25));
+        fondo.setStroke(dp(2), dorado);
+
+        tarjeta.setBackground(fondo);
+        tarjeta.setElevation(dp(8));
+
+        // ENCABEZADO
+
+        LinearLayout encabezado = new LinearLayout(requireContext());
+
+        encabezado.setOrientation(LinearLayout.VERTICAL);
+        encabezado.setGravity(Gravity.CENTER);
+
+        encabezado.setPadding(
+                dp(15),
+                dp(17),
+                dp(15),
+                dp(17)
         );
 
-        int crema = ContextCompat.getColor(
-                requireContext(),
-                R.color.buti_crema
+        GradientDrawable fondoEncabezado =
+                new GradientDrawable(
+                        GradientDrawable.Orientation.LEFT_RIGHT,
+                        new int[]{vino, vinoClaro}
+                );
+
+        fondoEncabezado.setCornerRadius(dp(19));
+
+        encabezado.setBackground(fondoEncabezado);
+
+        TextView etiqueta = new TextView(requireContext());
+
+        etiqueta.setText("RETO HÑÄÑHU");
+        etiqueta.setTextSize(11);
+        etiqueta.setTypeface(null, Typeface.BOLD);
+        etiqueta.setTextColor(dorado);
+        etiqueta.setGravity(Gravity.CENTER);
+
+        encabezado.addView(etiqueta);
+
+        // PERSONAJE DE LA RESPUESTA
+
+        ImageView ilustracion = new ImageView(requireContext());
+
+        ilustracion.setImageResource(
+                acierto
+                        ? personajesFelices[personajeNina ? 0 : 1]
+                        : personajesAnimando[personajeNina ? 0 : 1]
         );
 
-        int naranja = ContextCompat.getColor(
-                requireContext(),
-                R.color.buti_naranja
+        ilustracion.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+        LinearLayout.LayoutParams ilustracionParams =
+                new LinearLayout.LayoutParams(
+                        dp(115),
+                        dp(115)
+                );
+
+        ilustracionParams.topMargin = dp(5);
+
+        encabezado.addView(
+                ilustracion,
+                ilustracionParams
         );
 
-        int colorPrincipal = acierto ? verde : naranja;
+        // TÍTULO
 
-        tarjeta.setBackground(
-                crearFondo(Color.WHITE, 28, colorPrincipal)
-        );
-
-        // Icono animado
-        TextView emoji = new TextView(requireContext());
-
-        emoji.setText(acierto ? "🌟" : "💚");
-        emoji.setTextSize(48);
-        emoji.setGravity(Gravity.CENTER);
-
-        tarjeta.addView(emoji);
-
-        // Título
         TextView titulo = new TextView(requireContext());
 
         titulo.setText(
                 acierto ? "¡Excelente!" : "¡Sigue intentando!"
         );
 
-        titulo.setTextSize(25);
+        titulo.setTextSize(23);
         titulo.setTypeface(null, Typeface.BOLD);
-        titulo.setTextColor(colorPrincipal);
+        titulo.setTextColor(crema);
         titulo.setGravity(Gravity.CENTER);
 
         LinearLayout.LayoutParams tituloParams =
@@ -762,11 +1465,14 @@ public class PracticarFragment extends Fragment {
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 );
 
-        tituloParams.topMargin = dp(8);
+        tituloParams.topMargin = dp(5);
 
-        tarjeta.addView(titulo, tituloParams);
+        encabezado.addView(titulo, tituloParams);
 
-        // Mensaje
+        tarjeta.addView(encabezado);
+
+        // MENSAJE
+
         TextView mensaje = new TextView(requireContext());
 
         mensaje.setText(
@@ -776,77 +1482,75 @@ public class PracticarFragment extends Fragment {
         );
 
         mensaje.setTextSize(15);
-        mensaje.setTextColor(
-                ContextCompat.getColor(
-                        requireContext(),
-                        R.color.buti_negro
-                )
+        mensaje.setTextColor(cafe);
+        mensaje.setGravity(Gravity.CENTER);
+        mensaje.setLineSpacing(dp(4), 1f);
+
+        mensaje.setPadding(
+                dp(5),
+                dp(17),
+                dp(5),
+                dp(5)
         );
 
-        mensaje.setGravity(Gravity.CENTER);
+        tarjeta.addView(mensaje);
 
-        LinearLayout.LayoutParams mensajeParams =
+        // PUNTOS
+
+        LinearLayout tarjetaPuntos =
+                new LinearLayout(requireContext());
+
+        tarjetaPuntos.setOrientation(LinearLayout.VERTICAL);
+        tarjetaPuntos.setGravity(Gravity.CENTER);
+
+        tarjetaPuntos.setPadding(
+                dp(15),
+                dp(14),
+                dp(15),
+                dp(14)
+        );
+
+        GradientDrawable fondoPuntos = new GradientDrawable();
+
+        fondoPuntos.setColor(Color.parseColor("#F8EBDD"));
+        fondoPuntos.setCornerRadius(dp(18));
+        fondoPuntos.setStroke(dp(1), dorado);
+
+        tarjetaPuntos.setBackground(fondoPuntos);
+
+        LinearLayout.LayoutParams puntosContenedorParams =
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 );
 
-        mensajeParams.topMargin = dp(12);
+        puntosContenedorParams.topMargin = dp(17);
 
-        tarjeta.addView(mensaje, mensajeParams);
-
-        // Puntos ganados
         TextView puntosTexto = new TextView(requireContext());
 
         puntosTexto.setText(
                 acierto
-                        ? "+" + puntosGanados + " puntos"
-                        : "+0 puntos"
+                        ? "+" + puntosGanados + " PUNTOS"
+                        : "+0 PUNTOS"
         );
 
-        puntosTexto.setTextSize(29);
+        puntosTexto.setTextSize(27);
         puntosTexto.setTypeface(null, Typeface.BOLD);
         puntosTexto.setTextColor(colorPrincipal);
         puntosTexto.setGravity(Gravity.CENTER);
 
-        LinearLayout.LayoutParams puntosParams =
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                );
+        tarjetaPuntos.addView(puntosTexto);
 
-        puntosParams.topMargin = dp(18);
-
-        tarjeta.addView(puntosTexto, puntosParams);
-
-        // Total acumulado
         TextView acumulado = new TextView(requireContext());
 
         acumulado.setText(
-                "⭐ Total acumulado: " + puntos + " puntos"
+                "Total acumulado: " + puntos + " puntos"
         );
 
-        acumulado.setTextSize(17);
+        acumulado.setTextSize(14);
         acumulado.setTypeface(null, Typeface.BOLD);
-        acumulado.setTextColor(
-                ContextCompat.getColor(
-                        requireContext(),
-                        R.color.buti_negro
-                )
-        );
-
+        acumulado.setTextColor(vino);
         acumulado.setGravity(Gravity.CENTER);
-
-        acumulado.setPadding(
-                dp(12),
-                dp(12),
-                dp(12),
-                dp(12)
-        );
-
-        acumulado.setBackground(
-                crearFondo(crema, 16, 0)
-        );
 
         LinearLayout.LayoutParams acumuladoParams =
                 new LinearLayout.LayoutParams(
@@ -854,37 +1558,68 @@ public class PracticarFragment extends Fragment {
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 );
 
-        acumuladoParams.topMargin = dp(18);
+        acumuladoParams.topMargin = dp(8);
 
-        tarjeta.addView(acumulado, acumuladoParams);
+        tarjetaPuntos.addView(acumulado, acumuladoParams);
 
-        // Mostrar la respuesta correcta cuando se equivoca
+        tarjeta.addView(tarjetaPuntos, puntosContenedorParams);
+
+        // RESPUESTA CORRECTA
+
         if (!acierto) {
 
             TextView respuesta = new TextView(requireContext());
 
             respuesta.setText(
-                    "La respuesta correcta era:\n"
+                    "LA RESPUESTA CORRECTA ERA\n\n"
                             + preguntas[preguntaActual][4]
             );
 
-            respuesta.setTextSize(16);
+            respuesta.setTextSize(15);
             respuesta.setTypeface(null, Typeface.BOLD);
             respuesta.setTextColor(verde);
             respuesta.setGravity(Gravity.CENTER);
+            respuesta.setLineSpacing(dp(3), 1f);
 
-            LinearLayout.LayoutParams respuestaParams =
-                    new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                    );
+            respuesta.setPadding(
+                    dp(10),
+                    dp(17),
+                    dp(10),
+                    dp(5)
+            );
 
-            respuestaParams.topMargin = dp(16);
-
-            tarjeta.addView(respuesta, respuestaParams);
+            tarjeta.addView(respuesta);
         }
 
+        // DETALLE
+
+        TextView detalle = new TextView(requireContext());
+
+        detalle.setText(
+                acierto
+                        ? "¡Una palabra más aprendida!"
+                        : "Cada intento te hace mejorar"
+        );
+
+        detalle.setTextSize(12);
+        detalle.setTextColor(cafe);
+        detalle.setGravity(Gravity.CENTER);
+        detalle.setTypeface(null, Typeface.ITALIC);
+
+        LinearLayout.LayoutParams detalleParams =
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+
+        detalleParams.topMargin = dp(17);
+
+        tarjeta.addView(detalle, detalleParams);
+
+        // CONFIGURAR DIÁLOGO
+
         dialog.setContentView(tarjeta);
+
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
 
@@ -896,13 +1631,21 @@ public class PracticarFragment extends Fragment {
                     android.R.color.transparent
             );
 
+            dialog.getWindow().setDimAmount(0.65f);
+
+            dialog.getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_DIM_BEHIND
+            );
+
             dialog.getWindow().setLayout(
-                    getResources().getDisplayMetrics().widthPixels - dp(40),
+                    getResources().getDisplayMetrics().widthPixels
+                            - dp(36),
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
         }
 
-        // Animación de entrada
+        // ANIMACIÓN DE ENTRADA
+
         AnimationSet animacion = new AnimationSet(true);
 
         ScaleAnimation escala = new ScaleAnimation(
@@ -916,12 +1659,11 @@ public class PracticarFragment extends Fragment {
                 0.5f
         );
 
-        escala.setDuration(350);
+        escala.setDuration(400);
 
-        AlphaAnimation aparecer =
-                new AlphaAnimation(0f, 1f);
+        AlphaAnimation aparecer = new AlphaAnimation(0f, 1f);
 
-        aparecer.setDuration(350);
+        aparecer.setDuration(400);
 
         animacion.addAnimation(escala);
         animacion.addAnimation(aparecer);
@@ -929,12 +1671,19 @@ public class PracticarFragment extends Fragment {
         tarjeta.startAnimation(animacion);
 
         if (acierto) {
-            animarCelebracion(emoji);
+
+            animarCelebracion(ilustracion);
             animarCelebracion(puntosTexto);
+
         } else {
-            animarElemento(emoji);
+
+            animarElemento(ilustracion);
         }
     }
+
+    // =========================================
+    // FONDOS Y DP
+    // =========================================
 
     private GradientDrawable crearFondo(
             int color,
@@ -948,7 +1697,7 @@ public class PracticarFragment extends Fragment {
         fondo.setCornerRadius(dp(radio));
 
         if (bordeColor != 0) {
-            fondo.setStroke(dp(2), bordeColor);
+            fondo.setStroke(dp(1), bordeColor);
         }
 
         return fondo;
@@ -961,9 +1710,9 @@ public class PracticarFragment extends Fragment {
         );
     }
 
-    // ------------------------------------------------
-    // AVANCE AUTOMÁTICO Y DESPLAZAMIENTO
-    // ------------------------------------------------
+    // =========================================
+    // AVANCE AUTOMÁTICO
+    // =========================================
 
     private void programarAvanceAutomatico(boolean acierto) {
 
@@ -985,20 +1734,21 @@ public class PracticarFragment extends Fragment {
 
             dialogResultadoRespuesta = null;
 
-            // Regresar arriba para mostrar el progreso
             if (scrollPracticar != null) {
-
                 scrollPracticar.smoothScrollTo(0, 0);
             }
 
-            // Cargar la siguiente pregunta después del desplazamiento
-            handler.postDelayed(() -> {
+            siguientePreguntaRunnable = () -> {
 
                 if (isAdded() && getView() != null) {
                     avanzarPregunta();
                 }
+            };
 
-            }, 400);
+            handler.postDelayed(
+                    siguientePreguntaRunnable,
+                    400
+            );
         };
 
         handler.postDelayed(avanzarRunnable, tiempo);
@@ -1013,6 +1763,13 @@ public class PracticarFragment extends Fragment {
             avanzarRunnable = null;
         }
 
+        if (siguientePreguntaRunnable != null) {
+
+            handler.removeCallbacks(siguientePreguntaRunnable);
+
+            siguientePreguntaRunnable = null;
+        }
+
         if (dialogResultadoRespuesta != null
                 && dialogResultadoRespuesta.isShowing()) {
 
@@ -1024,8 +1781,6 @@ public class PracticarFragment extends Fragment {
 
     private void avanzarPregunta() {
 
-        cancelarAvanceAutomatico();
-
         if (!isAdded() || getView() == null) {
             return;
         }
@@ -1035,9 +1790,9 @@ public class PracticarFragment extends Fragment {
         cargarPregunta();
     }
 
-    // ------------------------------------------------
+    // =========================================
     // REPASO
-    // ------------------------------------------------
+    // =========================================
 
     private void iniciarRepaso() {
 
@@ -1072,9 +1827,9 @@ public class PracticarFragment extends Fragment {
         cargarPregunta();
     }
 
-    // ------------------------------------------------
+    // =========================================
     // PUNTOS Y PERSONAJES
-    // ------------------------------------------------
+    // =========================================
 
     private void actualizarPuntos() {
 
@@ -1175,14 +1930,16 @@ public class PracticarFragment extends Fragment {
         elemento.startAnimation(animacion);
     }
 
-    // ------------------------------------------------
+    // =========================================
     // RESULTADO FINAL
-    // ------------------------------------------------
+    // =========================================
 
     private void mostrarResultado() {
 
         cancelarAvanceAutomatico();
+        liberarReproductor();
 
+        layoutSeleccionPractica.setVisibility(View.GONE);
         layoutCuestionario.setVisibility(View.GONE);
         layoutResultado.setVisibility(View.VISIBLE);
 
@@ -1192,12 +1949,10 @@ public class PracticarFragment extends Fragment {
 
         animarCelebracion(imgPersonajeResultado);
 
-        // Aciertos de la primera ronda, sin sumar los del repaso
         txtCorrectasResultado.setText(
                 correctasPrimeraRonda + "/" + totalPreguntasIniciales
         );
 
-        // Puntos de ambas rondas
         txtPuntosResultado.setText(
                 "+" + puntos
         );
@@ -1231,12 +1986,27 @@ public class PracticarFragment extends Fragment {
         imgColibri.setImageResource(
                 R.drawable.ic_colibri_meta
         );
+
+        if (scrollPracticar != null) {
+            scrollPracticar.post(() ->
+                    scrollPracticar.smoothScrollTo(0, 0)
+            );
+        }
     }
+
+    // =========================================
+    // DESTRUIR VISTA
+    // =========================================
 
     @Override
     public void onDestroyView() {
 
         cancelarAvanceAutomatico();
+
+        liberarReproductor();
+
+        palabraActualAudio = "";
+        categoriaAudioActual = "";
 
         super.onDestroyView();
     }

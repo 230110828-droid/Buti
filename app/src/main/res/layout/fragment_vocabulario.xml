@@ -12,16 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="18dp"
-        android:paddingTop="12dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingTop="14dp"
         android:paddingBottom="30dp">
 
         <!-- ENCABEZADO -->
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/buti_negro"
-            app:cardCornerRadius="26dp"
+            app:cardCornerRadius="25dp"
             app:cardElevation="5dp"
             app:strokeWidth="0dp">
 
@@ -30,288 +32,266 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:padding="22dp">
+                android:padding="23dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="APRENDE Y DESCUBRE"
+                    android:text="B'ÜTI · APRENDE Y DESCUBRE"
                     android:textColor="@color/buti_rosa"
                     android:textSize="11sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.15"
-                    android:gravity="center"/>
+                    android:letterSpacing="0.12"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Vocabulario"
+                    android:layout_marginTop="7dp"
+                    android:text="Mi vocabulario"
                     android:textColor="@color/buti_crema"
-                    android:textSize="36sp"
+                    android:textSize="32sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-condensed"
                     android:gravity="center"/>
 
                 <View
-                    android:layout_width="48dp"
+                    android:layout_width="55dp"
                     android:layout_height="3dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:background="@color/buti_rosa"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Conoce nuevas palabras y descubre la riqueza de la lengua hñähñu."
+                    android:text="Explora, aprende y escucha nuevas palabras de la lengua Hñähñu."
                     android:textColor="@color/buti_crema"
                     android:textSize="14sp"
                     android:gravity="center"
-                    android:lineSpacingExtra="3dp"/>
+                    android:lineSpacingExtra="4dp"/>
 
             </LinearLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
         <!-- GRUPO 1 -->
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/txtTituloGrupo1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="25dp"
+            android:text="Lo básico"
+            android:textColor="@color/buti_azul"
+            android:textSize="23sp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/txtTituloGrupo1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lo básico"
-                android:textColor="@color/buti_azul"
-                android:textSize="23sp"
-                android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="Comienza con palabras de uso cotidiano."
+            android:textColor="@color/buti_negro"
+            android:textSize="13sp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Empieza con palabras de uso cotidiano"
-                android:textColor="@color/buti_negro"
-                android:textSize="13sp"
-                android:alpha="0.75"
-                android:layout_marginTop="3dp"/>
-
-            <View
-                android:layout_width="55dp"
-                android:layout_height="3dp"
-                android:layout_marginTop="9dp"
-                android:background="@color/buti_rosa"/>
-
-        </LinearLayout>
+        <View
+            android:layout_width="55dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="9dp"
+            android:background="@color/buti_rosa"/>
 
         <GridLayout
             android:id="@+id/gridGrupo1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:columnCount="2">
+            android:columnCount="2"
+            android:alignmentMode="alignMargins">
 
             <!-- COLORES -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatColores"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_rosa"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_rosa"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_rombo7"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_colores"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de colores"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Colores"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- NUMEROS -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatNumeros"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_azul"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_dorado"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_numeros"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_numeros"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de números"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Números"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- SALUDOS -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatSaludos"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_azul"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_rosa"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_manitas"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_saludos"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de saludos"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Saludos"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- TIEMPO -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatTiempo"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_rosa"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_dorado"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_reloj"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_tiempo"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado del tiempo"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Tiempo"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </GridLayout>
 
-        <!-- BOTON VER MAS -->
+        <!-- BOTÓN VER MÁS -->
+
         <TextView
             android:id="@+id/btnVerMasCategorias"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="12dp"
             android:gravity="center"
             android:text="Ver más categorías  ↓"
             android:textColor="@color/buti_rosa"
@@ -322,370 +302,338 @@
             android:focusable="true"/>
 
         <!-- GRUPO 2 -->
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/txtTituloGrupo2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="18dp">
-
-            <TextView
-                android:id="@+id/txtTituloGrupo2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="Vida y cultura de Ixmiquilpan"
-                android:textColor="@color/buti_azul"
-                android:textSize="23sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
+            android:layout_marginTop="18dp"
+            android:text="Naturaleza y vida cotidiana"
+            android:textColor="@color/buti_azul"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
         <GridLayout
             android:id="@+id/gridGrupo2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:visibility="gone"
-            android:columnCount="2">
+            android:columnCount="2"
+            android:alignmentMode="alignMargins"
+            android:visibility="gone">
 
             <!-- PLANTAS -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatPlantas"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_rosa"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_verde"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_nopal"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_plantas"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de plantas"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Plantas"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- ANIMALES -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatAnimales"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_azul"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_rosa"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_venado"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_animales"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de animales"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Animales"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- OBJETOS -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatObjetos"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_azul"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_dorado"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_jarronnaranja"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_objetos"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de objetos"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Objetos"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- CUERPO -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatCuerpo"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_rosa"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_rosa"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_humano"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_cuerpo"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado del cuerpo"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Cuerpo"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- COMIDA -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatComida"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_rosa"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_dorado"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_teflauta"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_comida"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de comida"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Comida"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- NATURALEZA -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatNaturaleza"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_azul"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_verde"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_solluna"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_naturaleza"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de naturaleza"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Naturaleza"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- LUGARES -->
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCatLugares"
                 android:layout_width="0dp"
-                android:layout_height="145dp"
+                android:layout_height="165dp"
                 android:layout_columnWeight="1"
                 android:layout_columnSpan="2"
                 android:layout_gravity="fill_horizontal"
                 android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/buti_rosa"
-                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="@color/buti_crema"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
-                app:rippleColor="#40FFFFFF"
-                app:strokeColor="#40FFFFFF"
+                app:strokeColor="@color/buti_rosa"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:padding="7dp">
 
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:background="@drawable/bg_circulo_icono_vocab">
-                        <ImageView
-                            android:layout_width="43dp"
-                            android:layout_height="43dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_ubicacion"
-                            android:importantForAccessibility="no"/>
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="115dp"
+                        android:src="@drawable/img_cat_lugares"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Bordado de lugares"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Lugares"
-                        android:textColor="@color/white"
+                        android:textColor="@color/buti_negro"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </GridLayout>
 
-        <!-- SE CONSERVA PARA COMPATIBILIDAD CON JAVA -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardCatFamilia"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone"/>
-
     </LinearLayout>
+
 </ScrollView>

@@ -12,180 +12,481 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="16dp">
 
-        <!-- =============================== -->
-        <!-- PANTALLA DEL CUESTIONARIO       -->
-        <!-- =============================== -->
+        <!-- ===================================== -->
+        <!-- PANTALLA DE SELECCIÓN DE RETOS         -->
+        <!-- ===================================== -->
+
+        <LinearLayout
+            android:id="@+id/layoutSeleccionPractica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <!-- ENCABEZADO -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="23dp"
+                android:background="@drawable/bg_practicar_encabezado">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="✦  BUTI  ✦"
+                    android:textColor="@color/buti_dorado"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:text="¡Es hora de practicar!"
+                    android:textColor="@color/buti_crema"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="Pon a prueba lo que sabes y descubre cuánto has aprendido de nuestra lengua."
+                    android:textColor="#F5DCCB"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="4dp"/>
+
+                <ImageView
+                    android:layout_width="115dp"
+                    android:layout_height="105dp"
+                    android:layout_marginTop="14dp"
+                    android:src="@drawable/ic_colibri_volando"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Colibrí de Buti"/>
+
+            </LinearLayout>
+
+            <!-- TÍTULO DE LOS RETOS -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="ELIGE TU RETO"
+                android:textColor="@color/buti_vino"
+                android:textSize="19sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:text="Cada desafío es una oportunidad para aprender."
+                android:textColor="@color/buti_siena"
+                android:textSize="13sp"/>
+
+            <!-- RETO GENERAL -->
+
+            <LinearLayout
+                android:id="@+id/btnRetoGeneral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="18dp"
+                android:background="@drawable/bg_practicar_tarjeta"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:padding="5dp"
+                    android:background="@drawable/bg_practicar_etiqueta"
+                    android:src="@drawable/ic_libro2"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Reto general"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reto general"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Preguntas mezcladas de todas las categorías."
+                        android:textColor="@color/buti_siena"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_flederecha"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Entrar al reto"/>
+
+            </LinearLayout>
+
+            <!-- RETO POR CATEGORÍA -->
+
+            <LinearLayout
+                android:id="@+id/btnRetoCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="18dp"
+                android:background="@drawable/bg_practicar_tarjeta"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:padding="5dp"
+                    android:background="@drawable/bg_practicar_etiqueta"
+                    android:src="@drawable/ic_practicar_categoria"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Practicar por categoría"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Practicar por categoría"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Elige un tema y refuerza tus conocimientos."
+                        android:textColor="@color/buti_siena"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_flederecha"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Ver categorías"/>
+
+            </LinearLayout>
+
+            <!-- CATEGORÍAS DINÁMICAS -->
+
+            <LinearLayout
+                android:id="@+id/layoutCategoriasPractica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ELIGE UNA CATEGORÍA"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="¿Qué tema quieres reforzar hoy?"
+                    android:textColor="@color/buti_siena"
+                    android:textSize="13sp"/>
+
+                <LinearLayout
+                    android:id="@+id/contenedorCategoriasPractica"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:text="✦  Aprende, practica y conserva nuestras raíces  ✦"
+                android:textColor="@color/buti_siena"
+                android:textSize="12sp"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
+
+        <!-- ===================================== -->
+        <!-- PANTALLA DEL CUESTIONARIO              -->
+        <!-- ===================================== -->
 
         <LinearLayout
             android:id="@+id/layoutCuestionario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
-            <!-- Encabezado: salir y puntos -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingTop="4dp"
-                android:paddingBottom="12dp">
-
-                <ImageView
-                    android:id="@+id/btnCerrarQuiz"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/bg_circulo_atras"
-                    android:clickable="true"
-                    android:contentDescription="Salir del cuestionario"
-                    android:focusable="true"
-                    android:padding="13dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_equis" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/txtPuntosActuales"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_circulo_durazno"
-                    android:gravity="center"
-                    android:paddingStart="17dp"
-                    android:paddingTop="12dp"
-                    android:paddingEnd="17dp"
-                    android:paddingBottom="12dp"
-                    android:text="★ 0 puntos"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!-- Colibrí arriba de la barra -->
-
-            <ImageView
-                android:id="@+id/imgColibri"
-                android:layout_width="76dp"
-                android:layout_height="65dp"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="Colibrí de progreso"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_colibri_normal" />
-
-            <!-- Barra de progreso -->
-
-            <ProgressBar
-                android:id="@+id/pbPreguntas"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="13dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:max="10"
-                android:progress="0"
-                android:progressBackgroundTint="@color/buti_crema_oscuro"
-                android:progressTint="@color/buti_verde"
-                android:indeterminate="false" />
-
-            <TextView
-                android:id="@+id/txtContadorPreguntas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="Pregunta 1/10"
-                android:textColor="@color/buti_cafe"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
-            <!-- Personaje -->
-
-            <ImageView
-                android:id="@+id/imgPersonaje"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="14dp"
-                android:contentDescription="Personaje acompañante"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_nina_pensando" />
-
-            <!-- Tarjeta de pregunta -->
+            <!-- ENCABEZADO -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_tarjeta_blanca"
-                android:elevation="3dp"
-                android:gravity="center"
                 android:orientation="vertical"
-                android:padding="22dp">
+                android:background="@drawable/bg_practicar_encabezado"
+                android:padding="18dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btnCerrarQuiz"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="@drawable/bg_circulo_atras"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="Salir del cuestionario"
+                        android:padding="11dp"
+                        android:src="@drawable/ic_equis"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="MI ESPACIO DE PRÁCTICA"
+                        android:textColor="@color/buti_crema"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/txtPuntosActuales"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_practicar_puntos"
+                        android:gravity="center"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:text="★ 0 puntos"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="PON A PRUEBA LO QUE SABES"
-                    android:textColor="@color/buti_naranja"
+                    android:layout_marginTop="19dp"
+                    android:text="¡Demuestra lo que has aprendido!"
+                    android:textColor="@color/buti_crema"
+                    android:textSize="23sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="Cada respuesta te acerca más a nuestras raíces."
+                    android:textColor="#F5DCCB"
+                    android:textSize="13sp"
+                    android:gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/imgColibri"
+                    android:layout_width="78dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:contentDescription="Colibrí de progreso"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_colibri_normal"/>
+
+                <ProgressBar
+                    android:id="@+id/pbPreguntas"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_marginTop="10dp"
+                    android:max="10"
+                    android:progress="0"
+                    android:progressBackgroundTint="#87545A"
+                    android:progressTint="@color/buti_dorado"
+                    android:indeterminate="false"/>
+
+                <TextView
+                    android:id="@+id/txtContadorPreguntas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="end"
+                    android:text="Pregunta 1/10"
+                    android:textColor="@color/buti_crema"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <!-- PERSONAJE -->
+
+            <ImageView
+                android:id="@+id/imgPersonaje"
+                android:layout_width="145dp"
+                android:layout_height="145dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:contentDescription="Personaje acompañante"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_nina_pensando"/>
+
+            <!-- PREGUNTA -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_practicar_tarjeta"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="21dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_practicar_etiqueta"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:text="✦  RETO HÑÄHÑU  ✦"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txtPreguntaQuiz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="17dp"
                     android:gravity="center"
                     android:lineSpacingExtra="5dp"
                     android:text="¿Cómo se dice hola?"
-                    android:textColor="@color/buti_negro"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/buti_vino"
+                    android:textSize="23sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Escucha la pronunciación y elige."
+                    android:textColor="@color/buti_siena"
+                    android:textSize="13sp"/>
 
                 <ImageView
                     android:id="@+id/btnAudioPregunta"
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/bg_circulo_durazno"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_practicar_audio"
                     android:clickable="true"
-                    android:contentDescription="Escuchar pronunciación"
                     android:focusable="true"
-                    android:padding="11dp"
+                    android:contentDescription="Escuchar pronunciación"
+                    android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_sonando" />
+                    android:src="@drawable/ic_sonando"/>
 
             </LinearLayout>
 
-            <!-- Texto de opciones -->
+            <!-- RESPUESTAS -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="23dp"
+                    android:background="@color/buti_naranja"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:text="Elige la respuesta correcta"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="17sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="12dp"
-                android:text="Elige la respuesta correcta"
-                android:textColor="@color/buti_cafe"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-            <!-- Opción A -->
+                android:text="Selecciona una de las tres opciones."
+                android:textColor="@color/buti_siena"
+                android:textSize="12sp"/>
 
             <Button
                 android:id="@+id/btnOpcionA"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
-                android:layout_marginBottom="12dp"
-                android:backgroundTint="@android:color/white"
+                android:layout_marginBottom="11dp"
+                android:background="@drawable/bg_practicar_opcion"
+                android:backgroundTint="@null"
                 android:elevation="2dp"
                 android:gravity="center"
                 android:minHeight="0dp"
@@ -193,16 +494,15 @@
                 android:text="Opción A"
                 android:textAllCaps="false"
                 android:textColor="@color/buti_negro"
-                android:textSize="16sp" />
-
-            <!-- Opción B -->
+                android:textSize="16sp"/>
 
             <Button
                 android:id="@+id/btnOpcionB"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
-                android:layout_marginBottom="12dp"
-                android:backgroundTint="@android:color/white"
+                android:layout_marginBottom="11dp"
+                android:background="@drawable/bg_practicar_opcion"
+                android:backgroundTint="@null"
                 android:elevation="2dp"
                 android:gravity="center"
                 android:minHeight="0dp"
@@ -210,16 +510,15 @@
                 android:text="Opción B"
                 android:textAllCaps="false"
                 android:textColor="@color/buti_negro"
-                android:textSize="16sp" />
-
-            <!-- Opción C -->
+                android:textSize="16sp"/>
 
             <Button
                 android:id="@+id/btnOpcionC"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
-                android:layout_marginBottom="12dp"
-                android:backgroundTint="@android:color/white"
+                android:layout_marginBottom="11dp"
+                android:background="@drawable/bg_practicar_opcion"
+                android:backgroundTint="@null"
                 android:elevation="2dp"
                 android:gravity="center"
                 android:minHeight="0dp"
@@ -227,79 +526,79 @@
                 android:text="Opción C"
                 android:textAllCaps="false"
                 android:textColor="@color/buti_negro"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
-            <!-- Retroalimentación debajo de opciones -->
+            <!-- RETROALIMENTACIÓN -->
 
             <TextView
                 android:id="@+id/txtRetroalimentacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_tarjeta_blanca"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_practicar_tarjeta"
                 android:gravity="center"
-                android:padding="18dp"
+                android:padding="17dp"
                 android:text="¡Muy bien!"
                 android:textColor="@color/buti_verde"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="23dp"
                 android:layout_marginBottom="12dp"
                 android:gravity="center"
-                android:text="🌱 Cada palabra nueva es un logro."
+                android:text="✦  Cada palabra nueva es un logro  ✦"
                 android:textColor="@color/buti_siena"
-                android:textSize="14sp"
-                android:textStyle="italic" />
+                android:textSize="13sp"
+                android:textStyle="italic"/>
 
         </LinearLayout>
 
-        <!-- =============================== -->
-        <!-- PANTALLA DE RESULTADOS          -->
-        <!-- =============================== -->
+        <!-- ===================================== -->
+        <!-- PANTALLA DE RESULTADOS                 -->
+        <!-- ===================================== -->
 
         <LinearLayout
             android:id="@+id/layoutResultado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_practicar_tarjeta"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingTop="20dp"
-            android:paddingBottom="24dp"
+            android:padding="22dp"
             android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="¡MISIÓN COMPLETADA!"
+                android:text="✦  RETO COMPLETADO  ✦"
                 android:textColor="@color/buti_naranja"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
             <ImageView
                 android:id="@+id/imgPersonajeResultado"
-                android:layout_width="205dp"
-                android:layout_height="205dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:layout_marginTop="15dp"
                 android:contentDescription="Personaje celebrando"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_nina_victoria" />
+                android:src="@drawable/ic_nina_victoria"/>
 
             <TextView
                 android:id="@+id/txtTituloResultado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="¡Increíble!"
-                android:textColor="@color/buti_verde"
+                android:textColor="@color/buti_vino"
                 android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/txtSubtituloResultado"
@@ -308,21 +607,20 @@
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:lineSpacingExtra="5dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:text="Terminaste tu práctica."
                 android:textColor="@color/buti_cafe"
-                android:textSize="16sp" />
+                android:textSize="15sp"/>
 
-            <!-- Tarjeta de aciertos -->
+            <!-- ESTADÍSTICAS -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
-                android:background="@drawable/bg_tarjeta_blanca"
-                android:elevation="3dp"
+                android:layout_marginTop="24dp"
                 android:orientation="vertical"
+                android:background="@drawable/bg_practicar_estadisticas"
                 android:padding="20dp">
 
                 <TextView
@@ -331,26 +629,26 @@
                     android:gravity="center"
                     android:text="RESPUESTAS CORRECTAS"
                     android:textColor="@color/buti_cafe"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txtCorrectasResultado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="7dp"
                     android:gravity="center"
                     android:text="0/10"
                     android:textColor="@color/buti_verde"
-                    android:textSize="36sp"
-                    android:textStyle="bold" />
+                    android:textSize="38sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:background="@color/buti_crema_oscuro" />
+                    android:background="#E4D2C3"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -358,63 +656,60 @@
                     android:gravity="center"
                     android:text="PUNTOS OBTENIDOS"
                     android:textColor="@color/buti_cafe"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txtPuntosResultado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="7dp"
                     android:gravity="center"
                     android:text="+0"
                     android:textColor="@color/buti_naranja"
-                    android:textSize="36sp"
-                    android:textStyle="bold" />
+                    android:textSize="38sp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
             <ImageView
                 android:layout_width="95dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="15dp"
                 android:contentDescription="Colibrí de meta"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_colibri_meta" />
-
-            <!-- Volver al inicio -->
+                android:src="@drawable/ic_colibri_meta"/>
 
             <Button
                 android:id="@+id/btnContinuarRacha"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
-                android:layout_marginTop="22dp"
-                android:backgroundTint="@color/buti_verde"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_practicar_boton_principal"
+                android:backgroundTint="@null"
                 android:minHeight="0dp"
                 android:text="Volver al inicio"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/buti_crema"
                 android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <!-- Seguir aprendiendo -->
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btnSeguirAprendiendo"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="@color/buti_naranja"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/bg_practicar_boton_secundario"
+                android:backgroundTint="@null"
                 android:minHeight="0dp"
                 android:text="Seguir aprendiendo"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/buti_crema"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
 </ScrollView>
-
