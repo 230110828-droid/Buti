@@ -201,9 +201,9 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_flederecha"
+                    android:contentDescription="Ver categorías"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Ver categorías"/>
+                    android:src="@drawable/ic_flederecha" />
 
             </LinearLayout>
 

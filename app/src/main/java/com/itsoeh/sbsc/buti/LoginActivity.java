@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.itsoeh.sbsc.buti.admin.AdminActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -303,10 +304,21 @@ public class LoginActivity extends AppCompatActivity {
 
     private void abrirPantallaPrincipal() {
 
-        Intent intent = new Intent(
-                LoginActivity.this,
-                MainActivity.class
-        );
+        String correoAdmin = "yelitzagranados002@gmail.com";
+        String correoIngresado = edtCorreoLogin != null ? edtCorreoLogin.getText().toString().trim() : "";
+
+        Intent intent;
+        if (!correoIngresado.isEmpty() && correoIngresado.equalsIgnoreCase(correoAdmin)) {
+            intent = new Intent(
+                    LoginActivity.this,
+                    AdminActivity.class
+            );
+        } else {
+            intent = new Intent(
+                    LoginActivity.this,
+                    MainActivity.class
+            );
+        }
 
         intent.addFlags(
                 Intent.FLAG_ACTIVITY_NEW_TASK

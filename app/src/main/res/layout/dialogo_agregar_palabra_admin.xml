@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lección (ej. Lección 1 - Saludos)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtLeccionAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Palabra en Hñähñu">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPalabraHnahnuAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Traducción al Español">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPalabraEspanolAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Categoría (ej. Saludos, Cultura)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtCategoriaAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- SECCIÓN DE AUDIO Y PRONUNCIACIÓN -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Audio de Pronunciación"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/buti_negro" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSeleccionarAudioAdmin"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Adjuntar Audio"
+                android:textColor="@color/buti_verde"
+                app:strokeColor="@color/buti_verde" />
+
+            <TextView
+                android:id="@+id/tvEstadoAudioAdmin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:text="Sin audio seleccionado"
+                android:textSize="12sp"
+                android:textColor="@color/buti_siena" />
+        </LinearLayout>
+
+        <!-- SECCIÓN DE ILUSTRACIÓN / IMAGEN -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Imagen Ilustrativa"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/buti_negro" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSeleccionarImagenAdmin"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Adjuntar Imagen"
+                android:textColor="@color/buti_naranja"
+                app:strokeColor="@color/buti_naranja" />
+
+            <TextView
+                android:id="@+id/tvEstadoImagenAdmin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:text="Sin imagen seleccionada"
+                android:textSize="12sp"
+                android:textColor="@color/buti_siena" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

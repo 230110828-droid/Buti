@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class UsuarioRepositorio {
@@ -57,6 +59,20 @@ public class UsuarioRepositorio {
                 new String[]{String.valueOf(id)})) {
             return c.moveToFirst() ? aUsuario(c) : null;
         }
+    }
+
+    public List<Usuario> obtenerTodos() {
+        List<Usuario> lista = new ArrayList<>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        try (Cursor c = db.rawQuery(
+                "SELECT id, nombre, correo, motivo, puntos, racha, nivel FROM usuario", null)) {
+            while (c.moveToNext()) {
+                lista.add(aUsuario(c));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 
     public void guardarMotivo(long id, String motivo) {
