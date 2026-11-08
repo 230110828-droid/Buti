@@ -11,9 +11,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.itsoeh.sbsc.buti.admin.AdminActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -304,27 +310,78 @@ public class LoginActivity extends AppCompatActivity {
 
     private void abrirPantallaPrincipal() {
 
-        String correoAdmin = "yelitzagranados002@gmail.com";
+        String correoAdmin1 = "yelitzagranados002@gmail.com";
+        String correoAdmin2 = "admin@buti.com";
         String correoIngresado = edtCorreoLogin != null ? edtCorreoLogin.getText().toString().trim() : "";
 
-        Intent intent;
-        if (!correoIngresado.isEmpty() && correoIngresado.equalsIgnoreCase(correoAdmin)) {
-            intent = new Intent(
+        FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
+        if (usuarioActual != null && usuarioActual.getEmail() != null) {
+            correoIngresado = usuarioActual.getEmail();
+        }
+
+        boolean esAdmin = !correoIngresado.isEmpty() && (
+                correoIngresado.equalsIgnoreCase(correoAdmin1) ||
+                correoIngresado.equalsIgnoreCase(correoAdmin2)
+        );
+
+        if (esAdmin) {
+            Intent intent = new Intent(
                     LoginActivity.this,
                     AdminActivity.class
             );
-        } else {
-            intent = new Intent(
-                    LoginActivity.this,
-                    MainActivity.class
+            intent.addFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
             );
+            startActivity(intent);
+            finish();
+            return;
         }
 
-        intent.addFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
-        );
+        // Si es usuario normal, verificar si el sistema está en modo mantenimiento
+        verificarMantenimientoYNavegar();
+    }
 
+    private void verificarMantenimientoYNavegar() {
+        boolean mantenimientoLocal = getSharedPreferences("buti_prefs", MODE_PRIVATE)
+                .getBoolean("modo_mantenimiento", false);
+
+        if (mantenimientoLocal) {
+            navegarAMantenimiento();
+            return;
+        }
+
+        FirebaseDatabase.getInstance().getReference("config/mantenimiento")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Boolean enMantenimiento = snapshot.getValue(Boolean.class);
+                        if (enMantenimiento != null && enMantenimiento) {
+                            getSharedPreferences("buti_prefs", MODE_PRIVATE)
+                                    .edit().putBoolean("modo_mantenimiento", true).apply();
+                            navegarAMantenimiento();
+                        } else {
+                            navegarAMainNormal();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        navegarAMainNormal();
+                    }
+                });
+    }
+
+    private void navegarAMantenimiento() {
+        Intent intent = new Intent(LoginActivity.this, MantenimientoActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void navegarAMainNormal() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }

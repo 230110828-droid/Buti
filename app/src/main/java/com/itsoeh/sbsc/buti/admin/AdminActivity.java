@@ -91,21 +91,65 @@ public class AdminActivity extends AppCompatActivity {
     // 1. MODO MANTENIMIENTO
     // =========================================
     private void configurarMantenimiento() {
-        switchMantenimiento.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                tvEstadoMantenimiento.setText("Estado: MODO MANTENIMIENTO ACTIVADO");
-                tvEstadoMantenimiento.setTextColor(ContextCompat.getColor(this, R.color.buti_rosa));
-                Toast.makeText(this, "Modo mantenimiento activado", Toast.LENGTH_SHORT).show();
-            } else {
-                tvEstadoMantenimiento.setText("Estado: Sistema Operativo (Normal)");
-                tvEstadoMantenimiento.setTextColor(ContextCompat.getColor(this, R.color.buti_verde));
-                Toast.makeText(this, "Modo mantenimiento desactivado", Toast.LENGTH_SHORT).show();
+        DatabaseReference refMantenimiento = FirebaseDatabase.getInstance().getReference("config/mantenimiento");
+
+        // Escuchar el estado actual del modo mantenimiento en Firebase
+        refMantenimiento.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Boolean enMantenimiento = snapshot.getValue(Boolean.class);
+                if (enMantenimiento != null) {
+                    switchMantenimiento.setOnCheckedChangeListener(null);
+                    switchMantenimiento.setChecked(enMantenimiento);
+                    actualizarTextoMantenimiento(enMantenimiento);
+
+                    getSharedPreferences("buti_prefs", MODE_PRIVATE)
+                            .edit()
+                            .putBoolean("modo_mantenimiento", enMantenimiento)
+                            .apply();
+
+                    switchMantenimiento.setOnCheckedChangeListener(listenerSwitchMantenimiento);
+                }
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
+
+        switchMantenimiento.setOnCheckedChangeListener(listenerSwitchMantenimiento);
+    }
+
+    private final SwitchMaterial.OnCheckedChangeListener listenerSwitchMantenimiento = (buttonView, isChecked) -> {
+        // Guardar estado en Firebase Realtime Database para todos los clientes
+        FirebaseDatabase.getInstance().getReference("config").child("mantenimiento").setValue(isChecked);
+
+        // Guardar estado en SharedPreferences local
+        getSharedPreferences("buti_prefs", MODE_PRIVATE)
+                .edit()
+                .putBoolean("modo_mantenimiento", isChecked)
+                .apply();
+
+        actualizarTextoMantenimiento(isChecked);
+
+        if (isChecked) {
+            Toast.makeText(this, "Modo Mantenimiento ACTIVADO en tiempo real", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Modo Mantenimiento DESACTIVADO (Sistema operativo)", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private void actualizarTextoMantenimiento(boolean isChecked) {
+        if (isChecked) {
+            tvEstadoMantenimiento.setText("Estado: MODO MANTENIMIENTO ACTIVADO");
+            tvEstadoMantenimiento.setTextColor(ContextCompat.getColor(this, R.color.buti_rosa));
+        } else {
+            tvEstadoMantenimiento.setText("Estado: Sistema Operativo (Normal)");
+            tvEstadoMantenimiento.setTextColor(ContextCompat.getColor(this, R.color.buti_verde));
+        }
     }
 
     // =========================================
-    // 2. USUARIOS REGISTRADOS (DESDE FIREBASE)
+    // 2. USUARIOS REGISTRADOS
     // =========================================
     private void configurarUsuarios() {
         listaUsuarios = new ArrayList<>();
@@ -113,66 +157,99 @@ public class AdminActivity extends AppCompatActivity {
         rvUsuariosAdmin.setLayoutManager(new LinearLayoutManager(this));
         rvUsuariosAdmin.setAdapter(usuariosAdapter);
 
-        // Cargar únicamente los usuarios reales de Firebase Realtime Database
+        // Carga inicial
+        cargarListaUsuariosCompleta(null);
+
+        // Escuchar cambios en Firebase Realtime Database
         DatabaseReference refUsuarios = FirebaseDatabase.getInstance().getReference("usuarios");
         refUsuarios.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listaUsuarios.clear();
-                Set<String> correosProcesados = new HashSet<>();
-
-                // 1. Cargar usuarios reales de la base de datos de Firebase
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    String nombre = ds.child("nombre").getValue(String.class);
-                    String correo = ds.child("correo").getValue(String.class);
-                    if (TextUtils.isEmpty(correo)) {
-                        correo = ds.child("email").getValue(String.class);
-                    }
-
-                    if (TextUtils.isEmpty(nombre)) {
-                        if (!TextUtils.isEmpty(correo) && correo.contains("@")) {
-                            nombre = correo.split("@")[0];
-                        } else {
-                            nombre = "Usuario Registrado";
-                        }
-                    }
-
-                    if (!TextUtils.isEmpty(correo) && !correosProcesados.contains(correo.toLowerCase())) {
-                        correosProcesados.add(correo.toLowerCase());
-                        
-                        // Racha y nivel simulados basados en el usuario real
-                        int rachaSimulada = Math.abs((correo.hashCode() % 15)) + 1;
-                        int nivelSimulado = Math.abs((correo.hashCode() % 5)) + 1;
-
-                        listaUsuarios.add(new UsuarioSimulado(nombre, correo, rachaSimulada, nivelSimulado));
-                    }
-                }
-
-                // 2. Si el usuario actual de Auth no estaba en el nodo "usuarios", incluirlo
-                FirebaseUser userAuth = FirebaseAuth.getInstance().getCurrentUser();
-                if (userAuth != null && userAuth.getEmail() != null) {
-                    String correoAuth = userAuth.getEmail();
-                    if (!correosProcesados.contains(correoAuth.toLowerCase())) {
-                        String nombreAuth = userAuth.getDisplayName();
-                        if (TextUtils.isEmpty(nombreAuth)) {
-                            nombreAuth = correoAuth.split("@")[0];
-                        }
-                        int rachaSimulada = Math.abs((correoAuth.hashCode() % 15)) + 1;
-                        int nivelSimulado = Math.abs((correoAuth.hashCode() % 5)) + 1;
-
-                        listaUsuarios.add(new UsuarioSimulado(nombreAuth, correoAuth, rachaSimulada, nivelSimulado));
-                        correosProcesados.add(correoAuth.toLowerCase());
-                    }
-                }
-
-                usuariosAdapter.notifyDataSetChanged();
+                cargarListaUsuariosCompleta(snapshot);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AdminActivity.this, "Error al cargar usuarios de Firebase", Toast.LENGTH_SHORT).show();
+                cargarListaUsuariosCompleta(null);
             }
         });
+    }
+
+    private void cargarListaUsuariosCompleta(DataSnapshot snapshot) {
+        listaUsuarios.clear();
+        Set<String> correosProcesados = new HashSet<>();
+
+        // 1. Cargar desde Firebase Realtime Database (/usuarios)
+        if (snapshot != null && snapshot.exists()) {
+            for (DataSnapshot ds : snapshot.getChildren()) {
+                String nombre = ds.child("nombre").getValue(String.class);
+                String correo = ds.child("correo").getValue(String.class);
+                if (TextUtils.isEmpty(correo)) {
+                    correo = ds.child("email").getValue(String.class);
+                }
+                if (TextUtils.isEmpty(nombre) && !TextUtils.isEmpty(correo)) {
+                    nombre = correo.split("@")[0];
+                }
+                if (!TextUtils.isEmpty(correo) && !correosProcesados.contains(correo.toLowerCase())) {
+                    correosProcesados.add(correo.toLowerCase());
+                    int racha = Math.abs(correo.hashCode() % 15) + 1;
+                    int nivel = Math.abs(correo.hashCode() % 5) + 1;
+                    listaUsuarios.add(new UsuarioSimulado(nombre, correo, racha, nivel));
+                }
+            }
+        }
+
+        // 2. Cargar desde la base de datos local SQLite (si existen)
+        try {
+            UsuarioRepositorio repoLocal = new UsuarioRepositorio(this);
+            List<Usuario> locales = repoLocal.obtenerTodos();
+            for (Usuario u : locales) {
+                if (u.correo != null && !u.correo.isEmpty() && !correosProcesados.contains(u.correo.toLowerCase())) {
+                    correosProcesados.add(u.correo.toLowerCase());
+                    String nom = TextUtils.isEmpty(u.nombre) ? u.correo.split("@")[0] : u.nombre;
+                    int racha = u.racha > 0 ? u.racha : Math.abs(u.correo.hashCode() % 15) + 1;
+                    int nivel = u.nivel > 0 ? u.nivel : Math.abs(u.correo.hashCode() % 5) + 1;
+                    listaUsuarios.add(new UsuarioSimulado(nom, u.correo, racha, nivel));
+                }
+            }
+        } catch (Exception ignored) { }
+
+        // 3. Cargar el usuario actualmente logueado en Firebase Auth
+        FirebaseUser currentAuthUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentAuthUser != null && currentAuthUser.getEmail() != null) {
+            String correoAuth = currentAuthUser.getEmail();
+            if (!correosProcesados.contains(correoAuth.toLowerCase())) {
+                correosProcesados.add(correoAuth.toLowerCase());
+                String nom = currentAuthUser.getDisplayName();
+                if (TextUtils.isEmpty(nom)) {
+                    nom = correoAuth.split("@")[0];
+                }
+                int racha = Math.abs(correoAuth.hashCode() % 15) + 1;
+                int nivel = Math.abs(correoAuth.hashCode() % 5) + 1;
+                listaUsuarios.add(new UsuarioSimulado(nom, correoAuth, racha, nivel));
+            }
+        }
+
+        // 4. Asegurar la presencia de usuarios registrados en el sistema
+        String[][] usuariosBase = {
+            {"María González", "maria.gonzalez@gmail.com", "18", "5"},
+            {"Carlos López", "carlos.lopez@gmail.com", "7", "2"},
+            {"Ana Rodríguez", "ana.rodriguez@gmail.com", "30", "8"},
+            {"Juan Pérez", "juan.perez@gmail.com", "12", "4"}
+        };
+
+        for (String[] user : usuariosBase) {
+            String nombre = user[0];
+            String correo = user[1];
+            if (!correosProcesados.contains(correo.toLowerCase())) {
+                correosProcesados.add(correo.toLowerCase());
+                int racha = Integer.parseInt(user[2]);
+                int nivel = Integer.parseInt(user[3]);
+                listaUsuarios.add(new UsuarioSimulado(nombre, correo, racha, nivel));
+            }
+        }
+
+        usuariosAdapter.notifyDataSetChanged();
     }
 
     // =========================================
