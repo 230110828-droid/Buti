@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/buti_crema"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <!-- ENCABEZADO -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btnVolverDiferencias"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/ic_fondo1"
+                android:gravity="center"
+                android:text="‹"
+                android:textColor="@color/buti_vino"
+                android:textSize="32sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="ENCUENTRA LAS DIFERENCIAS"
+                android:textColor="@color/buti_vino"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/ic_colibri_feliz"
+                android:scaleType="fitCenter"
+                android:contentDescription="Colibrí B'ÜTI" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="OJO DE COLIBRÍ"
+            android:textColor="@color/buti_naranja"
+            android:textStyle="bold"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Encuentra los 5 detalles que cambiaron en el bordado"
+            android:textColor="@color/buti_cafe"
+            android:textSize="14sp" />
+
+        <!-- SELECCIÓN DE ESCENARIO -->
+
+        <LinearLayout
+            android:id="@+id/layoutSeleccionDiferencias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="Elige un lugar"
+                android:textColor="@color/buti_vino"
+                android:textStyle="bold"
+                android:textSize="19sp" />
+
+            <LinearLayout
+                android:id="@+id/contenedorEscenariosDiferencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+        <!-- JUEGO -->
+
+        <LinearLayout
+            android:id="@+id/layoutJuegoDiferencias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtNombreDiferencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Lugar seleccionado"
+                android:textColor="@color/buti_vino"
+                android:textStyle="bold"
+                android:textSize="19sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtEncontradasDiferencias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_fondo1"
+                    android:padding="12dp"
+                    android:text="Encontradas: 0 / 5"
+                    android:textColor="@color/buti_vino"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtErroresDiferencias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/ic_fondo1"
+                    android:padding="12dp"
+                    android:text="Intentos fallidos: 0"
+                    android:textColor="@color/buti_vino"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="Toca en cualquiera de las dos imágenes donde veas un cambio"
+                android:textColor="@color/buti_cafe"
+                android:textSize="13sp" />
+
+            <!-- Imagen original -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="Original"
+                android:textColor="@color/buti_naranja"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+
+            <FrameLayout
+                android:id="@+id/frameOriginalDiferencias"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:id="@+id/imgOriginalDiferencias"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:contentDescription="Imagen original" />
+
+            </FrameLayout>
+
+            <!-- Imagen con cambios -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="¿Qué cambió?"
+                android:textColor="@color/buti_naranja"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+
+            <FrameLayout
+                android:id="@+id/frameCambiosDiferencias"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:id="@+id/imgCambiosDiferencias"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:contentDescription="Imagen con cambios" />
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/btnPistaDiferencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Pedir una pista"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/buti_naranja" />
+
+            <Button
+                android:id="@+id/btnReiniciarDiferencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Empezar de nuevo"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/buti_vino" />
+
+            <Button
+                android:id="@+id/btnCambiarEscenarioDiferencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Elegir otro lugar"
+                android:textAllCaps="false"
+                android:textColor="@color/buti_vino"
+                android:backgroundTint="@color/buti_dorado" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="B'ÜTI · Nuestra cultura, nuestro orgullo"
+            android:textColor="@color/buti_naranja"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</ScrollView>

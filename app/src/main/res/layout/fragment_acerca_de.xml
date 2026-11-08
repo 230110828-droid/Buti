@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/buti_crema"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="22dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="28dp">
+
+        <!-- LOGO Y NOMBRE -->
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/principla_logo"
+            android:scaleType="fitCenter"
+            android:contentDescription="Logo de B'ÜTI" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="B'ÜTI"
+            android:textColor="@color/buti_vino"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtVersionAcercaDe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Versión 1.0.0"
+            android:textColor="@color/buti_naranja"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/ic_margen_otomi_verde"
+            android:scaleType="fitXY"
+            android:importantForAccessibility="no" />
+
+        <!-- ¿QUÉ ES? -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="#FFFAF0"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/buti_naranja"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Qué es B'ÜTI?"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="B'ÜTI es una aplicación para aprender la lengua hñähñu (otomí) y conocer la cultura de Ixmiquilpan, Hidalgo. Incluye vocabulario con audio grabado por un hablante nativo, lecciones por niveles, juegos de reforzamiento e información de las comunidades de El Dexthi, El Nith y Panales."
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- OBJETIVO -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="#FFFAF0"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/buti_naranja"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Objetivo"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="Apoyar el aprendizaje y la difusión de la lengua y la cultura hñähñu del Valle del Mezquital de una forma práctica y divertida."
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- CRÉDITOS -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="#FFFAF0"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/buti_naranja"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Créditos"
+                    android:textColor="@color/buti_vino"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <!-- Hablante -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Hablante y asesor de lengua hñähñu"
+                    android:textColor="@color/buti_naranja"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Evaristo García Martín"
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="14sp" />
+
+                <!-- Asesores -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Asesores"
+                    android:textColor="@color/buti_naranja"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="Mtro. Mario Pérez Bautista · Aplicaciones Móviles 1\nMtra. Lorena Mendoza Guzmán · Diseño UX/UI"
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="14sp" />
+
+                <!-- Equipo -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Equipo de desarrollo"
+                    android:textColor="@color/buti_naranja"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <!-- TODO: escribir los nombres de los 6 integrantes -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="Integrante 1\nIntegrante 2\nIntegrante 3\nIntegrante 4\nIntegrante 5\nIntegrante 6"
+                    android:textColor="@color/buti_cafe"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- INSTITUCIÓN -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:lineSpacingExtra="3dp"
+            android:text="Proyecto integrador · 7.º semestre, grupo A\nIngeniería en Sistemas Computacionales\nInstituto Tecnológico Superior del Occidente del Estado de Hidalgo (ITSOEH)\n2026"
+            android:textColor="@color/buti_cafe"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="16dp"
+            android:rotation="180"
+            android:src="@drawable/ic_margen_otomi_verde"
+            android:scaleType="fitXY"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="B'ÜTI · Nuestra cultura, nuestro orgullo"
+            android:textColor="@color/buti_naranja"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</ScrollView>

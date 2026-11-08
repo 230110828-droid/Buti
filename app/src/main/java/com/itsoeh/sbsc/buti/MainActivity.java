@@ -107,15 +107,15 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-
-
         ViewCompat.requestApplyInsets(contenedorPrincipal);
 
-        // La barra inferior no debe sumar el espacio de los botones del sistema
+        // La barra inferior no suma el espacio
+        // de los botones del sistema.
         ViewCompat.setOnApplyWindowInsetsListener(bottomNav, (v, insets) -> {
             v.setPadding(0, 0, 0, 0);
             return insets;
         });
+
         bottomNav.post(() -> bottomNav.setPadding(0, 0, 0, 0));
 
         // ---------------------------------------------
@@ -470,6 +470,7 @@ public class MainActivity extends AppCompatActivity {
                 || id == R.id.culturaFragment
                 || id == R.id.vocabularioFragment
                 || id == R.id.practicarFragment
+                || id == R.id.juegosFragment
                 || id == R.id.progresoFragment;
     }
 

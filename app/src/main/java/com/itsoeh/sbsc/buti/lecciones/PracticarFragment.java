@@ -58,6 +58,9 @@ public class PracticarFragment extends Fragment {
 
     private LinearLayout btnRetoGeneral;
     private LinearLayout btnRetoCategoria;
+    private LinearLayout btnAprenderImagenes;
+    private LinearLayout btnEscucharResponder;
+    private ImageView imgImagenPregunta;
 
     private ScrollView scrollPracticar;
 
@@ -69,6 +72,7 @@ public class PracticarFragment extends Fragment {
 
     private TextView txtContadorPreguntas;
     private TextView txtPreguntaQuiz;
+    private TextView txtIndicacionPregunta;
     private TextView txtPuntosActuales;
     private TextView txtRetroalimentacion;
 
@@ -118,6 +122,8 @@ public class PracticarFragment extends Fragment {
     private boolean respuestaEvaluada = false;
     private boolean rondaRepaso = false;
     private boolean personajeNina = true;
+    private boolean modoImagenes = false;
+    private boolean modoEscuchar = false;
 
     private String[][] preguntas = new String[0][0];
 
@@ -262,6 +268,15 @@ public class PracticarFragment extends Fragment {
         btnRetoCategoria =
                 view.findViewById(R.id.btnRetoCategoria);
 
+        btnAprenderImagenes =
+                view.findViewById(R.id.btnAprenderImagenes);
+
+        btnEscucharResponder =
+                view.findViewById(R.id.btnEscucharResponder);
+
+        imgImagenPregunta =
+                view.findViewById(R.id.imgImagenPregunta);
+
         layoutCuestionario =
                 view.findViewById(R.id.layoutCuestionario);
 
@@ -276,6 +291,9 @@ public class PracticarFragment extends Fragment {
 
         txtPreguntaQuiz =
                 view.findViewById(R.id.txtPreguntaQuiz);
+
+        txtIndicacionPregunta =
+                view.findViewById(R.id.txtIndicacionPregunta);
 
         txtPuntosActuales =
                 view.findViewById(R.id.txtPuntosActuales);
@@ -336,6 +354,14 @@ public class PracticarFragment extends Fragment {
                 iniciarPracticaGeneral()
         );
 
+        btnAprenderImagenes.setOnClickListener(v ->
+                iniciarAprenderImagenes()
+        );
+
+        btnEscucharResponder.setOnClickListener(v ->
+                iniciarEscucharResponder()
+        );
+
         btnRetoCategoria.setOnClickListener(v -> {
 
             if (layoutCategoriasPractica.getVisibility()
@@ -369,6 +395,12 @@ public class PracticarFragment extends Fragment {
         layoutResultado.setVisibility(View.GONE);
 
         layoutCategoriasPractica.setVisibility(View.GONE);
+
+        modoImagenes = false;
+        modoEscuchar = false;
+        if (imgPersonaje != null) imgPersonaje.setVisibility(View.VISIBLE);
+        if (imgImagenPregunta != null) imgImagenPregunta.setVisibility(View.GONE);
+        if (btnAudioPregunta != null) btnAudioPregunta.setVisibility(View.VISIBLE);
 
         temaSeleccionado = "Reto general";
 
@@ -601,6 +633,9 @@ public class PracticarFragment extends Fragment {
 
     private void iniciarPracticaGeneral() {
 
+        modoImagenes = false;
+        modoEscuchar = false;
+
         List<String[]> palabras = new ArrayList<>();
 
         agregarPalabras(
@@ -675,10 +710,230 @@ public class PracticarFragment extends Fragment {
     }
 
     // =========================================
+    // APRENDER CON IMÁGENES
+    // =========================================
+
+    private void iniciarAprenderImagenes() {
+
+        List<String[]> palabras = new ArrayList<>();
+
+        agregarPalabras(palabras, VocabularioDatos.COLORES, "Colores");
+        agregarPalabras(palabras, VocabularioDatos.NUMEROS, "Números");
+        agregarPalabras(palabras, VocabularioDatos.SALUDOS, "Saludos");
+        agregarPalabras(palabras, VocabularioDatos.TIEMPO, "Tiempo");
+        agregarPalabras(palabras, VocabularioDatos.PLANTAS, "Plantas");
+        agregarPalabras(palabras, VocabularioDatos.ANIMALES, "Animales");
+        agregarPalabras(palabras, VocabularioDatos.OBJETOS, "Objetos");
+        agregarPalabras(palabras, VocabularioDatos.CUERPO, "Cuerpo");
+        agregarPalabras(palabras, VocabularioDatos.COMIDA, "Alimentos");
+        agregarPalabras(palabras, VocabularioDatos.NATURALEZA, "Naturaleza");
+        agregarPalabras(palabras, VocabularioDatos.LUGARES, "Lugares");
+
+        modoImagenes = true;
+        modoEscuchar = false;
+        temaSeleccionado = "Aprender con imágenes";
+
+        iniciarCuestionario(palabras);
+    }
+
+    // =========================================
+    // ESCUCHAR Y RESPONDER
+    // =========================================
+
+    private void iniciarEscucharResponder() {
+
+        List<String[]> palabras = new ArrayList<>();
+
+        agregarPalabras(palabras, VocabularioDatos.COLORES, "Colores");
+        agregarPalabras(palabras, VocabularioDatos.NUMEROS, "Números");
+        agregarPalabras(palabras, VocabularioDatos.SALUDOS, "Saludos");
+        agregarPalabras(palabras, VocabularioDatos.TIEMPO, "Tiempo");
+        agregarPalabras(palabras, VocabularioDatos.PLANTAS, "Plantas");
+        agregarPalabras(palabras, VocabularioDatos.ANIMALES, "Animales");
+        agregarPalabras(palabras, VocabularioDatos.OBJETOS, "Objetos");
+        agregarPalabras(palabras, VocabularioDatos.CUERPO, "Cuerpo");
+        agregarPalabras(palabras, VocabularioDatos.COMIDA, "Alimentos");
+        agregarPalabras(palabras, VocabularioDatos.NATURALEZA, "Naturaleza");
+        agregarPalabras(palabras, VocabularioDatos.LUGARES, "Lugares");
+
+        modoImagenes = false;
+        modoEscuchar = true;
+        temaSeleccionado = "Escuchar y responder";
+
+        iniciarCuestionario(palabras);
+    }
+
+    // =========================================
+    // GENERAR PREGUNTAS DE ESCUCHA
+    // =========================================
+
+    private String[][] generarPreguntasEscuchar(List<String[]> datos) {
+
+        List<String[]> validas = new ArrayList<>();
+
+        for (String[] fila : datos) {
+            if (fila != null
+                    && fila.length >= 3
+                    && fila[0] != null
+                    && fila[1] != null
+                    && fila[2] != null
+                    && !fila[0].trim().isEmpty()
+                    && !fila[1].trim().isEmpty()
+                    && !fila[2].trim().isEmpty()) {
+
+                validas.add(new String[]{
+                        fila[0].trim(),
+                        fila[1].trim(),
+                        fila[2].trim()
+                });
+            }
+        }
+
+        if (validas.size() < 3) {
+            return new String[0][0];
+        }
+
+        Collections.shuffle(validas);
+
+        List<String[]> resultado = new ArrayList<>();
+        int limite = Math.min(10, validas.size());
+
+        for (int i = 0; i < limite; i++) {
+
+            String[] palabra = validas.get(i);
+            String espanolCorrecto = palabra[0];
+            String categoria = palabra[2];
+
+            List<String> opciones = new ArrayList<>();
+            opciones.add(espanolCorrecto);
+
+            List<String> distractores = new ArrayList<>();
+
+            for (String[] otra : validas) {
+                String opcion = otra[0];
+
+                if (!opcion.equals(espanolCorrecto)
+                        && !distractores.contains(opcion)) {
+                    distractores.add(opcion);
+                }
+            }
+
+            Collections.shuffle(distractores);
+
+            for (String distractor : distractores) {
+                if (opciones.size() == 3) {
+                    break;
+                }
+                opciones.add(distractor);
+            }
+
+            if (opciones.size() < 3) {
+                continue;
+            }
+
+            Collections.shuffle(opciones);
+
+            // pregunta[5] conserva la palabra en español porque
+            // AudiosVocabulario usa esa palabra para localizar su audio hñähñu.
+            resultado.add(new String[]{
+                    "Escucha la palabra en hñähñu. ¿Qué significa?",
+                    opciones.get(0),
+                    opciones.get(1),
+                    opciones.get(2),
+                    espanolCorrecto,
+                    espanolCorrecto,
+                    categoria
+            });
+        }
+
+        return resultado.toArray(new String[0][0]);
+    }
+
+    private int obtenerImagenPalabra(String espanol, String categoria) {
+
+        String prefijo;
+
+        switch (normalizar(categoria)) {
+            case "alimentos":
+            case "comida":
+                prefijo = "img_comida_";
+                break;
+            default:
+                prefijo = "img_" + normalizar(categoria) + "_";
+                break;
+        }
+
+        String palabra = normalizar(espanol)
+                .replace("¿", "")
+                .replace("?", "")
+                .replace("¡", "")
+                .replace("!", "")
+                .replace(",", "")
+                .replace(".", "")
+                .replace("  ", " ")
+                .trim()
+                .replace(" ", "_");
+
+        // Nombres especiales usados por los archivos de ilustraciones.
+        if (palabra.equals("bienvenidos_as")) palabra = "bienvenidos_as";
+        if (palabra.equals("me_da_permiso_pas ar")) palabra = "permiso_para_pasar";
+        if (palabra.equals("me_da_permiso_pasar")) palabra = "permiso_para_pasar";
+        if (palabra.equals("como_estas")) palabra = "como_estas";
+        if (palabra.equals("estoy_triste_estoy_preocupado")) palabra = "estoy_triste_preocupado";
+        if (palabra.equals("nos_vemos_manana")) palabra = "nos_vemos_manana";
+        if (palabra.equals("hasta_luego_hasta_pronto")) palabra = "hasta_luego";
+        if (palabra.equals("hablas_hnahnu")) palabra = "hablas_hnahnu";
+        if (palabra.equals("de_donde_eres")) palabra = "de_donde_eres";
+        if (palabra.equals("cuantos_anos_tienes")) palabra = "cuantos_anos_tienes";
+        if (palabra.equals("como_te_llamas")) palabra = "como_te_llamas";
+        if (palabra.equals("donde_estas_donde_andas")) palabra = "donde_estas";
+        if (palabra.equals("guajolota")) palabra = "guajolota";
+        if (palabra.equals("borrego_oveja")) palabra = "borrego_oveja";
+        if (palabra.equals("chivo_cabra")) palabra = "chivo_cabra";
+        if (palabra.equals("vibora_culebra")) palabra = "vibora_culebra";
+        if (palabra.equals("gluteo_nalga")) palabra = "gluteo_nalga";
+        if (palabra.equals("organo_cactus")) palabra = "organo_cactus";
+        if (palabra.equals("flor_de_maguey")) palabra = "flor_de_maguey";
+        if (palabra.equals("hace_ano")) palabra = "hace_ano";
+        if (palabra.equals("a_noche")) palabra = "anoche";
+        if (palabra.equals("anoche")) palabra = "anoche";
+        if (palabra.equals("pasado_manana")) palabra = "pasado_manana";
+        if (palabra.equals("manana_por_la_manana")) palabra = "manana_por_la_manana";
+        if (palabra.equals("manana_por_la_noche")) palabra = "manana_por_la_noche";
+        if (palabra.equals("manana_temprano")) palabra = "manana_temprano";
+        if (palabra.equals("dedo_mano")) palabra = "dedo_mano";
+        if (palabra.equals("dedo_pie")) palabra = "dedo_pie";
+        if (palabra.equals("llave_puerta")) palabra = "llave_puerta";
+        if (palabra.equals("dormitorio_recamara")) palabra = "dormitorio_recamara";
+        if (palabra.equals("servilleta_de_tortillas")
+                || palabra.equals("servilleta_(de_tortillas)")) {
+            palabra = "servilleta_tortillas";
+        }
+        if (palabra.equals("pueblo_ciudad")) palabra = "pueblo_ciudad";
+        if (palabra.equals("carcel")) palabra = "carcel";
+        if (palabra.equals("pena")) palabra = "pena";
+        if (palabra.equals("rio")) palabra = "rio";
+        if (palabra.equals("ar ana")) palabra = "arana";
+
+        String nombre = prefijo + palabra;
+
+        int recurso = getResources().getIdentifier(
+                nombre,
+                "drawable",
+                requireContext().getPackageName()
+        );
+
+        return recurso;
+    }
+
+    // =========================================
     // INICIAR RETO POR CATEGORÍA
     // =========================================
 
     private void iniciarPracticaCategoria(String categoria) {
+
+        modoImagenes = false;
+        modoEscuchar = false;
 
         String[][] datos = obtenerPalabras(categoria);
 
@@ -726,7 +981,9 @@ public class PracticarFragment extends Fragment {
         cancelarAvanceAutomatico();
         liberarReproductor();
 
-        preguntas = generarPreguntas(datos);
+        preguntas = modoEscuchar
+                ? generarPreguntasEscuchar(datos)
+                : generarPreguntas(datos);
 
         if (preguntas.length == 0) {
 
@@ -1034,11 +1291,53 @@ public class PracticarFragment extends Fragment {
         pbPreguntas.setMax(total);
         pbPreguntas.setProgress(preguntaActual);
 
-        imgPersonaje.setImageResource(
-                personajesPensando[personajeNina ? 0 : 1]
-        );
+        if (modoImagenes) {
+
+            imgPersonaje.setVisibility(View.GONE);
+            imgImagenPregunta.setVisibility(View.VISIBLE);
+
+            int imagen = obtenerImagenPalabra(
+                    pregunta[5],
+                    pregunta[6]
+            );
+
+            if (imagen != 0) {
+                imgImagenPregunta.setImageResource(imagen);
+            } else {
+                imgImagenPregunta.setImageResource(R.drawable.ic_practicar_categoria);
+            }
+
+            btnAudioPregunta.setVisibility(View.GONE);
+            txtIndicacionPregunta.setText(
+                    "Observa la imagen y elige su traducción en hñähñu."
+            );
+
+        } else {
+
+            imgPersonaje.setVisibility(View.VISIBLE);
+            imgImagenPregunta.setVisibility(View.GONE);
+            btnAudioPregunta.setVisibility(View.VISIBLE);
+            if (modoEscuchar) {
+                txtIndicacionPregunta.setText(
+                        "Escucha el audio y elige su significado en español. "
+                                + "Puedes tocar el botón para repetirlo."
+                );
+            } else {
+                txtIndicacionPregunta.setText(
+                        "Escucha la pronunciación y elige."
+                );
+            }
+
+            imgPersonaje.setImageResource(
+                    personajesPensando[personajeNina ? 0 : 1]
+            );
+        }
 
         actualizarColibri();
+
+        if (modoEscuchar) {
+            reproducirAudioPregunta();
+        }
 
         if (scrollPracticar != null && preguntaActual == 0) {
 

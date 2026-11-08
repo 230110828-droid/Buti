@@ -15,6 +15,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="24dp">
 
+        <!-- TÍTULO -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +25,7 @@
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <!-- Avatar -->
+        <!-- AVATAR -->
         <TextView
             android:id="@+id/txtInicialesProgreso"
             android:layout_width="104dp"
@@ -33,29 +34,31 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_avatar_progreso"
             android:gravity="center"
-            android:text="MG"
+            android:text="U"
             android:textColor="@color/prog_naranja"
             android:textSize="40sp"
             android:textStyle="bold" />
 
+        <!-- NOMBRE DEL USUARIO -->
         <TextView
             android:id="@+id/txtNombreProgreso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:text="María González"
+            android:text="Usuario"
             android:textColor="@color/prog_azul"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <!-- Racha / Puntos / Nivel -->
+        <!-- ESTADÍSTICAS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:orientation="horizontal">
 
+            <!-- RACHA -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -69,15 +72,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:paddingVertical="14dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/imgRachaMaguey"
@@ -91,10 +94,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="12"
+                            android:text="0"
                             android:textColor="@color/prog_naranja"
                             android:textSize="24sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
 
                     <TextView
@@ -104,11 +108,15 @@
                         android:text="racha"
                         android:textColor="@color/prog_marron"
                         android:textSize="15sp" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <Space android:layout_width="10dp" android:layout_height="wrap_content" />
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
 
+            <!-- PUNTOS -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -122,15 +130,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/txtPuntosProgreso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="380"
+                        android:text="0"
                         android:textColor="@color/prog_naranja"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -142,11 +150,15 @@
                         android:text="puntos"
                         android:textColor="@color/prog_marron"
                         android:textSize="15sp" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <Space android:layout_width="10dp" android:layout_height="wrap_content" />
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
 
+            <!-- NIVEL -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -160,15 +172,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/txtNivelProgreso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nv. 4"
+                        android:text="Nv. 1"
                         android:textColor="@color/prog_oliva"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -180,11 +192,13 @@
                         android:text="nivel"
                         android:textColor="@color/prog_marron"
                         android:textSize="15sp" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
-        <!-- Insignias -->
+        <!-- INSIGNIAS -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -194,39 +208,46 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Logros que podrás conseguir mientras aprendes."
+            android:textColor="@color/prog_marron"
+            android:textSize="12sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             android:orientation="horizontal">
 
-            <!-- Insignia 1 -->
+            <!-- INSIGNIA 1 -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInsignia1"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     app:cardBackgroundColor="@color/prog_tarjeta"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
-                    app:rippleColor="@color/prog_ripple"
                     app:strokeColor="@color/prog_borde"
                     app:strokeWidth="1dp">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:id="@+id/imgInsignia1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_cirpajaro"
+                        android:src="@drawable/ic_candado3"
                         android:contentDescription="Primera lección" />
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -236,36 +257,44 @@
                     android:gravity="center"
                     android:text="Primera lección"
                     android:textColor="@color/prog_marron"
-                    android:textSize="11sp" />
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtEstadoInsignia1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendiente"
+                    android:textColor="@color/prog_marron"
+                    android:textSize="10sp" />
+
             </LinearLayout>
 
-            <!-- Insignia 2 -->
+            <!-- INSIGNIA 2 -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInsignia2"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     app:cardBackgroundColor="@color/prog_tarjeta"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
-                    app:rippleColor="@color/prog_ripple"
                     app:strokeColor="@color/prog_borde"
                     app:strokeWidth="1dp">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:id="@+id/imgInsignia2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_libro1"
-                        android:contentDescription="10 palabras" />
+                        android:src="@drawable/ic_candado3"
+                        android:contentDescription="Aprendiz constante" />
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -273,38 +302,46 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:gravity="center"
-                    android:text="10 palabras"
+                    android:text="Aprendiz constante"
                     android:textColor="@color/prog_marron"
-                    android:textSize="11sp" />
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtEstadoInsignia2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendiente"
+                    android:textColor="@color/prog_marron"
+                    android:textSize="10sp" />
+
             </LinearLayout>
 
-            <!-- Insignia 3 -->
+            <!-- INSIGNIA 3 -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInsignia3"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     app:cardBackgroundColor="@color/prog_tarjeta"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
-                    app:rippleColor="@color/prog_ripple"
                     app:strokeColor="@color/prog_borde"
                     app:strokeWidth="1dp">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:id="@+id/imgInsignia3"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_nopalverde"
-                        android:contentDescription="Explorador" />
+                        android:src="@drawable/ic_candado3"
+                        android:contentDescription="Conocimiento" />
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -312,39 +349,46 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:gravity="center"
-                    android:text="Explorador"
+                    android:text="Conocimiento"
                     android:textColor="@color/prog_marron"
-                    android:textSize="11sp" />
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtEstadoInsignia3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendiente"
+                    android:textColor="@color/prog_marron"
+                    android:textSize="10sp" />
+
             </LinearLayout>
 
-            <!-- Insignia 4 (bloqueada) -->
+            <!-- INSIGNIA 4 -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInsignia4"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     app:cardBackgroundColor="@color/prog_tarjeta"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
-                    app:rippleColor="@color/prog_ripple"
                     app:strokeColor="@color/prog_borde"
                     app:strokeWidth="1dp">
 
                     <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
+                        android:id="@+id/imgInsignia4"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:alpha="0.55"
                         android:src="@drawable/ic_candado3"
-                        android:contentDescription="Por desbloquear" />
+                        android:contentDescription="Maestro Buti" />
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -352,19 +396,136 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:gravity="center"
-                    android:text="Por desbloquear"
+                    android:text="Maestro Buti"
                     android:textColor="@color/prog_marron"
-                    android:textSize="11sp" />
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtEstadoInsignia4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendiente"
+                    android:textColor="@color/prog_marron"
+                    android:textSize="10sp" />
+
             </LinearLayout>
+
         </LinearLayout>
 
+        <!-- SEPARADOR -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
             android:layout_marginTop="22dp"
             android:background="@color/prog_borde" />
 
-        <!-- Actividad reciente -->
+        <!-- PUNTOS DE LA SEMANA -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Puntos de la semana"
+            android:textColor="@color/prog_marron"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/prog_tarjeta"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/prog_borde"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <com.itsoeh.sbsc.buti.progreso.GraficaBarrasView
+                    android:id="@+id/graficaSemanaProgreso"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:contentDescription="Gráfica de puntos de los últimos 7 días" />
+
+                <TextView
+                    android:id="@+id/txtResumenSemanaProgreso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/prog_marron"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- SEPARADOR -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="22dp"
+            android:background="@color/prog_borde" />
+
+        <!-- AVANCE POR NIVEL -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Avance por nivel"
+            android:textColor="@color/prog_marron"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/prog_tarjeta"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/prog_borde"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <com.itsoeh.sbsc.buti.progreso.GraficaBarrasView
+                    android:id="@+id/graficaNivelesProgreso"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:contentDescription="Gráfica de etapas completadas por nivel" />
+
+                <TextView
+                    android:id="@+id/txtResumenNivelesProgreso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/prog_marron"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- SEPARADOR -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="22dp"
+            android:background="@color/prog_borde" />
+
+        <!-- ACTIVIDAD RECIENTE -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -374,51 +535,44 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            app:cardBackgroundColor="@color/prog_tarjeta"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/prog_borde"
+            app:strokeWidth="1dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_cirpaloma"
-                android:importantForAccessibility="no" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="Completaste ‘Colores’ — hace 2 días"
-                android:textColor="@color/prog_marron"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_cirpaloma"
+                    android:contentDescription="Actividad reciente"
+                    android:importantForAccessibility="no" />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_cirestrella"
-                android:importantForAccessibility="no" />
+                <TextView
+                    android:id="@+id/txtActividadReciente"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:text="Todavía no tienes actividades registradas."
+                    android:textColor="@color/prog_marron"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="+60 puntos obtenidos"
-                android:textColor="@color/prog_marron"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
+
 </ScrollView>

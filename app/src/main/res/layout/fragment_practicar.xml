@@ -14,9 +14,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- ===================================== -->
-        <!-- PANTALLA DE SELECCIÓN DE RETOS         -->
-        <!-- ===================================== -->
+        <!-- PANTALLA DE SELECCIÓN DE RETOS -->
 
         <LinearLayout
             android:id="@+id/layoutSeleccionPractica"
@@ -207,6 +205,120 @@
 
             </LinearLayout>
 
+            <!-- APRENDER CON IMÁGENES -->
+
+            <LinearLayout
+                android:id="@+id/btnAprenderImagenes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="18dp"
+                android:background="@drawable/bg_practicar_tarjeta"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:padding="5dp"
+                    android:background="@drawable/bg_practicar_etiqueta"
+                    android:src="@drawable/img_cat_objetos"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Aprender con imágenes"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Aprender con imágenes"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Observa una ilustración y elige su palabra en hñähñu."
+                        android:textColor="@color/buti_siena"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_flederecha"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Iniciar aprendizaje con imágenes"/>
+
+            </LinearLayout>
+
+            <!-- ESCUCHAR Y RESPONDER -->
+
+            <LinearLayout
+                android:id="@+id/btnEscucharResponder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="18dp"
+                android:background="@drawable/bg_practicar_tarjeta"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:padding="5dp"
+                    android:background="@drawable/bg_practicar_etiqueta"
+                    android:src="@drawable/ic_sonando"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Escuchar y responder"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Escuchar y responder"
+                        android:textColor="@color/buti_vino"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Escucha una palabra en hñähñu y elige su significado."
+                        android:textColor="@color/buti_siena"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_flederecha"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Iniciar escucha"/>
+
+            </LinearLayout>
+
             <!-- CATEGORÍAS DINÁMICAS -->
 
             <LinearLayout
@@ -254,9 +366,7 @@
 
         </LinearLayout>
 
-        <!-- ===================================== -->
-        <!-- PANTALLA DEL CUESTIONARIO              -->
-        <!-- ===================================== -->
+        <!-- PANTALLA DEL CUESTIONARIO -->
 
         <LinearLayout
             android:id="@+id/layoutCuestionario"
@@ -385,6 +495,19 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_nina_pensando"/>
 
+            <!-- IMAGEN DE LA PALABRA -->
+
+            <ImageView
+                android:id="@+id/imgImagenPregunta"
+                android:layout_width="230dp"
+                android:layout_height="190dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:contentDescription="Ilustración de la palabra en español"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:visibility="gone"/>
+
             <!-- PREGUNTA -->
 
             <LinearLayout
@@ -422,6 +545,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/txtIndicacionPregunta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -557,9 +681,7 @@
 
         </LinearLayout>
 
-        <!-- ===================================== -->
-        <!-- PANTALLA DE RESULTADOS                 -->
-        <!-- ===================================== -->
+        <!-- PANTALLA DE RESULTADOS -->
 
         <LinearLayout
             android:id="@+id/layoutResultado"

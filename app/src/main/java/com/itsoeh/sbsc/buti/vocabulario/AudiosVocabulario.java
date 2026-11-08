@@ -193,6 +193,7 @@ public final class AudiosVocabulario {
             "cuerpo_21_gluteonalga"
     };
 
+    // Los audios de esta categoría utilizan el nombre "alimentos".
     private static final String[] COMIDA = {
             "alimentos_01_tamal",
             "alimentos_02_tortilla",
@@ -243,8 +244,9 @@ public final class AudiosVocabulario {
             "lugares_11_delegacion"
     };
 
+
     // Obtiene todas las pronunciaciones de una palabra.
-    // Si tiene variante terminada en 2, también la devuelve.
+    // Si tiene una variante terminada en 2, también la devuelve.
 
     public static int[] obtenerAudios(
             Context context,
@@ -257,6 +259,7 @@ public final class AudiosVocabulario {
         }
 
         String cat = normalizar(categoria);
+
         String[][] datos;
         String[] archivos;
 
@@ -302,7 +305,9 @@ public final class AudiosVocabulario {
                 archivos = CUERPO;
                 break;
 
+            // Acepta tanto "Comida" como "Alimentos".
             case "comida":
+            case "alimentos":
                 datos = VocabularioDatos.COMIDA;
                 archivos = COMIDA;
                 break;
@@ -323,24 +328,32 @@ public final class AudiosVocabulario {
 
         int indice = -1;
 
-        for (int i = 0; i < datos.length; i++) {
+        // Buscar la palabra dentro de los datos de vocabulario.
+        for (int i = 0; i < datos.length && i < archivos.length; i++) {
 
-            if (normalizar(datos[i][0]).equals(normalizar(palabra))) {
+            if (datos[i] != null
+                    && datos[i].length > 0
+                    && datos[i][0] != null
+                    && normalizar(datos[i][0]).equals(normalizar(palabra))) {
+
                 indice = i;
                 break;
             }
         }
 
-        if (indice == -1 || indice >= archivos.length) {
+        if (indice == -1) {
             return new int[0];
         }
 
         List<Integer> resultados = new ArrayList<>();
 
+        // Agregar audio principal.
         agregarAudio(context, resultados, archivos[indice]);
 
-        // Pronunciaciones alternativas del ZIP.
-        if (cat.equals("animales") && (indice == 6 || indice == 17 || indice == 23)) {
+        // Pronunciaciones alternativas.
+        if (cat.equals("animales")
+                && (indice == 6 || indice == 17 || indice == 23)) {
+
             agregarAudio(context, resultados, archivos[indice] + "2");
         }
 
@@ -352,6 +365,7 @@ public final class AudiosVocabulario {
             agregarAudio(context, resultados, archivos[indice] + "2");
         }
 
+        // Convertir la lista a un arreglo de enteros.
         int[] audios = new int[resultados.size()];
 
         for (int i = 0; i < resultados.size(); i++) {
@@ -360,6 +374,7 @@ public final class AudiosVocabulario {
 
         return audios;
     }
+
 
     // Obtiene solamente la primera pronunciación.
 
@@ -378,14 +393,21 @@ public final class AudiosVocabulario {
         return 0;
     }
 
+
+    // Busca el audio dentro de res/raw.
+
     private static void agregarAudio(
             Context context,
             List<Integer> resultados,
             String nombre
     ) {
 
+        if (context == null || nombre == null) {
+            return;
+        }
+
         int id = context.getResources().getIdentifier(
-                nombre,
+                nombre.toLowerCase(Locale.ROOT),
                 "raw",
                 context.getPackageName()
         );
@@ -395,7 +417,15 @@ public final class AudiosVocabulario {
         }
     }
 
+
+    // Normaliza palabras para comparar sin problemas de acentos,
+    // mayúsculas, espacios o caracteres especiales.
+
     private static String normalizar(String texto) {
+
+        if (texto == null) {
+            return "";
+        }
 
         String resultado = texto.toLowerCase(Locale.ROOT).trim();
 
@@ -404,12 +434,16 @@ public final class AudiosVocabulario {
                 Normalizer.Form.NFD
         );
 
+        // Eliminar acentos.
         resultado = resultado.replaceAll("\\p{M}", "");
 
+        // Normalizar la letra ñ.
         resultado = resultado.replace("ñ", "n");
 
+        // Cambiar espacios y caracteres especiales por guiones bajos.
         resultado = resultado.replaceAll("[^a-z0-9]+", "_");
 
+        // Eliminar guiones bajos al principio y al final.
         return resultado.replaceAll("^_+|_+$", "");
     }
 }
