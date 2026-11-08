@@ -4,33 +4,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/buti_crema"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="28dp">
 
-        <!-- Puntos (arriba a la derecha) -->
+        <!-- Encabezado: título, subtítulo y puntos -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end">
+            android:background="@drawable/bg_header_lecciones"
+            android:elevation="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="18dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tu camino hñähñu"
+                    android:textColor="@color/buti_crema"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="11 niveles de lengua y cultura"
+                    android:textColor="@color/buti_crema_oscuro"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:background="@drawable/bg_chip_puntos"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="14dp"
+                android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:importantForAccessibility="no"
                     android:src="@drawable/deco_estrella"
                     app:tint="@color/buti_dorado" />
@@ -42,49 +73,31 @@
                     android:layout_marginStart="6dp"
                     android:text="320"
                     android:textColor="@color/buti_siena"
-                    android:textSize="20sp"
+                    android:textSize="19sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center_horizontal"
-            android:text="Tu camino hñáhñu"
-            android:textColor="@color/buti_siena"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <!-- Ruta de Niveles -->
+        <!-- Camino de niveles -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="22dp"
             android:orientation="vertical">
 
-            <!-- Nivel 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:translationX="20dp">
+                android:orientation="horizontal">
 
-                <LinearLayout
+                <Space
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end|center_vertical"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="4dp">
-
-                </LinearLayout>
-
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
                 <FrameLayout
-                    android:layout_width="104dp"
-                    android:layout_height="104dp">
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardNivel1"
@@ -95,50 +108,57 @@
                         android:focusable="true"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="48dp"
-                        app:cardElevation="6dp"
-                        app:strokeColor="#6B7F4A"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_rosa"
                         app:strokeWidth="4dp">
 
                         <ImageView
-                            android:layout_width="58dp"
-                            android:layout_height="58dp"
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
                             android:layout_gravity="center"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_manitas" />
+                            android:contentDescription="Saludos"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_saludos" />
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Insignia de estado -->
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="0dp"
-                        android:background="@drawable/bg_badge_hecho"
-                        android:importantForAccessibility="no"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_paloma"
-                        app:tint="@color/white" />
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_rosa"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </FrameLayout>
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="8dp">
+                    android:gravity="start|center_vertical">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:letterSpacing="0.08"
+                            android:letterSpacing="0.1"
                             android:text="NIVEL 1"
-                            android:textColor="#6B7F4A"
-                            android:textSize="12sp"
+                            android:textColor="@color/buti_rosa"
+                            android:textSize="11sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -146,86 +166,66 @@
                             android:layout_height="wrap_content"
                             android:text="Saludos"
                             android:textColor="@color/buti_negro"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Camino punteado -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
                 android:orientation="vertical">
-
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="13.3dp" />
-
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="6.7dp" />
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="0.0dp" />
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-6.7dp" />
-
                 <View
                     android:layout_width="6dp"
                     android:layout_height="6dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
+                    android:layout_margin="3dp"
                     android:background="@drawable/bg_punto_camino"
-                    android:translationX="-13.3dp" />
+                    android:translationX="16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="-16dp" />
             </LinearLayout>
 
-            <!-- Nivel 2 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:translationX="-20dp">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end|center_vertical"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="4dp">
+                    android:gravity="end|center_vertical">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:letterSpacing="0.08"
+                            android:letterSpacing="0.1"
                             android:text="NIVEL 2"
-                            android:textColor="#6B7F4A"
-                            android:textSize="12sp"
+                            android:textColor="@color/buti_naranja"
+                            android:textSize="11sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -233,14 +233,13 @@
                             android:layout_height="wrap_content"
                             android:text="Números"
                             android:textColor="@color/buti_negro"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
-
                 <FrameLayout
-                    android:layout_width="104dp"
-                    android:layout_height="104dp">
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardNivel2"
@@ -251,267 +250,220 @@
                         android:focusable="true"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="48dp"
-                        app:cardElevation="6dp"
-                        app:strokeColor="#6B7F4A"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_naranja"
                         app:strokeWidth="4dp">
 
                         <ImageView
-                            android:layout_width="58dp"
-                            android:layout_height="58dp"
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
                             android:layout_gravity="center"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_piramide" />
+                            android:contentDescription="Números"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_numeros" />
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Insignia de estado -->
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="0dp"
-                        android:background="@drawable/bg_badge_hecho"
-                        android:importantForAccessibility="no"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_paloma"
-                        app:tint="@color/white" />
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_naranja"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </FrameLayout>
-
-                <LinearLayout
+                <Space
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="8dp">
-
-                </LinearLayout>
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
             </LinearLayout>
 
-            <!-- Camino punteado -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
                 android:orientation="vertical">
-
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-11.7dp" />
-
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-3.3dp" />
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="5.0dp" />
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="13.3dp" />
-
                 <View
                     android:layout_width="6dp"
                     android:layout_height="6dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
+                    android:layout_margin="3dp"
                     android:background="@drawable/bg_punto_camino"
-                    android:translationX="21.7dp" />
+                    android:translationX="-16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
             </LinearLayout>
 
-            <!-- Nivel 3 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:translationX="30dp">
+                android:orientation="horizontal">
 
-                <LinearLayout
+                <Space
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end|center_vertical"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="4dp">
-
-                </LinearLayout>
-
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
                 <FrameLayout
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:background="@drawable/bg_halo_nivel">
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardNivel3"
-                        android:layout_width="112dp"
-                        android:layout_height="112dp"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
                         app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="56dp"
-                        app:cardElevation="12dp"
-                        app:strokeColor="@color/buti_siena"
-                        app:strokeWidth="5dp">
+                        app:cardCornerRadius="48dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_verde"
+                        app:strokeWidth="4dp">
 
                         <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
                             android:layout_gravity="center"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_humano" />
+                            android:contentDescription="Colores"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_colores" />
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Insignia de estado -->
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/bg_badge_actual"
-                        android:importantForAccessibility="no"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_flederecha"
-                        app:tint="@color/white" />
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_verde"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </FrameLayout>
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="8dp">
+                    android:gravity="start|center_vertical">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:letterSpacing="0.08"
+                            android:letterSpacing="0.1"
                             android:text="NIVEL 3"
-                            android:textColor="@color/buti_siena"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Familia"
-                            android:textColor="@color/buti_negro"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Camino punteado -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="21.7dp" />
-
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="13.3dp" />
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="5.0dp" />
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-3.3dp" />
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-11.7dp" />
-            </LinearLayout>
-
-            <!-- Nivel 4 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:translationX="-20dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end|center_vertical"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="4dp">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:letterSpacing="0.08"
-                            android:text="NIVEL 4"
-                            android:textColor="#A89877"
-                            android:textSize="12sp"
+                            android:textColor="@color/buti_verde"
+                            android:textSize="11sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Colores"
-                            android:textColor="#8A7B66"
-                            android:textSize="18sp"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="-16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:text="NIVEL 4"
+                            android:textColor="@color/buti_azul"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Animales"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
                 <FrameLayout
-                    android:layout_width="104dp"
-                    android:layout_height="104dp">
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardNivel4"
@@ -520,113 +472,80 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="#F3ECDF"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="48dp"
-                        app:cardElevation="1dp"
-                        app:strokeColor="#E3D7C3"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_azul"
                         app:strokeWidth="4dp">
 
                         <ImageView
-                            android:layout_width="58dp"
-                            android:layout_height="58dp"
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
                             android:layout_gravity="center"
-                            android:alpha="0.45"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_rombo7" />
+                            android:contentDescription="Animales"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_animales" />
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Insignia de estado -->
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="0dp"
-                        android:background="@drawable/bg_badge_bloq"
-                        android:importantForAccessibility="no"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_candado2"
-                        app:tint="@color/white" />
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_azul"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="4"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </FrameLayout>
-
-                <LinearLayout
+                <Space
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="8dp">
-
-                </LinearLayout>
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
             </LinearLayout>
 
-            <!-- Camino punteado -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
                 android:orientation="vertical">
-
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-21.7dp" />
-
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-23.3dp" />
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-25.0dp" />
-
-                <View
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
-                    android:background="@drawable/bg_punto_camino"
-                    android:translationX="-26.7dp" />
-
                 <View
                     android:layout_width="6dp"
                     android:layout_height="6dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="3dp"
+                    android:layout_margin="3dp"
                     android:background="@drawable/bg_punto_camino"
-                    android:translationX="-28.3dp" />
+                    android:translationX="-16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
             </LinearLayout>
 
-            <!-- Nivel 5 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:translationX="-30dp">
+                android:orientation="horizontal">
 
-                <LinearLayout
+                <Space
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end|center_vertical"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="4dp">
-
-                </LinearLayout>
-
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
                 <FrameLayout
-                    android:layout_width="104dp"
-                    android:layout_height="104dp">
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardNivel5"
@@ -635,66 +554,754 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="#F3ECDF"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="48dp"
-                        app:cardElevation="1dp"
-                        app:strokeColor="#E3D7C3"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_siena"
                         app:strokeWidth="4dp">
 
                         <ImageView
-                            android:layout_width="58dp"
-                            android:layout_height="58dp"
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
                             android:layout_gravity="center"
-                            android:alpha="0.45"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_venado" />
+                            android:contentDescription="Plantas"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_plantas" />
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Insignia de estado -->
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="0dp"
-                        android:background="@drawable/bg_badge_bloq"
-                        android:importantForAccessibility="no"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_candado2"
-                        app:tint="@color/white" />
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_siena"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="5"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </FrameLayout>
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="8dp">
+                    android:gravity="start|center_vertical">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:letterSpacing="0.08"
+                            android:letterSpacing="0.1"
                             android:text="NIVEL 5"
-                            android:textColor="#A89877"
-                            android:textSize="12sp"
+                            android:textColor="@color/buti_siena"
+                            android:textSize="11sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Animales"
-                            android:textColor="#8A7B66"
-                            android:textSize="18sp"
+                            android:text="Plantas"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="-16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:text="NIVEL 6"
+                            android:textColor="@color/buti_vino"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Objetos"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+                <FrameLayout
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardNivel6"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="48dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_vino"
+                        app:strokeWidth="4dp">
+
+                        <ImageView
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="Objetos"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_objetos" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_vino"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="6"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="-16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
+                <FrameLayout
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardNivel7"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="48dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_rosa"
+                        app:strokeWidth="4dp">
+
+                        <ImageView
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="Cuerpo"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_cuerpo" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_rosa"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="7"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:text="NIVEL 7"
+                            android:textColor="@color/buti_rosa"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cuerpo"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="-16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:text="NIVEL 8"
+                            android:textColor="@color/buti_naranja"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Comida"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+                <FrameLayout
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardNivel8"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="48dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_naranja"
+                        app:strokeWidth="4dp">
+
+                        <ImageView
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="Comida"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_comida" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_naranja"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="8"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="-16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
+                <FrameLayout
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardNivel9"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="48dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_verde"
+                        app:strokeWidth="4dp">
+
+                        <ImageView
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="Tiempo y celebraciones"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_tiempo" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_verde"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="9"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:text="NIVEL 9"
+                            android:textColor="@color/buti_verde"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tiempo y celebraciones"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="-16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:text="NIVEL 10"
+                            android:textColor="@color/buti_azul"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Naturaleza"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+                <FrameLayout
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardNivel10"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="48dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_azul"
+                        app:strokeWidth="4dp">
+
+                        <ImageView
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="Naturaleza"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_naturaleza" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_azul"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="10"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="-16dp" />
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="0dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_punto_camino"
+                    android:translationX="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="0.2" />
+                <FrameLayout
+                    android:layout_width="108dp"
+                    android:layout_height="108dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardNivel11"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="48dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="@color/buti_siena"
+                        app:strokeWidth="4dp">
+
+                        <ImageView
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="Lugares"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_cat_lugares" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_badge_nivel"
+                        android:backgroundTint="@color/buti_siena"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:text="11"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_etiqueta_nivel"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:text="NIVEL 11"
+                            android:textColor="@color/buti_siena"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lugares"
+                            android:textColor="@color/buti_negro"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:gravity="center"
+            android:text="Cada palabra cuenta. ¡Sigue avanzando!"
+            android:textColor="@color/buti_siena"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
     </LinearLayout>
 </ScrollView>

@@ -34,11 +34,13 @@
         android:name="com.itsoeh.sbsc.buti.vocabulario.VocabularioFragment"
         android:label="@string/menu_vocabulario"
         tools:layout="@layout/fragment_vocabulario" />
+
     <fragment
         android:id="@+id/palabrasVocabularioFragment"
         android:name="com.itsoeh.sbsc.buti.vocabulario.PalabrasVocabularioFragment"
         android:label="Palabras de vocabulario"
         tools:layout="@layout/fragment_palabras_vocabulario" />
+
     <fragment
         android:id="@+id/practicarFragment"
         android:name="com.itsoeh.sbsc.buti.lecciones.PracticarFragment"
@@ -56,5 +58,60 @@
         android:name="com.itsoeh.sbsc.buti.perfil.EditarPerfilFragment"
         android:label="Editar perfil"
         tools:layout="@layout/fragment_editar_perfil" />
+
+    <!-- Pantalla con las cinco etapas del nivel -->
+    <fragment
+        android:id="@+id/etapasLeccionFragment"
+        android:name="com.itsoeh.sbsc.buti.lecciones.EtapasLeccionFragment"
+        android:label="Etapas de la lección"
+        tools:layout="@layout/fragment_etapas_leccion" />
+
+    <!-- Pantalla donde se realiza cada actividad -->
+    <fragment
+        android:id="@+id/actividadLeccionFragment"
+        android:name="com.itsoeh.sbsc.buti.lecciones.ActividadLeccionFragment"
+        android:label="Actividad de lección"
+        tools:layout="@layout/fragment_actividad_leccion" />
+
+    <!-- Sección de juegos -->
+    <fragment
+        android:id="@+id/juegosFragment"
+        android:name="com.itsoeh.sbsc.buti.juegos.JuegosFragment"
+        android:label="Juegos"
+        tools:layout="@layout/fragment_juegos" />
+
+
+    <fragment
+        android:id="@+id/memoramaFragment"
+        android:name="com.itsoeh.sbsc.buti.juegos.MemoramaFragment"
+        android:label="Memorama"
+        tools:layout="@layout/fragment_memorama" />
+
+
+    <fragment
+        android:id="@+id/rompecabezasFragment"
+        android:name="com.itsoeh.sbsc.buti.juegos.RompecabezasFragment"
+        android:label="Rompecabezas"
+        tools:layout="@layout/fragment_rompecabezas" />
+
+
+    <fragment
+        android:id="@+id/atrapaPalabraFragment"
+        android:name="com.itsoeh.sbsc.buti.juegos.AtrapaPalabraFragment"
+        android:label="Atrapa la palabra"
+        tools:layout="@layout/fragment_atrapa_palabra" />
+
+    <fragment
+        android:id="@+id/diferenciasFragment"
+        android:name="com.itsoeh.sbsc.buti.juegos.DiferenciasFragment"
+        android:label="Encuentra las diferencias"
+        tools:layout="@layout/fragment_diferencias" />
+
+    <!-- Acerca de -->
+    <fragment
+        android:id="@+id/acercaDeFragment"
+        android:name="com.itsoeh.sbsc.buti.acerca.AcercaDeFragment"
+        android:label="Acerca de"
+        tools:layout="@layout/fragment_acerca_de" />
 
 </navigation>
