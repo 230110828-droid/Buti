@@ -22,7 +22,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.annotation.NonNull;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -33,11 +32,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -706,7 +700,7 @@ public class MainActivity extends AppCompatActivity {
                     getSharedPreferences("buti_prefs", MODE_PRIVATE)
                             .edit().putBoolean("modo_mantenimiento", true).apply();
 
-                    Toast.makeText(MainActivity.this, "El sistema ha entrado en modo mantenimiento", Toast.LENGTH_LONG).show();
+                    // La pantalla de mantenimiento ya explica el aviso (sin Toast).
                     Intent intent = new Intent(MainActivity.this, MantenimientoActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

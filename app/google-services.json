@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "337345576125-b12h6chuun6tsr7nlpmmnkhkrf3fb8j4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.itsoeh.sbsc.buti",
+            "certificate_hash": "40043c67578730a8cc22ba61b1c602e0d311700a"
+          }
+        },
+        {
           "client_id": "337345576125-njjvgfaakdlm6qb4838b2e4te29o778d.apps.googleusercontent.com",
           "client_type": 3
         }
