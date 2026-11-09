@@ -1,8 +1,8 @@
 package com.itsoeh.sbsc.buti.lecciones;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.itsoeh.sbsc.buti.ButiDialogo;
+import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
 
 public class LeccionesFragment extends Fragment {
@@ -71,6 +79,40 @@ public class LeccionesFragment extends Fragment {
         // Nivel 11
         setupNivelCard(view.findViewById(R.id.cardNivel11),
                 11, "Lugares", navController);
+
+        // Puntos totales del usuario (lecciones + práctica + juegos).
+        cargarPuntos(view.findViewById(R.id.txtPuntosLecciones));
+    }
+
+    private void cargarPuntos(TextView txtPuntos) {
+
+        if (txtPuntos == null) return;
+
+        txtPuntos.setText("0");
+
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (usuario == null) return;
+
+        FirebaseDatabase.getInstance()
+                .getReference("usuarios")
+                .child(usuario.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (!isAdded() || getView() == null) return;
+
+                        txtPuntos.setText(String.valueOf(
+                                ProgresoButi.puntosTotales(snapshot)
+                        ));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
     }
 
     private void setupNivelCard(
@@ -90,14 +132,14 @@ public class LeccionesFragment extends Fragment {
                 return;
             }
 
-            new AlertDialog.Builder(requireContext())
-                    .setTitle("Nivel " + numeroNivel + " · " + titulo)
-                    .setMessage(
-                            "Tema: " + titulo
-                                    + "\n\n5 etapas de aprendizaje"
-                                    + "\n\nCompleta los desafíos para avanzar."
-                    )
-                    .setPositiveButton("Empezar", (dialog, which) -> {
+            new ButiDialogo(requireContext()).mostrarConfirmacion(
+                    "Nivel " + numeroNivel + " · " + titulo,
+                    "5 etapas de aprendizaje.\n\n"
+                            + "Completa los desafíos para avanzar "
+                            + "en tu camino hñähñu.",
+                    "Empezar",
+                    "Ahora no",
+                    () -> {
 
                         Bundle argumentos = new Bundle();
 
@@ -125,9 +167,9 @@ public class LeccionesFragment extends Fragment {
                                     argumentos
                             );
                         }
-                    })
-                    .setNegativeButton("Cancelar", null)
-                    .show();
+                    },
+                    null
+            );
         });
     }
 }

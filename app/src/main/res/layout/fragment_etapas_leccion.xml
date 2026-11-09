@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5EFE3"
+    android:background="@color/buti_fondo"
     android:fillViewport="true"
     android:scrollbars="none">
 
@@ -22,14 +22,13 @@
 
             <ImageButton
                 android:id="@+id/btnVolverEtapas"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_boton_volver"
                 android:contentDescription="Regresar"
-                android:src="@drawable/ic_fleizquierda"
+                android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:padding="0dp"
-                android:tint="@null" />
+                android:src="@drawable/ic_flecha_atras" />
 
             <TextView
                 android:id="@+id/txtTituloNivel"
@@ -37,67 +36,101 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_marginHorizontal="8dp"
+                android:maxLines="2"
                 android:text="Nivel 1: Saludos"
-                android:textColor="#4F000B"
-                android:textSize="22sp"
+                android:textColor="@color/buti_titulo"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtPuntosEtapas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="⭐ 0"
-                android:textColor="#8C4A2F"
-                android:textSize="16sp"
+                android:background="@drawable/bg_chip_puntos"
+                android:drawableStart="@drawable/ic_estrella_puntos"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:text="0"
+                android:textColor="@color/buti_titulo"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="Tu aventura comienza aquí"
-            android:textColor="#4F000B"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="Completa cada desafío para avanzar en tu aprendizaje."
-            android:textColor="#6D6258"
-            android:textSize="15sp" />
-
-        <!-- Progreso -->
+        <!-- Encabezado: aventura y progreso -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:background="#E8DCC8"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_header_lecciones"
+            android:elevation="4dp"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="20dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tu aventura comienza aquí"
+                        android:textColor="@color/buti_crema"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Completa cada desafío para avanzar en tu aprendizaje."
+                        android:textColor="@color/buti_crema_oscuro"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="8dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_colibri_volando" />
+
+            </LinearLayout>
+
+            <!-- Progreso -->
             <TextView
                 android:id="@+id/txtProgresoEtapas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="0 de 5 etapas completadas"
-                android:textColor="#4F000B"
-                android:textStyle="bold"
-                android:textSize="14sp" />
+                android:textColor="@color/buti_dorado"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <ProgressBar
                 android:id="@+id/barraProgresoEtapas"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="12dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="8dp"
                 android:max="5"
                 android:progress="0"
-                android:progressTint="#6B7A4F"
-                android:progressBackgroundTint="#C8BBA7" />
+                android:progressBackgroundTint="#66FFFFFF"
+                android:progressTint="@color/buti_dorado" />
 
         </LinearLayout>
 
@@ -107,10 +140,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="20dp"
             app:cardElevation="4dp"
-            app:strokeColor="#D9C8A9"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -121,9 +154,11 @@
                 android:padding="17dp">
 
                 <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="#E8EEDC"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_icono_etapa1"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_maguey_brote"
                     android:contentDescription="Descubre" />
 
@@ -138,7 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ETAPA 1"
-                        android:textColor="#8C4A2F"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -146,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Descubre"
-                        android:textColor="#4F000B"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="19sp"
                         android:textStyle="bold" />
 
@@ -154,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Conoce nuevas palabras y sus sonidos."
-                        android:textColor="#6D6258"
+                        android:textColor="@color/buti_texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -162,9 +197,8 @@
                     android:id="@+id/txtEstadoEtapa1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="▶"
-                    android:textColor="#6B7A4F"
-                    android:textSize="22sp" />
+                    android:drawableEnd="@drawable/ic_estado_jugar"
+                    android:text="" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -175,10 +209,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
-            app:strokeColor="#D9C8A9"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -189,9 +223,11 @@
                 android:padding="17dp">
 
                 <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="#F8E9D5"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_icono_etapa2"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_libro1"
                     android:contentDescription="Completa palabras" />
 
@@ -206,7 +242,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ETAPA 2"
-                        android:textColor="#8C4A2F"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -214,7 +250,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Completa palabras"
-                        android:textColor="#4F000B"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -222,7 +258,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Resuelve palabras incompletas."
-                        android:textColor="#6D6258"
+                        android:textColor="@color/buti_texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -230,8 +266,8 @@
                     android:id="@+id/txtEstadoEtapa2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🔒"
-                    android:textSize="19sp" />
+                    android:drawableEnd="@drawable/ic_estado_bloqueada"
+                    android:text="" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -242,10 +278,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
-            app:strokeColor="#D9C8A9"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -256,9 +292,11 @@
                 android:padding="17dp">
 
                 <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="#E3EBF0"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_icono_etapa3"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_manitas"
                     android:contentDescription="Relaciona" />
 
@@ -273,7 +311,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ETAPA 3"
-                        android:textColor="#8C4A2F"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -281,7 +319,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Relaciona"
-                        android:textColor="#4F000B"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="19sp"
                         android:textStyle="bold" />
 
@@ -289,7 +327,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Une imágenes, sonidos y significados."
-                        android:textColor="#6D6258"
+                        android:textColor="@color/buti_texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -297,8 +335,8 @@
                     android:id="@+id/txtEstadoEtapa3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🔒"
-                    android:textSize="19sp" />
+                    android:drawableEnd="@drawable/ic_estado_bloqueada"
+                    android:text="" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -309,10 +347,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
-            app:strokeColor="#D9C8A9"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -323,9 +361,11 @@
                 android:padding="17dp">
 
                 <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="#F2E4E9"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_icono_etapa4"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_trofeo"
                     android:contentDescription="Reto especial" />
 
@@ -340,7 +380,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ETAPA 4"
-                        android:textColor="#8C4A2F"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -348,7 +388,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reto especial"
-                        android:textColor="#4F000B"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="19sp"
                         android:textStyle="bold" />
 
@@ -356,7 +396,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Supera un desafío diferente."
-                        android:textColor="#6D6258"
+                        android:textColor="@color/buti_texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -364,8 +404,8 @@
                     android:id="@+id/txtEstadoEtapa4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🔒"
-                    android:textSize="19sp" />
+                    android:drawableEnd="@drawable/ic_estado_bloqueada"
+                    android:text="" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -377,10 +417,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="30dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
-            app:strokeColor="#D9C8A9"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -391,9 +431,11 @@
                 android:padding="17dp">
 
                 <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="#F5EBCB"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_icono_etapa5"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_cirestrella"
                     android:contentDescription="Evaluación final" />
 
@@ -408,7 +450,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ETAPA 5"
-                        android:textColor="#8C4A2F"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -416,7 +458,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Evaluación final"
-                        android:textColor="#4F000B"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="19sp"
                         android:textStyle="bold" />
 
@@ -424,7 +466,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Demuestra lo que has aprendido."
-                        android:textColor="#6D6258"
+                        android:textColor="@color/buti_texto_secundario"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -432,8 +474,8 @@
                     android:id="@+id/txtEstadoEtapa5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🔒"
-                    android:textSize="19sp" />
+                    android:drawableEnd="@drawable/ic_estado_bloqueada"
+                    android:text="" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

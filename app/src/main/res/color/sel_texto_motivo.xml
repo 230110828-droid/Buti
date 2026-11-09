@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Color del texto de la opción: naranja si está seleccionada, café si no -->
+<!-- Texto de las opciones: crema cuando está elegida, color normal si no.
+     Usa colores por función, así funciona en claro y oscuro. -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="#D9722E" android:state_checked="true" />
-    <item android:color="@color/buti_cafe" />
+    <item android:color="@color/buti_sobre_acento" android:state_checked="true" />
+    <item android:color="@color/buti_texto" />
 </selector>

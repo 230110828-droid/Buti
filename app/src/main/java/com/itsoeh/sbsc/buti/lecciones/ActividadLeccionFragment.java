@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -26,29 +26,22 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 
+import com.itsoeh.sbsc.buti.ButiAviso;
+import com.itsoeh.sbsc.buti.ProgresoButi;
+import com.itsoeh.sbsc.buti.ResultadoButi;
 import com.itsoeh.sbsc.buti.R;
 import com.itsoeh.sbsc.buti.vocabulario.AudiosVocabulario;
 import com.itsoeh.sbsc.buti.vocabulario.VocabularioDatos;
 
 import java.text.BreakIterator;
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.Calendar;
 
 public class ActividadLeccionFragment extends Fragment {
 
@@ -129,6 +122,13 @@ public class ActividadLeccionFragment extends Fragment {
     private final List<Integer> palabrasMemoria = new ArrayList<>();
     private final List<String> palabrasParaRepasar = new ArrayList<>();
 
+    // Ronda de repaso: palabras falladas (una sola oportunidad, menos puntos)
+    private final List<Integer> palabrasFallidas = new ArrayList<>();
+    private boolean enRepaso = false;
+    private int indiceRepaso = 0;
+    private int aciertosRepaso = 0;
+    private ResultadoButi pantallaResultado;
+
     private int indiceTarjetaMemoria = 0;
     private boolean fasePreguntasMemoria = false;
     private MediaPlayer reproductor;
@@ -149,7 +149,9 @@ public class ActividadLeccionFragment extends Fragment {
     // CONSTANTES
     // =========================================================
 
-    private static final int PUNTOS_ETAPA = 12;
+    // Puntos: 10 por respuesta correcta y 5 por acierto en el repaso.
+    private static final int PUNTOS_ACIERTO = ProgresoButi.PUNTOS_ACIERTO;
+    private static final int PUNTOS_REPASO = ProgresoButi.PUNTOS_REPASO;
 
     private static final int TOTAL_DESCUBRE = 6;
     private static final int TOTAL_RELACIONA = 6;
@@ -158,11 +160,17 @@ public class ActividadLeccionFragment extends Fragment {
 
     private static final int DURACION_PREGUNTA = 20000;
 
-    private static final int VERDE = Color.rgb(107, 122, 79);
-    private static final int ROSA = Color.rgb(214, 51, 108);
-    private static final int CREMA = Color.rgb(245, 239, 227);
-    private static final int CAFE = Color.rgb(140, 74, 47);
-    private static final int DORADO = Color.rgb(242, 169, 0);
+    // Colores de la paleta B'ÜTI. Se cargan en cargarColores()
+    // para que cambien solos entre modo claro y modo oscuro.
+    private int VERDE;          // acierto
+    private int ROSA;           // error
+    private int CREMA;          // fondo de las letras
+    private int CAFE;           // texto principal
+    private int DORADO;         // opción seleccionada
+    private int FONDO_OPCION;   // fondo normal de las opciones
+    private int FONDO_ACIERTO;  // fondo de una opción correcta
+    private int FONDO_ERROR;    // fondo de una opción incorrecta
+    private int BORDE;          // borde de las tarjetas
 
     public ActividadLeccionFragment() {
         super(R.layout.fragment_actividad_leccion);
@@ -175,10 +183,33 @@ public class ActividadLeccionFragment extends Fragment {
     ) {
         super.onViewCreated(view, savedInstanceState);
 
+        cargarColores();
         inicializarVistas(view);
         recibirDatos();
         configurarBotonVolver();
         configurarActividad();
+    }
+
+    // =========================================================
+    // COLORES (CLARO / OSCURO)
+    // =========================================================
+
+    private void cargarColores() {
+
+        boolean oscuro = (getResources().getConfiguration().uiMode
+                & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+
+        VERDE = ContextCompat.getColor(requireContext(), R.color.buti_exito);
+        ROSA = ContextCompat.getColor(requireContext(), R.color.nivel_rosa);
+        CREMA = ContextCompat.getColor(requireContext(), R.color.buti_superficie_alt);
+        CAFE = ContextCompat.getColor(requireContext(), R.color.buti_texto);
+        FONDO_OPCION = ContextCompat.getColor(requireContext(), R.color.buti_superficie);
+        BORDE = ContextCompat.getColor(requireContext(), R.color.buti_borde);
+
+        DORADO = oscuro ? Color.rgb(122, 92, 20) : Color.rgb(242, 169, 0);
+        FONDO_ACIERTO = oscuro ? Color.rgb(47, 74, 34) : Color.rgb(213, 229, 199);
+        FONDO_ERROR = oscuro ? Color.rgb(90, 26, 42) : Color.rgb(255, 210, 210);
     }
 
     // =========================================================
@@ -307,9 +338,18 @@ public class ActividadLeccionFragment extends Fragment {
         palabrasMemoria.clear();
         preguntasDescubre.clear();
         palabrasParaRepasar.clear();
+        palabrasFallidas.clear();
+        enRepaso = false;
+        indiceRepaso = 0;
+        aciertosRepaso = 0;
+
+        if (pantallaResultado != null) {
+            pantallaResultado.cerrar();
+            pantallaResultado = null;
+        }
 
         txtEtapa.setText("ETAPA " + numeroEtapa);
-        txtPuntos.setText("⭐ 0");
+        txtPuntos.setText("0");
         personajeNina = (numeroNivel % 2 != 0);
         progresoVisual = 0;
         totalPreguntasVisual = obtenerTotalPreguntasEtapa();
@@ -545,6 +585,27 @@ public class ActividadLeccionFragment extends Fragment {
         if (!palabrasParaRepasar.contains(registro)) {
             palabrasParaRepasar.add(registro);
         }
+
+        // También entra a la ronda de repaso del final.
+        if (!palabrasFallidas.contains(indice)) {
+            palabrasFallidas.add(indice);
+        }
+    }
+
+    // Suma puntos por una respuesta correcta y actualiza el marcador.
+    private void sumarAcierto() {
+        aciertos++;
+        puntosObtenidos += PUNTOS_ACIERTO;
+        txtPuntos.setText(String.valueOf(puntosObtenidos));
+        animarMarcador();
+    }
+
+    private void animarMarcador() {
+        if (txtPuntos == null) return;
+        txtPuntos.animate().cancel();
+        txtPuntos.setScaleX(1.35f);
+        txtPuntos.setScaleY(1.35f);
+        txtPuntos.animate().scaleX(1f).scaleY(1f).setDuration(260).start();
     }
 
     // Avanza el colibrí únicamente cuando se completa una actividad.
@@ -661,7 +722,7 @@ public class ActividadLeccionFragment extends Fragment {
         boton.setEnabled(true);
 
         boton.setBackgroundTintList(
-                ColorStateList.valueOf(Color.WHITE)
+                ColorStateList.valueOf(FONDO_OPCION)
         );
 
         boton.setTextColor(CAFE);
@@ -862,8 +923,8 @@ public class ActividadLeccionFragment extends Fragment {
             tarjeta.setRadius(dp(18));
             tarjeta.setCardElevation(dp(3));
             tarjeta.setStrokeWidth(dp(1));
-            tarjeta.setStrokeColor(Color.rgb(227, 213, 191));
-            tarjeta.setCardBackgroundColor(Color.WHITE);
+            tarjeta.setStrokeColor(BORDE);
+            tarjeta.setCardBackgroundColor(FONDO_OPCION);
             tarjeta.setClickable(true);
             tarjeta.setFocusable(true);
 
@@ -882,6 +943,7 @@ public class ActividadLeccionFragment extends Fragment {
             imagen.setContentDescription("Opción de imagen");
 
             tarjeta.addView(imagen);
+            tarjeta.setTag(opcion);
 
             tarjeta.setOnClickListener(v ->
                     responderDescubre(opcion, indiceCorrecto, tarjeta)
@@ -899,51 +961,83 @@ public class ActividadLeccionFragment extends Fragment {
 
         if (respondida) return;
 
+        // Una sola oportunidad: bien o mal, se pasa a la siguiente.
+        respondida = true;
+        registrarAvanceVisual();
+
+        String espanol = vocabulario[correcta][0];
+        String hnahnu = primeraVariante(vocabulario[correcta][1]);
+
         if (opcion == correcta) {
 
-            respondida = true;
-            aciertos++;
-            registrarAvanceVisual();
+            sumarAcierto();
 
             tarjeta.setStrokeColor(VERDE);
             tarjeta.setStrokeWidth(dp(3));
 
             mostrarResultado(
-                    "¡Correcto! Escuchaste e identificaste la palabra.",
+                    "¡Correcto! +" + PUNTOS_ACIERTO + " puntos. «" + hnahnu
+                            + "» significa «" + espanol + "».",
                     VERDE
             );
 
-            txtTraduccion.setText(
-                    vocabulario[correcta][1]
-            );
-
-            txtTraduccion.setVisibility(View.VISIBLE);
-
-            bloquearTarjetasImagen();
-
-            btnContinuar.setText(
-                    indicePregunta == totalDescubre - 1
-                            ? "Terminar etapa"
-                            : "Siguiente palabra"
-            );
-
-            btnContinuar.setEnabled(true);
-
-            btnContinuar.setOnClickListener(v -> {
-                indicePregunta++;
-                mostrarPreguntaDescubre();
-            });
-
         } else {
+
             registrarPalabraParaRepasar(correcta);
 
             tarjeta.setStrokeColor(ROSA);
             tarjeta.setStrokeWidth(dp(3));
+            marcarTarjetaCorrecta(correcta);
 
             mostrarResultado(
-                    "Esa no es la imagen correcta. Escucha nuevamente e inténtalo.",
+                    "Incorrecto. Lo que escuchaste fue «" + hnahnu
+                            + "», que significa «" + espanol
+                            + "». La verás otra vez en el repaso.",
                     ROSA
             );
+        }
+
+        txtTraduccion.setText(hnahnu + " = " + espanol);
+        txtTraduccion.setVisibility(View.VISIBLE);
+
+        bloquearTarjetasImagen();
+
+        btnContinuar.setText(
+                indicePregunta == totalDescubre - 1
+                        ? "Terminar etapa"
+                        : "Siguiente palabra"
+        );
+
+        btnContinuar.setEnabled(true);
+
+        btnContinuar.setOnClickListener(v -> {
+            indicePregunta++;
+            mostrarPreguntaDescubre();
+        });
+    }
+
+    // Resalta en verde la imagen correcta cuando el usuario se equivoca.
+    private void marcarTarjetaCorrecta(int correcta) {
+
+        for (int i = 0; i < contenedorOpciones.getChildCount(); i++) {
+
+            View fila = contenedorOpciones.getChildAt(i);
+
+            if (!(fila instanceof LinearLayout)) continue;
+
+            LinearLayout grupo = (LinearLayout) fila;
+
+            for (int j = 0; j < grupo.getChildCount(); j++) {
+
+                View hijo = grupo.getChildAt(j);
+
+                if (hijo instanceof MaterialCardView
+                        && Integer.valueOf(correcta).equals(hijo.getTag())) {
+
+                    ((MaterialCardView) hijo).setStrokeColor(VERDE);
+                    ((MaterialCardView) hijo).setStrokeWidth(dp(4));
+                }
+            }
         }
     }
 
@@ -1318,6 +1412,8 @@ public class ActividadLeccionFragment extends Fragment {
 
     private void comprobarPalabra() {
 
+        if (respondida) return;
+
         if (letrasColocadas == null || posicionesFijas == null) {
             return;
         }
@@ -1352,65 +1448,57 @@ public class ActividadLeccionFragment extends Fragment {
                 Normalizer.Form.NFC
         );
 
+        // Una sola oportunidad: bien o mal, se pasa a la siguiente.
+        respondida = true;
+        registrarAvanceVisual();
+
+        String espanol = vocabulario[indicePalabra][0];
+
         if (construidaNormalizada.equalsIgnoreCase(objetivoNormalizado)) {
 
-            respondida = true;
-            aciertos++;
-            registrarAvanceVisual();
+            sumarAcierto();
 
             mostrarResultado(
-                    "¡Excelente! Formaste correctamente la palabra.",
+                    "¡Excelente! +" + PUNTOS_ACIERTO + " puntos. Formaste «"
+                            + palabraObjetivo + "» (" + espanol + ").",
                     VERDE
             );
 
-            txtTraduccion.setText(
-                    vocabulario[indicePalabra][0]
-            );
-
-            txtTraduccion.setVisibility(View.VISIBLE);
-
-            bloquearBancoLetras();
-
-            indicePregunta++;
-
-            int total = Math.min(TOTAL_DESCUBRE, preguntas.size());
-
-            btnContinuar.setText(
-                    indicePregunta >= total
-                            ? "Terminar etapa"
-                            : "Siguiente palabra"
-            );
-
-            btnContinuar.setEnabled(true);
-
-            btnContinuar.setOnClickListener(v ->
-                    mostrarPalabraIncompleta()
-            );
+            txtTraduccion.setText(palabraObjetivo + " = " + espanol);
 
         } else {
+
             registrarPalabraParaRepasar(indicePalabra);
 
             mostrarResultado(
-                    "La palabra no coincide. Vuelve a intentarlo.",
+                    "Incorrecto. Escribiste «" + palabraConstruida
+                            + "», pero la palabra correcta es «" + palabraObjetivo
+                            + "» (" + espanol + "). La verás otra vez en el repaso.",
                     ROSA
             );
 
-            // Limpiar únicamente las letras que seleccionó el usuario.
-            // Las letras de ayuda permanecen en sus posiciones.
-            for (int i = 0; i < letrasColocadas.length; i++) {
-
-                if (!posicionesFijas[i]) {
-                    letrasColocadas[i] = null;
-                }
-            }
-
-            palabraConstruida = "";
-
-            actualizarEspacios();
-
-            // Volver a crear el banco con las letras faltantes.
-            crearBancoLetras();
+            txtTraduccion.setText("Correcta: " + palabraObjetivo + " = " + espanol);
         }
+
+        txtTraduccion.setVisibility(View.VISIBLE);
+
+        bloquearBancoLetras();
+
+        indicePregunta++;
+
+        int total = Math.min(TOTAL_DESCUBRE, preguntas.size());
+
+        btnContinuar.setText(
+                indicePregunta >= total
+                        ? "Terminar etapa"
+                        : "Siguiente palabra"
+        );
+
+        btnContinuar.setEnabled(true);
+
+        btnContinuar.setOnClickListener(v ->
+                mostrarPalabraIncompleta()
+        );
     }
 
     private void bloquearBancoLetras() {
@@ -1560,7 +1648,7 @@ public class ActividadLeccionFragment extends Fragment {
         boton.setCornerRadius(dp(14));
 
         boton.setBackgroundTintList(
-                ColorStateList.valueOf(Color.WHITE)
+                ColorStateList.valueOf(FONDO_OPCION)
         );
 
         return boton;
@@ -1619,7 +1707,7 @@ public class ActividadLeccionFragment extends Fragment {
                 if (boton.isEnabled()) {
 
                     boton.setBackgroundTintList(
-                            ColorStateList.valueOf(Color.WHITE)
+                            ColorStateList.valueOf(FONDO_OPCION)
                     );
                 }
             }
@@ -1635,48 +1723,62 @@ public class ActividadLeccionFragment extends Fragment {
         int espanol = seleccionEspanol;
         int hnahnu = seleccionHnahnu;
 
+        String palabraEspanol = vocabulario[espanol][0];
+        String palabraHnahnu = primeraVariante(vocabulario[espanol][1]);
+
+        // Una sola oportunidad por palabra: bien o mal, la pareja se cierra.
+        parejasCompletadas.add(espanol);
+        registrarAvanceVisual();
+
+        restaurarColoresRelacion(columnaEspanol);
+        restaurarColoresRelacion(columnaHnahnu);
+
         if (espanol == hnahnu) {
 
-            aciertos++;
-            parejasCompletadas.add(espanol);
-            registrarAvanceVisual();
-
-            marcarParejaRelacion(espanol);
+            sumarAcierto();
+            marcarParejaRelacion(espanol, FONDO_ACIERTO);
 
             mostrarResultado(
-                    "¡Muy bien! Encontraste una pareja.",
+                    "¡Muy bien! +" + PUNTOS_ACIERTO + " puntos. «" + palabraEspanol
+                            + "» se dice «" + palabraHnahnu + "».",
                     VERDE
             );
 
-            if (parejasCompletadas.size() == 2) {
-
-                esperandoRelacion = false;
-                indicePregunta += 2;
-
-                btnContinuar.setEnabled(true);
-
-                btnContinuar.setOnClickListener(v ->
-                        prepararRelacion()
-                );
-            }
-
         } else {
+
             registrarPalabraParaRepasar(espanol);
+            marcarParejaRelacion(espanol, FONDO_ERROR);
 
             mostrarResultado(
-                    "Estas palabras no corresponden. Intenta otra combinación.",
+                    "Incorrecto. «" + palabraEspanol + "» se dice «" + palabraHnahnu
+                            + "». La verás otra vez en el repaso.",
                     ROSA
             );
+        }
 
-            restaurarColoresRelacion(columnaEspanol);
-            restaurarColoresRelacion(columnaHnahnu);
+        if (parejasCompletadas.size() == 2) {
+
+            esperandoRelacion = false;
+            indicePregunta += 2;
+
+            btnContinuar.setText(
+                    indicePregunta >= obtenerTotalRelacion()
+                            ? "Terminar etapa"
+                            : "Siguientes parejas"
+            );
+
+            btnContinuar.setEnabled(true);
+
+            btnContinuar.setOnClickListener(v ->
+                    prepararRelacion()
+            );
         }
 
         seleccionEspanol = -1;
         seleccionHnahnu = -1;
     }
 
-    private void marcarParejaRelacion(int indice) {
+    private void marcarParejaRelacion(int indice, int color) {
 
         for (int i = 0; i < columnaEspanol.getChildCount(); i++) {
 
@@ -1689,7 +1791,7 @@ public class ActividadLeccionFragment extends Fragment {
                 boton.setEnabled(false);
 
                 boton.setBackgroundTintList(
-                        ColorStateList.valueOf(Color.rgb(213, 229, 199))
+                        ColorStateList.valueOf(color)
                 );
             }
         }
@@ -1707,7 +1809,7 @@ public class ActividadLeccionFragment extends Fragment {
                 boton.setEnabled(false);
 
                 boton.setBackgroundTintList(
-                        ColorStateList.valueOf(Color.rgb(213, 229, 199))
+                        ColorStateList.valueOf(color)
                 );
             }
         }
@@ -1965,10 +2067,11 @@ public class ActividadLeccionFragment extends Fragment {
 
         if (esCorrecta) {
 
-            aciertos++;
+            sumarAcierto();
 
             mostrarResultado(
-                    "¡Excelente! Recordaste correctamente el significado.",
+                    "¡Excelente! +" + PUNTOS_ACIERTO + " puntos. Recordaste que significa «"
+                            + correcta + "».",
                     VERDE
             );
 
@@ -1976,7 +2079,8 @@ public class ActividadLeccionFragment extends Fragment {
             registrarPalabraParaRepasar(indiceCorrecto);
 
             mostrarResultado(
-                    "No te preocupes. La respuesta correcta era: " + correcta,
+                    "Incorrecto. La respuesta correcta era «" + correcta
+                            + "». La verás otra vez en el repaso.",
                     ROSA
             );
 
@@ -2000,13 +2104,13 @@ public class ActividadLeccionFragment extends Fragment {
             if (textoOpcion.equalsIgnoreCase(correcta)) {
 
                 boton.setBackgroundTintList(
-                        ColorStateList.valueOf(Color.rgb(213, 229, 199))
+                        ColorStateList.valueOf(FONDO_ACIERTO)
                 );
 
             } else if (textoOpcion.equalsIgnoreCase(opcion)) {
 
                 boton.setBackgroundTintList(
-                        ColorStateList.valueOf(Color.rgb(255, 210, 210))
+                        ColorStateList.valueOf(FONDO_ERROR)
                 );
             }
         }
@@ -2196,10 +2300,10 @@ public class ActividadLeccionFragment extends Fragment {
 
         if (esCorrecta) {
 
-            aciertos++;
+            sumarAcierto();
 
             mostrarResultado(
-                    "¡Respuesta correcta!",
+                    "¡Respuesta correcta! +" + PUNTOS_ACIERTO + " puntos.",
                     VERDE
             );
 
@@ -2207,7 +2311,8 @@ public class ActividadLeccionFragment extends Fragment {
             registrarPalabraParaRepasar(indicePalabra);
 
             mostrarResultado(
-                    "Respuesta incorrecta. La respuesta era: " + correcta,
+                    "Incorrecto. La respuesta correcta era «" + correcta
+                            + "». La verás otra vez en el repaso.",
                     ROSA
             );
 
@@ -2225,7 +2330,7 @@ public class ActividadLeccionFragment extends Fragment {
             if (boton.getText().toString().equalsIgnoreCase(correcta)) {
 
                 boton.setBackgroundTintList(
-                        ColorStateList.valueOf(Color.rgb(213, 229, 199))
+                        ColorStateList.valueOf(FONDO_ACIERTO)
                 );
 
             } else {
@@ -2235,8 +2340,8 @@ public class ActividadLeccionFragment extends Fragment {
                                 opcion.equalsIgnoreCase(
                                         boton.getText().toString()
                                 )
-                                        ? Color.rgb(255, 210, 210)
-                                        : Color.WHITE
+                                        ? FONDO_ERROR
+                                        : FONDO_OPCION
                         )
                 );
             }
@@ -2279,7 +2384,7 @@ public class ActividadLeccionFragment extends Fragment {
 
                 int segundos = (int) (millisUntilFinished / 1000);
 
-                txtTemporizador.setText("⏱ " + segundos + " s");
+                txtTemporizador.setText(segundos + " s");
 
                 if (segundos <= 5) {
                     txtTemporizador.setTextColor(ROSA);
@@ -2323,7 +2428,7 @@ public class ActividadLeccionFragment extends Fragment {
                     if (boton.getText().toString().equalsIgnoreCase(correcta)) {
 
                         boton.setBackgroundTintList(
-                                ColorStateList.valueOf(Color.rgb(213, 229, 199))
+                                ColorStateList.valueOf(FONDO_ACIERTO)
                         );
                     }
                 }
@@ -2344,7 +2449,7 @@ public class ActividadLeccionFragment extends Fragment {
                         mostrarPreguntaEvaluacion()
                 );
 
-                txtTemporizador.setText("⏱ Tiempo terminado");
+                txtTemporizador.setText("Tiempo terminado");
             }
 
         }.start();
@@ -2366,88 +2471,264 @@ public class ActividadLeccionFragment extends Fragment {
     // RESULTADOS
     // =========================================================
 
+    // Al terminar las preguntas: si hubo errores, primero viene la ronda de repaso.
     private void terminarEjercicio() {
 
         detenerTemporizador();
         detenerAudio();
 
-        int total;
-
-        switch (numeroEtapa) {
-
-            case 1:
-                total = totalDescubre;
-                break;
-
-            case 2:
-                total = Math.min(TOTAL_DESCUBRE, preguntas.size());
-                break;
-
-            case 3:
-                total = obtenerTotalRelacion();
-                break;
-
-            case 4:
-                total = palabrasMemoria.size();
-                break;
-
-            case 5:
-                total = TOTAL_EVALUACION;
-                break;
-
-            default:
-                total = 1;
-                break;
-        }
-
-        if (total <= 0) {
+        if (obtenerTotalEtapa() <= 0) {
             mostrarSinVocabulario();
             return;
         }
 
-        boolean aprobado;
+        if (!enRepaso && !palabrasFallidas.isEmpty()) {
+            iniciarRepaso();
+            return;
+        }
 
-        if (numeroEtapa == 5) {
+        finalizarEtapa();
+    }
 
-            aprobado = aciertos >= 7;
+    private int obtenerTotalEtapa() {
 
-        } else {
+        switch (numeroEtapa) {
+            case 1:
+                return totalDescubre;
+            case 2:
+                return Math.min(TOTAL_DESCUBRE, preguntas.size());
+            case 3:
+                return obtenerTotalRelacion();
+            case 4:
+                return palabrasMemoria.size();
+            case 5:
+                return TOTAL_EVALUACION;
+            default:
+                return 1;
+        }
+    }
 
-            aprobado = aciertos >= Math.max(
-                    1,
-                    (total + 1) / 2
+    // =========================================================
+    // RONDA DE REPASO (una sola oportunidad, vale menos puntos)
+    // =========================================================
+
+    private void iniciarRepaso() {
+
+        enRepaso = true;
+        indiceRepaso = 0;
+        aciertosRepaso = 0;
+
+        Collections.shuffle(palabrasFallidas);
+
+        // La pantalla vuelve a un formato sencillo de opciones.
+        contenedorCompletar.setVisibility(View.GONE);
+        contenedorRelacionar.setVisibility(View.GONE);
+        cardRetoEspecial.setVisibility(View.GONE);
+        btnHablar.setVisibility(View.GONE);
+        btnValidarManual.setVisibility(View.GONE);
+        restaurarBotonesOpciones();
+
+        txtInstruccion.setText("RONDA DE REPASO");
+
+        txtDescripcion.setText(
+                "Vuelve a responder las palabras que fallaste. Solo tienes una oportunidad "
+                        + "y cada acierto vale " + PUNTOS_REPASO + " puntos."
+        );
+
+        // El colibrí vuelve a recorrer la barra durante el repaso.
+        progresoVisual = 0;
+        totalPreguntasVisual = palabrasFallidas.size();
+        actualizarColibriActividad();
+
+        mostrarResultado(
+                "¡Segunda oportunidad! Tienes " + palabrasFallidas.size()
+                        + (palabrasFallidas.size() == 1 ? " palabra" : " palabras")
+                        + " para repasar.",
+                CAFE
+        );
+
+        mostrarPreguntaRepaso();
+    }
+
+    // La etapa 1 reemplaza los botones de opción por tarjetas con imagen;
+    // aquí se vuelven a colocar para poder usarlos en el repaso.
+    private void restaurarBotonesOpciones() {
+
+        if (botonesOpciones[0] != null && botonesOpciones[0].getParent() != contenedorOpciones) {
+
+            contenedorOpciones.removeAllViews();
+
+            for (MaterialButton boton : botonesOpciones) {
+
+                if (boton == null) continue;
+
+                if (boton.getParent() instanceof android.view.ViewGroup) {
+                    ((android.view.ViewGroup) boton.getParent()).removeView(boton);
+                }
+
+                contenedorOpciones.addView(boton);
+            }
+        }
+
+        mostrarOpcionesGenericas();
+    }
+
+    private void mostrarPreguntaRepaso() {
+
+        detenerAudio();
+
+        if (indiceRepaso >= palabrasFallidas.size()) {
+            finalizarEtapa();
+            return;
+        }
+
+        indicePalabra = palabrasFallidas.get(indiceRepaso);
+
+        String espanol = vocabulario[indicePalabra][0];
+        String hnahnu = primeraVariante(vocabulario[indicePalabra][1]);
+
+        respondida = false;
+
+        txtNumeroPregunta.setText(
+                "Repaso " + (indiceRepaso + 1) + " de " + palabrasFallidas.size()
+        );
+
+        txtTraduccion.setVisibility(View.GONE);
+        configurarImagen(espanol);
+
+        txtPalabra.setText(espanol);
+        txtPregunta.setText("¿Cómo se dice «" + espanol + "» en hñähñu?");
+
+        btnEscuchar.setVisibility(View.VISIBLE);
+        btnEscuchar.setOnClickListener(v -> reproducirAudio());
+
+        // Opciones: la correcta y otras palabras de la etapa.
+        List<String> opciones = new ArrayList<>();
+        opciones.add(hnahnu);
+
+        List<Integer> candidatos = new ArrayList<>(preguntas);
+        Collections.shuffle(candidatos);
+
+        for (int indice : candidatos) {
+
+            if (opciones.size() >= 4) break;
+
+            String candidata = primeraVariante(vocabulario[indice][1]);
+
+            if (!opciones.contains(candidata)) {
+                opciones.add(candidata);
+            }
+        }
+
+        Collections.shuffle(opciones);
+
+        mostrarOpcionesGenericas();
+
+        for (int i = 0; i < opciones.size() && i < 4; i++) {
+
+            final String opcion = opciones.get(i);
+
+            prepararBotonOpcion(
+                    botonesOpciones[i],
+                    opcion,
+                    v -> responderRepaso(opcion, hnahnu, espanol)
             );
         }
 
-        if (aprobado) {
+        for (int i = opciones.size(); i < 4; i++) {
+            botonesOpciones[i].setVisibility(View.GONE);
+        }
 
-            if (numeroEtapa == 5) {
+        btnContinuar.setText("Selecciona una respuesta");
+        btnContinuar.setEnabled(false);
+    }
 
-                puntosObtenidos = Math.round(
-                        (aciertos / (float) total) * PUNTOS_ETAPA
-                );
+    private void responderRepaso(String opcion, String correcta, String espanol) {
 
-            } else {
+        if (respondida) return;
 
-                puntosObtenidos = PUNTOS_ETAPA;
-            }
+        respondida = true;
+        registrarAvanceVisual();
+
+        if (opcion.equalsIgnoreCase(correcta)) {
+
+            aciertosRepaso++;
+            puntosObtenidos += PUNTOS_REPASO;
+            txtPuntos.setText(String.valueOf(puntosObtenidos));
+            animarMarcador();
+
+            mostrarResultado(
+                    "¡Ahora sí! +" + PUNTOS_REPASO + " puntos. «" + espanol
+                            + "» se dice «" + correcta + "».",
+                    VERDE
+            );
 
         } else {
 
-            puntosObtenidos = 0;
+            mostrarResultado(
+                    "Incorrecto. «" + espanol + "» se dice «" + correcta
+                            + "». Sigue practicándola.",
+                    ROSA
+            );
         }
 
-        txtNumeroPregunta.setText("RESULTADO FINAL");
+        txtTraduccion.setText(correcta + " = " + espanol);
+        txtTraduccion.setVisibility(View.VISIBLE);
 
-        barraProgreso.setMax(total);
-        barraProgreso.setProgress(total);
+        for (MaterialButton boton : botonesOpciones) {
 
-        txtPalabra.setText(
-                aprobado
-                        ? "¡Lo lograste!"
-                        : "¡Sigue practicando!"
+            if (boton.getVisibility() != View.VISIBLE) continue;
+
+            String texto = boton.getText().toString();
+
+            int fondo;
+            if (texto.equalsIgnoreCase(correcta)) fondo = FONDO_ACIERTO;
+            else if (texto.equalsIgnoreCase(opcion)) fondo = FONDO_ERROR;
+            else fondo = FONDO_OPCION;
+
+            boton.setBackgroundTintList(ColorStateList.valueOf(fondo));
+        }
+
+        bloquearOpciones();
+
+        indiceRepaso++;
+
+        btnContinuar.setText(
+                indiceRepaso >= palabrasFallidas.size()
+                        ? "Ver resultado"
+                        : "Siguiente palabra"
         );
 
+        btnContinuar.setEnabled(true);
+        btnContinuar.setOnClickListener(v -> mostrarPreguntaRepaso());
+    }
+
+    // =========================================================
+    // RESULTADO FINAL: se guarda solo y aparece el colibrí
+    // =========================================================
+
+    private void finalizarEtapa() {
+
+        detenerTemporizador();
+        detenerAudio();
+
+        int total = obtenerTotalEtapa();
+        int totalRepaso = enRepaso ? palabrasFallidas.size() : 0;
+
+        // Aprobar: en la evaluación 7 de 10; en las demás, la mitad.
+        // Los aciertos del repaso también cuentan para aprobar.
+        int aciertosTotales = aciertos + aciertosRepaso;
+
+        boolean aprobado = numeroEtapa == 5
+                ? aciertosTotales >= 7
+                : aciertosTotales >= Math.max(1, (total + 1) / 2);
+
+        // Pantalla de fondo (por si se cierra el diálogo).
+        txtNumeroPregunta.setText("RESULTADO FINAL");
+        barraProgreso.setMax(Math.max(1, total));
+        barraProgreso.setProgress(Math.max(1, total));
+
+        txtPalabra.setText(aprobado ? "¡Lo lograste!" : "¡Sigue practicando!");
         txtTraduccion.setVisibility(View.GONE);
         imgActividad.setVisibility(View.GONE);
 
@@ -2461,62 +2742,69 @@ public class ActividadLeccionFragment extends Fragment {
         cardRetoEspecial.setVisibility(View.GONE);
 
         StringBuilder resumen = new StringBuilder();
+        resumen.append("Correctas: ").append(aciertos).append(" de ").append(total);
 
-        resumen.append("Aciertos: ")
-                .append(aciertos)
-                .append(" de ")
-                .append(total);
+        if (totalRepaso > 0) {
+            resumen.append("\nRepaso: ").append(aciertosRepaso).append(" de ").append(totalRepaso);
+        }
+
+        resumen.append("\nPuntos: ").append(puntosObtenidos);
 
         if (!palabrasParaRepasar.isEmpty()) {
-
-            resumen.append("\n\n📚 PALABRAS PARA REPASAR:\n");
-
+            resumen.append("\n\nPALABRAS PARA REPASAR:\n");
             for (String palabra : palabrasParaRepasar) {
-
-                resumen.append("• ")
-                        .append(palabra)
-                        .append("\n");
+                resumen.append("• ").append(palabra).append("\n");
             }
-
-        } else {
-
-            resumen.append("\n\n¡Excelente! No tienes palabras pendientes de repaso.");
         }
 
         txtPregunta.setText(resumen.toString());
+        txtPuntos.setText(String.valueOf(puntosObtenidos));
 
-        if (aprobado) {
+        mostrarResultado(
+                aprobado
+                        ? "¡Excelente trabajo! Completaste esta etapa."
+                        : (numeroEtapa == 5
+                           ? "Necesitas al menos 7 respuestas correctas para aprobar."
+                           : "Necesitas más aciertos. Vuelve a intentarlo."),
+                aprobado ? VERDE : ROSA
+        );
 
-            mostrarResultado(
-                    "¡Excelente trabajo! Has completado esta actividad.",
-                    VERDE
-            );
-
-            txtPuntos.setText("⭐ +" + puntosObtenidos);
-
-            btnContinuar.setText("Guardar progreso");
-
-            btnContinuar.setOnClickListener(v ->
-                    guardarProgreso()
-            );
-
-        } else {
-
-            mostrarResultado(
-                    numeroEtapa == 5
-                            ? "Necesitas al menos 7 respuestas correctas para aprobar."
-                            : "Necesitas más aciertos. Vuelve a intentarlo.",
-                    ROSA
-            );
-
-            btnContinuar.setText("Reintentar");
-
-            btnContinuar.setOnClickListener(v ->
-                    configurarActividad()
-            );
-        }
-
+        btnContinuar.setText(aprobado ? "Volver a etapas" : "Reintentar");
         btnContinuar.setEnabled(true);
+        btnContinuar.setOnClickListener(v -> {
+            if (aprobado) volverAEtapas();
+            else configurarActividad();
+        });
+
+        // Pantalla del colibrí.
+        ResultadoButi.Datos datos = new ResultadoButi.Datos();
+        datos.etiqueta = "ETAPA " + numeroEtapa + " · NIVEL " + numeroNivel;
+        datos.titulo = aprobado ? "¡Lo lograste!" : "¡Sigue practicando!";
+        datos.mensaje = aprobado
+                ? (palabrasParaRepasar.isEmpty()
+                   ? "¡Perfecto! No tienes palabras pendientes."
+                   : "Completaste la etapa. Repasa las palabras que fallaste.")
+                : (numeroEtapa == 5
+                   ? "Necesitas al menos 7 respuestas correctas para aprobar."
+                   : "Necesitas acertar al menos la mitad. ¡Tú puedes!");
+        datos.correctas = aciertos;
+        datos.total = total;
+        datos.repasoCorrectas = aciertosRepaso;
+        datos.repasoTotal = totalRepaso;
+        datos.puntos = puntosObtenidos;
+        datos.exito = aprobado;
+
+        if (pantallaResultado != null) pantallaResultado.cerrar();
+
+        pantallaResultado = aprobado
+                ? ResultadoButi.mostrar(requireContext(), datos,
+                "Volver a etapas", this::volverAEtapas,
+                "Repetir etapa", this::configurarActividad)
+                : ResultadoButi.mostrar(requireContext(), datos,
+                "Reintentar", this::configurarActividad,
+                "Volver a etapas", this::volverAEtapas);
+
+        guardarProgreso(aprobado);
     }
 
     // =========================================================
@@ -2546,11 +2834,11 @@ public class ActividadLeccionFragment extends Fragment {
 
         if (audio == 0) {
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No se encontró el audio de esta palabra.",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    ButiAviso.Tipo.INFO
+            );
 
             return;
         }
@@ -2577,22 +2865,22 @@ public class ActividadLeccionFragment extends Fragment {
 
             } else {
 
-                Toast.makeText(
-                        requireContext(),
+                ButiAviso.mostrar(
+                        this,
                         "No se pudo cargar el audio.",
-                        Toast.LENGTH_SHORT
-                ).show();
+                        ButiAviso.Tipo.ERROR
+                );
             }
 
         } catch (Exception e) {
 
             detenerAudio();
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No se pudo reproducir el audio.",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
         }
     }
 
@@ -2748,219 +3036,39 @@ public class ActividadLeccionFragment extends Fragment {
     // FIREBASE
     // =========================================================
 
-    private void guardarProgreso() {
+    // Guarda la etapa y la racha automáticamente (sin botón).
+    private void guardarProgreso(boolean aprobado) {
 
         if (guardando) return;
 
-        FirebaseUser usuario = FirebaseAuth.getInstance()
-                .getCurrentUser();
-
-        if (usuario == null) {
-
-            Toast.makeText(
-                    requireContext(),
-                    "Debes iniciar sesión para guardar tu progreso.",
-                    Toast.LENGTH_LONG
-            ).show();
-
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            ButiAviso.mostrar(
+                    this,
+                    "Inicia sesión para guardar tus puntos y tu racha.",
+                    ButiAviso.Tipo.INFO
+            );
+            if (pantallaResultado != null) pantallaResultado.ponerRacha(0);
             return;
         }
 
         guardando = true;
-        btnContinuar.setEnabled(false);
 
-        DatabaseReference referenciaEtapa =
-                FirebaseDatabase.getInstance()
-                        .getReference("usuarios")
-                        .child(usuario.getUid())
-                        .child("progresoLecciones")
-                        .child("nivel" + numeroNivel)
-                        .child("etapa" + numeroEtapa);
+        ProgresoButi.guardarEtapa(
+                numeroNivel,
+                numeroEtapa,
+                puntosObtenidos,
+                aprobado,
+                (puntosSumados, racha) -> {
 
-        referenciaEtapa.runTransaction(new Transaction.Handler() {
+                    guardando = false;
 
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(
-                    @NonNull MutableData datos
-            ) {
+                    if (!isAdded() || getView() == null) return;
 
-                Boolean completada = datos.child("completada")
-                        .getValue(Boolean.class);
-
-                Integer intentos = datos.child("intentos")
-                        .getValue(Integer.class);
-
-                Integer puntosAnteriores = datos.child("puntos")
-                        .getValue(Integer.class);
-
-                Integer mejorPuntuacion = datos.child("mejorPuntuacion")
-                        .getValue(Integer.class);
-
-                int nuevosIntentos = intentos == null
-                        ? 1
-                        : intentos + 1;
-
-                datos.child("intentos").setValue(nuevosIntentos);
-
-                if (completada == null || !completada) {
-
-                    datos.child("completada").setValue(true);
-                    datos.child("puntos").setValue(puntosObtenidos);
-                    datos.child("mejorPuntuacion").setValue(puntosObtenidos);
-
-                    datos.child("fecha").setValue(
-                            new SimpleDateFormat(
-                                    "yyyy-MM-dd HH:mm:ss",
-                                    Locale.getDefault()
-                            ).format(new Date())
-                    );
-
-                } else {
-
-                    datos.child("completada").setValue(true);
-
-                    datos.child("puntos").setValue(
-                            puntosAnteriores == null
-                                    ? 0
-                                    : puntosAnteriores
-                    );
-
-                    int mejor = mejorPuntuacion == null
-                            ? 0
-                            : mejorPuntuacion;
-
-                    datos.child("mejorPuntuacion").setValue(
-                            Math.max(mejor, puntosObtenidos)
-                    );
+                    if (pantallaResultado != null) {
+                        pantallaResultado.ponerRacha(racha);
+                    }
                 }
-
-                return Transaction.success(datos);
-            }
-
-            @Override
-            public void onComplete(
-                    @Nullable DatabaseError error,
-                    boolean committed,
-                    @Nullable DataSnapshot snapshot
-            ) {
-
-                guardando = false;
-
-                if (!isAdded() || getView() == null) {
-                    return;
-                }
-
-                if (error != null || !committed) {
-
-                    btnContinuar.setEnabled(true);
-
-                    mostrarResultado(
-                            "No se pudo guardar el progreso. Inténtalo de nuevo.",
-                            ROSA
-                    );
-
-                    return;
-                }
-
-                // Registrar que el usuario practicó hoy.
-                registrarActividadDiaria(usuario.getUid());
-
-                mostrarResultado(
-                        "¡Etapa completada y progreso guardado correctamente!",
-                        VERDE
-                );
-
-                btnContinuar.setText("Volver a etapas");
-                btnContinuar.setEnabled(true);
-
-                btnContinuar.setOnClickListener(v ->
-                        volverAEtapas()
-                );
-            }
-        });
-    }
-
-    // =========================================================
-// REGISTRAR RACHA DIARIA EN FIREBASE
-// =========================================================
-
-    private void registrarActividadDiaria(String uid) {
-
-        DatabaseReference referenciaRacha =
-                FirebaseDatabase.getInstance()
-                        .getReference("usuarios")
-                        .child(uid)
-                        .child("racha");
-
-        SimpleDateFormat formato =
-                new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
-        String hoy = formato.format(new Date());
-
-        Calendar calendarioAyer = Calendar.getInstance();
-        calendarioAyer.add(Calendar.DAY_OF_YEAR, -1);
-
-        String ayer = formato.format(calendarioAyer.getTime());
-
-        referenciaRacha.runTransaction(new Transaction.Handler() {
-
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(
-                    @NonNull MutableData datos) {
-
-                String ultimaFecha =
-                        datos.child("ultimaFecha").getValue(String.class);
-
-                Integer diasGuardados =
-                        datos.child("diasActuales").getValue(Integer.class);
-
-                Integer mejorGuardada =
-                        datos.child("mejorRacha").getValue(Integer.class);
-
-                int dias = diasGuardados == null ? 0 : diasGuardados;
-                int mejor = mejorGuardada == null ? 0 : mejorGuardada;
-
-                // Si ya practicó hoy, no aumentar nuevamente.
-                if (hoy.equals(ultimaFecha)) {
-                    return Transaction.success(datos);
-                }
-
-                int nuevaRacha;
-
-                // Si practicó ayer, continúa la racha.
-                if (ayer.equals(ultimaFecha)) {
-                    nuevaRacha = dias + 1;
-                } else {
-                    // Si dejó pasar uno o más días, comienza otra racha.
-                    nuevaRacha = 1;
-                }
-
-                int mejorRacha = Math.max(mejor, nuevaRacha);
-
-                datos.child("diasActuales").setValue(nuevaRacha);
-                datos.child("ultimaFecha").setValue(hoy);
-                datos.child("mejorRacha").setValue(mejorRacha);
-
-                return Transaction.success(datos);
-            }
-
-            @Override
-            public void onComplete(
-                    @Nullable DatabaseError error,
-                    boolean committed,
-                    @Nullable DataSnapshot snapshot) {
-
-                if (error != null) {
-                    android.util.Log.e(
-                            "RachaButi",
-                            "No se pudo actualizar la racha: "
-                                    + error.getMessage()
-                    );
-                }
-            }
-        });
+        );
     }
 
     // =========================================================
@@ -2983,6 +3091,12 @@ public class ActividadLeccionFragment extends Fragment {
     public void onDestroyView() {
 
         handlerReacciones.removeCallbacksAndMessages(null);
+
+        if (pantallaResultado != null) {
+            pantallaResultado.cerrar();
+            pantallaResultado = null;
+        }
+
         detenerTemporizador();
         detenerAudio();
 

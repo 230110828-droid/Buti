@@ -3,6 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- =========================================================
+         PALETA OFICIAL B'ÜTI (NO CAMBIAR)
+         Estos colores son fijos: se ven igual en claro y en oscuro.
+         ========================================================= -->
+
     <!-- Flor de maguey -->
     <color name="buti_rosa">#D6336C</color>
     <color name="buti_dorado">#F2A900</color>
@@ -24,7 +29,7 @@
     <color name="buti_marron">@color/buti_cafe</color>
     <color name="buti_blanco">@color/buti_crema</color>
 
-
+    <!-- Pantalla de progreso -->
     <color name="prog_naranja">#C4560F</color>
     <color name="prog_marron">#5A2A12</color>
     <color name="prog_azul">#1E3A5F</color>
@@ -33,4 +38,39 @@
     <color name="prog_borde">#F0DDBF</color>
     <color name="prog_durazno">#F2D3A8</color>
     <color name="prog_ripple">#33C4560F</color>
+
+    <!-- =========================================================
+         COLORES POR FUNCIÓN (MODO CLARO)
+         Las pantallas rediseñadas usan ESTOS nombres.
+         Su versión oscura está en values-night/colors.xml
+         ========================================================= -->
+
+    <!-- Fondos -->
+    <color name="buti_fondo">#F5EFE3</color>              <!-- fondo de pantalla (crema) -->
+    <color name="buti_superficie">#FFFAF0</color>         <!-- tarjetas -->
+    <color name="buti_superficie_alt">#E4DAC6</color>     <!-- chips, campos, tarjetas secundarias -->
+    <color name="buti_borde">#D8C7AE</color>              <!-- bordes y separadores -->
+
+    <!-- Textos -->
+    <color name="buti_texto">#3C2815</color>              <!-- texto principal (café) -->
+    <color name="buti_texto_secundario">#6B5644</color>   <!-- descripciones -->
+    <color name="buti_titulo">#4F000B</color>             <!-- títulos (vino) -->
+    <color name="buti_resalte">#8C4A2F</color>            <!-- etiquetas pequeñas (siena) -->
+
+    <!-- Botones y encabezados de color -->
+    <color name="buti_acento">#4F000B</color>             <!-- botón principal / encabezado vino -->
+    <color name="buti_sobre_acento">#F5EFE3</color>       <!-- texto encima del vino -->
+    <color name="buti_exito">#6B7A4F</color>              <!-- verde (éxito) -->
+
+    <!-- Splash -->
+    <color name="buti_splash_lema">#4F000B</color>        <!-- vino -->
+    <color name="buti_splash_lugar">#8C4A2F</color>       <!-- siena -->
+
+    <!-- Colores de los niveles (Lecciones) -->
+    <color name="nivel_rosa">#D6336C</color>
+    <color name="nivel_naranja">#C97A2B</color>
+    <color name="nivel_verde">#6B7A4F</color>
+    <color name="nivel_azul">#3E5266</color>
+    <color name="nivel_siena">#8C4A2F</color>
+    <color name="nivel_vino">#4F000B</color>
 </resources>

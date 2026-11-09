@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reverso de la carta MODO CLARO: vino con borde dorado -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="16dp" />
+    <gradient
+        android:angle="315"
+        android:startColor="#812B36"
+        android:endColor="#4F000B" />
+    <stroke android:width="2dp" android:color="#F2A900" />
+</shape>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5EFE3"
+    android:background="@color/buti_fondo"
     android:fillViewport="true"
     android:scrollbars="none">
 
@@ -24,11 +24,11 @@
                 android:id="@+id/btnVolverActividad"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:background="@drawable/bg_practicar_boton_secundario"
+                android:background="@drawable/bg_boton_volver"
                 android:contentDescription="Regresar"
                 android:padding="11dp"
-                android:src="@android:drawable/ic_media_previous"
-                app:tint="#4F000B" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_flecha_atras" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="ETAPA 1"
-                    android:textColor="#4F000B"
+                    android:textColor="@color/buti_titulo"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:letterSpacing="0.15"
                     android:text="APRENDE JUGANDO"
-                    android:textColor="#8C4A2F"
+                    android:textColor="@color/buti_resalte"
                     android:textSize="10sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -62,11 +62,14 @@
                 android:id="@+id/txtPuntosActividad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_practicar_etiqueta"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="9dp"
-                android:text="⭐ 0"
-                android:textColor="#4F000B"
+                android:paddingVertical="7dp"
+                android:background="@drawable/bg_chip_puntos"
+                android:drawableStart="@drawable/ic_estrella_puntos"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="@color/buti_titulo"
                 android:textSize="15sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -89,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Tu avance"
-                    android:textColor="#4F000B"
+                    android:textColor="@color/buti_titulo"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -98,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Actividad 1"
-                    android:textColor="#8C4A2F"
+                    android:textColor="@color/buti_resalte"
                     android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -118,8 +121,8 @@
                     android:layout_marginBottom="3dp"
                     android:max="10"
                     android:progress="0"
-                    android:progressBackgroundTint="#D9C8A9"
-                    android:progressTint="#6B7A4F" />
+                    android:progressBackgroundTint="@color/buti_borde"
+                    android:progressTint="@color/buti_exito" />
 
                 <ImageView
                     android:id="@+id/imgColibriActividad"
@@ -159,7 +162,7 @@
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
                 android:text="¡Vamos a aprender! Tú puedes hacerlo."
-                android:textColor="#4F000B"
+                android:textColor="@color/buti_titulo"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -174,8 +177,11 @@
             android:background="@drawable/bg_practicar_etiqueta"
             android:paddingHorizontal="18dp"
             android:paddingVertical="8dp"
-            android:text="⏱ 20 s"
-            android:textColor="#4F000B"
+            android:drawableStart="@drawable/ic_temporizador"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            android:text="20 s"
+            android:textColor="@color/buti_titulo"
             android:textSize="15sp"
             android:textStyle="bold"
             android:visibility="gone" />
@@ -188,7 +194,7 @@
             android:layout_marginTop="27dp"
             android:gravity="center"
             android:text="¡Vamos a aprender!"
-            android:textColor="#4F000B"
+            android:textColor="@color/buti_titulo"
             android:textSize="26sp"
             android:textStyle="bold" />
 
@@ -199,7 +205,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="Observa, escucha y descubre nuevas palabras."
-            android:textColor="#6D6258"
+            android:textColor="@color/buti_texto_secundario"
             android:textSize="14sp" />
 
         <!-- TARJETA PRINCIPAL -->
@@ -208,10 +214,10 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginTop="24dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="28dp"
             app:cardElevation="5dp"
-            app:strokeColor="#E3D5BF"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -235,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="¡Aprende algo nuevo!"
-                    android:textColor="#4F000B"
+                    android:textColor="@color/buti_titulo"
                     android:textSize="26sp"
                     android:textStyle="bold" />
 
@@ -245,7 +251,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:gravity="center"
-                    android:textColor="#6B7A4F"
+                    android:textColor="@color/buti_exito"
                     android:textSize="21sp"
                     android:textStyle="bold"
                     android:visibility="gone" />
@@ -259,8 +265,7 @@
                     android:contentDescription="Escuchar pronunciación"
                     android:padding="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_play"
-                    android:tint="@null" />
+                    android:src="@drawable/ic_play" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -272,7 +277,7 @@
             android:layout_marginTop="27dp"
             android:gravity="center"
             android:text="Selecciona la respuesta correcta"
-            android:textColor="#4F000B"
+            android:textColor="@color/buti_titulo"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -282,13 +287,17 @@
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_marginTop="16dp"
-            android:text="🎙 Repetir en voz alta"
+            android:text="Repetir en voz alta"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/buti_sobre_acento"
             android:textSize="16sp"
             android:visibility="gone"
-            app:backgroundTint="#6B7A4F"
-            app:cornerRadius="18dp" />
+            app:backgroundTint="@color/buti_exito"
+            app:cornerRadius="18dp"
+            app:icon="@drawable/ic_microfono"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/buti_sobre_acento" />
 
         <!-- CONFIRMACIÓN MANUAL -->
         <com.google.android.material.button.MaterialButton
@@ -298,9 +307,9 @@
             android:layout_marginTop="9dp"
             android:text="Ya practiqué esta palabra"
             android:textAllCaps="false"
-            android:textColor="#4F000B"
+            android:textColor="@color/buti_texto"
             android:visibility="gone"
-            app:backgroundTint="#E8DDC9"
+            app:backgroundTint="@color/buti_superficie_alt"
             app:cornerRadius="17dp" />
 
         <!-- OPCIONES GENERALES -->
@@ -318,11 +327,11 @@
                 android:layout_marginBottom="11dp"
                 android:text="Opción 1"
                 android:textAllCaps="false"
-                android:textColor="#4F000B"
+                android:textColor="@color/buti_titulo"
                 android:textSize="16sp"
-                app:backgroundTint="#FFFFFF"
+                app:backgroundTint="@color/buti_superficie"
                 app:cornerRadius="17dp"
-                app:strokeColor="#D9C8A9"
+                app:strokeColor="@color/buti_borde"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -332,11 +341,11 @@
                 android:layout_marginBottom="11dp"
                 android:text="Opción 2"
                 android:textAllCaps="false"
-                android:textColor="#4F000B"
+                android:textColor="@color/buti_titulo"
                 android:textSize="16sp"
-                app:backgroundTint="#FFFFFF"
+                app:backgroundTint="@color/buti_superficie"
                 app:cornerRadius="17dp"
-                app:strokeColor="#D9C8A9"
+                app:strokeColor="@color/buti_borde"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -346,11 +355,11 @@
                 android:layout_marginBottom="11dp"
                 android:text="Opción 3"
                 android:textAllCaps="false"
-                android:textColor="#4F000B"
+                android:textColor="@color/buti_titulo"
                 android:textSize="16sp"
-                app:backgroundTint="#FFFFFF"
+                app:backgroundTint="@color/buti_superficie"
                 app:cornerRadius="17dp"
-                app:strokeColor="#D9C8A9"
+                app:strokeColor="@color/buti_borde"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -360,11 +369,11 @@
                 android:layout_marginBottom="5dp"
                 android:text="Opción 4"
                 android:textAllCaps="false"
-                android:textColor="#4F000B"
+                android:textColor="@color/buti_titulo"
                 android:textSize="16sp"
-                app:backgroundTint="#FFFFFF"
+                app:backgroundTint="@color/buti_superficie"
                 app:cornerRadius="17dp"
-                app:strokeColor="#D9C8A9"
+                app:strokeColor="@color/buti_borde"
                 app:strokeWidth="1dp" />
         </LinearLayout>
 
@@ -386,7 +395,7 @@
                 android:minHeight="75dp"
                 android:padding="14dp"
                 android:text="＿ ＿ ＿ ＿"
-                android:textColor="#4F000B"
+                android:textColor="@color/buti_titulo"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -396,7 +405,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="Selecciona los caracteres en orden"
-                android:textColor="#8C4A2F"
+                android:textColor="@color/buti_resalte"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -450,10 +459,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
-            app:strokeColor="#E3D5BF"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -467,7 +476,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="#4F000B"
+                    android:textColor="@color/buti_titulo"
                     android:textSize="17sp"
                     android:textStyle="bold" />
 
@@ -490,7 +499,7 @@
             android:background="@drawable/bg_practicar_tarjeta"
             android:gravity="center"
             android:padding="15dp"
-            android:textColor="#6B7A4F"
+            android:textColor="@color/buti_exito"
             android:textSize="15sp"
             android:textStyle="bold"
             android:visibility="gone" />
@@ -503,13 +512,18 @@
             android:layout_marginTop="22dp"
             android:layout_marginBottom="28dp"
             android:enabled="false"
-            android:text="Continuar →"
+            android:text="Continuar"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/buti_sobre_acento"
             android:textSize="17sp"
             android:textStyle="bold"
-            app:backgroundTint="#6B7A4F"
-            app:cornerRadius="19dp" />
+            app:backgroundTint="@color/buti_acento"
+            app:cornerRadius="19dp"
+            app:icon="@drawable/ic_flederecha"
+            app:iconGravity="textEnd"
+            app:iconPadding="10dp"
+            app:iconSize="20dp"
+            app:iconTint="@color/buti_sobre_acento" />
 
     </LinearLayout>
 </ScrollView>

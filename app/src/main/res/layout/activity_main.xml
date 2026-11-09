@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/buti_crema">
+        android:background="@color/buti_fondo">
 
         <!-- CENEFA SUPERIOR -->
         <ImageView
@@ -27,13 +27,13 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@color/buti_crema"
+            android:background="@color/buti_fondo"
             app:navigationIcon="@drawable/ic_menu"
-            app:navigationIconTint="@color/buti_marron"
+            app:navigationIconTint="@color/buti_titulo"
             app:title="@string/app_titulo"
             app:titleCentered="true"
             app:titleTextAppearance="@style/TextAppearance.Buti.Titulo"
-            app:titleTextColor="@color/buti_marron">
+            app:titleTextColor="@color/buti_titulo">
 
             <ImageView
                 android:id="@+id/imgLogoToolbar"
@@ -41,7 +41,7 @@
                 android:layout_height="42dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="12dp"
-                android:contentDescription="Logo de B'üti"
+                android:contentDescription="Logo de B'ÜTI"
                 android:scaleType="fitCenter"
                 android:src="@drawable/principla_logo" />
 
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/buti_crema">
+            android:background="@color/buti_fondo">
 
             <!-- FONDO DECORATIVO -->
             <ImageView
@@ -63,6 +63,12 @@
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_fondo1" />
+
+            <!-- VELO: suaviza el bordado (casi transparente en claro, vino en oscuro) -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/velo_principal" />
 
             <!-- NAVEGACIÓN -->
             <androidx.fragment.app.FragmentContainerView

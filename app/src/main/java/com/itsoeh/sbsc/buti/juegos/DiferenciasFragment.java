@@ -18,16 +18,18 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.card.MaterialCardView;
+import com.itsoeh.sbsc.buti.ButiAviso;
+import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.ResultadoButi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,42 +207,70 @@ public class DiferenciasFragment extends Fragment {
             parametros.setMargins(0, dp(7), 0, dp(7));
 
             tarjeta.setLayoutParams(parametros);
-            tarjeta.setRadius(dp(16));
-            tarjeta.setCardElevation(dp(4));
-            tarjeta.setCardBackgroundColor(Color.rgb(255, 250, 240));
+            tarjeta.setRadius(dp(20));
+            tarjeta.setCardElevation(dp(3));
+            tarjeta.setCardBackgroundColor(color(R.color.buti_superficie));
             tarjeta.setStrokeWidth(dp(1));
-            tarjeta.setStrokeColor(Color.rgb(201, 122, 43));
+            tarjeta.setStrokeColor(color(R.color.buti_borde));
+            tarjeta.setRippleColor(android.content.res.ColorStateList.valueOf(
+                    color(R.color.buti_dorado)));
 
             LinearLayout contenido = new LinearLayout(requireContext());
             contenido.setGravity(Gravity.CENTER_VERTICAL);
             contenido.setOrientation(LinearLayout.HORIZONTAL);
             contenido.setPadding(dp(10), dp(10), dp(10), dp(10));
 
+            // Miniatura con esquinas redondeadas.
+            MaterialCardView marco = new MaterialCardView(requireContext());
+            marco.setRadius(dp(14));
+            marco.setCardElevation(0);
+            marco.setStrokeWidth(0);
+
             ImageView miniatura = new ImageView(requireContext());
-            miniatura.setImageBitmap(cargarBitmap(imagenesOriginales[i], dp(95)));
+            miniatura.setImageBitmap(cargarBitmap(imagenesOriginales[i], dp(96)));
             miniatura.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            miniatura.setLayoutParams(new LinearLayout.LayoutParams(dp(95), dp(95)));
+            marco.addView(miniatura, new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
 
             LinearLayout textos = new LinearLayout(requireContext());
             textos.setOrientation(LinearLayout.VERTICAL);
-            textos.setPadding(dp(15), 0, 0, 0);
+            textos.setPadding(dp(14), 0, dp(6), 0);
+
+            TextView etiqueta = new TextView(requireContext());
+            etiqueta.setText(String.format(
+                    java.util.Locale.getDefault(), "POSTAL %02d", i + 1));
+            etiqueta.setTextColor(color(R.color.buti_resalte));
+            etiqueta.setTextSize(10);
+            etiqueta.setLetterSpacing(0.1f);
+            etiqueta.setTypeface(null, 1);
 
             TextView nombre = new TextView(requireContext());
             nombre.setText(nombres[i]);
-            nombre.setTextColor(Color.rgb(79, 0, 11));
-            nombre.setTextSize(15);
+            nombre.setTextColor(color(R.color.buti_titulo));
+            nombre.setTextSize(16);
             nombre.setTypeface(null, 1);
+            nombre.setPadding(0, dp(3), 0, 0);
 
             TextView detalle = new TextView(requireContext());
             detalle.setText("5 diferencias escondidas");
-            detalle.setTextColor(Color.rgb(201, 122, 43));
-            detalle.setTextSize(13);
+            detalle.setTextColor(color(R.color.nivel_azul));
+            detalle.setTextSize(12);
+            detalle.setTypeface(null, 1);
+            detalle.setPadding(0, dp(6), 0, 0);
+            detalle.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    0, 0, R.drawable.ic_flecha_mini, 0);
+            detalle.setCompoundDrawableTintList(
+                    android.content.res.ColorStateList.valueOf(
+                            color(R.color.nivel_azul)));
 
+            textos.addView(etiqueta);
             textos.addView(nombre);
             textos.addView(detalle);
 
-            contenido.addView(miniatura);
-            contenido.addView(textos);
+            contenido.addView(marco, new LinearLayout.LayoutParams(dp(96), dp(96)));
+            contenido.addView(textos, new LinearLayout.LayoutParams(
+                    0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             tarjeta.addView(contenido);
 
             tarjeta.setOnClickListener(v -> {
@@ -264,9 +294,9 @@ public class DiferenciasFragment extends Fragment {
         bitmapCambios = cargarBitmap(imagenesCambios[escenario], lado);
 
         if (bitmapOriginal == null || bitmapCambios == null) {
-            Toast.makeText(requireContext(),
+            ButiAviso.mostrar(this,
                     "No se pudo cargar la imagen",
-                    Toast.LENGTH_SHORT).show();
+                    ButiAviso.Tipo.ERROR);
             return;
         }
 
@@ -334,9 +364,9 @@ public class DiferenciasFragment extends Fragment {
             if (zona.contains(x, y)) {
 
                 if (encontradas[i]) {
-                    Toast.makeText(requireContext(),
-                            "Esa ya la encontraste 😉",
-                            Toast.LENGTH_SHORT).show();
+                    ButiAviso.mostrar(this,
+                            "Esa ya la encontraste",
+                            ButiAviso.Tipo.INFO);
                     return;
                 }
 
@@ -346,9 +376,9 @@ public class DiferenciasFragment extends Fragment {
                 marcasOriginal.agregarEncontrada(circulo);
                 marcasCambios.agregarEncontrada(circulo);
 
-                Toast.makeText(requireContext(),
+                ButiAviso.mostrar(this,
                         "¡Bien! " + nombresDiferencias[escenario][i],
-                        Toast.LENGTH_SHORT).show();
+                        ButiAviso.Tipo.EXITO);
 
                 actualizarContadores();
 
@@ -383,9 +413,9 @@ public class DiferenciasFragment extends Fragment {
                 marcasOriginal.mostrarPista(zona);
                 marcasCambios.mostrarPista(zona);
 
-                Toast.makeText(requireContext(),
-                        "Observa la zona que parpadea ✨",
-                        Toast.LENGTH_SHORT).show();
+                ButiAviso.mostrar(this,
+                        "Observa la zona que parpadea",
+                        ButiAviso.Tipo.INFO);
                 return;
             }
         }
@@ -397,19 +427,26 @@ public class DiferenciasFragment extends Fragment {
             return;
         }
 
-        new AlertDialog.Builder(requireContext())
-                .setTitle("¡Tienes ojo de colibrí! 🎉")
-                .setMessage(
-                        "Encontraste las 5 diferencias.\n\n"
-                                + "Lugar: " + nombres[escenario]
-                                + "\nIntentos fallidos: " + errores
-                                + "\nPistas usadas: " + pistas)
-                .setCancelable(false)
-                .setPositiveButton("Volver a jugar",
-                        (dialog, which) -> iniciarJuego())
-                .setNegativeButton("Elegir otro lugar",
-                        (dialog, which) -> mostrarSeleccion())
-                .show();
+        // Pantalla del colibrí: muestra el resultado y guarda puntos y racha.
+        ResultadoButi.Datos datos = new ResultadoButi.Datos();
+        datos.etiqueta = "ENCUENTRA LAS DIFERENCIAS";
+        datos.titulo = "¡Tienes ojo de colibrí!";
+        datos.mensaje = "Lugar: " + nombres[escenario]
+                + "\nIntentos fallidos: " + errores
+                + " · Pistas usadas: " + pistas;
+        datos.correctas = 5;
+        datos.total = 5;
+        datos.puntos = ProgresoButi.PUNTOS_DIFERENCIAS;
+        datos.exito = true;
+
+        ResultadoButi.mostrarYGuardar(
+                requireContext(),
+                datos,
+                "Volver a jugar",
+                this::iniciarJuego,
+                "Elegir otro lugar",
+                this::mostrarSeleccion
+        );
     }
 
     private void mostrarSeleccion() {
@@ -465,8 +502,9 @@ public class DiferenciasFragment extends Fragment {
         int ancho = getResources().getDisplayMetrics().widthPixels;
         int alto = getResources().getDisplayMetrics().heightPixels;
 
-        int porAncho = ancho - dp(36);
-        int porAlto = (alto - dp(250)) / 2;
+        // Márgenes de pantalla (32) + marco de cada imagen (8) + separación.
+        int porAncho = ancho - dp(48);
+        int porAlto = (alto - dp(290)) / 2;
 
         int lado = Math.max(dp(220), Math.min(porAncho, porAlto));
 
@@ -512,6 +550,10 @@ public class DiferenciasFragment extends Fragment {
         }
         bitmapOriginal = null;
         bitmapCambios = null;
+    }
+
+    private int color(int recurso) {
+        return ContextCompat.getColor(requireContext(), recurso);
     }
 
     private int dp(int valor) {

@@ -1,6 +1,5 @@
 package com.itsoeh.sbsc.buti.perfil;
 
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -30,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.itsoeh.sbsc.buti.ButiAviso;
+import com.itsoeh.sbsc.buti.ButiDialogo;
 import com.itsoeh.sbsc.buti.LoginActivity;
 import com.itsoeh.sbsc.buti.R;
 import com.itsoeh.sbsc.buti.RecuperarContrasenaActivity;
@@ -134,12 +134,8 @@ public class PerfilFragment extends Fragment {
 
         // Configuración.
         btnConfiguracion.setOnClickListener(v ->
-                Toast.makeText(
-                        requireContext(),
-                        "Configuración: versión 1.0.0",
-                        Toast.LENGTH_SHORT
-                ).show()
-        );
+                Navigation.findNavController(v)
+                        .navigate(R.id.configuracionFragment));
 
         // Cerrar sesión.
         btnCerrarSesion.setOnClickListener(v ->
@@ -216,11 +212,11 @@ public class PerfilFragment extends Fragment {
                     return;
                 }
 
-                Toast.makeText(
-                        requireContext(),
+                ButiAviso.mostrar(
+                        PerfilFragment.this,
                         "No se pudieron cargar los datos del perfil.",
-                        Toast.LENGTH_SHORT
-                ).show();
+                        ButiAviso.Tipo.ERROR
+                );
 
                 android.util.Log.e(
                         "PerfilFragment",
@@ -298,11 +294,11 @@ public class PerfilFragment extends Fragment {
         DatabaseReference referenciaFoto =
                 referenciaUsuario.child("fotoPerfilBase64");
 
-        Toast.makeText(
-                requireContext(),
+        ButiAviso.mostrar(
+                PerfilFragment.this,
                 "Guardando fotografía...",
-                Toast.LENGTH_SHORT
-        ).show();
+                ButiAviso.Tipo.INFO
+        );
 
         // La conversión se realiza fuera del hilo principal.
         new Thread(() -> {
@@ -312,11 +308,11 @@ public class PerfilFragment extends Fragment {
                 if (isAdded()) {
                     requireActivity().runOnUiThread(() -> {
                         if (isAdded()) {
-                            Toast.makeText(
-                                    requireContext(),
+                            ButiAviso.mostrar(
+                                    PerfilFragment.this,
                                     "No se pudo procesar la fotografía.",
-                                    Toast.LENGTH_LONG
-                            ).show();
+                                    ButiAviso.Tipo.ERROR
+                            );
                         }
                     });
                 }
@@ -330,17 +326,17 @@ public class PerfilFragment extends Fragment {
                         }
 
                         if (task.isSuccessful()) {
-                            Toast.makeText(
-                                    requireContext(),
+                            ButiAviso.mostrar(
+                                    PerfilFragment.this,
                                     "Fotografía guardada en Firebase.",
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                                    ButiAviso.Tipo.EXITO
+                            );
                         } else {
-                            Toast.makeText(
-                                    requireContext(),
+                            ButiAviso.mostrar(
+                                    PerfilFragment.this,
                                     "No se pudo guardar. Revisa tu conexión y las reglas de Firebase.",
-                                    Toast.LENGTH_LONG
-                            ).show();
+                                    ButiAviso.Tipo.ERROR
+                            );
                         }
                     });
         }).start();
@@ -531,15 +527,15 @@ public class PerfilFragment extends Fragment {
 
     private void confirmarCerrarSesion() {
 
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Cerrar sesión")
-                .setMessage("¿Seguro que quieres salir de tu cuenta?")
-                .setPositiveButton(
-                        "Sí, cerrar sesión",
-                        (dialog, which) -> cerrarSesion()
-                )
-                .setNegativeButton("Cancelar", null)
-                .show();
+        // Mensaje personalizado de B'ÜTI (antes AlertDialog).
+        new ButiDialogo(requireContext()).mostrarConfirmacion(
+                "Cerrar sesión",
+                "¿Seguro que quieres salir de tu cuenta?",
+                "Sí, cerrar sesión",
+                "Cancelar",
+                this::cerrarSesion,
+                null
+        );
     }
 
     private void cerrarSesion() {

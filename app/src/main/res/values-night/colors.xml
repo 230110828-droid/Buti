@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MODO OSCURO DE B'ÜTI - "Noche vino"
+    Fondo vino muy oscuro con acentos dorados, naranja y rosa
+    del bordado hñähñu. La paleta oficial no se toca.
+-->
+<resources>
+
+    <!-- Fondos -->
+    <color name="buti_fondo">#1A080C</color>              <!-- vino casi negro -->
+    <color name="buti_superficie">#2B1116</color>         <!-- tarjetas -->
+    <color name="buti_superficie_alt">#3D1A21</color>     <!-- chips, campos -->
+    <color name="buti_borde">#5E2A34</color>              <!-- bordes -->
+
+    <!-- Textos -->
+    <color name="buti_texto">#FAEFE2</color>              <!-- crema brillante -->
+    <color name="buti_texto_secundario">#E2C9B4</color>   <!-- tepetate claro -->
+    <color name="buti_titulo">#FFC857</color>             <!-- dorado brillante -->
+    <color name="buti_resalte">#FF9E5E</color>            <!-- naranja atardecer -->
+
+    <!-- Botones y encabezados -->
+    <color name="buti_acento">#9E1E33</color>             <!-- vino vivo -->
+    <color name="buti_sobre_acento">#FFF6EA</color>       <!-- crema sobre vino -->
+    <color name="buti_exito">#9DB36A</color>              <!-- olivo brillante -->
+
+    <!-- Splash -->
+    <color name="buti_splash_lema">#FFC857</color>        <!-- dorado -->
+    <color name="buti_splash_lugar">#FFE7C7</color>       <!-- crema cálido -->
+
+    <!-- Colores de los niveles MODO OSCURO -->
+    <color name="nivel_rosa">#FF6F9A</color>
+    <color name="nivel_naranja">#FF9E5E</color>
+    <color name="nivel_verde">#A9C46C</color>
+    <color name="nivel_azul">#8FB3D9</color>
+    <color name="nivel_siena">#E0A06A</color>
+    <color name="nivel_vino">#E8949C</color>
+</resources>

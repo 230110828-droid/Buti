@@ -114,4 +114,18 @@
         android:label="Acerca de"
         tools:layout="@layout/fragment_acerca_de" />
 
+    <!-- Mapa de Ixmiquilpan -->
+    <fragment
+        android:id="@+id/mapaFragment"
+        android:name="com.itsoeh.sbsc.buti.cultura.MapaFragment"
+        android:label="Mapa de Ixmiquilpan"
+        tools:layout="@layout/fragment_mapa" />
+
+    <!-- Configuración: tema y tamaño de letra -->
+    <fragment
+        android:id="@+id/configuracionFragment"
+        android:name="com.itsoeh.sbsc.buti.configuracion.ConfiguracionFragment"
+        android:label="Configuración"
+        tools:layout="@layout/fragment_configuracion" />
+
 </navigation>

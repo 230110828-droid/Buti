@@ -1,6 +1,11 @@
 package com.itsoeh.sbsc.buti.progreso;
 
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,8 +13,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.itsoeh.sbsc.buti.FotoPerfil;
+import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
 import com.itsoeh.sbsc.buti.RachaMaguey;
 
@@ -89,6 +98,14 @@ public class ProgresoFragment extends Fragment {
         // DATOS DEL USUARIO
         txtNombre = view.findViewById(R.id.txtNombreProgreso);
         txtIniciales = view.findViewById(R.id.txtInicialesProgreso);
+
+        // Foto de perfil (si no hay, se ven las iniciales).
+        FotoPerfil.mostrar(
+                getViewLifecycleOwner(),
+                view.findViewById(R.id.imgFotoProgreso),
+                txtIniciales,
+                null
+        );
         txtRacha = view.findViewById(R.id.txtRachaProgreso);
         txtPuntos = view.findViewById(R.id.txtPuntosProgreso);
         txtNivel = view.findViewById(R.id.txtNivelProgreso);
@@ -157,7 +174,7 @@ public class ProgresoFragment extends Fragment {
 
             actualizarInsignias(0);
 
-            cargarGraficas(null);
+            cargarGraficas(null, null);
 
             txtActividadReciente.setText(
                     "Todavía no tienes actividades registradas."
@@ -209,11 +226,8 @@ public class ProgresoFragment extends Fragment {
                 // RACHA
                 // -----------------------------------------
 
-                Integer racha = snapshot.child("racha")
-                        .child("diasActuales")
-                        .getValue(Integer.class);
-
-                int diasRacha = racha == null ? 0 : racha;
+                // Si dejó pasar un día sin practicar, la racha vuelve a 0.
+                int diasRacha = ProgresoButi.rachaVigente(snapshot);
 
                 txtRacha.setText(String.valueOf(diasRacha));
 
@@ -229,6 +243,9 @@ public class ProgresoFragment extends Fragment {
                         snapshot.child("progresoLecciones");
 
                 calcularEstadisticas(progreso);
+
+                // Puntos: lecciones (mejor puntaje) + práctica + juegos.
+                txtPuntos.setText(String.valueOf(ProgresoButi.puntosTotales(snapshot)));
 
                 // -----------------------------------------
                 // INSIGNIAS
@@ -246,7 +263,7 @@ public class ProgresoFragment extends Fragment {
                 // GRÁFICAS
                 // -----------------------------------------
 
-                cargarGraficas(progreso);
+                cargarGraficas(progreso, snapshot);
             }
 
             @Override
@@ -355,8 +372,6 @@ public class ProgresoFragment extends Fragment {
             }
         }
 
-        txtPuntos.setText(String.valueOf(puntosTotales));
-
         txtNivel.setText("Nv. " + nivelActual);
     }
 
@@ -453,6 +468,14 @@ public class ProgresoFragment extends Fragment {
             tarjeta.setAlpha(1.0f);
 
             estado.setText("Desbloqueada");
+            estado.setTextColor(ContextCompat.getColor(requireContext(), R.color.buti_exito));
+
+            // Aro dorado cuando la insignia ya es tuya.
+            if (tarjeta instanceof MaterialCardView) {
+                ((MaterialCardView) tarjeta).setStrokeColor(
+                        ContextCompat.getColor(requireContext(), R.color.buti_dorado));
+                ((MaterialCardView) tarjeta).setStrokeWidth(dp(2));
+            }
 
         } else {
 
@@ -462,6 +485,13 @@ public class ProgresoFragment extends Fragment {
             tarjeta.setAlpha(0.75f);
 
             estado.setText("Pendiente");
+            estado.setTextColor(ContextCompat.getColor(requireContext(), R.color.buti_texto_secundario));
+
+            if (tarjeta instanceof MaterialCardView) {
+                ((MaterialCardView) tarjeta).setStrokeColor(
+                        ContextCompat.getColor(requireContext(), R.color.buti_borde));
+                ((MaterialCardView) tarjeta).setStrokeWidth(dp(1));
+            }
         }
     }
 
@@ -579,7 +609,17 @@ public class ProgresoFragment extends Fragment {
 
         // MOSTRAR LAS TRES MÁS RECIENTES
 
-        StringBuilder resultado = new StringBuilder();
+        // Palomita real (icono) en lugar del símbolo "✓".
+        SpannableStringBuilder resultado = new SpannableStringBuilder();
+
+        Drawable palomita = ContextCompat.getDrawable(requireContext(), R.drawable.ic_req_ok);
+
+        if (palomita != null) {
+            palomita = palomita.mutate();
+            palomita.setTintList(ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.buti_exito)));
+            palomita.setBounds(0, 0, dp(16), dp(16));
+        }
 
         int limite = Math.min(3, actividades.size());
 
@@ -590,19 +630,27 @@ public class ProgresoFragment extends Fragment {
             String nivel = actividad.nivel.replace("nivel", "");
             String etapa = actividad.etapa.replace("etapa", "");
 
-            resultado.append("✓ Nivel ")
+            if (palomita != null) {
+                int inicio = resultado.length();
+                resultado.append("✓");
+                resultado.setSpan(new ImageSpan(palomita, ImageSpan.ALIGN_BASELINE),
+                        inicio, inicio + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                resultado.append("  ");
+            }
+
+            resultado.append("Nivel ")
                     .append(nivel)
                     .append(" · Etapa ")
                     .append(etapa);
 
             if (actividad.fecha != null) {
 
-                resultado.append("\n   ")
+                resultado.append("\n      ")
                         .append(formatoMostrar.format(actividad.fecha));
 
             } else {
 
-                resultado.append("\n   Fecha no disponible");
+                resultado.append("\n      Fecha no disponible");
             }
 
             if (i < limite - 1) {
@@ -610,14 +658,15 @@ public class ProgresoFragment extends Fragment {
             }
         }
 
-        txtActividadReciente.setText(resultado.toString());
+        txtActividadReciente.setText(resultado);
     }
 
     // =====================================================
     // GRÁFICAS
     // =====================================================
 
-    private void cargarGraficas(@Nullable DataSnapshot progreso) {
+    private void cargarGraficas(@Nullable DataSnapshot progreso,
+                                @Nullable DataSnapshot usuario) {
 
         // ---------- Puntos de los últimos 7 días ----------
 
@@ -625,17 +674,21 @@ public class ProgresoFragment extends Fragment {
         int[] puntosPorDia = new int[7];
         String[] inicialDia = {"D", "L", "M", "X", "J", "V", "S"};
 
-        SimpleDateFormat formatoDia =
-                new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
         String[] claves = new String[7];
+
+        // Datos nuevos: puntos guardados por día (lecciones, práctica y juegos).
+        boolean hayPuntosPorDia = usuario != null && usuario.hasChild("puntosPorDia");
 
         Calendar calendario = Calendar.getInstance();
         calendario.add(Calendar.DAY_OF_YEAR, -6);
 
         for (int i = 0; i < 7; i++) {
 
-            claves[i] = formatoDia.format(calendario.getTime());
+            claves[i] = ProgresoButi.diaDe(calendario);
+
+            if (hayPuntosPorDia) {
+                puntosPorDia[i] = ProgresoButi.puntosDelDia(usuario, claves[i]);
+            }
 
             dias[i] = (i == 6)
                     ? "Hoy"
@@ -691,7 +744,7 @@ public class ProgresoFragment extends Fragment {
                     String fecha = etapa.child("fecha").getValue(String.class);
                     Long puntos = etapa.child("puntos").getValue(Long.class);
 
-                    if (fecha == null || fecha.length() < 10) {
+                    if (hayPuntosPorDia || fecha == null || fecha.length() < 10) {
                         continue;
                     }
 
@@ -718,7 +771,7 @@ public class ProgresoFragment extends Fragment {
 
         if (txtResumenSemana != null) {
             txtResumenSemana.setText(totalSemana == 0
-                    ? "Aún no tienes puntos esta semana. ¡Completa una etapa!"
+                    ? "Aún no tienes puntos esta semana. ¡Completa una lección, práctica o juego!"
                     : "Ganaste " + totalSemana + " puntos en los últimos 7 días.");
         }
 
@@ -733,6 +786,10 @@ public class ProgresoFragment extends Fragment {
             txtResumenNiveles.setText("Etapas completadas: " + etapasTotales
                     + " de " + (TOTAL_NIVELES * ETAPAS_POR_NIVEL));
         }
+    }
+
+    private int dp(int valor) {
+        return (int) (valor * getResources().getDisplayMetrics().density);
     }
 
     // =====================================================

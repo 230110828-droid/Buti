@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Encabezado de Mi vocabulario MODO OSCURO -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="26dp" />
+    <gradient
+        android:angle="315"
+        android:startColor="#34506E"
+        android:centerColor="#1F2D40"
+        android:endColor="#14060A" />
+    <stroke android:width="1.5dp" android:color="#FFC857" />
+</shape>

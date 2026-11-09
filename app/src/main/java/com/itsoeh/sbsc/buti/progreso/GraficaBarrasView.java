@@ -10,6 +10,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import com.itsoeh.sbsc.buti.R;
 
 /**
  * Gráfica de barras sencilla, dibujada sin librerías externas.
@@ -19,12 +22,12 @@ import androidx.annotation.Nullable;
  */
 public class GraficaBarrasView extends View {
 
-    // Paleta B'ÜTI
-    private static final int COLOR_BARRA = Color.rgb(201, 122, 43);      // naranja
-    private static final int COLOR_DESTACADA = Color.rgb(79, 0, 11);     // vino
-    private static final int COLOR_VACIA = Color.rgb(236, 222, 200);     // crema oscuro
-    private static final int COLOR_TEXTO = Color.rgb(92, 52, 30);        // marrón
-    private static final int COLOR_LINEA = Color.rgb(222, 200, 170);
+    // Paleta B'ÜTI (cambia sola en modo oscuro: se lee de colors.xml / values-night).
+    private final int COLOR_BARRA;      // naranja
+    private final int COLOR_DESTACADA;  // vino en claro, dorado en oscuro
+    private final int COLOR_VACIA;      // fondo de la barra
+    private final int COLOR_TEXTO;      // etiquetas
+    private final int COLOR_LINEA;      // líneas guía
 
     private String[] etiquetas = new String[0];
     private int[] valores = new int[0];
@@ -51,11 +54,17 @@ public class GraficaBarrasView extends View {
 
         densidad = context.getResources().getDisplayMetrics().density;
 
+        COLOR_BARRA = ContextCompat.getColor(context, R.color.nivel_naranja);
+        COLOR_DESTACADA = ContextCompat.getColor(context, R.color.buti_titulo);
+        COLOR_VACIA = ContextCompat.getColor(context, R.color.buti_superficie_alt);
+        COLOR_TEXTO = ContextCompat.getColor(context, R.color.buti_texto_secundario);
+        COLOR_LINEA = ContextCompat.getColor(context, R.color.buti_borde);
+
         pincelTexto.setColor(COLOR_TEXTO);
         pincelTexto.setTextSize(11 * densidad);
         pincelTexto.setTextAlign(Paint.Align.CENTER);
 
-        pincelValor.setColor(COLOR_TEXTO);
+        pincelValor.setColor(ContextCompat.getColor(context, R.color.buti_texto));
         pincelValor.setTextSize(11 * densidad);
         pincelValor.setTextAlign(Paint.Align.CENTER);
         pincelValor.setFakeBoldText(true);

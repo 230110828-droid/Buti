@@ -1,12 +1,9 @@
 package com.itsoeh.sbsc.buti.juegos;
 
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -16,11 +13,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.ResultadoButi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,8 +34,9 @@ public class MemoramaFragment extends Fragment {
     private TextView txtParejas;
     private TextView txtMensaje;
 
-    private TextView btnReiniciar;
-    private TextView btnVolver;
+    // View: así funcionan con el botón Material y la flecha redonda.
+    private View btnReiniciar;
+    private View btnVolver;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
@@ -165,11 +164,7 @@ public class MemoramaFragment extends Fragment {
 
         FrameLayout contenedor = new FrameLayout(requireContext());
 
-        contenedor.setBackground(crearFondo(
-                Color.WHITE,
-                Color.parseColor("#D6A43B"),
-                16
-        ));
+        contenedor.setBackgroundResource(R.drawable.bg_carta_frente);
 
         contenedor.setElevation(dp(3));
 
@@ -179,26 +174,16 @@ public class MemoramaFragment extends Fragment {
         imagen.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imagen.setPadding(dp(7), dp(7), dp(7), dp(7));
 
-        imagen.setBackground(crearFondo(
-                Color.WHITE,
-                Color.parseColor("#D6A43B"),
-                16
-        ));
-
         imagen.setVisibility(View.GONE);
 
-        TextView reverso = new TextView(requireContext());
+        // Reverso: tu diseño en punto de cruz, con borde dorado y esquinas redondeadas.
+        ImageView reverso = new ImageView(requireContext());
 
-        reverso.setText("✿");
-        reverso.setTextSize(34);
-        reverso.setTextColor(Color.parseColor("#F2A900"));
-        reverso.setGravity(Gravity.CENTER);
-
-        reverso.setBackground(crearFondo(
-                Color.parseColor("#4F000B"),
-                Color.parseColor("#F2A900"),
-                16
-        ));
+        reverso.setImageResource(R.drawable.img_reverso_memorama);
+        reverso.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        reverso.setPadding(dp(3), dp(3), dp(3), dp(3));
+        reverso.setBackgroundResource(R.drawable.bg_carta_reverso);
+        reverso.setClipToOutline(true);
 
         FrameLayout.LayoutParams parametros =
                 new FrameLayout.LayoutParams(
@@ -286,6 +271,10 @@ public class MemoramaFragment extends Fragment {
             primeraCarta.encontrada = true;
             segundaCarta.encontrada = true;
 
+            // Borde verde para las parejas encontradas.
+            primeraCarta.contenedor.setBackgroundResource(R.drawable.bg_carta_encontrada);
+            segundaCarta.contenedor.setBackgroundResource(R.drawable.bg_carta_encontrada);
+
             parejasEncontradas++;
 
             txtParejas.setText(
@@ -362,22 +351,29 @@ public class MemoramaFragment extends Fragment {
 
         txtMensaje.setText("¡Completaste el memorama!");
 
-        new AlertDialog.Builder(requireContext())
-                .setTitle("¡Excelente!")
-                .setMessage(
-                        "¡Encontraste todas las parejas!\n\n" +
-                                "Tiempo: " + tiempoFinal + "\n" +
-                                "Movimientos: " + movimientos + "\n" +
-                                "Parejas: " + parejasEncontradas
-                )
-                .setCancelable(false)
-                .setPositiveButton("Jugar otra vez", (dialog, which) -> {
-                    reiniciarJuego();
-                })
-                .setNegativeButton("Salir", (dialog, which) -> {
-                    NavHostFragment.findNavController(this).popBackStack();
-                })
-                .show();
+        // Pantalla del colibrí: muestra el resultado y guarda puntos y racha.
+        ResultadoButi.Datos datos = new ResultadoButi.Datos();
+        datos.etiqueta = "MEMORAMA";
+        datos.titulo = "¡Excelente!";
+        datos.mensaje = "¡Encontraste todas las parejas!\n"
+                + "Tiempo: " + tiempoFinal + " · Movimientos: " + movimientos;
+        datos.correctas = parejasEncontradas;
+        datos.total = parejasEncontradas;
+        datos.puntos = ProgresoButi.PUNTOS_MEMORAMA;
+        datos.exito = true;
+
+        ResultadoButi.mostrarYGuardar(
+                requireContext(),
+                datos,
+                "Jugar otra vez",
+                this::reiniciarJuego,
+                "Salir",
+                () -> {
+                    if (isAdded()) {
+                        NavHostFragment.findNavController(this).popBackStack();
+                    }
+                }
+        );
     }
 
     private void reiniciarJuego() {
@@ -387,24 +383,6 @@ public class MemoramaFragment extends Fragment {
         handler.removeCallbacksAndMessages(null);
 
         iniciarJuego();
-    }
-
-    private GradientDrawable crearFondo(
-            int color,
-            int borde,
-            int radio) {
-
-        GradientDrawable fondo = new GradientDrawable();
-
-        fondo.setColor(color);
-        fondo.setCornerRadius(dp(radio));
-
-        fondo.setStroke(
-                dp(2),
-                borde
-        );
-
-        return fondo;
     }
 
     private int dp(float valor) {
@@ -439,7 +417,7 @@ public class MemoramaFragment extends Fragment {
 
         FrameLayout contenedor;
         ImageView imagenVista;
-        TextView reversoVista;
+        ImageView reversoVista;
 
         Carta(int imagen) {
             this.imagen = imagen;

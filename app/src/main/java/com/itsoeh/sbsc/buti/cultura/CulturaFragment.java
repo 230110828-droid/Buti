@@ -11,12 +11,12 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.itsoeh.sbsc.buti.R;
 
@@ -31,6 +31,7 @@ public class CulturaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // ANIMACIONES DE ENTRADA
+        animarEntrada(view.findViewById(R.id.cardExploraIxmiquilpan), 60);
         animarEntrada(view.findViewById(R.id.cardPuebloDexthi), 150);
         animarEntrada(view.findViewById(R.id.cardPuebloNith), 280);
         animarEntrada(view.findViewById(R.id.cardPuebloPanales), 410);
@@ -123,6 +124,25 @@ public class CulturaFragment extends Fragment {
                     R.drawable.ixmiquilpan_templo_fachada
             );
         });
+
+        // UBICACIÓN: EXPLORA IXMIQUILPAN
+        view.findViewById(R.id.cardExploraIxmiquilpan).setOnClickListener(v -> {
+            animarToque(v);
+
+            mostrarDetalle(
+                    "Ixmiquilpan",
+                    "Corazón del Valle del Mezquital",
+                    "Ixmiquilpan es un municipio del estado de Hidalgo y uno de los centros más importantes del Valle del Mezquital. Es hogar de comunidades hñähñu que conservan su lengua, sus artesanías y sus tradiciones, como El Dexthi, El Nith y Panales.",
+                    R.drawable.ixmiquilpan_templo_fachada
+            );
+        });
+
+        // PIN: ABRIR EL MAPA DENTRO DE LA APP
+        view.findViewById(R.id.btnMapaIxmiquilpan).setOnClickListener(v -> {
+            animarToque(v);
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.mapaFragment);
+        });
     }
 
     // ANIMACIÓN DE ENTRADA
@@ -183,8 +203,6 @@ public class CulturaFragment extends Fragment {
         ImageView imgFoto = dialog.findViewById(R.id.imgDetalleCultura);
         ImageView btnCerrar = dialog.findViewById(R.id.btnCerrarDetalleCultura);
 
-        Button btnEscuchar = dialog.findViewById(R.id.btnEscucharOtomi);
-
         // COLOCAR INFORMACIÓN
         if (txtTitulo != null) txtTitulo.setText(titulo);
         if (txtCategoria != null) txtCategoria.setText(categoria);
@@ -194,17 +212,6 @@ public class CulturaFragment extends Fragment {
         // CERRAR DETALLES
         if (btnCerrar != null) {
             btnCerrar.setOnClickListener(v -> dialog.dismiss());
-        }
-
-        // BOTÓN DE AUDIO EN OTOMÍ
-        if (btnEscuchar != null) {
-            btnEscuchar.setOnClickListener(v ->
-                    Toast.makeText(
-                            requireContext(),
-                            "Reproduciendo pronunciación en otomí...",
-                            Toast.LENGTH_SHORT
-                    ).show()
-            );
         }
 
         // REFERENCIAS DE LOS BOTONES INFORMATIVOS
@@ -219,7 +226,8 @@ public class CulturaFragment extends Fragment {
 
                 mostrarInfoFlotante(
                         "Cultura de " + titulo,
-                        "✿",
+                        R.drawable.ic_info_cultura,
+                        R.drawable.bg_tag_naranja,
                         obtenerInformacion(titulo, "cultura")
                 );
             });
@@ -232,7 +240,8 @@ public class CulturaFragment extends Fragment {
 
                 mostrarInfoFlotante(
                         "Tradiciones de " + titulo,
-                        "✧",
+                        R.drawable.ic_info_tradiciones,
+                        R.drawable.bg_tag_verde,
                         obtenerInformacion(titulo, "tradiciones")
                 );
             });
@@ -245,7 +254,8 @@ public class CulturaFragment extends Fragment {
 
                 mostrarInfoFlotante(
                         "Ubicación de " + titulo,
-                        "⌖",
+                        R.drawable.ic_info_ubicacion,
+                        R.drawable.bg_tag_siena,
                         obtenerInformacion(titulo, "ubicacion")
                 );
             });
@@ -370,6 +380,20 @@ public class CulturaFragment extends Fragment {
                         return "El templo de San Miguel Arcángel se encuentra en el centro de Ixmiquilpan, Hidalgo, dentro de la región del Valle del Mezquital.";
                 }
                 break;
+
+            case "Ixmiquilpan":
+
+                switch (tipo) {
+                    case "cultura":
+                        return "Ixmiquilpan es uno de los principales centros de la cultura hñähñu. En sus comunidades se conservan la lengua, la artesanía de ixtle, los bordados y el trabajo en madera con concha de abulón.";
+
+                    case "tradiciones":
+                        return "Entre sus tradiciones destacan las fiestas en honor a San Miguel Arcángel, el tianguis, la gastronomía regional como la barbacoa y el pulque, y los oficios artesanales que se transmiten de generación en generación.";
+
+                    case "ubicacion":
+                        return "Ixmiquilpan se encuentra en el estado de Hidalgo, en la región del Valle del Mezquital. Desde aquí se llega a comunidades como El Dexthi, El Nith y Panales.";
+                }
+                break;
         }
 
         return "Esta expresión forma parte de la riqueza cultural de Ixmiquilpan y del Valle del Mezquital, Hidalgo.";
@@ -378,7 +402,8 @@ public class CulturaFragment extends Fragment {
     // MOSTRAR VENTANA FLOTANTE DE INFORMACIÓN
     private void mostrarInfoFlotante(
             String titulo,
-            String icono,
+            @DrawableRes int icono,
+            @DrawableRes int fondoIcono,
             String descripcion
     ) {
 
@@ -399,7 +424,12 @@ public class CulturaFragment extends Fragment {
 
         // COLOCAR INFORMACIÓN
         if (txtTitulo != null) txtTitulo.setText(titulo);
-        if (txtIcono != null) txtIcono.setText(icono);
+        // Icono real (en lugar de símbolos de texto) sobre el color de la etiqueta.
+        if (txtIcono != null) {
+            txtIcono.setText("");
+            txtIcono.setBackgroundResource(fondoIcono);
+            txtIcono.setCompoundDrawablesRelativeWithIntrinsicBounds(0, icono, 0, 0);
+        }
         if (txtDescripcion != null) txtDescripcion.setText(descripcion);
 
         // CERRAR VENTANA

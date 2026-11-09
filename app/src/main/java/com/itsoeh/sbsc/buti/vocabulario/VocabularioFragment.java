@@ -54,10 +54,20 @@ public class VocabularioFragment extends Fragment {
                 tituloGrupo2.setVisibility(visibilidad);
                 gridGrupo2.setVisibility(visibilidad);
 
+                // Texto sin flechas: la flecha ahora es un icono real.
                 btnVerMas.setText(
                         masCategoriasVisibles
-                                ? "Ver menos categorías ↑"
-                                : "Ver más categorías ↓"
+                                ? "Ver menos categorías"
+                                : "Ver más categorías"
+                );
+
+                btnVerMas.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0,
+                        0,
+                        masCategoriasVisibles
+                                ? R.drawable.ic_contraer
+                                : R.drawable.ic_expandir,
+                        0
                 );
             });
         }

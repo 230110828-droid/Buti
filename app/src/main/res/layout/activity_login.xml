@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/buti_crema"
+    android:background="@color/buti_fondo"
     android:fitsSystemWindows="true">
 
     <!-- Fondo cultural -->
@@ -14,11 +14,11 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_fondo1" />
 
-    <!-- Capa para mejorar la lectura -->
+    <!-- Capa para mejorar la lectura (crema en claro, vino en oscuro) -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EAFBF3EA" />
+        android:background="@drawable/velo_fondo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         <!-- Cenefa superior -->
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="48dp"
             android:contentDescription="@null"
             android:importantForAccessibility="no"
             android:scaleType="fitXY"
@@ -55,8 +55,8 @@
                 <!-- Logo -->
                 <ImageView
                     android:id="@+id/imgLogoLogin"
-                    android:layout_width="104dp"
-                    android:layout_height="104dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:contentDescription="Logo de B'ÜTI"
                     android:scaleType="fitCenter"
                     android:src="@drawable/principla_logo" />
@@ -69,9 +69,9 @@
                     android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif-black"
                     android:letterSpacing="0.04"
-                    android:text="B’ÜTI"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="32sp"
+                    android:text="B'ÜTI"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
                 <!-- Bienvenida -->
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="¡Qué gusto tenerte de vuelta!"
-                    android:textColor="@color/buti_cafe"
+                    android:textColor="@color/buti_texto_secundario"
                     android:textSize="15sp" />
 
                 <!-- Tarjeta de inicio de sesión -->
@@ -90,10 +90,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="22dp"
-                    app:cardBackgroundColor="#FFFEFC"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="5dp"
-                    app:strokeColor="#E8DCD0"
+                    app:cardBackgroundColor="@color/buti_superficie"
+                    app:cardCornerRadius="26dp"
+                    app:cardElevation="6dp"
+                    app:strokeColor="@color/buti_borde"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -111,7 +111,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Inicia sesión"
-                            android:textColor="@color/buti_vino"
+                            android:textColor="@color/buti_titulo"
                             android:textSize="25sp"
                             android:textStyle="bold" />
 
@@ -121,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="Ingresa tus datos para continuar aprendiendo."
-                            android:textColor="@color/buti_cafe"
+                            android:textColor="@color/buti_texto_secundario"
                             android:textSize="14sp" />
 
                         <!-- Etiqueta correo -->
@@ -131,7 +131,7 @@
                             android:layout_marginTop="23dp"
                             android:layout_marginBottom="8dp"
                             android:text="Correo electrónico"
-                            android:textColor="@color/buti_cafe"
+                            android:textColor="@color/buti_texto"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -140,6 +140,7 @@
                             android:id="@+id/contenedorCorreoLogin"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
+                            android:addStatesFromChildren="true"
                             android:background="@drawable/bg_campo_correo"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
@@ -162,8 +163,8 @@
                                 android:inputType="textEmailAddress"
                                 android:maxLines="1"
                                 android:paddingVertical="8dp"
-                                android:textColor="@color/buti_negro"
-                                android:textColorHint="#968B83"
+                                android:textColor="@color/buti_texto"
+                                android:textColorHint="@color/buti_texto_secundario"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
@@ -174,7 +175,7 @@
                             android:layout_marginTop="17dp"
                             android:layout_marginBottom="8dp"
                             android:text="Contraseña"
-                            android:textColor="@color/buti_cafe"
+                            android:textColor="@color/buti_texto"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -183,6 +184,7 @@
                             android:id="@+id/contenedorContrasenaLogin"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
+                            android:addStatesFromChildren="true"
                             android:background="@drawable/bg_campo_contrasena"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
@@ -206,8 +208,8 @@
                                 android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:paddingVertical="8dp"
-                                android:textColor="@color/buti_negro"
-                                android:textColorHint="#968B83"
+                                android:textColor="@color/buti_texto"
+                                android:textColorHint="@color/buti_texto_secundario"
                                 android:textSize="15sp" />
 
                             <ImageView
@@ -235,7 +237,7 @@
                             android:focusable="true"
                             android:padding="7dp"
                             android:text="¿Olvidaste tu contraseña?"
-                            android:textColor="@color/buti_siena"
+                            android:textColor="@color/buti_resalte"
                             android:textSize="13sp"
                             android:textStyle="bold" />
 
@@ -247,11 +249,11 @@
                             android:layout_marginTop="14dp"
                             android:text="Iniciar sesión"
                             android:textAllCaps="false"
-                            android:textColor="@color/white"
+                            android:textColor="@color/buti_sobre_acento"
                             android:textSize="17sp"
                             android:textStyle="bold"
-                            app:backgroundTint="@color/buti_vino"
-                            app:cornerRadius="16dp"
+                            app:backgroundTint="@color/buti_acento"
+                            app:cornerRadius="18dp"
                             app:elevation="3dp" />
 
                         <!-- Separador -->
@@ -266,21 +268,21 @@
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_weight="1"
-                                android:background="@color/buti_crema_oscuro" />
+                                android:background="@color/buti_borde" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="14dp"
                                 android:text="O continúa con"
-                                android:textColor="@color/buti_cafe"
+                                android:textColor="@color/buti_texto_secundario"
                                 android:textSize="12sp" />
 
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_weight="1"
-                                android:background="@color/buti_crema_oscuro" />
+                                android:background="@color/buti_borde" />
                         </LinearLayout>
 
                         <!-- Google -->
@@ -290,12 +292,12 @@
                             android:layout_height="54dp"
                             android:text="Continuar con Google"
                             android:textAllCaps="false"
-                            android:textColor="@color/buti_cafe"
+                            android:textColor="@color/buti_texto"
                             android:textSize="15sp"
                             android:textStyle="bold"
-                            app:backgroundTint="@color/white"
-                            app:cornerRadius="16dp"
-                            app:strokeColor="@color/buti_crema_oscuro"
+                            app:backgroundTint="@color/buti_superficie_alt"
+                            app:cornerRadius="18dp"
+                            app:strokeColor="@color/buti_borde"
                             app:strokeWidth="1dp" />
 
                         <!-- Registro -->
@@ -311,7 +313,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="¿No tienes una cuenta?"
-                                android:textColor="@color/buti_cafe"
+                                android:textColor="@color/buti_texto_secundario"
                                 android:textSize="14sp" />
 
                             <TextView
@@ -323,7 +325,7 @@
                                 android:focusable="true"
                                 android:padding="5dp"
                                 android:text="Regístrate"
-                                android:textColor="@color/buti_siena"
+                                android:textColor="@color/buti_resalte"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -338,7 +340,7 @@
                     android:layout_marginTop="18dp"
                     android:gravity="center"
                     android:text="Tu lengua, tu cultura, tus raíces."
-                    android:textColor="@color/buti_vino"
+                    android:textColor="@color/buti_titulo"
                     android:textSize="14sp"
                     android:textStyle="italic" />
 
@@ -348,7 +350,7 @@
         <!-- Cenefa inferior -->
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="48dp"
             android:contentDescription="@null"
             android:importantForAccessibility="no"
             android:scaleType="fitXY"

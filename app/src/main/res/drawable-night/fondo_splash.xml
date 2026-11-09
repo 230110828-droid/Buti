@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Splash MODO OSCURO: "noche vino". Vino intenso al centro
+     que se oscurece hacia las orillas. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:type="radial"
+        android:centerX="0.5"
+        android:centerY="0.40"
+        android:gradientRadius="75%p"
+        android:startColor="#8E1B2C"
+        android:centerColor="#4A0A15"
+        android:endColor="#14060A" />
+</shape>

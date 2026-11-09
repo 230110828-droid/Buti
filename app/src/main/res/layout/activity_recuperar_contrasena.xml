@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Recuperar contraseña B'ÜTI (mismo estilo que Login y Registro) -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/buti_crema">
+    android:background="@color/buti_fondo"
+    android:fitsSystemWindows="true">
 
-    <!-- Fondo -->
+    <!-- Fondo cultural -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,17 +15,21 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_fondo1" />
 
+    <!-- Capa para mejorar la lectura (crema en claro, vino en oscuro) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/velo_fondo" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Cenefa superior (fija, fuera del ScrollView) -->
+        <!-- Cenefa superior -->
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:contentDescription="@null"
+            android:layout_height="48dp"
             android:importantForAccessibility="no"
             android:scaleType="fitXY"
             android:src="@drawable/ic_margen_otomi_verde" />
@@ -32,430 +38,434 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:clipToPadding="true"
             android:fillViewport="true"
-            android:overScrollMode="never">
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="16dp">
+                android:paddingStart="24dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="24dp">
 
-                <!-- Logo / Marca -->
-                <ImageView
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/principla_logo" />
-
-                <!-- PASO 1: Ingresar correo -->
-                <LinearLayout
-                    android:id="@+id/layoutPaso1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:text="¿Olvidaste tu contraseña?"
-                        android:textColor="@color/buti_vino"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_plandaverde" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:paddingHorizontal="8dp"
-                            android:text="Ingresa tu correo y te enviaremos un código para recuperarla"
-                            android:textColor="@color/buti_cafe"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_plandaverde" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="28dp"
-                        android:background="@drawable/bg_campo_correo"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="16dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_msg" />
-
-                        <EditText
-                            android:id="@+id/edtCorreoRecuperar"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:background="@null"
-                            android:hint="Correo electrónico"
-                            android:inputType="textEmailAddress"
-                            android:textColor="@color/buti_negro"
-                            android:textColorHint="#888888"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnObtenerCodigo"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="28dp"
-                        android:backgroundTint="@color/buti_siena"
-                        android:text="Obtener código"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="16dp" />
-                </LinearLayout>
-
-                <!-- PASO 2: Ingresar código de 4 dígitos -->
-                <LinearLayout
-                    android:id="@+id/layoutPaso2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:text="Revisa tu correo"
-                        android:textColor="@color/buti_vino"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txtMensajeCodigoEnviado"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_horizontal"
-                        android:text="Enviamos un código de 4 dígitos a tu correo"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="28dp"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/edtCodigo1"
-                            android:layout_width="56dp"
-                            android:layout_height="64dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/bg_campo_correo"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:maxLength="1"
-                            android:textColor="@color/buti_vino"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/edtCodigo2"
-                            android:layout_width="56dp"
-                            android:layout_height="64dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/bg_campo_correo"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:maxLength="1"
-                            android:textColor="@color/buti_vino"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/edtCodigo3"
-                            android:layout_width="56dp"
-                            android:layout_height="64dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/bg_campo_correo"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:maxLength="1"
-                            android:textColor="@color/buti_vino"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/edtCodigo4"
-                            android:layout_width="56dp"
-                            android:layout_height="64dp"
-                            android:background="@drawable/bg_campo_correo"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:maxLength="1"
-                            android:textColor="@color/buti_vino"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/txtReenviarCodigo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="8dp"
-                        android:text="Reenviar código"
-                        android:textColor="@color/buti_siena"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnVerificarCodigo"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="16dp"
-                        android:backgroundTint="@color/buti_siena"
-                        android:text="Verificar"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="16dp" />
-                </LinearLayout>
-
-                <!-- PASO 3: Nueva contraseña -->
-                <LinearLayout
-                    android:id="@+id/layoutPaso3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:text="Crea tu nueva contraseña"
-                        android:textColor="@color/buti_vino"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_horizontal"
-                        android:text="Debe tener al menos 8 caracteres"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="28dp"
-                        android:background="@drawable/bg_campo_contrasena"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="16dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_candado2" />
-
-                        <EditText
-                            android:id="@+id/edtNuevaContrasena"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:background="@null"
-                            android:hint="Nueva contraseña"
-                            android:inputType="textPassword"
-                            android:textColor="@color/buti_negro"
-                            android:textColorHint="#888888"
-                            android:textSize="15sp" />
-
-                        <ImageView
-                            android:id="@+id/imgVerNueva"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:contentDescription="Mostrar u ocultar contraseña"
-                            android:padding="8dp"
-                            android:src="@drawable/ic_ojocerrado" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/bg_campo_contrasena"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="16dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_candado2" />
-
-                        <EditText
-                            android:id="@+id/edtConfirmarNuevaContrasena"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:background="@null"
-                            android:hint="Confirmar contraseña"
-                            android:inputType="textPassword"
-                            android:textColor="@color/buti_negro"
-                            android:textColorHint="#888888"
-                            android:textSize="15sp" />
-
-                        <ImageView
-                            android:id="@+id/imgVerConfirmar"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:contentDescription="Mostrar u ocultar contraseña"
-                            android:padding="8dp"
-                            android:src="@drawable/ic_ojocerrado" />
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnGuardarContrasena"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="28dp"
-                        android:backgroundTint="@color/buti_siena"
-                        android:text="Guardar contraseña"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="16dp" />
-                </LinearLayout>
-
-                <!-- PASO 4: Confirmación -->
-                <LinearLayout
-                    android:id="@+id/layoutPaso4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                <!-- Personaje dentro de un círculo -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="104dp"
+                    android:layout_height="104dp"
+                    app:cardBackgroundColor="@color/buti_superficie"
+                    app:cardCornerRadius="52dp"
+                    app:cardElevation="4dp"
+                    app:strokeColor="@color/buti_dorado"
+                    app:strokeWidth="2dp">
 
                     <ImageView
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_cirpaloma" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Colibrí de B'ÜTI"
+                        android:padding="14dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_nina_pensando" />
 
-                    <TextView
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:letterSpacing="0.14"
+                    android:text="RECUPERAR ACCESO"
+                    android:textColor="@color/buti_resalte"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <!-- Tarjeta con los pasos -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:cardBackgroundColor="@color/buti_superficie"
+                    app:cardCornerRadius="26dp"
+                    app:cardElevation="6dp"
+                    app:strokeColor="@color/buti_borde"
+                    app:strokeWidth="1dp">
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center"
-                        android:text="¡Contraseña\nactualizada!"
-                        android:textColor="@color/buti_vino"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:padding="22dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center"
-                        android:text="Ya puedes iniciar sesión con tu nueva contraseña"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        <!-- =============== PASO 1: correo =============== -->
+                        <LinearLayout
+                            android:id="@+id/layoutPaso1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="visible">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnIrIniciarSesion"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="32dp"
-                        android:backgroundTint="@color/buti_siena"
-                        android:text="Iniciar sesión"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="16dp" />
-                </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="¿Olvidaste tu contraseña?"
+                                android:textColor="@color/buti_titulo"
+                                android:textSize="23sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:lineSpacingExtra="2dp"
+                                android:text="Escribe tu correo y te enviaremos un enlace para crear una nueva contraseña."
+                                android:textColor="@color/buti_texto_secundario"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="8dp"
+                                android:text="Correo electrónico"
+                                android:textColor="@color/buti_texto"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:addStatesFromChildren="true"
+                                android:background="@drawable/bg_campo_correo"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="14dp">
+
+                                <ImageView
+                                    android:layout_width="22dp"
+                                    android:layout_height="22dp"
+                                    android:importantForAccessibility="no"
+                                    android:src="@drawable/ic_msg" />
+
+                                <EditText
+                                    android:id="@+id/edtCorreoRecuperar"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_weight="1"
+                                    android:background="@null"
+                                    android:hint="ejemplo@correo.com"
+                                    android:inputType="textEmailAddress"
+                                    android:maxLines="1"
+                                    android:textColor="@color/buti_texto"
+                                    android:textColorHint="@color/buti_texto_secundario"
+                                    android:textSize="15sp" />
+
+                            </LinearLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnObtenerCodigo"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:layout_marginTop="20dp"
+                                android:text="Enviar enlace"
+                                android:textAllCaps="false"
+                                android:textColor="@color/buti_sobre_acento"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                app:backgroundTint="@color/buti_acento"
+                                app:cornerRadius="18dp"
+                                app:icon="@drawable/ic_msgpajaro"
+                                app:iconGravity="textStart"
+                                app:iconPadding="10dp"
+                                app:iconSize="24dp"
+                                app:iconTint="@null" />
+
+                        </LinearLayout>
+
+                        <!-- =============== PASO 2: revisar correo =============== -->
+                        <LinearLayout
+                            android:id="@+id/layoutPaso2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Revisa tu correo"
+                                android:textColor="@color/buti_titulo"
+                                android:textSize="23sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txtMensajeCodigoEnviado"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:lineSpacingExtra="2dp"
+                                android:text="Te enviamos un enlace a tu correo"
+                                android:textColor="@color/buti_texto_secundario"
+                                android:textSize="14sp" />
+
+                            <!-- Pasos numerados -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="18dp"
+                                android:background="@drawable/bg_requisitos_contrasena"
+                                android:orientation="vertical"
+                                android:padding="14dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:background="@drawable/bg_numero_paso"
+                                        android:gravity="center"
+                                        android:text="1"
+                                        android:textColor="@color/buti_vino"
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_weight="1"
+                                        android:text="Abre el correo que te enviamos."
+                                        android:textColor="@color/buti_texto"
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:background="@drawable/bg_numero_paso"
+                                        android:gravity="center"
+                                        android:text="2"
+                                        android:textColor="@color/buti_vino"
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_weight="1"
+                                        android:text="Toca el enlace."
+                                        android:textColor="@color/buti_texto"
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:background="@drawable/bg_numero_paso"
+                                        android:gravity="center"
+                                        android:text="3"
+                                        android:textColor="@color/buti_vino"
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_weight="1"
+                                        android:text="Escribe tu nueva contraseña en la página y guárdala."
+                                        android:textColor="@color/buti_texto"
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:background="@drawable/bg_numero_paso"
+                                        android:gravity="center"
+                                        android:text="4"
+                                        android:textColor="@color/buti_vino"
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_weight="1"
+                                        android:text="Regresa a B'ÜTI e inicia sesión."
+                                        android:textColor="@color/buti_texto"
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
+                                android:text="¿No lo ves? Revisa la carpeta de spam."
+                                android:textColor="@color/buti_texto_secundario"
+                                android:textSize="12sp"
+                                android:textStyle="italic" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnVerificarCodigo"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:layout_marginTop="16dp"
+                                android:text="Ya cambié mi contraseña"
+                                android:textAllCaps="false"
+                                android:textColor="@color/buti_sobre_acento"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:backgroundTint="@color/buti_acento"
+                                app:cornerRadius="18dp" />
+
+                            <TextView
+                                android:id="@+id/txtReenviarCodigo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="8dp"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:padding="8dp"
+                                android:text="Reenviar enlace"
+                                android:textColor="@color/buti_resalte"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <!-- =============== PASO 4: listo =============== -->
+                        <LinearLayout
+                            android:id="@+id/layoutPaso4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="110dp"
+                                android:layout_height="110dp"
+                                android:importantForAccessibility="no"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_colibri_meta" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:gravity="center"
+                                android:text="¡Contraseña actualizada!"
+                                android:textColor="@color/buti_titulo"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center"
+                                android:text="Ya puedes iniciar sesión con tu nueva contraseña."
+                                android:textColor="@color/buti_texto_secundario"
+                                android:textSize="14sp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnIrIniciarSesion"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:layout_marginTop="20dp"
+                                android:text="Iniciar sesión"
+                                android:textAllCaps="false"
+                                android:textColor="@color/buti_sobre_acento"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                app:backgroundTint="@color/buti_exito"
+                                app:cornerRadius="18dp" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- Volver al login -->
                 <TextView
                     android:id="@+id/txtRegresarLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="14dp"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
+                    android:drawableStart="@drawable/ic_flecha_atras"
+                    android:drawablePadding="6dp"
                     android:focusable="true"
-                    android:padding="10dp"
-                    android:text="Volver a Iniciar sesión"
-                    android:textColor="@color/buti_cafe"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="Volver a iniciar sesión"
+                    android:textColor="@color/buti_texto"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Tu lengua, tu cultura, tus raíces."
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
             </LinearLayout>
+
         </ScrollView>
 
-        <!-- Cenefa inferior (fija, fuera del ScrollView) -->
+        <!-- Cenefa inferior -->
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:contentDescription="@null"
+            android:layout_height="48dp"
             android:importantForAccessibility="no"
             android:scaleType="fitXY"
             android:src="@drawable/ic_margen_otomi_verde" />
 
     </LinearLayout>
+
 </FrameLayout>

@@ -1,62 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Atrapa la palabra · B'ÜTI
+    Solo diseño: ids iguales. Modo claro y oscuro.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/buti_fondo"
     android:orientation="vertical"
-    android:background="@color/buti_crema"
-    android:padding="16dp">
+    android:paddingStart="16dp"
+    android:paddingTop="14dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="12dp">
 
+    <!-- Encabezado -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
+        <ImageView
             android:id="@+id/btnVolverAtrapa"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:gravity="center"
-            android:text="‹"
-            android:textColor="@color/buti_vino"
-            android:textSize="34sp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_boton_volver"
             android:clickable="true"
-            android:focusable="true" />
+            android:contentDescription="Regresar"
+            android:focusable="true"
+            android:padding="11dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_flecha_atras" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingStart="8dp">
+            android:paddingStart="12dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:letterSpacing="0.12"
                 android:text="JUEGO DE REFLEJOS"
-                android:textColor="@color/buti_naranja"
+                android:textColor="@color/buti_resalte"
                 android:textSize="10sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.12" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Atrapa la palabra"
-                android:textColor="@color/buti_vino"
-                android:textSize="23sp"
+                android:textColor="@color/buti_titulo"
+                android:textSize="22sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <ImageView
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:src="@drawable/ic_colibri_feliz"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="Colibrí B'ÜTI"
             android:scaleType="fitCenter"
-            android:contentDescription="Colibrí B'ÜTI" />
+            android:src="@drawable/ic_colibri_feliz" />
     </LinearLayout>
 
-    <!-- SELECCIÓN DE CATEGORÍAS -->
+    <!-- ================= SELECCIÓN DE CATEGORÍAS ================= -->
     <ScrollView
         android:id="@+id/layoutSeleccionAtrapa"
         android:layout_width="match_parent"
@@ -69,235 +79,427 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="18dp">
+            android:paddingTop="14dp">
 
-            <TextView
+            <!-- Banner -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="¡Prepárate para atrapar!"
-                android:textColor="@color/buti_vino"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:background="@drawable/bg_banner_juegos"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="18dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="16dp">
 
-            <TextView
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_rombo1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:letterSpacing="0.1"
+                            android:text="10 RONDAS · 3 VIDAS · 60 S"
+                            android:textColor="@color/buti_dorado"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="¡Prepárate para atrapar!"
+                        android:textColor="@color/buti_crema"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Elige una categoría y demuestra qué tanto sabes de hñähñu."
+                        android:textColor="#F5DCCB"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:layout_marginStart="8dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_juego_atrapa" />
+
+            </LinearLayout>
+
+            <!-- Título -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Elige una categoría y demuestra qué tanto sabes de Hñähñu."
-                android:textColor="@color/buti_cafe"
-                android:textSize="14sp"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="18dp" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/bg_barra_seccion" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Elige una categoría"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <GridLayout
                 android:id="@+id/gridCategoriasAtrapa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:alignmentMode="alignMargins" />
+                android:alignmentMode="alignMargins"
+                android:columnCount="2" />
 
-            <TextView
+            <!-- Pie -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="✦ Aprende jugando · B’ÜTI ✦"
-                android:textColor="@color/buti_naranja"
-                android:textStyle="bold"
-                android:textSize="12sp"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="12dp"
                 android:gravity="center"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="15dp" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rombo2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Aprende jugando · B'ÜTI"
+                    android:textColor="@color/buti_resalte"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rombo2" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- PANTALLA DEL JUEGO -->
+    <!-- ================= PANTALLA DEL JUEGO ================= -->
     <LinearLayout
         android:id="@+id/layoutPartidaAtrapa"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:paddingTop="12dp"
         android:visibility="gone">
 
+        <!-- Ronda · puntos · tiempo -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="3">
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtRondaAtrapa"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:layout_weight="1"
+                android:background="@drawable/bg_stat_juego"
+                android:gravity="center"
                 android:text="RONDA 1/10"
-                android:textColor="@color/buti_vino"
-                android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textColor="@color/buti_titulo"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtPuntosAtrapa"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
+                android:background="@drawable/bg_stat_juego"
+                android:drawableStart="@drawable/ic_estrella_puntos"
+                android:drawablePadding="4dp"
                 android:gravity="center"
-                android:text="★ 0"
-                android:textColor="@color/buti_naranja"
-                android:textStyle="bold"
-                android:textSize="14sp" />
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:text="0"
+                android:textColor="@color/buti_titulo"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtTiempoAtrapa"
+            <!-- Tiempo: icono bordado (PNG) en tamaño fijo + texto -->
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:layout_weight="1"
-                android:gravity="end"
-                android:text="60 s"
-                android:textColor="@color/buti_vino"
-                android:textStyle="bold"
-                android:textSize="14sp" />
+                android:background="@drawable/bg_stat_juego"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_temporizador_chico" />
+
+                <TextView
+                    android:id="@+id/txtTiempoAtrapa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="60 s"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtCategoriaActual"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ANIMALES"
-            android:textColor="@color/buti_verde"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="12dp" />
-
-        <com.google.android.material.card.MaterialCardView
+        <!-- Pregunta -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:cardBackgroundColor="#FFF9F0"
-            app:cardCornerRadius="18dp"
-            app:strokeColor="#E6C47A"
-            app:strokeWidth="1dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            android:background="@drawable/bg_practicar_tarjeta"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="14dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="12dp">
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtCategoriaActual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_practicar_etiqueta"
+                    android:letterSpacing="0.08"
+                    android:paddingStart="10dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="3dp"
+                    android:text="ANIMALES"
+                    android:textColor="@color/nivel_verde"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:letterSpacing="0.06"
+                    android:text="ATRAPA LA TRADUCCIÓN"
+                    android:textColor="@color/buti_resalte"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtPreguntaAtrapa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="14dp"
-                android:gravity="center">
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="¿Cómo se dice PERRO en Hñähñu?"
+                android:textColor="@color/buti_titulo"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="ATRAPA LA TRADUCCIÓN CORRECTA"
-                    android:textColor="@color/buti_naranja"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/txtPreguntaAtrapa"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Cómo se dice PERRO en Hñähñu?"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
+        <!-- Vidas (corazones reales, los pone el Java) -->
         <TextView
             android:id="@+id/txtVidasAtrapa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="♥  ♥  ♥"
-            android:textColor="@color/buti_rosa"
-            android:textSize="22sp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:layout_marginTop="8dp" />
+            android:text=""
+            android:textSize="22sp" />
 
+        <!-- Zona donde caen las palabras -->
         <FrameLayout
             android:id="@+id/areaPalabrasAtrapa"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:layout_marginBottom="8dp"
-            android:background="#F1E4D1"
+            android:layout_weight="1"
+            android:background="@drawable/bg_tablero_juego"
             android:clipChildren="false"
             android:clipToPadding="false" />
 
         <TextView
             android:id="@+id/txtMensajeAtrapa"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¡Atrapa la palabra correcta!"
-            android:textColor="@color/buti_cafe"
-            android:textSize="13sp"
-            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_practicar_etiqueta"
             android:gravity="center"
-            android:padding="8dp" />
+            android:paddingStart="16dp"
+            android:paddingTop="7dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="7dp"
+            android:text="¡Atrapa la palabra correcta!"
+            android:textColor="@color/buti_titulo"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <!-- RESULTADOS -->
+    <!-- ================= RESULTADOS ================= -->
     <LinearLayout
         android:id="@+id/layoutResultadoAtrapa"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
         android:gravity="center"
-        android:padding="12dp"
+        android:orientation="vertical"
+        android:paddingTop="12dp"
         android:visibility="gone">
 
-        <ImageView
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:src="@drawable/ic_colibri_feliz"
-            android:scaleType="fitCenter"
-            android:contentDescription="Colibrí ganador" />
-
-        <TextView
-            android:id="@+id/txtResultadoAtrapa"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="¡Excelente!"
-            android:textColor="@color/buti_vino"
-            android:textSize="27sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="15dp" />
+            android:background="@drawable/bg_practicar_tarjeta"
+            android:elevation="2dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp">
 
-        <TextView
-            android:id="@+id/txtDetalleResultadoAtrapa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Obtuviste 80 puntos"
-            android:textColor="@color/buti_cafe"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="25dp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="14dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_margen_otomi_verde" />
 
-        <Button
-            android:id="@+id/btnRepetirAtrapa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Volver a jugar"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/buti_vino" />
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="Personaje celebrando"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_nino_victoria" />
 
-        <Button
-            android:id="@+id/btnCategoriasAtrapa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Elegir otra categoría"
-            android:textColor="@color/buti_vino"
-            android:backgroundTint="#E9D9C4"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/txtResultadoAtrapa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="¡Excelente!"
+                android:textColor="@color/buti_titulo"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDetalleResultadoAtrapa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_practicar_estadisticas"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:padding="16dp"
+                android:text="Obtuviste 80 puntos"
+                android:textColor="@color/buti_texto"
+                android:textSize="15sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRepetirAtrapa"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="18dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Volver a jugar"
+                android:textAllCaps="false"
+                android:textColor="@color/buti_sobre_acento"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/buti_acento"
+                app:cornerRadius="18dp"
+                app:icon="@drawable/ic_reiniciar"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconSize="24dp"
+                app:iconTint="@null" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCategoriasAtrapa"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="10dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Elegir otra categoría"
+                android:textAllCaps="false"
+                android:textColor="@color/buti_titulo"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/buti_superficie"
+                app:cornerRadius="18dp"
+                app:icon="@drawable/ic_categorias"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconSize="24dp"
+                app:iconTint="@null"
+                app:strokeColor="@color/buti_dorado"
+                app:strokeWidth="1.5dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

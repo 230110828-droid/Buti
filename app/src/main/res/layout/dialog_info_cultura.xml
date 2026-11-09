@@ -1,69 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Ventana de información (Cultura / Tradiciones / Ubicación) · B'ÜTI
+    Solo diseño: ids iguales. El icono ahora es un icono real
+    (lo pone CulturaFragment). Modo claro y oscuro.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/bg_dialogo_cultura"
+    android:orientation="vertical"
     android:padding="24dp">
 
-    <!-- ICONO DECORATIVO -->
+    <!-- ICONO (círculo de color con icono) -->
     <TextView
         android:id="@+id/txtIconoInfo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_tag_naranja"
-        android:gravity="center"
-        android:text="✿"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:drawableTop="@drawable/ic_info_cultura"
+        android:elevation="3dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="19dp"
+        android:text=""
+        android:textSize="1sp" />
 
     <!-- TÍTULO -->
     <TextView
         android:id="@+id/txtTituloInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Nuestra cultura"
-        android:textColor="@color/buti_vino"
-        android:textSize="23sp"
+        android:textColor="@color/buti_titulo"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <!-- DETALLE DECORATIVO -->
-    <View
-        android:layout_width="70dp"
-        android:layout_height="3dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="13dp"
-        android:background="@color/buti_dorado" />
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="28dp"
+            android:layout_height="2dp"
+            android:background="@color/buti_dorado" />
+
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_rombo1" />
+
+        <View
+            android:layout_width="28dp"
+            android:layout_height="2dp"
+            android:background="@color/buti_dorado" />
+
+    </LinearLayout>
 
     <!-- DESCRIPCIÓN -->
     <TextView
         android:id="@+id/txtDescripcionInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:lineSpacingExtra="5dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
+        android:lineSpacingExtra="5dp"
         android:text="Información sobre la cultura de Ixmiquilpan."
-        android:textColor="@color/buti_cafe"
-        android:textSize="16sp" />
+        android:textColor="@color/buti_texto"
+        android:textSize="15sp" />
 
     <!-- BOTÓN CERRAR -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCerrarInfo"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/buti_siena"
-        android:text="Cerrar"
+        android:layout_marginTop="22dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Entendido"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/buti_sobre_acento"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:cornerRadius="16dp" />
+        app:backgroundTint="@color/buti_acento"
+        app:cornerRadius="18dp" />
 
 </LinearLayout>

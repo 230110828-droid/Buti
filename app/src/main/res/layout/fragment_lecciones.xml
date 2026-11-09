@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/buti_crema"
+    android:background="@color/buti_fondo"
     android:fillViewport="true"
     android:scrollbars="none">
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:text="320"
-                    android:textColor="@color/buti_siena"
+                    android:textColor="@color/buti_titulo"
                     android:textSize="19sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -106,10 +106,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_rosa"
+                        app:strokeColor="@color/nivel_rosa"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -128,7 +128,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_rosa"
+                        android:backgroundTint="@color/nivel_rosa"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="1"
@@ -157,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 1"
-                            android:textColor="@color/buti_rosa"
+                            android:textColor="@color/nivel_rosa"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -165,7 +165,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Saludos"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -224,7 +224,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 2"
-                            android:textColor="@color/buti_naranja"
+                            android:textColor="@color/nivel_naranja"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -232,7 +232,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Números"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -248,10 +248,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_naranja"
+                        app:strokeColor="@color/nivel_naranja"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -270,7 +270,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_naranja"
+                        android:backgroundTint="@color/nivel_naranja"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="2"
@@ -330,10 +330,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_verde"
+                        app:strokeColor="@color/nivel_verde"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -352,7 +352,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_verde"
+                        android:backgroundTint="@color/nivel_verde"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="3"
@@ -381,7 +381,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 3"
-                            android:textColor="@color/buti_verde"
+                            android:textColor="@color/nivel_verde"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -389,7 +389,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Colores"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -448,7 +448,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 4"
-                            android:textColor="@color/buti_azul"
+                            android:textColor="@color/nivel_azul"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -456,7 +456,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Animales"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -472,10 +472,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_azul"
+                        app:strokeColor="@color/nivel_azul"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -494,7 +494,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_azul"
+                        android:backgroundTint="@color/nivel_azul"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="4"
@@ -554,10 +554,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_siena"
+                        app:strokeColor="@color/nivel_siena"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -576,7 +576,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_siena"
+                        android:backgroundTint="@color/nivel_siena"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="5"
@@ -605,7 +605,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 5"
-                            android:textColor="@color/buti_siena"
+                            android:textColor="@color/nivel_siena"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -613,7 +613,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Plantas"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -672,7 +672,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 6"
-                            android:textColor="@color/buti_vino"
+                            android:textColor="@color/nivel_vino"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -680,7 +680,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Objetos"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -696,10 +696,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_vino"
+                        app:strokeColor="@color/nivel_vino"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -718,7 +718,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_vino"
+                        android:backgroundTint="@color/nivel_vino"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="6"
@@ -778,10 +778,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_rosa"
+                        app:strokeColor="@color/nivel_rosa"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -800,7 +800,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_rosa"
+                        android:backgroundTint="@color/nivel_rosa"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="7"
@@ -829,7 +829,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 7"
-                            android:textColor="@color/buti_rosa"
+                            android:textColor="@color/nivel_rosa"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -837,7 +837,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Cuerpo"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -896,7 +896,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 8"
-                            android:textColor="@color/buti_naranja"
+                            android:textColor="@color/nivel_naranja"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -904,7 +904,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Comida"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -920,10 +920,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_naranja"
+                        app:strokeColor="@color/nivel_naranja"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -942,7 +942,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_naranja"
+                        android:backgroundTint="@color/nivel_naranja"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="8"
@@ -1002,10 +1002,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_verde"
+                        app:strokeColor="@color/nivel_verde"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -1024,7 +1024,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_verde"
+                        android:backgroundTint="@color/nivel_verde"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="9"
@@ -1053,7 +1053,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 9"
-                            android:textColor="@color/buti_verde"
+                            android:textColor="@color/nivel_verde"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -1061,7 +1061,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tiempo y celebraciones"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -1120,7 +1120,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 10"
-                            android:textColor="@color/buti_azul"
+                            android:textColor="@color/nivel_azul"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -1128,7 +1128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Naturaleza"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -1144,10 +1144,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_azul"
+                        app:strokeColor="@color/nivel_azul"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -1166,7 +1166,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_azul"
+                        android:backgroundTint="@color/nivel_azul"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="10"
@@ -1226,10 +1226,10 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
-                        app:cardBackgroundColor="@color/white"
+                        app:cardBackgroundColor="@color/buti_superficie"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="8dp"
-                        app:strokeColor="@color/buti_siena"
+                        app:strokeColor="@color/nivel_siena"
                         app:strokeWidth="4dp">
 
                         <ImageView
@@ -1248,7 +1248,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="2dp"
                         android:background="@drawable/bg_badge_nivel"
-                        android:backgroundTint="@color/buti_siena"
+                        android:backgroundTint="@color/nivel_siena"
                         android:elevation="10dp"
                         android:gravity="center"
                         android:text="11"
@@ -1277,7 +1277,7 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
                             android:text="NIVEL 11"
-                            android:textColor="@color/buti_siena"
+                            android:textColor="@color/nivel_siena"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -1285,7 +1285,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Lugares"
-                            android:textColor="@color/buti_negro"
+                            android:textColor="@color/buti_texto"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -1299,7 +1299,7 @@
             android:layout_marginTop="26dp"
             android:gravity="center"
             android:text="Cada palabra cuenta. ¡Sigue avanzando!"
-            android:textColor="@color/buti_siena"
+            android:textColor="@color/buti_resalte"
             android:textSize="14sp"
             android:textStyle="italic" />
 

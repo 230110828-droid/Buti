@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Opción del menú lateral MODO OSCURO: la elegida se resalta. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <inset android:insetLeft="10dp" android:insetRight="10dp"
+            android:insetTop="2dp" android:insetBottom="2dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="16dp" />
+                <solid android:color="#4D9E1E33" />
+                <stroke android:width="1dp" android:color="#80FFC857" />
+            </shape>
+        </inset>
+    </item>
+    <item android:state_pressed="true">
+        <inset android:insetLeft="10dp" android:insetRight="10dp"
+            android:insetTop="2dp" android:insetBottom="2dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="16dp" />
+                <solid android:color="#33FFC857" />
+            </shape>
+        </inset>
+    </item>
+    <item android:drawable="@android:color/transparent" />
+</selector>

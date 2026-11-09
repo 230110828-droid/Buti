@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Velo de la pantalla principal MODO CLARO: muy suave, deja ver el bordado. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#59F5EFE3" />
+</shape>

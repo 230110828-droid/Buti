@@ -17,35 +17,131 @@
         android:paddingEnd="20dp"
         android:paddingBottom="28dp">
 
-        <!-- Saludo -->
-        <TextView
-            android:id="@+id/txtNombreUsuarioInicio"
+        <!-- Saludo: encabezado vino con el colibrí -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Hola, aprendiz"
-            android:textColor="@color/buti_vino"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            app:cardBackgroundColor="@color/buti_acento"
+            app:cardCornerRadius="26dp"
+            app:cardElevation="6dp"
+            app:strokeWidth="0dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="¡Qué bueno verte de nuevo!"
-            android:textColor="@color/buti_siena"
-            android:textSize="15sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_saludo_inicio"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingTop="18dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="18dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:letterSpacing="0.12"
+                        android:text="VALLE DEL MEZQUITAL"
+                        android:textColor="@color/buti_dorado"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtNombreUsuarioInicio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:text="Hola, aprendiz"
+                        android:textColor="@color/buti_sobre_acento"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="48dp"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/buti_dorado" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="¡Qué bueno verte de nuevo!"
+                        android:textColor="@color/buti_sobre_acento"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <!-- Foto de perfil (o iniciales) con el colibrí de insignia -->
+                <FrameLayout
+                    android:id="@+id/contenedorAvatarInicio"
+                    android:layout_width="92dp"
+                    android:layout_height="92dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="Ver mi perfil"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_avatar_crema"
+                        android:clipToOutline="true"
+                        android:elevation="3dp">
+
+                        <ImageView
+                            android:id="@+id/imgFotoInicio"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:importantForAccessibility="no"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/txtInicialesInicio"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:importantForAccessibility="no"
+                            android:text="U"
+                            android:textColor="@color/buti_titulo"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                    </FrameLayout>
+
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_gravity="bottom|end"
+                        android:elevation="4dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_colibri_feliz" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Tarjeta: Tu progreso -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="24dp"
             app:cardElevation="5dp"
-            app:strokeColor="#EFE4D7"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -81,7 +177,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tu progreso"
-                            android:textColor="@color/buti_vino"
+                            android:textColor="@color/buti_titulo"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -90,8 +186,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Lección 1 de 10"
-                            android:textColor="@color/buti_cafe"
+                            android:text="Lección 1 de 11"
+                            android:textColor="@color/buti_texto_secundario"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -118,7 +214,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:text="20%"
-                                android:textColor="@color/buti_verde"
+                                android:textColor="@color/buti_exito"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -132,11 +228,16 @@
                     android:layout_marginTop="18dp"
                     android:text="Continuar lección"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/buti_sobre_acento"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:backgroundTint="@color/buti_naranja"
-                    app:cornerRadius="17dp"
+                    app:cornerRadius="18dp"
+                    app:icon="@drawable/ic_play"
+                    app:iconGravity="textStart"
+                    app:iconPadding="10dp"
+                    app:iconSize="22dp"
+                    app:iconTint="@null"
                     app:elevation="2dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -147,7 +248,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
             android:text="Aprende hoy"
-            android:textColor="@color/buti_vino"
+            android:textColor="@color/buti_titulo"
             android:textSize="21sp"
             android:textStyle="bold" />
 
@@ -155,10 +256,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="24dp"
             app:cardElevation="5dp"
-            app:strokeColor="#EFE4D7"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -188,8 +289,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Saludos en otomí"
-                        android:textColor="@color/buti_vino"
+                        android:text="Saludos en hñähñu"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -198,7 +299,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="Aprende a saludar y responder de forma amable."
-                        android:textColor="@color/buti_cafe"
+                        android:textColor="@color/buti_texto_secundario"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -221,7 +322,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:text="5 min"
-                            android:textColor="@color/buti_verde"
+                            android:textColor="@color/buti_exito"
                             android:textSize="13sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -243,10 +344,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/buti_superficie"
             app:cardCornerRadius="24dp"
             app:cardElevation="5dp"
-            app:strokeColor="#EFE4D7"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -257,6 +358,7 @@
                 android:padding="17dp">
 
                 <ImageView
+                    android:id="@+id/imgRachaInicio"
                     android:layout_width="68dp"
                     android:layout_height="68dp"
                     android:background="@drawable/bg_circulo_durazno"
@@ -278,16 +380,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Racha de 3 días"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
+                    <!-- Puntos totales (lecciones + práctica + juegos) -->
                     <TextView
+                        android:id="@+id/txtPuntosInicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:drawableStart="@drawable/ic_estrella_puntos"
+                        android:drawablePadding="6dp"
+                        android:gravity="center_vertical"
+                        android:text="0 puntos"
+                        android:textColor="@color/buti_dorado"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtMensajeRachaInicio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="¡Sigue así, lo estás haciendo genial!"
-                        android:textColor="@color/buti_cafe"
+                        android:textColor="@color/buti_texto_secundario"
                         android:textSize="13sp" />
                 </LinearLayout>
 
@@ -323,7 +440,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="27dp"
             android:text="¿Qué quieres explorar hoy?"
-            android:textColor="@color/buti_vino"
+            android:textColor="@color/buti_titulo"
             android:textSize="21sp"
             android:textStyle="bold" />
 
@@ -332,7 +449,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Descubre, aprende y conoce nuestras raíces."
-            android:textColor="@color/buti_siena"
+            android:textColor="@color/buti_resalte"
             android:textSize="13sp" />
 
         <GridLayout
@@ -353,10 +470,10 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="@color/buti_superficie"
                 app:cardCornerRadius="22dp"
                 app:cardElevation="4dp"
-                app:strokeColor="#EFE4D7"
+                app:strokeColor="@color/buti_borde"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -381,7 +498,7 @@
                         android:layout_marginTop="11dp"
                         android:gravity="center"
                         android:text="Ixmiquilpan"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -391,7 +508,7 @@
                         android:layout_marginTop="3dp"
                         android:gravity="center"
                         android:text="Cultura e historia"
-                        android:textColor="@color/buti_siena"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -405,10 +522,10 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="@color/buti_superficie"
                 app:cardCornerRadius="22dp"
                 app:cardElevation="4dp"
-                app:strokeColor="#EFE4D7"
+                app:strokeColor="@color/buti_borde"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -433,7 +550,7 @@
                         android:layout_marginTop="11dp"
                         android:gravity="center"
                         android:text="Vocabulario"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -442,8 +559,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:gravity="center"
-                        android:text="10 categorías"
-                        android:textColor="@color/buti_siena"
+                        android:text="11 categorías"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -457,10 +574,10 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="@color/buti_superficie"
                 app:cardCornerRadius="22dp"
                 app:cardElevation="4dp"
-                app:strokeColor="#EFE4D7"
+                app:strokeColor="@color/buti_borde"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -485,7 +602,7 @@
                         android:layout_marginTop="11dp"
                         android:gravity="center"
                         android:text="Practicar"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -495,7 +612,7 @@
                         android:layout_marginTop="3dp"
                         android:gravity="center"
                         android:text="Niveles y retos"
-                        android:textColor="@color/buti_siena"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -509,10 +626,10 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="@color/buti_superficie"
                 app:cardCornerRadius="22dp"
                 app:cardElevation="4dp"
-                app:strokeColor="#EFE4D7"
+                app:strokeColor="@color/buti_borde"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -537,7 +654,7 @@
                         android:layout_marginTop="11dp"
                         android:gravity="center"
                         android:text="Mi progreso"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -547,7 +664,7 @@
                         android:layout_marginTop="3dp"
                         android:gravity="center"
                         android:text="Racha y puntos"
-                        android:textColor="@color/buti_siena"
+                        android:textColor="@color/buti_resalte"
                         android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

@@ -1,80 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Mi progreso · B'ÜTI
+    Solo diseño: ids iguales. Modo claro y oscuro.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     android:fillViewport="true"
-    android:scrollbars="none"
-    android:background="@android:color/transparent">
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="8dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
         android:paddingBottom="24dp">
 
-        <!-- TÍTULO -->
-        <TextView
+        <!-- ENCABEZADO: perfil -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Mi progreso"
-            android:textColor="@color/prog_naranja"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:background="@drawable/bg_practicar_encabezado"
+            android:elevation="4dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="18dp"
+            android:paddingBottom="20dp">
 
-        <!-- AVATAR -->
-        <TextView
-            android:id="@+id/txtInicialesProgreso"
-            android:layout_width="104dp"
-            android:layout_height="104dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_avatar_progreso"
-            android:gravity="center"
-            android:text="U"
-            android:textColor="@color/prog_naranja"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <!-- NOMBRE DEL USUARIO -->
-        <TextView
-            android:id="@+id/txtNombreProgreso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="Usuario"
-            android:textColor="@color/prog_azul"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rombo1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:letterSpacing="0.14"
+                    android:text="MI PROGRESO"
+                    android:textColor="@color/buti_dorado"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rombo1" />
+
+            </LinearLayout>
+
+
+            <!-- Avatar: foto de perfil o iniciales -->
+            <FrameLayout
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_avatar_crema"
+                android:clipToOutline="true"
+                android:elevation="3dp">
+
+                <ImageView
+                    android:id="@+id/imgFotoProgreso"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtInicialesProgreso"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="U"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+            <!-- NOMBRE DEL USUARIO -->
+            <TextView
+                android:id="@+id/txtNombreProgreso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Usuario"
+                android:textColor="@color/buti_crema"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Aprendiz de hñähñu"
+                android:textColor="#F5DCCB"
+                android:textSize="13sp" />
+
+        </LinearLayout>
 
         <!-- ESTADÍSTICAS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="14dp"
             android:orientation="horizontal">
 
-            <!-- RACHA -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/prog_tarjeta"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/prog_borde"
-                app:strokeWidth="1.5dp">
+                app:cardBackgroundColor="@color/buti_superficie"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/buti_borde"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingVertical="14dp">
+                    android:paddingVertical="12dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -84,19 +146,20 @@
 
                         <ImageView
                             android:id="@+id/imgRachaMaguey"
-                            android:layout_width="34dp"
-                            android:layout_height="34dp"
-                            android:src="@drawable/ic_maguey2"
-                            android:contentDescription="Maguey de tu racha" />
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:contentDescription="Maguey de tu racha"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_maguey2" />
 
                         <TextView
                             android:id="@+id/txtRachaProgreso"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
+                            android:layout_marginStart="5dp"
                             android:text="0"
-                            android:textColor="@color/prog_naranja"
-                            android:textSize="24sp"
+                            android:textColor="@color/nivel_verde"
+                            android:textSize="22sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -105,122 +168,182 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="racha"
-                        android:textColor="@color/prog_marron"
-                        android:textSize="15sp" />
+                        android:letterSpacing="0.08"
+                        android:text="RACHA"
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <Space
-                android:layout_width="10dp"
+                android:layout_width="8dp"
                 android:layout_height="wrap_content" />
 
-            <!-- PUNTOS -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/prog_tarjeta"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/prog_borde"
-                app:strokeWidth="1.5dp">
+                app:cardBackgroundColor="@color/buti_superficie"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/buti_borde"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingVertical="14dp">
+                    android:paddingVertical="12dp">
 
-                    <TextView
-                        android:id="@+id/txtPuntosProgreso"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="@color/prog_naranja"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="Puntos"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_estrella_puntos" />
+
+                        <TextView
+                            android:id="@+id/txtPuntosProgreso"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="0"
+                            android:textColor="@color/buti_resalte"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="puntos"
-                        android:textColor="@color/prog_marron"
-                        android:textSize="15sp" />
+                        android:letterSpacing="0.08"
+                        android:text="PUNTOS"
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <Space
-                android:layout_width="10dp"
+                android:layout_width="8dp"
                 android:layout_height="wrap_content" />
 
-            <!-- NIVEL -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/prog_tarjeta"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/prog_borde"
-                app:strokeWidth="1.5dp">
+                app:cardBackgroundColor="@color/buti_superficie"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/buti_borde"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingVertical="14dp">
+                    android:paddingVertical="12dp">
 
-                    <TextView
-                        android:id="@+id/txtNivelProgreso"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nv. 1"
-                        android:textColor="@color/prog_oliva"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Nivel"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_rombo7" />
+
+                        <TextView
+                            android:id="@+id/txtNivelProgreso"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Nv. 1"
+                            android:textColor="@color/buti_titulo"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="nivel"
-                        android:textColor="@color/prog_marron"
-                        android:textSize="15sp" />
+                        android:letterSpacing="0.08"
+                        android:text="NIVEL"
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
-        <!-- INSIGNIAS -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="Insignias"
-            android:textColor="@color/prog_marron"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Logros que podrás conseguir mientras aprendes."
-            android:textColor="@color/prog_marron"
-            android:textSize="12sp" />
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_barra_seccion" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Insignias"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Logros que podrás conseguir mientras aprendes."
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_practicar_tarjeta"
+            android:orientation="horizontal"
+            android:paddingTop="14dp"
+            android:paddingBottom="12dp">
 
             <!-- INSIGNIA 1 -->
             <LinearLayout
@@ -232,21 +355,24 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInsignia1"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    app:cardBackgroundColor="@color/prog_tarjeta"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/prog_borde"
-                    app:strokeWidth="1dp">
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    app:cardBackgroundColor="@color/buti_superficie"
+                    app:cardCornerRadius="33dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/buti_borde"
+                    app:strokeWidth="1.5dp">
 
                     <ImageView
                         android:id="@+id/imgInsignia1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_candado3"
-                        android:contentDescription="Primera lección" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/bg_insignia_circulo"
+                        android:contentDescription="Primera lección"
+                        android:padding="11dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_candado3" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -256,15 +382,17 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:text="Primera lección"
-                    android:textColor="@color/prog_marron"
-                    android:textSize="10sp" />
+                    android:textColor="@color/buti_texto"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtEstadoInsignia1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:text="Pendiente"
-                    android:textColor="@color/prog_marron"
+                    android:textColor="@color/buti_texto_secundario"
                     android:textSize="10sp" />
 
             </LinearLayout>
@@ -279,21 +407,24 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInsignia2"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    app:cardBackgroundColor="@color/prog_tarjeta"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/prog_borde"
-                    app:strokeWidth="1dp">
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    app:cardBackgroundColor="@color/buti_superficie"
+                    app:cardCornerRadius="33dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/buti_borde"
+                    app:strokeWidth="1.5dp">
 
                     <ImageView
                         android:id="@+id/imgInsignia2"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_candado3"
-                        android:contentDescription="Aprendiz constante" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/bg_insignia_circulo"
+                        android:contentDescription="Aprendiz constante"
+                        android:padding="11dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_candado3" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -303,15 +434,17 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:text="Aprendiz constante"
-                    android:textColor="@color/prog_marron"
-                    android:textSize="10sp" />
+                    android:textColor="@color/buti_texto"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtEstadoInsignia2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:text="Pendiente"
-                    android:textColor="@color/prog_marron"
+                    android:textColor="@color/buti_texto_secundario"
                     android:textSize="10sp" />
 
             </LinearLayout>
@@ -326,21 +459,24 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInsignia3"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    app:cardBackgroundColor="@color/prog_tarjeta"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/prog_borde"
-                    app:strokeWidth="1dp">
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    app:cardBackgroundColor="@color/buti_superficie"
+                    app:cardCornerRadius="33dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/buti_borde"
+                    app:strokeWidth="1.5dp">
 
                     <ImageView
                         android:id="@+id/imgInsignia3"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_candado3"
-                        android:contentDescription="Conocimiento" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/bg_insignia_circulo"
+                        android:contentDescription="Conocimiento"
+                        android:padding="11dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_candado3" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -350,15 +486,17 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:text="Conocimiento"
-                    android:textColor="@color/prog_marron"
-                    android:textSize="10sp" />
+                    android:textColor="@color/buti_texto"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtEstadoInsignia3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:text="Pendiente"
-                    android:textColor="@color/prog_marron"
+                    android:textColor="@color/buti_texto_secundario"
                     android:textSize="10sp" />
 
             </LinearLayout>
@@ -373,21 +511,24 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInsignia4"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    app:cardBackgroundColor="@color/prog_tarjeta"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/prog_borde"
-                    app:strokeWidth="1dp">
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    app:cardBackgroundColor="@color/buti_superficie"
+                    app:cardCornerRadius="33dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/buti_borde"
+                    app:strokeWidth="1.5dp">
 
                     <ImageView
                         android:id="@+id/imgInsignia4"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_candado3"
-                        android:contentDescription="Maestro Buti" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/bg_insignia_circulo"
+                        android:contentDescription="Maestro Buti"
+                        android:padding="11dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_candado3" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -397,46 +538,70 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:text="Maestro Buti"
-                    android:textColor="@color/prog_marron"
-                    android:textSize="10sp" />
+                    android:textColor="@color/buti_texto"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtEstadoInsignia4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:text="Pendiente"
-                    android:textColor="@color/prog_marron"
+                    android:textColor="@color/buti_texto_secundario"
                     android:textSize="10sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- SEPARADOR -->
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:layout_marginTop="22dp"
-            android:background="@color/prog_borde" />
-
-        <!-- PUNTOS DE LA SEMANA -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Puntos de la semana"
-            android:textColor="@color/prog_marron"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_barra_seccion" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Puntos de la semana"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Lo que ganaste en los últimos 7 días."
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardBackgroundColor="@color/prog_tarjeta"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/prog_borde"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/buti_superficie"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -455,41 +620,67 @@
                     android:id="@+id/txtResumenSemanaProgreso"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_practicar_etiqueta"
                     android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
                     android:text=""
-                    android:textColor="@color/prog_marron"
-                    android:textSize="13sp" />
+                    android:textColor="@color/buti_texto"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- SEPARADOR -->
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:layout_marginTop="22dp"
-            android:background="@color/prog_borde" />
-
-        <!-- AVANCE POR NIVEL -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Avance por nivel"
-            android:textColor="@color/prog_marron"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_barra_seccion" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avance por nivel"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Etapas completadas en cada nivel."
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardBackgroundColor="@color/prog_tarjeta"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/prog_borde"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/buti_superficie"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -508,41 +699,59 @@
                     android:id="@+id/txtResumenNivelesProgreso"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_practicar_etiqueta"
                     android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
                     android:text=""
-                    android:textColor="@color/prog_marron"
-                    android:textSize="13sp" />
+                    android:textColor="@color/buti_texto"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- SEPARADOR -->
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:layout_marginTop="22dp"
-            android:background="@color/prog_borde" />
-
-        <!-- ACTIVIDAD RECIENTE -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Actividad reciente"
-            android:textColor="@color/prog_marron"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="24dp"
+                android:background="@drawable/bg_barra_seccion" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Actividad reciente"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardBackgroundColor="@color/prog_tarjeta"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/prog_borde"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/buti_superficie"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/buti_borde"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -553,11 +762,12 @@
                 android:padding="14dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_cirpaloma"
-                    android:contentDescription="Actividad reciente"
-                    android:importantForAccessibility="no" />
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icono_reto"
+                    android:importantForAccessibility="no"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_cirpaloma" />
 
                 <TextView
                     android:id="@+id/txtActividadReciente"
@@ -565,13 +775,46 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_weight="1"
+                    android:lineSpacingExtra="2dp"
                     android:text="Todavía no tienes actividades registradas."
-                    android:textColor="@color/prog_marron"
+                    android:textColor="@color/buti_texto"
                     android:textSize="14sp" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Pie -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Cada etapa te acerca a nuestras raíces"
+                android:textColor="@color/buti_resalte"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

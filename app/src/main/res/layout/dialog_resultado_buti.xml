@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Resultado final de B'ÜTI: el colibrí (logo) en grande con animación,
+    respuestas correctas, repaso, puntos y racha.
+    Lo usa ResultadoButi.java (lecciones y práctica).
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="12dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/buti_superficie"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="12dp"
+            app:strokeColor="@color/buti_dorado"
+            app:strokeWidth="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <!-- Encabezado vino con el colibrí -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_practicar_encabezado"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp">
+
+                    <FrameLayout
+                        android:layout_width="210dp"
+                        android:layout_height="210dp"
+                        android:layout_gravity="center">
+
+                        <View
+                            android:id="@+id/viewHaloResultado"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:alpha="0"
+                            android:background="@drawable/bg_halo_logo" />
+
+                        <FrameLayout
+                            android:id="@+id/contenedorLogoResultado"
+                            android:layout_width="164dp"
+                            android:layout_height="164dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_avatar_crema"
+                            android:elevation="6dp"
+                            android:scaleX="0"
+                            android:scaleY="0">
+
+                            <ImageView
+                                android:id="@+id/imgLogoResultado"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Colibrí de B'ÜTI"
+                                android:padding="16dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/principla_logo" />
+
+                        </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/imgEstrellaResultado1"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="top|start"
+                    android:layout_margin="14dp"
+                    android:importantForAccessibility="no"
+                    android:scaleX="0"
+                    android:scaleY="0"
+                    android:src="@drawable/ic_estrella_puntos" />
+
+                <ImageView
+                    android:id="@+id/imgEstrellaResultado2"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="8dp"
+                    android:importantForAccessibility="no"
+                    android:scaleX="0"
+                    android:scaleY="0"
+                    android:src="@drawable/ic_estrella_puntos" />
+
+                <ImageView
+                    android:id="@+id/imgEstrellaResultado3"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="bottom|start"
+                    android:layout_margin="22dp"
+                    android:importantForAccessibility="no"
+                    android:scaleX="0"
+                    android:scaleY="0"
+                    android:src="@drawable/ic_estrella_puntos" />
+
+                <ImageView
+                    android:id="@+id/imgEstrellaResultado4"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="16dp"
+                    android:importantForAccessibility="no"
+                    android:scaleX="0"
+                    android:scaleY="0"
+                    android:src="@drawable/ic_estrella_puntos" />
+
+                    </FrameLayout>
+
+                </FrameLayout>
+
+                <!-- Cenefa -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_margen_otomi_verde" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingStart="18dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="18dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_rombo1" />
+
+                        <TextView
+                            android:id="@+id/txtEtiquetaResultado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:layout_marginEnd="7dp"
+                            android:letterSpacing="0.12"
+                            android:text="RESULTADO"
+                            android:textColor="@color/buti_resalte"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_rombo1" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtTituloResultadoFinal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="¡Lo lograste!"
+                        android:textColor="@color/buti_titulo"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtMensajeResultadoFinal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="3dp"
+                        android:text="Sigue así, cada palabra cuenta."
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp" />
+
+                    <!-- Estadísticas -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:alpha="0"
+                        android:background="@drawable/bg_stat_juego"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:tag="stat">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_req_ok"
+                            app:tint="@color/buti_exito" />
+
+                        <TextView
+                            android:id="@+id/txtCorrectasResultadoFinal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="0"
+                            android:textColor="@color/buti_exito"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.06"
+                            android:text="CORRECTAS"
+                            android:textColor="@color/buti_texto_secundario"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/filaRepasoResultado"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:alpha="0"
+                        android:background="@drawable/bg_stat_juego"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:tag="stat">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_reiniciar" />
+
+                        <TextView
+                            android:id="@+id/txtRepasoResultadoFinal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="0"
+                            android:textColor="@color/buti_resalte"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.06"
+                            android:text="REPASO"
+                            android:textColor="@color/buti_texto_secundario"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:alpha="0"
+                        android:background="@drawable/bg_stat_juego"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:tag="stat">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_estrella_puntos" />
+
+                        <TextView
+                            android:id="@+id/txtPuntosResultadoFinal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="0"
+                            android:textColor="@color/buti_titulo"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.06"
+                            android:text="PUNTOS"
+                            android:textColor="@color/buti_texto_secundario"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:alpha="0"
+                        android:background="@drawable/bg_stat_juego"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:tag="stat">
+
+                        <ImageView
+                            android:id="@+id/imgRachaResultadoFinal"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_maguey_brote" />
+
+                        <TextView
+                            android:id="@+id/txtRachaResultadoFinal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="0"
+                            android:textColor="@color/nivel_verde"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.06"
+                            android:text="DÍAS DE RACHA"
+                            android:textColor="@color/buti_texto_secundario"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPrincipalResultado"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginTop="16dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="Continuar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/buti_sobre_acento"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/buti_acento"
+                        app:cornerRadius="18dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSecundarioResultado"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Reintentar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/buti_titulo"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

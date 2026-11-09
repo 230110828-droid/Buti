@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Línea decorativa dorada a rosa -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="2dp" />
+    <gradient
+        android:angle="0"
+        android:startColor="#F2A900"
+        android:endColor="#D6336C" />
+</shape>

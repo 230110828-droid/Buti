@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Círculo crema del avatar (iniciales MG) -->
+<!-- Avatar con iniciales MODO CLARO -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <solid android:color="#E4D3BC" />
+    <solid android:color="#F9E3C2" />
+    <stroke android:width="3dp" android:color="#F2A900" />
 </shape>

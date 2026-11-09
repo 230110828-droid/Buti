@@ -1,11 +1,16 @@
 package com.itsoeh.sbsc.buti;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -23,6 +28,11 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,12 +47,27 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean primeraCarga = true;
 
+    // Lector de voz: dónde empezó el toque (para no leer al desplazarse).
+    private float toqueInicioX;
+    private float toqueInicioY;
+
+    // Aplica el tamaño de letra elegido en Configuración.
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(PreferenciasButi.contextoConLetra(base));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Activar Edge-to-Edge.
         EdgeToEdge.enable(this);
+
+        // Accesibilidad: texto en negrita (antes de dibujar la pantalla).
+        if (PreferenciasButi.negritaActiva(this)) {
+            getTheme().applyStyle(R.style.ThemeOverlay_Buti_TextoNegrita, true);
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -75,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
                 || navView == null
                 || contenidoNavegacion == null) {
 
-            Toast.makeText(
+            ButiAviso.mostrar(
                     this,
-                    "Revisa los IDs de activity_main.xml",
-                    Toast.LENGTH_LONG
-            ).show();
+                    "No se pudo cargar la pantalla principal.",
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -128,11 +153,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (navHost == null) {
 
-            Toast.makeText(
+            ButiAviso.mostrar(
                     this,
-                    "No se encontró el contenedor de navegación.",
-                    Toast.LENGTH_LONG
-            ).show();
+                    "No se pudo cargar la navegación.",
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -178,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
 
         configurarMenuLateral();
 
+        configurarEncabezadoMenu();
+
         // ---------------------------------------------
         // CAMBIOS DE DESTINO
         // ---------------------------------------------
@@ -218,6 +245,47 @@ public class MainActivity extends AppCompatActivity {
         // ---------------------------------------------
 
         configurarBotonAtras();
+    }
+
+    // =================================================
+    // LECTOR DE VOZ: lee lo que se toca
+    // =================================================
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent evento) {
+
+        if (PreferenciasButi.lectorActivo(this)) {
+
+            int accion = evento.getActionMasked();
+
+            if (accion == MotionEvent.ACTION_DOWN) {
+
+                toqueInicioX = evento.getRawX();
+                toqueInicioY = evento.getRawY();
+
+            } else if (accion == MotionEvent.ACTION_UP) {
+
+                float limite = 12 * getResources().getDisplayMetrics().density;
+
+                boolean fueToque =
+                        Math.abs(evento.getRawX() - toqueInicioX) < limite
+                                && Math.abs(evento.getRawY() - toqueInicioY) < limite;
+
+                if (fueToque) {
+
+                    String texto = LectorVoz.textoEnPunto(
+                            getWindow().getDecorView(),
+                            (int) evento.getRawX(),
+                            (int) evento.getRawY()
+                    );
+
+                    LectorVoz.hablar(this, texto);
+                }
+            }
+        }
+
+        // La acción normal del toque sigue funcionando.
+        return super.dispatchTouchEvent(evento);
     }
 
     // =================================================
@@ -411,13 +479,14 @@ public class MainActivity extends AppCompatActivity {
             // CONFIGURACIÓN
             if (id == R.id.itemConfiguracion) {
 
-                Toast.makeText(
-                        MainActivity.this,
-                        "Configuración: versión 1.0.0",
-                        Toast.LENGTH_SHORT
-                ).show();
-
                 drawerLayout.closeDrawer(GravityCompat.START);
+
+                if (navController.getCurrentDestination() == null
+                        || navController.getCurrentDestination().getId()
+                        != R.id.configuracionFragment) {
+
+                    navController.navigate(R.id.configuracionFragment);
+                }
 
                 return true;
             }
@@ -461,12 +530,95 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // =================================================
+    // ENCABEZADO DEL MENÚ: FOTO, NOMBRE, PUNTOS Y RACHA
+    // =================================================
+
+    private void configurarEncabezadoMenu() {
+
+        if (navView.getHeaderCount() == 0) return;
+
+        View encabezado = navView.getHeaderView(0);
+
+        ImageView imgFoto = encabezado.findViewById(R.id.imgFotoDrawer);
+        TextView txtIniciales = encabezado.findViewById(R.id.txtInicialesDrawer);
+        TextView txtNombre = encabezado.findViewById(R.id.txtNombreDrawer);
+        TextView txtResumen = encabezado.findViewById(R.id.txtResumenDrawer);
+
+        // Foto o iniciales y nombre (se actualizan solos si cambian).
+        FotoPerfil.mostrar(this, imgFoto, txtIniciales, txtNombre);
+
+        // Tocar la tarjeta abre "Mi perfil".
+        View tarjeta = encabezado.findViewById(R.id.contenedorPerfilDrawer);
+
+        if (tarjeta != null) {
+            tarjeta.setOnClickListener(v -> abrirPerfil());
+        }
+
+        // Puntos y racha: se refrescan cada vez que se abre el menú.
+        if (txtResumen != null) {
+
+            actualizarResumenMenu(txtResumen);
+
+            drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+                @Override
+                public void onDrawerOpened(@NonNull View drawerView) {
+                    actualizarResumenMenu(txtResumen);
+                }
+            });
+        }
+    }
+
+    private void abrirPerfil() {
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        if (navController != null
+                && (navController.getCurrentDestination() == null
+                || navController.getCurrentDestination().getId() != R.id.perfilFragment)) {
+
+            navController.navigate(R.id.perfilFragment);
+        }
+    }
+
+    private void actualizarResumenMenu(TextView txtResumen) {
+
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (usuario == null) return;
+
+        FirebaseDatabase.getInstance()
+                .getReference("usuarios")
+                .child(usuario.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (isFinishing() || isDestroyed()) return;
+
+                        int puntos = ProgresoButi.puntosTotales(snapshot);
+                        int racha = ProgresoButi.rachaVigente(snapshot);
+
+                        txtResumen.setText(
+                                puntos + " puntos · racha " + racha
+                                        + (racha == 1 ? " día" : " días")
+                        );
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+    }
+
+    // =================================================
     // DESTINOS DEL MENÚ LATERAL
     // =================================================
 
     private boolean esDestinoDelMenu(int id) {
 
         return id == R.id.inicioFragment
+                || id == R.id.perfilFragment
                 || id == R.id.culturaFragment
                 || id == R.id.vocabularioFragment
                 || id == R.id.practicarFragment

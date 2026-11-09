@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bolita de los interruptores de Configuración -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/buti_dorado" android:state_checked="true" />
+    <item android:color="@color/buti_superficie_alt" />
+</selector>

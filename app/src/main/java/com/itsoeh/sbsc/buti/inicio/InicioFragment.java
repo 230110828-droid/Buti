@@ -3,6 +3,7 @@ package com.itsoeh.sbsc.buti.inicio;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,7 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.itsoeh.sbsc.buti.FotoPerfil;
+import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.RachaMaguey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,9 @@ public class InicioFragment extends Fragment {
     private TextView txtLeccionActual;
     private TextView txtPorcentaje;
     private TextView txtRacha;
+    private TextView txtPuntos;
+    private TextView txtMensajeRacha;
+    private ImageView imgRacha;
 
     private ProgressBar pbProgreso;
 
@@ -75,6 +82,18 @@ public class InicioFragment extends Fragment {
         pbProgreso =
                 view.findViewById(R.id.pbProgresoInicio);
 
+        txtPuntos = view.findViewById(R.id.txtPuntosInicio);
+        txtMensajeRacha = view.findViewById(R.id.txtMensajeRachaInicio);
+        imgRacha = view.findViewById(R.id.imgRachaInicio);
+
+        // Foto de perfil (o iniciales) en la tarjeta de saludo.
+        FotoPerfil.mostrar(
+                getViewLifecycleOwner(),
+                view.findViewById(R.id.imgFotoInicio),
+                view.findViewById(R.id.txtInicialesInicio),
+                null
+        );
+
         // -----------------------------------------
         // VALORES INICIALES
         // -----------------------------------------
@@ -98,6 +117,21 @@ public class InicioFragment extends Fragment {
 
         NavController navController =
                 Navigation.findNavController(view);
+
+        // -----------------------------------------
+        // AVATAR: ABRE MI PERFIL
+        // -----------------------------------------
+
+        View avatar = view.findViewById(R.id.contenedorAvatarInicio);
+
+        if (avatar != null) {
+            avatar.setOnClickListener(v ->
+                    animarYCambiar(
+                            v,
+                            () -> navegar(navController, R.id.perfilFragment)
+                    )
+            );
+        }
 
         // -----------------------------------------
         // BOTÓN CONTINUAR LECCIÓN
@@ -245,16 +279,36 @@ public class InicioFragment extends Fragment {
                 // RACHA DEL USUARIO
                 // ---------------------------------
 
-                Long diasRacha = snapshot
-                        .child("racha")
-                        .child("diasActuales")
-                        .getValue(Long.class);
-
-                int racha = diasRacha != null
-                        ? diasRacha.intValue()
-                        : 0;
+                // Si dejó pasar un día sin practicar, la racha vuelve a 0.
+                int racha = ProgresoButi.rachaVigente(snapshot);
 
                 actualizarRacha(racha);
+
+                // ---------------------------------
+                // PUNTOS TOTALES
+                // ---------------------------------
+
+                int puntos = ProgresoButi.puntosTotales(snapshot);
+
+                if (txtPuntos != null) {
+                    txtPuntos.setText(puntos == 1 ? "1 punto" : puntos + " puntos");
+                }
+
+                // ¿Ya practicó hoy?
+                if (txtMensajeRacha != null) {
+
+                    boolean practicoHoy = ProgresoButi.hoy().equals(
+                            snapshot.child("racha").child("ultimaFecha").getValue(String.class)
+                    );
+
+                    txtMensajeRacha.setText(
+                            practicoHoy
+                                    ? "¡Ya practicaste hoy! Vuelve mañana para que crezca."
+                                    : racha > 0
+                                      ? "Practica hoy para no perder tu racha."
+                                      : "Completa una lección, práctica o juego para empezar."
+                    );
+                }
 
                 // ---------------------------------
                 // PROGRESO DE LAS LECCIONES
@@ -373,6 +427,11 @@ public class InicioFragment extends Fragment {
         } else {
 
             txtRacha.setText("Racha de " + dias + " días");
+        }
+
+        // El maguey crece con la racha.
+        if (imgRacha != null) {
+            imgRacha.setImageResource(RachaMaguey.dibujoPorRacha(dias));
         }
     }
 
@@ -513,6 +572,9 @@ public class InicioFragment extends Fragment {
         txtLeccionActual = null;
         txtPorcentaje = null;
         txtRacha = null;
+        txtPuntos = null;
+        txtMensajeRacha = null;
+        imgRacha = null;
         pbProgreso = null;
 
         super.onDestroyView();

@@ -1,157 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    Editar perfil · B'ÜTI
+    Solo diseño: ids iguales. Modo claro y oscuro.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/buti_fondo"
     android:fillViewport="true"
-    android:scrollbars="none"
-    android:background="@android:color/transparent">
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="8dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
         android:paddingBottom="28dp">
 
-        <!-- Título -->
-        <TextView
+        <!-- ENCABEZADO -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Editar perfil"
-            android:textColor="@color/prog_naranja"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:background="@drawable/bg_practicar_encabezado"
+            android:elevation="4dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="18dp"
+            android:paddingBottom="20dp">
 
-        <!-- Avatar: las iniciales cambian al escribir el nombre -->
-        <TextView
-            android:id="@+id/txtInicialesEditar"
-            android:layout_width="104dp"
-            android:layout_height="104dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_avatar_progreso"
-            android:gravity="center"
-            android:text="MG"
-            android:textColor="@color/prog_naranja"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <!-- Nombre -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="Nombre"
-            android:textColor="@color/prog_marron"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rombo1" />
 
-        <EditText
-            android:id="@+id/etNombrePerfil"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:letterSpacing="0.14"
+                    android:text="EDITAR PERFIL"
+                    android:textColor="@color/buti_dorado"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rombo1" />
+
+            </LinearLayout>
+
+            <!-- Avatar: las iniciales cambian al escribir el nombre -->
+            <!-- Avatar: foto de perfil o iniciales -->
+            <FrameLayout
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_avatar_crema"
+                android:clipToOutline="true"
+                android:elevation="3dp">
+
+                <ImageView
+                    android:id="@+id/imgFotoEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtInicialesEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="MG"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Tus iniciales cambian al escribir tu nombre"
+                android:textColor="#F5DCCB"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Tarjeta de datos -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="6dp"
-            android:autofillHints="name"
-            android:background="@drawable/bg_campo_perfil"
-            android:hint="Tu nombre"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName|textCapWords"
-            android:maxLength="40"
-            android:maxLines="1"
-            android:paddingHorizontal="16dp"
-            android:textColor="@color/buti_negro"
-            android:textColorHint="#9A8F80"
-            android:textSize="16sp" />
-
-        <!-- Correo electrónico editable -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Correo electrónico"
-            android:textColor="@color/prog_marron"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_practicar_tarjeta"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:padding="18dp">
 
-        <EditText
-            android:id="@+id/etCorreoPerfil"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="6dp"
-            android:autofillHints="emailAddress"
-            android:background="@drawable/bg_campo_perfil"
-            android:hint="correo@ejemplo.com"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:paddingHorizontal="16dp"
-            android:textColor="@color/buti_negro"
-            android:textColorHint="#9A8F80"
-            android:textSize="16sp" />
+            <!-- Nombre -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.06"
+                android:text="NOMBRE"
+                android:textColor="@color/buti_resalte"
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
-        <!-- Nota sobre el correo -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Puedes actualizar tu correo electrónico. Firebase podría solicitar que vuelvas a iniciar sesión."
-            android:textColor="@color/buti_siena"
-            android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="6dp"
+                android:addStatesFromChildren="true"
+                android:background="@drawable/bg_campo_busqueda"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_usuario" />
+
+                <EditText
+                    android:id="@+id/etNombrePerfil"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:autofillHints="name"
+                    android:background="@android:color/transparent"
+                    android:hint="Tu nombre"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:textColor="@color/buti_texto"
+                    android:textColorHint="@color/buti_texto_secundario"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Correo electrónico editable -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:letterSpacing="0.06"
+                android:text="CORREO ELECTRÓNICO"
+                android:textColor="@color/buti_resalte"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="6dp"
+                android:addStatesFromChildren="true"
+                android:background="@drawable/bg_campo_busqueda"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_msg" />
+
+                <EditText
+                    android:id="@+id/etCorreoPerfil"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:autofillHints="emailAddress"
+                    android:background="@android:color/transparent"
+                    android:hint="correo@ejemplo.com"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:textColor="@color/buti_texto"
+                    android:textColorHint="@color/buti_texto_secundario"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Nota sobre el correo -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_practicar_etiqueta"
+                android:lineSpacingExtra="2dp"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="8dp"
+                android:text="Puedes actualizar tu correo electrónico. Te enviaremos un enlace para confirmarlo."
+                android:textColor="@color/buti_texto_secundario"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <!-- Cambiar contraseña -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCambiarContrasena"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="16dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="Cambiar contraseña"
             android:textAllCaps="false"
-            android:textColor="@color/buti_cafe"
+            android:textColor="@color/buti_titulo"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:backgroundTint="@android:color/transparent"
-            app:cornerRadius="20dp"
+            app:backgroundTint="@color/buti_superficie"
+            app:cornerRadius="18dp"
             app:icon="@drawable/ic_candado4"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
             app:iconSize="24dp"
             app:iconTint="@null"
-            app:rippleColor="#33C97A2B"
-            app:strokeColor="@color/buti_crema_oscuro"
-            app:strokeWidth="1.5dp" />
+            app:rippleColor="@color/buti_dorado"
+            app:strokeColor="@color/buti_borde"
+            app:strokeWidth="1dp" />
 
         <!-- Guardar cambios -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGuardarPerfil"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="28dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="22dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="Guardar cambios"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/buti_sobre_acento"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:backgroundTint="@color/buti_naranja"
-            app:cornerRadius="20dp" />
+            app:backgroundTint="@color/buti_acento"
+            app:cornerRadius="18dp"
+            app:icon="@drawable/ic_req_ok"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:iconSize="20dp"
+            app:iconTint="@color/buti_sobre_acento" />
 
         <!-- Cancelar -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancelarPerfil"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="Cancelar"
             android:textAllCaps="false"
-            android:textColor="@color/buti_cafe"
+            android:textColor="@color/buti_texto"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:backgroundTint="@color/buti_crema_oscuro"
-            app:cornerRadius="20dp" />
+            app:backgroundTint="@color/buti_superficie_alt"
+            app:cornerRadius="18dp" />
 
     </LinearLayout>
 

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- Botón secundario de práctica MODO CLARO: naranja -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="17dp" />
     <gradient
         android:angle="0"
         android:startColor="#B85E27"
         android:endColor="#C97A2B" />
-    <corners android:radius="17dp" />
 </shape>

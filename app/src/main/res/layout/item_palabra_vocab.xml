@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Una fila de la lista: palabra en español y su traducción en hñähñu -->
+<!-- Una fila de la lista: palabra en español y su traducción en hñähñu.
+     Solo diseño: ids iguales. Modo claro y oscuro. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@color/buti_cafe"
+        android:textColor="@color/buti_texto"
         android:textSize="16sp" />
 
     <TextView
@@ -28,7 +29,7 @@
         android:layout_marginStart="10dp"
         android:layout_weight="1"
         android:gravity="end"
-        android:textColor="@color/buti_vino"
+        android:textColor="@color/buti_titulo"
         android:textSize="18sp"
         android:textStyle="bold" />
 </LinearLayout>

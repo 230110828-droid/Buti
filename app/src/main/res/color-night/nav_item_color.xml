@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Iconos y textos de la barra inferior MODO OSCURO -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#FFC857" android:state_checked="true" />
+    <item android:color="#E2C9B4" />
+</selector>

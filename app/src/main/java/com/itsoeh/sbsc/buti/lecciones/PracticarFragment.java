@@ -23,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +31,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.itsoeh.sbsc.buti.ButiAviso;
+import com.itsoeh.sbsc.buti.ProgresoButi;
+import com.itsoeh.sbsc.buti.ResultadoButi;
 import com.itsoeh.sbsc.buti.R;
 import com.itsoeh.sbsc.buti.vocabulario.AudiosVocabulario;
 import com.itsoeh.sbsc.buti.vocabulario.VocabularioDatos;
@@ -505,17 +508,15 @@ public class PracticarFragment extends Fragment {
         tarjeta.setGravity(Gravity.CENTER_VERTICAL);
 
         tarjeta.setPadding(
-                dp(15),
-                dp(13),
-                dp(15),
-                dp(13)
+                dp(16),
+                dp(14),
+                dp(16),
+                dp(14)
         );
 
-        tarjeta.setBackground(crearFondo(
-                Color.WHITE,
-                18,
-                Color.parseColor("#E8D5C3")
-        ));
+        // Mismo estilo que las tarjetas de retos (claro y oscuro).
+        tarjeta.setBackgroundResource(R.drawable.bg_reto_tarjeta);
+        tarjeta.setElevation(dp(2));
 
         tarjeta.setClickable(true);
         tarjeta.setFocusable(true);
@@ -535,13 +536,7 @@ public class PracticarFragment extends Fragment {
         icono.setImageResource(imagen);
         icono.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-        GradientDrawable fondoIcono = crearFondo(
-                Color.parseColor("#F8EBDD"),
-                15,
-                Color.TRANSPARENT
-        );
-
-        icono.setBackground(fondoIcono);
+        icono.setBackgroundResource(R.drawable.bg_icono_reto);
 
         icono.setPadding(
                 dp(5),
@@ -552,8 +547,8 @@ public class PracticarFragment extends Fragment {
 
         LinearLayout.LayoutParams iconoParams =
                 new LinearLayout.LayoutParams(
-                        dp(65),
-                        dp(65)
+                        dp(60),
+                        dp(60)
                 );
 
         tarjeta.addView(icono, iconoParams);
@@ -572,19 +567,19 @@ public class PracticarFragment extends Fragment {
                         1
                 );
 
-        contenidoParams.leftMargin = dp(13);
+        contenidoParams.leftMargin = dp(14);
 
         TextView titulo = new TextView(requireContext());
 
         titulo.setText(nombre);
-        titulo.setTextColor(Color.parseColor("#4F000B"));
+        titulo.setTextColor(color(R.color.buti_titulo));
         titulo.setTextSize(16);
         titulo.setTypeface(null, Typeface.BOLD);
 
         TextView subtitulo = new TextView(requireContext());
 
         subtitulo.setText(descripcion);
-        subtitulo.setTextColor(Color.parseColor("#8C4A2F"));
+        subtitulo.setTextColor(color(R.color.buti_texto_secundario));
         subtitulo.setTextSize(12);
 
         LinearLayout.LayoutParams subtituloParams =
@@ -606,12 +601,19 @@ public class PracticarFragment extends Fragment {
 
         flecha.setImageResource(R.drawable.ic_flederecha);
         flecha.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        flecha.setBackgroundResource(R.drawable.bg_flecha_reto);
+        flecha.setPadding(dp(8), dp(8), dp(8), dp(8));
+        flecha.setImageTintList(
+                ColorStateList.valueOf(color(R.color.buti_sobre_acento))
+        );
 
         LinearLayout.LayoutParams flechaParams =
                 new LinearLayout.LayoutParams(
-                        dp(25),
-                        dp(25)
+                        dp(34),
+                        dp(34)
                 );
+
+        flechaParams.leftMargin = dp(8);
 
         tarjeta.addView(flecha, flechaParams);
 
@@ -939,11 +941,11 @@ public class PracticarFragment extends Fragment {
 
         if (datos == null || datos.length < 3) {
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No hay suficientes palabras para esta categoría.",
-                    Toast.LENGTH_LONG
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -969,11 +971,11 @@ public class PracticarFragment extends Fragment {
 
         if (datos == null || datos.size() < 3) {
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No hay suficientes palabras para crear el reto.",
-                    Toast.LENGTH_LONG
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -987,11 +989,11 @@ public class PracticarFragment extends Fragment {
 
         if (preguntas.length == 0) {
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No se pudieron generar las preguntas.",
-                    Toast.LENGTH_LONG
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -1360,11 +1362,11 @@ public class PracticarFragment extends Fragment {
         if (palabraActualAudio == null
                 || palabraActualAudio.trim().isEmpty()) {
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No hay una palabra para reproducir.",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -1379,11 +1381,11 @@ public class PracticarFragment extends Fragment {
 
         if (audioId == 0) {
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No se encontró el audio de: " + palabraActualAudio,
-                    Toast.LENGTH_SHORT
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -1412,22 +1414,22 @@ public class PracticarFragment extends Fragment {
 
             } else {
 
-                Toast.makeText(
-                        requireContext(),
+                ButiAviso.mostrar(
+                        this,
                         "No se pudo reproducir el audio.",
-                        Toast.LENGTH_SHORT
-                ).show();
+                        ButiAviso.Tipo.ERROR
+                );
             }
 
         } catch (Exception e) {
 
             liberarReproductor();
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "Ocurrió un error al reproducir el audio.",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
         }
     }
 
@@ -1470,16 +1472,10 @@ public class PracticarFragment extends Fragment {
 
     private void resetBoton(Button boton) {
 
-        boton.setBackgroundTintList(
-                ColorStateList.valueOf(Color.WHITE)
-        );
+        // Sin tinte: se ve el fondo bg_practicar_opcion (claro u oscuro).
+        boton.setBackgroundTintList(null);
 
-        boton.setTextColor(
-                ContextCompat.getColor(
-                        requireContext(),
-                        R.color.buti_negro
-                )
-        );
+        boton.setTextColor(color(R.color.buti_texto));
     }
 
     private void evaluarRespuesta() {
@@ -1506,29 +1502,29 @@ public class PracticarFragment extends Fragment {
 
             if (rondaRepaso) {
 
-                puntosGanados = 3;
+                puntosGanados = ProgresoButi.PUNTOS_PRACTICA_REPASO;
                 puntos += puntosGanados;
                 palabrasReforzadas++;
 
                 txtRetroalimentacion.setText(
-                        "¡Muy bien! Reforzaste esta palabra. +3 puntos"
+                        "¡Muy bien! Reforzaste esta palabra. +" + puntosGanados + " puntos"
                 );
 
             } else {
 
-                puntosGanados = 10;
+                puntosGanados = ProgresoButi.PUNTOS_PRACTICA;
                 puntos += puntosGanados;
                 correctasPrimeraRonda++;
 
                 txtRetroalimentacion.setText(
-                        "¡Excelente! Tu respuesta es correcta. +10 puntos"
+                        "¡Excelente! Tu respuesta es correcta. +" + puntosGanados + " puntos"
                 );
             }
 
             txtRetroalimentacion.setTextColor(
                     ContextCompat.getColor(
                             requireContext(),
-                            R.color.buti_verde
+                            R.color.buti_exito
                     )
             );
 
@@ -1570,7 +1566,7 @@ public class PracticarFragment extends Fragment {
             txtRetroalimentacion.setTextColor(
                     ContextCompat.getColor(
                             requireContext(),
-                            R.color.buti_naranja
+                            R.color.buti_resalte
                     )
             );
 
@@ -1619,7 +1615,7 @@ public class PracticarFragment extends Fragment {
                         )
                 );
 
-                boton.setTextColor(Color.WHITE);
+                boton.setTextColor(color(R.color.buti_crema));
 
             } else if (texto.equals(opcionSeleccionada)) {
 
@@ -1632,7 +1628,7 @@ public class PracticarFragment extends Fragment {
                         )
                 );
 
-                boton.setTextColor(Color.WHITE);
+                boton.setTextColor(color(R.color.buti_crema));
             }
         }
     }
@@ -1654,14 +1650,19 @@ public class PracticarFragment extends Fragment {
 
         dialogResultadoRespuesta = dialog;
 
+        // Encabezado: siempre vino con letras crema (claro y oscuro).
         int vino = Color.parseColor("#4F000B");
         int vinoClaro = Color.parseColor("#812B36");
         int crema = Color.parseColor("#F5EFE3");
-        int blanco = Color.parseColor("#FFF9F1");
-        int dorado = Color.parseColor("#D9A441");
-        int naranja = Color.parseColor("#C97A2B");
-        int verde = Color.parseColor("#6B7A4F");
-        int cafe = Color.parseColor("#3C2815");
+        int dorado = Color.parseColor("#F2A900");
+
+        // Colores que cambian solos en modo oscuro.
+        int blanco = color(R.color.buti_superficie);
+        int fondoCajaPuntos = color(R.color.buti_superficie_alt);
+        int tituloColor = color(R.color.buti_titulo);
+        int naranja = color(R.color.buti_resalte);
+        int verde = color(R.color.buti_exito);
+        int cafe = color(R.color.buti_texto);
 
         int colorPrincipal = acierto ? verde : naranja;
 
@@ -1712,7 +1713,7 @@ public class PracticarFragment extends Fragment {
 
         TextView etiqueta = new TextView(requireContext());
 
-        etiqueta.setText("RETO HÑÄÑHU");
+        etiqueta.setText("RETO HÑÄHÑU");
         etiqueta.setTextSize(11);
         etiqueta.setTypeface(null, Typeface.BOLD);
         etiqueta.setTextColor(dorado);
@@ -1811,7 +1812,7 @@ public class PracticarFragment extends Fragment {
 
         GradientDrawable fondoPuntos = new GradientDrawable();
 
-        fondoPuntos.setColor(Color.parseColor("#F8EBDD"));
+        fondoPuntos.setColor(fondoCajaPuntos);
         fondoPuntos.setCornerRadius(dp(18));
         fondoPuntos.setStroke(dp(1), dorado);
 
@@ -1848,7 +1849,7 @@ public class PracticarFragment extends Fragment {
 
         acumulado.setTextSize(14);
         acumulado.setTypeface(null, Typeface.BOLD);
-        acumulado.setTextColor(vino);
+        acumulado.setTextColor(tituloColor);
         acumulado.setGravity(Gravity.CENTER);
 
         LinearLayout.LayoutParams acumuladoParams =
@@ -2002,6 +2003,11 @@ public class PracticarFragment extends Fragment {
         return fondo;
     }
 
+    private int color(int recurso) {
+
+        return ContextCompat.getColor(requireContext(), recurso);
+    }
+
     private int dp(float valor) {
 
         return (int) (
@@ -2112,12 +2118,13 @@ public class PracticarFragment extends Fragment {
                 R.drawable.ic_colibri_volando
         );
 
-        Toast.makeText(
-                requireContext(),
+        ButiAviso.mostrar(
+                this,
                 "¡Comienza el repaso! Vamos a reforzar las palabras "
-                        + "que fueron más difíciles. Cada acierto vale 3 puntos.",
-                Toast.LENGTH_LONG
-        ).show();
+                        + "que fueron más difíciles. Cada acierto vale "
+                        + ProgresoButi.PUNTOS_PRACTICA_REPASO + " puntos.",
+                ButiAviso.Tipo.INFO
+        );
 
         if (scrollPracticar != null) {
             scrollPracticar.smoothScrollTo(0, 0);
@@ -2133,7 +2140,7 @@ public class PracticarFragment extends Fragment {
     private void actualizarPuntos() {
 
         txtPuntosActuales.setText(
-                "★ " + puntos + " puntos"
+                puntos + " puntos"
         );
 
         animarElemento(txtPuntosActuales);
@@ -2291,6 +2298,51 @@ public class PracticarFragment extends Fragment {
                     scrollPracticar.smoothScrollTo(0, 0)
             );
         }
+
+        mostrarPantallaColibri();
+    }
+
+    // =========================================
+    // PANTALLA DEL COLIBRÍ Y GUARDADO
+    // =========================================
+
+    private ResultadoButi pantallaResultado;
+
+    private void mostrarPantallaColibri() {
+
+        int totalRepaso = totalPreguntasIniciales - correctasPrimeraRonda;
+        boolean bien = correctasPrimeraRonda >= Math.max(1, (totalPreguntasIniciales + 1) / 2);
+
+        ResultadoButi.Datos datos = new ResultadoButi.Datos();
+        datos.etiqueta = "PRÁCTICA · " + temaSeleccionado.toUpperCase();
+        datos.titulo = txtTituloResultado.getText().toString();
+        datos.mensaje = "¡Cada palabra que aprendes cuenta!";
+        datos.correctas = correctasPrimeraRonda;
+        datos.total = totalPreguntasIniciales;
+        datos.repasoCorrectas = palabrasReforzadas;
+        datos.repasoTotal = Math.max(0, totalRepaso);
+        datos.puntos = puntos;
+        datos.exito = bien;
+
+        if (pantallaResultado != null) pantallaResultado.cerrar();
+
+        pantallaResultado = ResultadoButi.mostrar(
+                requireContext(), datos,
+                "Ver resumen", null,
+                null, null
+        );
+
+        // Guardar los puntos y la racha del día.
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            pantallaResultado.ponerRacha(0);
+            return;
+        }
+
+        ProgresoButi.sumarPuntosActividad(puntos, (sumados, racha) -> {
+            if (isAdded() && pantallaResultado != null) {
+                pantallaResultado.ponerRacha(racha);
+            }
+        });
     }
 
     // =========================================
@@ -2303,6 +2355,11 @@ public class PracticarFragment extends Fragment {
         cancelarAvanceAutomatico();
 
         liberarReproductor();
+
+        if (pantallaResultado != null) {
+            pantallaResultado.cerrar();
+            pantallaResultado = null;
+        }
 
         palabraActualAudio = "";
         categoriaAudioActual = "";

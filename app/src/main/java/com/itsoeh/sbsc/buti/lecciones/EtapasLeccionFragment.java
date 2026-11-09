@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.R;
 
 public class EtapasLeccionFragment extends Fragment {
@@ -132,11 +132,11 @@ public class EtapasLeccionFragment extends Fragment {
             tarjetas[i].setOnClickListener(v -> {
 
                 if (!tarjetas[numeroEtapa - 1].isEnabled()) {
-                    Toast.makeText(
-                            requireContext(),
+                    ButiAviso.mostrar(
+                            this,
                             "Primero completa la etapa anterior.",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                            ButiAviso.Tipo.INFO
+                    );
                     return;
                 }
 
@@ -151,11 +151,11 @@ public class EtapasLeccionFragment extends Fragment {
                 FirebaseAuth.getInstance().getCurrentUser();
 
         if (usuario == null) {
-            Toast.makeText(
-                    requireContext(),
-                    "Debes iniciar sesión para consultar tu progreso.",
-                    Toast.LENGTH_LONG
-            ).show();
+            ButiAviso.mostrar(
+                    this,
+                    "Inicia sesión para guardar tu progreso.",
+                    ButiAviso.Tipo.INFO
+            );
 
             actualizarEtapas(new boolean[5], 0);
             return;
@@ -212,11 +212,11 @@ public class EtapasLeccionFragment extends Fragment {
                             ) {
 
                                 if (isAdded()) {
-                                    Toast.makeText(
-                                            requireContext(),
-                                            "No se pudo cargar el progreso.",
-                                            Toast.LENGTH_SHORT
-                                    ).show();
+                                    ButiAviso.mostrar(
+                                            EtapasLeccionFragment.this,
+                                            "No se pudo cargar tu progreso.",
+                                            ButiAviso.Tipo.ERROR
+                                    );
                                 }
                             }
                         }
@@ -256,24 +256,21 @@ public class EtapasLeccionFragment extends Fragment {
                     desbloqueada ? 1.0f : 0.55f
             );
 
+            // Iconos reales en lugar de símbolos de texto
+            int icono;
+
             if (completada) {
-
-                estados[i].setText("✓");
-                estados[i].setTextColor(
-                        android.graphics.Color.rgb(107, 122, 79)
-                );
-
+                icono = R.drawable.ic_estado_completada;
             } else if (desbloqueada) {
-
-                estados[i].setText("▶");
-                estados[i].setTextColor(
-                        android.graphics.Color.rgb(107, 122, 79)
-                );
-
+                icono = R.drawable.ic_estado_jugar;
             } else {
-
-                estados[i].setText("🔒");
+                icono = R.drawable.ic_estado_bloqueada;
             }
+
+            estados[i].setText("");
+            estados[i].setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    0, 0, icono, 0
+            );
         }
 
         txtProgresoEtapas.setText(
@@ -283,7 +280,7 @@ public class EtapasLeccionFragment extends Fragment {
         barraProgreso.setMax(5);
         barraProgreso.setProgress(totalCompletadas);
 
-        txtPuntosEtapas.setText("⭐ " + puntos);
+        txtPuntosEtapas.setText(String.valueOf(puntos));
         // Abrir automáticamente la primera etapa pendiente
 // cuando se llega desde el botón Continuar lección.
         if (etapaPendiente >= 1

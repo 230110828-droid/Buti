@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Círculo con el número de la palabra MODO CLARO -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <gradient
+        android:angle="315"
+        android:startColor="#812B36"
+        android:endColor="#4F000B" />
+    <stroke android:width="1.5dp" android:color="#F2A900" />
+</shape>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Hoja que se abre al tocar una categoría de Vocabulario -->
+<!-- Hoja que se abre al tocar una categoría de Vocabulario.
+     Solo diseño: los ids se conservan igual. Modo claro y oscuro. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_hoja_vocab"
@@ -15,7 +17,7 @@
         android:layout_width="44dp"
         android:layout_height="5dp"
         android:layout_gravity="center_horizontal"
-        android:background="@color/buti_crema_oscuro" />
+        android:background="@drawable/bg_barra_arrastre" />
 
     <!-- Encabezado: icono, nombre de la categoría y cerrar -->
     <LinearLayout
@@ -27,9 +29,11 @@
 
         <ImageView
             android:id="@+id/imgIconoCategoria"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_icono_reto"
             android:importantForAccessibility="no"
+            android:padding="5dp"
             android:scaleType="fitCenter" />
 
         <LinearLayout
@@ -43,27 +47,29 @@
                 android:id="@+id/txtTituloCategoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/buti_vino"
-                android:textSize="24sp"
+                android:textColor="@color/buti_titulo"
+                android:textSize="23sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtCantidadPalabras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/buti_siena"
-                android:textSize="14sp" />
+                android:layout_marginTop="2dp"
+                android:textColor="@color/buti_texto_secundario"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/btnCerrarCategoria"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_boton_volver"
             android:contentDescription="Cerrar"
-            android:padding="9dp"
+            android:padding="11dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_equis" />
+            android:src="@drawable/ic_equis"
+            app:tint="@color/buti_texto" />
     </LinearLayout>
 
     <!-- Títulos de las dos columnas -->
@@ -71,17 +77,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@drawable/bg_practicar_etiqueta"
         android:orientation="horizontal"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Español"
-            android:textColor="@color/buti_cafe"
-            android:textSize="13sp"
+            android:letterSpacing="0.08"
+            android:text="ESPAÑOL"
+            android:textColor="@color/buti_texto"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <TextView
@@ -89,9 +99,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-            android:text="Hñähñu"
-            android:textColor="@color/buti_rosa"
-            android:textSize="13sp"
+            android:letterSpacing="0.08"
+            android:text="HÑÄHÑU"
+            android:textColor="@color/nivel_rosa"
+            android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -99,7 +110,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:fillViewport="false"
         android:scrollbars="none">

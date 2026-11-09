@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,9 +16,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseNetworkException;
@@ -69,6 +68,9 @@ public class RegistroActivity extends AppCompatActivity {
     // Animaciones
     private RegistroAnimador registroAnimador;
 
+    // Mensajes personalizados
+    private ButiDialogo butiDialogo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +83,9 @@ public class RegistroActivity extends AppCompatActivity {
 
         // Inicializar animador
         registroAnimador = new RegistroAnimador();
+
+        // Inicializar mensajes personalizados
+        butiDialogo = new ButiDialogo(this);
 
         // Campos del formulario
         edtNombre = findViewById(R.id.edtNombreRegistro);
@@ -314,25 +319,26 @@ public class RegistroActivity extends AppCompatActivity {
         int color;
         String nivel;
 
+        // Colores de la paleta B'ÜTI (cambian solos en modo oscuro)
         if (contrasena.isEmpty()) {
 
             nivel = "Seguridad de la contraseña";
-            color = Color.GRAY;
+            color = ContextCompat.getColor(this, R.color.buti_texto);
 
         } else if (puntos <= 2) {
 
             nivel = "Seguridad: débil";
-            color = Color.rgb(217, 83, 79);
+            color = ContextCompat.getColor(this, R.color.buti_rosa);
 
         } else if (puntos <= 4) {
 
             nivel = "Seguridad: media";
-            color = Color.rgb(230, 160, 40);
+            color = ContextCompat.getColor(this, R.color.buti_naranja);
 
         } else {
 
             nivel = "Seguridad: fuerte";
-            color = Color.rgb(46, 160, 95);
+            color = ContextCompat.getColor(this, R.color.buti_exito);
         }
 
         txtNivelContrasena.setText(nivel);
@@ -349,16 +355,21 @@ public class RegistroActivity extends AppCompatActivity {
             String texto
     ) {
 
-        if (cumplido) {
+        vista.setText(texto);
 
-            vista.setText("✓ " + texto);
-            vista.setTextColor(Color.rgb(46, 160, 95));
+        int color = ContextCompat.getColor(
+                this,
+                cumplido ? R.color.buti_exito : R.color.buti_texto_secundario
+        );
 
-        } else {
+        // Icono real en lugar de los símbolos de texto
+        vista.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                cumplido ? R.drawable.ic_req_ok : R.drawable.ic_req_pendiente,
+                0, 0, 0
+        );
 
-            vista.setText("○ " + texto);
-            vista.setTextColor(Color.GRAY);
-        }
+        vista.setCompoundDrawableTintList(ColorStateList.valueOf(color));
+        vista.setTextColor(color);
     }
 
     private boolean contrasenaSegura() {
@@ -413,11 +424,11 @@ public class RegistroActivity extends AppCompatActivity {
 
             edtContrasena.requestFocus();
 
-            Toast.makeText(
+            ButiAviso.mostrar(
                     this,
                     "Tu contraseña debe cumplir los 5 requisitos.",
-                    Toast.LENGTH_LONG
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -434,16 +445,21 @@ public class RegistroActivity extends AppCompatActivity {
 
         if (!chkTerminos.isChecked()) {
 
-            Toast.makeText(
+            ButiAviso.mostrar(
                     this,
-                    "Debes aceptar los términos y condiciones",
-                    Toast.LENGTH_LONG
-            ).show();
+                    "Debes aceptar los términos y condiciones.",
+                    ButiAviso.Tipo.INFO
+            );
 
             return;
         }
 
         btnCrearCuenta.setEnabled(false);
+
+        butiDialogo.mostrarCargando(
+                "Creando tu cuenta",
+                "Estamos preparando tu camino para aprender hñähñu..."
+        );
 
         mAuth.createUserWithEmailAndPassword(correo, contrasena)
                 .addOnCompleteListener(this, task -> {
@@ -462,11 +478,10 @@ public class RegistroActivity extends AppCompatActivity {
                                 error
                         );
 
-                        Toast.makeText(
-                                RegistroActivity.this,
-                                mensaje,
-                                Toast.LENGTH_LONG
-                        ).show();
+                        butiDialogo.mostrarError(
+                                "No pudimos crear tu cuenta",
+                                mensaje
+                        );
 
                         return;
                     }
@@ -483,11 +498,11 @@ public class RegistroActivity extends AppCompatActivity {
                                         + "pero getCurrentUser() devolvió null."
                         );
 
-                        Toast.makeText(
-                                RegistroActivity.this,
-                                "No se pudo obtener el usuario creado.",
-                                Toast.LENGTH_LONG
-                        ).show();
+                        butiDialogo.mostrarError(
+                                "Algo salió mal",
+                                "Tu cuenta se creó, pero no pudimos abrirla. "
+                                        + "Intenta iniciar sesión."
+                        );
 
                         return;
                     }
@@ -520,14 +535,8 @@ public class RegistroActivity extends AppCompatActivity {
                     + "Revisa tu internet e inténtalo otra vez.";
         }
 
-        if (error != null && error.getMessage() != null) {
-
-            return "No se pudo crear la cuenta: "
-                    + error.getMessage();
-        }
-
-        return "No se pudo crear la cuenta. "
-                + "Revisa Logcat para ver el error.";
+        return "Ocurrió un problema al crear tu cuenta.\n\n"
+                + "Inténtalo de nuevo en un momento.";
     }
 
     // ------------------------------------------------
@@ -577,13 +586,13 @@ public class RegistroActivity extends AppCompatActivity {
                                         )
                                 );
 
-                        Toast.makeText(
-                                RegistroActivity.this,
-                                "¡Cuenta creada y datos guardados!",
-                                Toast.LENGTH_LONG
-                        ).show();
-
-                        finish();
+                        butiDialogo.mostrarExito(
+                                "¡Cuenta creada!",
+                                "Bienvenido a B'ÜTI, " + nombre + ".\n\n"
+                                        + "Ya puedes iniciar sesión y comenzar "
+                                        + "a aprender hñähñu.",
+                                this::finish
+                        );
 
                     } else {
 
@@ -597,20 +606,12 @@ public class RegistroActivity extends AppCompatActivity {
                                 error
                         );
 
-                        String mensaje =
-                                "La cuenta existe, pero no se guardaron los datos.";
-
-                        if (error != null
-                                && error.getLocalizedMessage() != null) {
-
-                            mensaje += " " + error.getLocalizedMessage();
-                        }
-
-                        Toast.makeText(
-                                RegistroActivity.this,
-                                mensaje,
-                                Toast.LENGTH_LONG
-                        ).show();
+                        butiDialogo.mostrarError(
+                                "No guardamos tus datos",
+                                "Tu cuenta se creó, pero no pudimos guardar "
+                                        + "tu información. Revisa tu internet "
+                                        + "e inténtalo de nuevo."
+                        );
                     }
                 });
     }
@@ -624,6 +625,10 @@ public class RegistroActivity extends AppCompatActivity {
 
         if (registroAnimador != null) {
             registroAnimador.detener();
+        }
+
+        if (butiDialogo != null) {
+            butiDialogo.cerrar();
         }
 
         super.onDestroy();

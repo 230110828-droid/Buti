@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Barrita de color a la izquierda del título "Naturaleza y vida cotidiana" MODO OSCURO -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="5dp"
+        android:gravity="start|fill_vertical">
+        <shape android:shape="rectangle">
+            <corners android:radius="3dp" />
+            <gradient
+                android:angle="270"
+                android:startColor="#FFC857"
+                android:endColor="#FF6F9A" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Botón de audio MODO OSCURO: círculo con borde dorado. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33FFC857">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#3D1A21" />
+            <stroke android:width="2dp" android:color="#FFC857" />
+        </shape>
+    </item>
+</ripple>

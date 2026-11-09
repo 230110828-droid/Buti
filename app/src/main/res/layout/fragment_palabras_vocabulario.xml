@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Palabras de una categoría · B'ÜTI
+    Solo diseño: los ids se conservan igual. Modo claro y oscuro.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8EFE5"
+    android:background="@color/buti_fondo"
     android:fillViewport="true"
     android:scrollbars="none">
 
@@ -10,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="18dp"
-        android:paddingEnd="18dp"
+        android:paddingStart="16dp"
         android:paddingTop="14dp"
+        android:paddingEnd="16dp"
         android:paddingBottom="28dp">
 
         <!-- REGRESAR -->
@@ -20,29 +24,52 @@
             android:id="@+id/btnRegresarPalabras"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:padding="9dp"
-            android:src="@drawable/ic_fleizquierda"
+            android:background="@drawable/bg_boton_volver"
             android:contentDescription="Regresar"
+            android:padding="11dp"
             android:scaleType="fitCenter"
-            android:background="@drawable/bg_circulo_icono_vocab" />
+            android:src="@drawable/ic_flecha_atras" />
 
         <!-- ENCABEZADO PRINCIPAL -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
+            android:background="@drawable/bg_header_vocab"
+            android:elevation="4dp"
             android:orientation="vertical"
-            android:padding="20dp"
-            android:background="@drawable/bg_encabezado_vocab">
+            android:padding="20dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✦  NUESTRA LENGUA, NUESTRAS RAÍCES  ✦"
-                android:textColor="#A75B42"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.08" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rombo1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:letterSpacing="0.1"
+                    android:text="NUESTRA LENGUA, NUESTRAS RAÍCES"
+                    android:textColor="@color/buti_dorado"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rombo1" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,51 +88,52 @@
                         android:id="@+id/txtTituloCategoria"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
                         android:text="Saludos"
-                        android:textColor="#4F000B"
+                        android:textColor="@color/buti_crema"
                         android:textSize="30sp"
-                        android:textStyle="bold"
-                        android:fontFamily="sans-serif" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtDescripcionCategoria"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="6dp"
+                        android:lineSpacingExtra="3dp"
                         android:text="Cada palabra guarda una parte de nuestra historia."
-                        android:textColor="#684B3B"
-                        android:textSize="14sp"
-                        android:lineSpacingExtra="3dp" />
+                        android:textColor="#F5DCCB"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:id="@+id/imgIconoCategoria"
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:layout_marginStart="8dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_rombo7"
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_icono_reto"
+                    android:contentDescription="Ilustración de categoría"
+                    android:padding="10dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Ilustración de categoría" />
+                    android:src="@drawable/ic_rombo7" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_marginTop="17dp"
-                android:background="#D99A62" />
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_linea_dorada" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:text="APRENDE  •  ESCUCHA  •  COMPARTE"
-                android:textColor="#8C4A2F"
+                android:layout_marginTop="10dp"
+                android:letterSpacing="0.08"
+                android:text="APRENDE  ·  ESCUCHA  ·  COMPARTE"
+                android:textColor="@color/buti_dorado"
                 android:textSize="11sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.07" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -113,16 +141,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="22dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="22dp"
+                android:background="@drawable/bg_barra_seccion" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:text="Explora las palabras"
-                android:textColor="#4F000B"
+                android:textColor="@color/buti_titulo"
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
@@ -130,50 +164,53 @@
                 android:id="@+id/txtCantidadPalabras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_chip_contador"
+                android:letterSpacing="0.06"
                 android:paddingStart="12dp"
+                android:paddingTop="6dp"
                 android:paddingEnd="12dp"
-                android:paddingTop="7dp"
-                android:paddingBottom="7dp"
-                android:text="0 palabras"
-                android:textColor="#FFFFFF"
+                android:paddingBottom="6dp"
+                android:text="0 PALABRAS"
+                android:textColor="@color/buti_sobre_acento"
                 android:textSize="11sp"
-                android:textStyle="bold"
-                android:background="#8C4A2F" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
-        <!-- BUSCADOR -->
+        <!-- BUSCADOR (se ilumina en dorado al escribir) -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="15dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="14dp"
+            android:addStatesFromChildren="true"
+            android:background="@drawable/bg_campo_busqueda"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:background="@drawable/bg_busqueda_vocab">
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
 
             <ImageView
-                android:layout_width="31dp"
-                android:layout_height="31dp"
-                android:src="@drawable/ic_buscar_bordado"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:contentDescription="Buscar palabras"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_buscar_bordado" />
 
             <EditText
                 android:id="@+id/edtBuscarPalabra"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:layout_marginStart="11dp"
                 android:background="@android:color/transparent"
                 android:hint="¿Qué palabra quieres descubrir?"
-                android:textColor="#30231D"
-                android:textColorHint="#A27B65"
-                android:textSize="14sp"
-                android:singleLine="true"
                 android:inputType="text"
-                android:padding="0dp" />
+                android:padding="0dp"
+                android:singleLine="true"
+                android:textColor="@color/buti_texto"
+                android:textColorHint="@color/buti_texto_secundario"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -181,23 +218,23 @@
         <LinearLayout
             android:id="@+id/btnMostrarFavoritos"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="46dp"
             android:layout_gravity="end"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_boton_favoritos"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingStart="15dp"
-            android:paddingEnd="17dp"
-            android:background="@drawable/bg_favoritos_vocab"
-            android:clickable="true"
-            android:focusable="true">
+            android:paddingStart="12dp"
+            android:paddingEnd="16dp">
 
             <ImageView
-                android:layout_width="29dp"
-                android:layout_height="29dp"
-                android:src="@drawable/ic_favorito_bordado"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="Favoritos"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_favorito_bordado" />
 
             <TextView
                 android:id="@+id/txtTextoFavoritos"
@@ -205,22 +242,44 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Mis palabras favoritas"
-                android:textColor="#4F000B"
-                android:textSize="12sp"
+                android:textColor="@color/buti_titulo"
+                android:textSize="13sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <!-- MENSAJE DE APOYO -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
-            android:layout_marginBottom="5dp"
-            android:text="Una palabra nueva es una historia por descubrir."
-            android:textColor="#93634D"
-            android:textSize="13sp"
-            android:textStyle="italic" />
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Una palabra nueva es una historia por descubrir"
+                android:textColor="@color/buti_resalte"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+        </LinearLayout>
 
         <!-- LISTA DINÁMICA -->
         <LinearLayout

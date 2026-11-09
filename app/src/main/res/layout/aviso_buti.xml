@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aviso corto de B'ÜTI (reemplaza a los Toast). Lo muestra ButiAviso.java -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardAvisoButi"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/buti_crema"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp"
+    app:strokeColor="@color/buti_dorado"
+    app:strokeWidth="1.5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- Franja de color según el tipo de aviso -->
+        <View
+            android:id="@+id/franjaAvisoButi"
+            android:layout_width="6dp"
+            android:layout_height="match_parent"
+            android:background="@color/buti_dorado" />
+
+        <!-- Personaje -->
+        <ImageView
+            android:id="@+id/imgAvisoButi"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_colibri_normal" />
+
+        <TextView
+            android:id="@+id/txtAvisoButi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:lineSpacingExtra="2dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Mensaje"
+            android:textColor="@color/buti_marron"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="14dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_rombo1" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

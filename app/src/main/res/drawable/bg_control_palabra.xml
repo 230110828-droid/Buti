@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circulito detrás de favorito y audio MODO CLARO -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33C97A2B">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#F3DFD4" />
+        </shape>
+    </item>
+</ripple>

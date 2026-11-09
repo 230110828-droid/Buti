@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Halo del logo MODO OSCURO: luz dorada cálida detrás del pájaro. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <gradient
+        android:type="radial"
+        android:gradientRadius="50%p"
+        android:startColor="#FFF8EA"
+        android:centerColor="#E6FFD98A"
+        android:endColor="#00F2A900" />
+</shape>

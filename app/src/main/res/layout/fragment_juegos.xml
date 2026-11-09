@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Juegos · B'ÜTI
+    Solo diseño: ids iguales. Iconos de juegos en punto de cruz (PNG). Modo claro y oscuro.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/buti_crema"
+    android:background="@color/buti_fondo"
     android:fillViewport="true"
     android:scrollbars="none">
 
@@ -11,14 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="18dp">
+        android:padding="16dp">
 
         <!-- Encabezado -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -26,51 +30,72 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ZONA DE DIVERSIÓN"
-                    android:textColor="@color/buti_naranja"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.12" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_rombo1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:letterSpacing="0.12"
+                        android:text="ZONA DE DIVERSIÓN"
+                        android:textColor="@color/buti_resalte"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:text="¡Vamos a jugar!"
-                    android:textColor="@color/buti_vino"
+                    android:textColor="@color/buti_titulo"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
                     android:text="Diviértete explorando y superando retos."
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="13sp"
-                    android:layout_marginTop="4dp" />
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
             <ImageView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:src="@drawable/ic_colibri_feliz"
+                android:layout_width="78dp"
+                android:layout_height="78dp"
+                android:contentDescription="Colibrí de B'ÜTI"
                 android:scaleType="fitCenter"
-                android:contentDescription="Colibrí de B'ÜTI" />
+                android:src="@drawable/ic_colibri_feliz" />
 
         </LinearLayout>
 
         <!-- Banner principal -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="145dp"
-            android:layout_marginTop="22dp"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_banner_juegos"
+            android:elevation="4dp"
             android:gravity="center_vertical"
-            android:padding="18dp"
-            android:background="@drawable/ic_fondo1">
+            android:minHeight="140dp"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="14dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -81,121 +106,175 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:letterSpacing="0.1"
                     android:text="TU MOMENTO DE DIVERSIÓN"
-                    android:textColor="@color/buti_vino"
+                    android:textColor="@color/buti_dorado"
                     android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:text="Descubre, juega y disfruta"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="19sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp" />
+                    android:textColor="@color/buti_crema"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="48dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_linea_dorada" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="¡Elige tu próximo desafío!"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="12sp"
-                    android:layout_marginTop="4dp" />
+                    android:textColor="#F5DCCB"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:gravity="center"
-                android:text="🎮"
-                android:textSize="48sp" />
+            <ImageView
+                android:layout_width="104dp"
+                android:layout_height="112dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_nino_animando" />
 
         </LinearLayout>
 
         <!-- Título de colección -->
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Elige un juego"
-            android:textColor="@color/buti_vino"
-            android:textSize="21sp"
-            android:textStyle="bold"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pequeños retos para pasarla bien."
-            android:textColor="@color/buti_cafe"
-            android:textSize="13sp"
-            android:layout_marginBottom="15dp" />
+            <View
+                android:layout_width="5dp"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_barra_seccion" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Elige un juego"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Pequeños retos para pasarla bien."
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <!-- Primera fila -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
 
             <!-- MEMORAMA -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardMemorama"
                 android:layout_width="0dp"
-                android:layout_height="190dp"
+                android:layout_height="196dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="7dp"
+                android:layout_marginEnd="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#FFF9F0"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:strokeColor="#E6C47A"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="@color/buti_superficie"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
+                app:rippleColor="@color/nivel_naranja"
+                app:strokeColor="@color/nivel_naranja"
+                app:strokeWidth="1.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:gravity="center"
-                        android:text="🃏"
-                        android:textSize="48sp" />
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp">
+
+                        <!-- Halo suave del color del juego -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:alpha="0.16"
+                            android:background="@drawable/bg_punto_categoria"
+                            android:backgroundTint="@color/nivel_naranja" />
+
+                        <!-- Tu icono en punto de cruz (PNG, sin tinte) -->
+                        <ImageView
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_juego_memorama" />
+
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
                         android:text="Memorama"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="7dp" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Encuentra las parejas"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="11sp"
+                        android:layout_marginTop="3dp"
                         android:gravity="center"
-                        android:layout_marginTop="4dp" />
+                        android:text="Encuentra las parejas"
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="JUGAR  →"
-                        android:textColor="@color/buti_naranja"
+                        android:layout_marginTop="9dp"
+                        android:background="@drawable/bg_practicar_etiqueta"
+                        android:drawableEnd="@drawable/ic_flecha_mini"
+                        android:drawableTint="@color/nivel_naranja"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="0.08"
+                        android:paddingStart="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="6dp"
+                        android:paddingBottom="4dp"
+                        android:text="JUGAR"
+                        android:textColor="@color/nivel_naranja"
                         android:textSize="11sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -205,58 +284,84 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardRompecabezas"
                 android:layout_width="0dp"
-                android:layout_height="190dp"
+                android:layout_height="196dp"
                 android:layout_weight="1"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#F1F1E6"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:strokeColor="#9AAB7B"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="@color/buti_superficie"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
+                app:rippleColor="@color/nivel_verde"
+                app:strokeColor="@color/nivel_verde"
+                app:strokeWidth="1.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:gravity="center"
-                        android:text="🧩"
-                        android:textSize="48sp" />
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp">
+
+                        <!-- Halo suave del color del juego -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:alpha="0.16"
+                            android:background="@drawable/bg_punto_categoria"
+                            android:backgroundTint="@color/nivel_verde" />
+
+                        <!-- Tu icono en punto de cruz (PNG, sin tinte) -->
+                        <ImageView
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_juego_rompecabezas" />
+
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
                         android:text="Rompecabezas"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="7dp" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Arma las ilustraciones"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="11sp"
+                        android:layout_marginTop="3dp"
                         android:gravity="center"
-                        android:layout_marginTop="4dp" />
+                        android:text="Arma las ilustraciones"
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="JUGAR  →"
-                        android:textColor="@color/buti_verde"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="9dp"
+                        android:background="@drawable/bg_practicar_etiqueta"
+                        android:drawableEnd="@drawable/ic_flecha_mini"
+                        android:drawableTint="@color/nivel_verde"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="0.08"
+                        android:paddingStart="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="6dp"
+                        android:paddingBottom="4dp"
+                        android:text="JUGAR"
+                        android:textColor="@color/nivel_verde"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -268,128 +373,178 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginTop="14dp">
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
 
             <!-- ATRAPA LA PALABRA -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAtrapaPalabras"
                 android:layout_width="0dp"
-                android:layout_height="190dp"
+                android:layout_height="196dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="7dp"
+                android:layout_marginEnd="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#F9ECEB"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:strokeColor="#D99A9C"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="@color/buti_superficie"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
+                app:rippleColor="@color/nivel_rosa"
+                app:strokeColor="@color/nivel_rosa"
+                app:strokeWidth="1.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:gravity="center"
-                        android:text="🎯"
-                        android:textSize="48sp" />
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp">
+
+                        <!-- Halo suave del color del juego -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:alpha="0.16"
+                            android:background="@drawable/bg_punto_categoria"
+                            android:backgroundTint="@color/nivel_rosa" />
+
+                        <!-- Tu icono en punto de cruz (PNG, sin tinte) -->
+                        <ImageView
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_juego_atrapa" />
+
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
                         android:text="Atrapa la palabra"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="7dp" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pon a prueba tus reflejos"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="11sp"
+                        android:layout_marginTop="3dp"
                         android:gravity="center"
-                        android:layout_marginTop="4dp" />
+                        android:text="Pon a prueba tus reflejos"
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="JUGAR  →"
-                        android:textColor="@color/buti_rosa"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="9dp"
+                        android:background="@drawable/bg_practicar_etiqueta"
+                        android:drawableEnd="@drawable/ic_flecha_mini"
+                        android:drawableTint="@color/nivel_rosa"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="0.08"
+                        android:paddingStart="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="6dp"
+                        android:paddingBottom="4dp"
+                        android:text="JUGAR"
+                        android:textColor="@color/nivel_rosa"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ENCUENTRA LAS DIFERENCIAS -->
+            <!-- ENCUENTRA DIFERENCIAS -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardDiferencias"
                 android:layout_width="0dp"
-                android:layout_height="190dp"
+                android:layout_height="196dp"
                 android:layout_weight="1"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#EBF0F5"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:strokeColor="#A4B6C8"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="@color/buti_superficie"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="3dp"
+                app:rippleColor="@color/nivel_azul"
+                app:strokeColor="@color/nivel_azul"
+                app:strokeWidth="1.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:gravity="center"
-                        android:text="🔎"
-                        android:textSize="48sp" />
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp">
+
+                        <!-- Halo suave del color del juego -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:alpha="0.16"
+                            android:background="@drawable/bg_punto_categoria"
+                            android:backgroundTint="@color/nivel_azul" />
+
+                        <!-- Tu icono en punto de cruz (PNG, sin tinte) -->
+                        <ImageView
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_juego_diferencias" />
+
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
                         android:text="Encuentra diferencias"
-                        android:textColor="@color/buti_vino"
+                        android:textColor="@color/buti_titulo"
                         android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:layout_marginTop="7dp" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
                         android:text="Observa con atención"
-                        android:textColor="@color/buti_cafe"
-                        android:textSize="11sp"
-                        android:gravity="center"
-                        android:layout_marginTop="4dp" />
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PRÓXIMAMENTE"
-                        android:textColor="@color/buti_azul"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="9dp"
+                        android:background="@drawable/bg_practicar_etiqueta"
+                        android:drawableEnd="@drawable/ic_flecha_mini"
+                        android:drawableTint="@color/nivel_azul"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="0.08"
+                        android:paddingStart="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="6dp"
+                        android:paddingBottom="4dp"
+                        android:text="JUGAR"
+                        android:textColor="@color/nivel_azul"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -398,16 +553,37 @@
         </LinearLayout>
 
         <!-- Pie decorativo -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp"
             android:gravity="center"
-            android:text="✦  B’ÜTI · Diversión con identidad  ✦"
-            android:textColor="@color/buti_naranja"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="15dp" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="B'ÜTI · Diversión con identidad"
+                android:textColor="@color/buti_resalte"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

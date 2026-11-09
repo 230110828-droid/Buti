@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Memorama · B'ÜTI
+    Solo diseño: ids iguales. Modo claro y oscuro.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/contenedorMemorama"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/buti_fondo"
     android:orientation="vertical"
-    android:background="@color/buti_crema"
-    android:padding="18dp">
+    android:paddingStart="16dp"
+    android:paddingTop="14dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="12dp">
 
     <!-- Encabezado -->
     <LinearLayout
@@ -14,146 +22,222 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
+        <ImageView
             android:id="@+id/btnVolverMemorama"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="‹"
-            android:textColor="@color/buti_vino"
-            android:textSize="38sp"
-            android:background="@android:color/transparent"
-            android:contentDescription="Regresar" />
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_boton_volver"
+            android:clickable="true"
+            android:contentDescription="Regresar"
+            android:focusable="true"
+            android:padding="11dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_flecha_atras" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:letterSpacing="0.1"
                 android:text="MEMORAMA"
-                android:textColor="@color/buti_vino"
-                android:textSize="23sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.08" />
+                android:textColor="@color/buti_titulo"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Encuentra todas las parejas"
-                android:textColor="@color/buti_cafe"
-                android:textSize="13sp" />
+                android:textColor="@color/buti_texto_secundario"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
         <ImageView
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:src="@drawable/ic_colibri_normal"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:contentDescription="Colibrí B'ÜTI"
             android:scaleType="fitCenter"
-            android:contentDescription="Colibrí B'ÜTI" />
+            android:src="@drawable/ic_colibri_normal" />
 
     </LinearLayout>
 
     <!-- Decoración -->
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="14dp"
-        android:background="@color/buti_dorado" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_linea_dorada" />
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_rombo1" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_linea_dorada"
+            android:rotation="180" />
+
+    </LinearLayout>
 
     <!-- Estadísticas -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="3"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="12dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="65dp"
+            android:layout_height="68dp"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:background="@drawable/bg_stat_juego"
             android:gravity="center"
-            android:background="@drawable/ic_fondo1">
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TIEMPO"
-                android:textColor="@color/buti_cafe"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_temporizador" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:letterSpacing="0.06"
+                    android:text="TIEMPO"
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtTiempoMemorama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="00:00"
-                android:textColor="@color/buti_vino"
-                android:textSize="19sp"
+                android:textColor="@color/buti_titulo"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="65dp"
+            android:layout_height="68dp"
+            android:layout_marginHorizontal="8dp"
             android:layout_weight="1"
-            android:layout_marginHorizontal="6dp"
-            android:orientation="vertical"
+            android:background="@drawable/bg_stat_juego"
             android:gravity="center"
-            android:background="@drawable/ic_fondo1">
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MOVIMIENTOS"
-                android:textColor="@color/buti_cafe"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_movimientos" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:letterSpacing="0.06"
+                    android:text="MOVIMIENTOS"
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtMovimientosMemorama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="0"
-                android:textColor="@color/buti_vino"
-                android:textSize="19sp"
+                android:textColor="@color/buti_titulo"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="65dp"
+            android:layout_height="68dp"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:background="@drawable/bg_stat_juego"
             android:gravity="center"
-            android:background="@drawable/ic_fondo1">
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PAREJAS"
-                android:textColor="@color/buti_cafe"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_req_ok"
+                    app:tint="@color/buti_exito" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:letterSpacing="0.06"
+                    android:text="PAREJAS"
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtParejasMemorama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="0 / 6"
-                android:textColor="@color/buti_vino"
-                android:textSize="19sp"
+                android:textColor="@color/buti_titulo"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -163,14 +247,20 @@
     <!-- Mensaje del juego -->
     <TextView
         android:id="@+id/txtMensajeMemorama"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_practicar_etiqueta"
         android:gravity="center"
+        android:paddingStart="16dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="6dp"
         android:text="¡Encuentra las imágenes iguales!"
-        android:textColor="@color/buti_cafe"
+        android:textColor="@color/buti_titulo"
         android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="12dp" />
+        android:textStyle="bold" />
 
     <!-- Tablero -->
     <GridLayout
@@ -178,25 +268,32 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:columnCount="3"
-        android:rowCount="4"
         android:alignmentMode="alignMargins"
-        android:useDefaultMargins="false"
-        android:padding="3dp" />
+        android:background="@drawable/bg_tablero_juego"
+        android:columnCount="3"
+        android:padding="6dp"
+        android:rowCount="4"
+        android:useDefaultMargins="false" />
 
     <!-- Botón reiniciar -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnReiniciarMemorama"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:text="⟳  Reiniciar partida"
-        android:textColor="@color/buti_crema"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Reiniciar partida"
+        android:textAllCaps="false"
+        android:textColor="@color/buti_sobre_acento"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:background="@color/buti_vino"
-        android:elevation="3dp" />
+        app:backgroundTint="@color/buti_acento"
+        app:cornerRadius="18dp"
+        app:icon="@drawable/ic_reiniciar"
+        app:iconGravity="textStart"
+        app:iconPadding="10dp"
+        app:iconSize="24dp"
+        app:iconTint="@null" />
 
 </LinearLayout>

@@ -11,6 +11,12 @@
             android:icon="@drawable/ic_inicio"
             android:title="@string/menu_inicio" />
 
+        <!-- Mi perfil -->
+        <item
+            android:id="@+id/perfilFragment"
+            android:icon="@drawable/ic_usuario"
+            android:title="Mi perfil" />
+
         <!-- Ixmiquilpan -->
         <item
             android:id="@+id/culturaFragment"

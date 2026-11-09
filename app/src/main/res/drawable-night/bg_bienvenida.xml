@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bienvenida MODO OSCURO: noche vino, más clara detrás del logo. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:type="radial"
+        android:centerX="0.5"
+        android:centerY="0.25"
+        android:gradientRadius="90%p"
+        android:startColor="#7A1828"
+        android:centerColor="#3D0A13"
+        android:endColor="#14060A" />
+</shape>

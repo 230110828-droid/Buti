@@ -1,9 +1,11 @@
 package com.itsoeh.sbsc.buti.juegos;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -15,16 +17,19 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.card.MaterialCardView;
 
+import com.itsoeh.sbsc.buti.ButiAviso;
+import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.ResultadoButi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -145,14 +150,15 @@ public class RompecabezasFragment extends Fragment {
             parametros.setMargins(0, dp(7), 0, dp(7));
 
             tarjeta.setLayoutParams(parametros);
-            tarjeta.setRadius(dp(16));
-            tarjeta.setCardElevation(dp(4));
-            tarjeta.setCardBackgroundColor(
-                    Color.rgb(255, 250, 240));
+            tarjeta.setRadius(dp(20));
+            tarjeta.setCardElevation(dp(3));
+            tarjeta.setCardBackgroundColor(color(R.color.buti_superficie));
 
             tarjeta.setStrokeWidth(dp(1));
-            tarjeta.setStrokeColor(
-                    Color.rgb(201, 122, 43));
+            tarjeta.setStrokeColor(color(R.color.buti_borde));
+            tarjeta.setRippleColor(
+                    android.content.res.ColorStateList.valueOf(
+                            color(R.color.buti_dorado)));
 
             LinearLayout contenido =
                     new LinearLayout(requireContext());
@@ -164,32 +170,71 @@ public class RompecabezasFragment extends Fragment {
             contenido.setPadding(
                     dp(10), dp(10), dp(10), dp(10));
 
+            // Foto con esquinas redondeadas.
+            MaterialCardView marco =
+                    new MaterialCardView(requireContext());
+
+            marco.setRadius(dp(14));
+            marco.setCardElevation(0);
+            marco.setStrokeWidth(0);
+
             ImageView imagen =
                     new ImageView(requireContext());
 
             imagen.setImageResource(imagenes[i]);
             imagen.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            LinearLayout.LayoutParams imagenParams =
-                    new LinearLayout.LayoutParams(
-                            dp(95), dp(95));
+            marco.addView(imagen, new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
 
-            imagen.setLayoutParams(imagenParams);
+            // Nombre y etiqueta.
+            LinearLayout textos =
+                    new LinearLayout(requireContext());
+
+            textos.setOrientation(LinearLayout.VERTICAL);
+            textos.setPadding(dp(14), 0, dp(6), 0);
+
+            TextView etiqueta =
+                    new TextView(requireContext());
+
+            etiqueta.setText(String.format(
+                    java.util.Locale.getDefault(), "POSTAL %02d", i + 1));
+            etiqueta.setTextColor(color(R.color.buti_resalte));
+            etiqueta.setTextSize(10);
+            etiqueta.setLetterSpacing(0.1f);
+            etiqueta.setTypeface(null, 1);
 
             TextView nombre =
                     new TextView(requireContext());
 
             nombre.setText(nombres[i]);
-            nombre.setTextColor(
-                    Color.rgb(79, 0, 11));
-
-            nombre.setTextSize(15);
+            nombre.setTextColor(color(R.color.buti_titulo));
+            nombre.setTextSize(16);
             nombre.setTypeface(null, 1);
+            nombre.setPadding(0, dp(3), 0, 0);
 
-            nombre.setPadding(dp(15), 0, 0, 0);
+            TextView jugar =
+                    new TextView(requireContext());
 
-            contenido.addView(imagen);
-            contenido.addView(nombre);
+            jugar.setText("Armar postal");
+            jugar.setTextColor(color(R.color.nivel_verde));
+            jugar.setTextSize(12);
+            jugar.setTypeface(null, 1);
+            jugar.setPadding(0, dp(6), 0, 0);
+            jugar.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    0, 0, R.drawable.ic_flecha_mini, 0);
+            jugar.setCompoundDrawableTintList(
+                    android.content.res.ColorStateList.valueOf(
+                            color(R.color.nivel_verde)));
+
+            textos.addView(etiqueta);
+            textos.addView(nombre);
+            textos.addView(jugar);
+
+            contenido.addView(marco, new LinearLayout.LayoutParams(dp(96), dp(96)));
+            contenido.addView(textos, new LinearLayout.LayoutParams(
+                    0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
             tarjeta.addView(contenido);
 
@@ -209,70 +254,56 @@ public class RompecabezasFragment extends Fragment {
 
     private void mostrarDificultades() {
 
-        LinearLayout opciones =
-                new LinearLayout(requireContext());
+        if (!isAdded()) return;
 
-        opciones.setOrientation(LinearLayout.VERTICAL);
-        opciones.setPadding(dp(20), dp(15), dp(20), dp(10));
+        // Ventana propia de B'ÜTI (antes AlertDialog).
+        Dialog ventana = new Dialog(requireContext());
+        ventana.setContentView(R.layout.dialog_dificultad_rompecabezas);
+        ventana.setCancelable(true);
 
-        TextView titulo =
-                new TextView(requireContext());
+        TextView txtLugar = ventana.findViewById(R.id.txtLugarDificultad);
+        if (txtLugar != null) {
+            txtLugar.setText(nombres[imagenSeleccionada].toUpperCase());
+        }
 
-        titulo.setText("Selecciona la dificultad");
-        titulo.setTextSize(18);
-        titulo.setTextColor(Color.rgb(79, 0, 11));
-        titulo.setGravity(Gravity.CENTER);
-        titulo.setTypeface(null, 1);
-
-        opciones.addView(titulo);
-
-        String[] textos = {
-                "Fácil · 9 piezas",
-                "Intermedio · 16 piezas",
-                "Difícil · 25 piezas"
+        int[] botones = {
+                R.id.btnDificultadFacil,
+                R.id.btnDificultadIntermedio,
+                R.id.btnDificultadDificil
         };
 
         int[] dificultades = {3, 4, 5};
 
-        for (int i = 0; i < textos.length; i++) {
+        for (int i = 0; i < botones.length; i++) {
 
             final int nivel = dificultades[i];
 
-            Button boton = new Button(requireContext());
+            View boton = ventana.findViewById(botones[i]);
 
-            boton.setText(textos[i]);
-            boton.setAllCaps(false);
-
-            boton.setTextColor(Color.WHITE);
-            boton.setBackgroundTintList(
-                    android.content.res.ColorStateList.valueOf(
-                            Color.rgb(79, 0, 11)));
-
-            LinearLayout.LayoutParams params =
-                    new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT);
-
-            params.setMargins(0, dp(6), 0, dp(6));
-
-            boton.setLayoutParams(params);
-
-            boton.setOnClickListener(v -> {
-
-                dificultad = nivel;
-
-                iniciarJuego();
-
-            });
-
-            opciones.addView(boton);
+            if (boton != null) {
+                boton.setOnClickListener(v -> {
+                    ventana.dismiss();
+                    dificultad = nivel;
+                    iniciarJuego();
+                });
+            }
         }
 
-        new androidx.appcompat.app.AlertDialog.Builder(
-                requireContext())
-                .setView(opciones)
-                .setNegativeButton("Cancelar", null)
-                .show();
+        View cancelar = ventana.findViewById(R.id.btnDificultadCancelar);
+        if (cancelar != null) {
+            cancelar.setOnClickListener(v -> ventana.dismiss());
+        }
+
+        ventana.show();
+
+        if (ventana.getWindow() != null) {
+            ventana.getWindow().setBackgroundDrawable(
+                    new ColorDrawable(Color.TRANSPARENT));
+            ventana.getWindow().setDimAmount(0.6f);
+            ventana.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
     }
 
     // Iniciar el rompecabezas.
@@ -297,11 +328,11 @@ public class RompecabezasFragment extends Fragment {
 
         if (imagenOriginal == null) {
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No se pudo cargar la imagen",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -371,7 +402,8 @@ public class RompecabezasFragment extends Fragment {
         int anchoPantalla =
                 getResources().getDisplayMetrics().widthPixels;
 
-        int margen = dp(36);
+        // Márgenes de la pantalla (32) + marco del tablero (16) + separación (12).
+        int margen = dp(60);
 
         int espacio = Math.max(
                 1,
@@ -530,25 +562,28 @@ public class RompecabezasFragment extends Fragment {
 
     private void mostrarVictoria() {
 
-        new androidx.appcompat.app.AlertDialog.Builder(
-                requireContext())
-                .setTitle("¡Excelente trabajo! 🎉")
-                .setMessage(
-                        "¡Completaste el rompecabezas!\n\n"
-                                + "Lugar: "
-                                + nombres[imagenSeleccionada]
-                                + "\nMovimientos: "
-                                + movimientos
-                                + "\nPiezas: "
-                                + (dificultad * dificultad))
-                .setCancelable(false)
-                .setPositiveButton(
-                        "Volver a jugar",
-                        (dialog, which) -> iniciarJuego())
-                .setNegativeButton(
-                        "Elegir otro lugar",
-                        (dialog, which) -> mostrarSeleccion())
-                .show();
+        if (!isAdded()) return;
+
+        // Pantalla del colibrí: más piezas = más puntos (3x3=10, 4x4=20, 5x5=30).
+        ResultadoButi.Datos datos = new ResultadoButi.Datos();
+        datos.etiqueta = "ROMPECABEZAS " + dificultad + "×" + dificultad;
+        datos.titulo = "¡Excelente trabajo!";
+        datos.mensaje = "¡Completaste el rompecabezas!\n"
+                + "Lugar: " + nombres[imagenSeleccionada]
+                + " · Movimientos: " + movimientos;
+        datos.correctas = dificultad * dificultad;
+        datos.total = dificultad * dificultad;
+        datos.puntos = ProgresoButi.PUNTOS_ROMPECABEZAS_POR_NIVEL * Math.max(1, dificultad - 2);
+        datos.exito = true;
+
+        ResultadoButi.mostrarYGuardar(
+                requireContext(),
+                datos,
+                "Volver a jugar",
+                this::iniciarJuego,
+                "Elegir otro lugar",
+                this::mostrarSeleccion
+        );
     }
 
     private void mostrarSeleccion() {
@@ -571,13 +606,18 @@ public class RompecabezasFragment extends Fragment {
         GradientDrawable fondo =
                 new GradientDrawable();
 
-        fondo.setColor(Color.WHITE);
+        fondo.setColor(color(R.color.buti_superficie));
 
         fondo.setStroke(
                 dp(1),
-                Color.rgb(242, 169, 0));
+                color(R.color.buti_dorado));
 
         return fondo;
+    }
+
+    private int color(int recurso) {
+
+        return ContextCompat.getColor(requireContext(), recurso);
     }
 
     private int dp(int valor) {

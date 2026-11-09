@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Mapa de Ixmiquilpan · B'ÜTI
+    Solo diseño: ids iguales. Modo claro y oscuro.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/buti_fondo">
+
+    <!-- MAPA (OpenStreetMap) -->
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapaIxmiquilpan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- ENCABEZADO Y LUGARES -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/buti_superficie"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="6dp"
+            app:strokeColor="@color/buti_dorado"
+            app:strokeWidth="1.5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/btnVolverMapa"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_boton_volver"
+                    android:clickable="true"
+                    android:contentDescription="Regresar"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_flecha_atras" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.12"
+                        android:text="UBICACIÓN"
+                        android:textColor="@color/buti_resalte"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Explora Ixmiquilpan"
+                        android:textColor="@color/buti_titulo"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="4dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_colibri_normal" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Botones para ir a cada lugar (los crea el Java) -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false"
+            android:paddingBottom="6dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/contenedorLugaresMapa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <!-- TARJETA DEL LUGAR SELECCIONADO -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardLugarMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="22dp"
+        app:cardBackgroundColor="@color/buti_superficie"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:strokeColor="@color/buti_dorado"
+        app:strokeWidth="1.5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_tag_ubicacion"
+                    app:tint="@color/buti_resalte" />
+
+                <TextView
+                    android:id="@+id/txtTipoLugarMapa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:letterSpacing="0.1"
+                    android:text="MUNICIPIO"
+                    android:textColor="@color/buti_resalte"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtNombreLugarMapa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Ixmiquilpan"
+                android:textColor="@color/buti_titulo"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_linea_dorada" />
+
+            <TextView
+                android:id="@+id/txtDescripcionLugarMapa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="2dp"
+                android:text=""
+                android:textColor="@color/buti_texto"
+                android:textSize="13sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnComoLlegarMapa"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="14dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Cómo llegar"
+                android:textAllCaps="false"
+                android:textColor="@color/buti_sobre_acento"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/buti_acento"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_ruta"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconSize="20dp"
+                app:iconTint="@color/buti_sobre_acento" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Créditos obligatorios de OpenStreetMap -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/bg_credito_mapa"
+        android:paddingStart="6dp"
+        android:paddingTop="1dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="1dp"
+        android:text="© colaboradores de OpenStreetMap"
+        android:textColor="@color/buti_texto"
+        android:textSize="9sp" />
+
+</FrameLayout>

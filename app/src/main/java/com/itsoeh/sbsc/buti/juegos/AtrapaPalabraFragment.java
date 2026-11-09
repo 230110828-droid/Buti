@@ -23,7 +23,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.ResultadoButi;
 import com.itsoeh.sbsc.buti.vocabulario.VocabularioDatos;
 
 import java.util.ArrayList;
@@ -646,11 +648,11 @@ public class AtrapaPalabraFragment extends Fragment {
 
         if (correcta) {
 
-            puntos += 10;
+            puntos += ProgresoButi.PUNTOS_ATRAPA_POR_ACIERTO;
 
             actualizarPuntos();
 
-            txtMensaje.setText("¡Muy bien! +10 puntos");
+            txtMensaje.setText("¡Muy bien! +" + ProgresoButi.PUNTOS_ATRAPA_POR_ACIERTO + " puntos");
 
         } else {
 
@@ -711,11 +713,13 @@ public class AtrapaPalabraFragment extends Fragment {
 
         layoutResultado.setVisibility(View.VISIBLE);
 
-        if (puntos >= 80) {
+        int acertadas = puntos / ProgresoButi.PUNTOS_ATRAPA_POR_ACIERTO;
+
+        if (acertadas >= 8) {
 
             txtResultado.setText("¡Excelente trabajo!");
 
-        } else if (puntos >= 50) {
+        } else if (acertadas >= 5) {
 
             txtResultado.setText("¡Muy bien!");
 
@@ -724,7 +728,6 @@ public class AtrapaPalabraFragment extends Fragment {
             txtResultado.setText("¡Sigue practicando!");
         }
 
-        int acertadas = puntos / 10;
 
         txtDetalleResultado.setText(
                 "Categoría: " + categoriaActual.nombre +
@@ -733,6 +736,27 @@ public class AtrapaPalabraFragment extends Fragment {
                         "\nVidas restantes: " + vidas +
                         "\nTiempo restante: " + tiempoRestante +
                         " segundos");
+
+        // Pantalla del colibrí: guarda puntos (5 por palabra) y la racha.
+        ResultadoButi.Datos datos = new ResultadoButi.Datos();
+        datos.etiqueta = "ATRAPA LA PALABRA · " + categoriaActual.nombre.toUpperCase();
+        datos.titulo = txtResultado.getText().toString();
+        datos.mensaje = acertadas == 0
+                ? "¡Inténtalo otra vez, tú puedes!"
+                : "Atrapaste " + acertadas + (acertadas == 1 ? " palabra." : " palabras.");
+        datos.correctas = acertadas;
+        datos.total = 10;
+        datos.puntos = puntos;
+        datos.exito = acertadas >= 5;
+
+        ResultadoButi.mostrarYGuardar(
+                requireContext(),
+                datos,
+                "Ver resumen",
+                null,
+                null,
+                null
+        );
     }
 
     // ------------------------------------------------

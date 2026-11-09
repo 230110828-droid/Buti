@@ -1,7 +1,9 @@
-
 package com.itsoeh.sbsc.buti.perfil;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,15 +12,12 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.content.Context;
-import android.text.InputType;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -36,6 +35,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.itsoeh.sbsc.buti.ButiAviso;
+import com.itsoeh.sbsc.buti.ButiDialogo;
+import com.itsoeh.sbsc.buti.FotoPerfil;
 import com.itsoeh.sbsc.buti.R;
 import com.itsoeh.sbsc.buti.RecuperarContrasenaActivity;
 
@@ -80,11 +82,11 @@ public class EditarPerfilFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user == null) {
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    EditarPerfilFragment.this,
                     "Inicia sesión para editar tu perfil.",
-                    Toast.LENGTH_LONG
-            ).show();
+                    ButiAviso.Tipo.INFO
+            );
 
             nav.popBackStack();
             return;
@@ -97,6 +99,14 @@ public class EditarPerfilFragment extends Fragment {
         cargarDatosIniciales();
         escucharNombreGuardado();
         configurarIniciales();
+
+        // Foto de perfil (si no hay, se ven las iniciales).
+        FotoPerfil.mostrar(
+                getViewLifecycleOwner(),
+                view.findViewById(R.id.imgFotoEditar),
+                txtIniciales,
+                null
+        );
 
         // Mostrar la opción de contraseña solo para cuentas
         // que usan correo y contraseña.
@@ -116,6 +126,13 @@ public class EditarPerfilFragment extends Fragment {
             } else {
                 btnPass.setVisibility(View.GONE);
             }
+        }
+
+        // Las cuentas de Google usan el correo de Google:
+        // ese correo no se puede cambiar desde la app.
+        if (!usaContrasena) {
+            etCorreo.setEnabled(false);
+            etCorreo.setAlpha(0.6f);
         }
 
         if (btnCancelar != null) {
@@ -282,13 +299,13 @@ public class EditarPerfilFragment extends Fragment {
         if (!tieneProveedorCorreoContrasena()) {
             restaurarBoton();
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    EditarPerfilFragment.this,
                     "Esta cuenta no usa contraseña de correo. " +
                             "Debes volver a autenticarte con tu proveedor " +
                             "de inicio de sesión para cambiar el correo.",
-                    Toast.LENGTH_LONG
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -305,102 +322,86 @@ public class EditarPerfilFragment extends Fragment {
             return;
         }
 
-        EditText campoContrasena = new EditText(requireContext());
+        // Ventana propia de B'ÜTI (antes AlertDialog).
+        Dialog dialogo = new Dialog(requireContext());
+        dialogo.setContentView(R.layout.dialog_confirmar_contrasena);
+        dialogo.setCancelable(true);
 
-        campoContrasena.setHint("Contraseña actual");
-        campoContrasena.setSingleLine(true);
-        campoContrasena.setInputType(
-                InputType.TYPE_CLASS_TEXT
-                        | InputType.TYPE_TEXT_VARIATION_PASSWORD
-        );
+        EditText campoContrasena =
+                dialogo.findViewById(R.id.etContrasenaConfirmar);
 
-        int margen = (int) (24 * getResources()
-                .getDisplayMetrics().density);
+        MaterialButton btnContinuar =
+                dialogo.findViewById(R.id.btnConfirmarContrasena);
 
-        LinearLayout contenedor = new LinearLayout(requireContext());
-        contenedor.setOrientation(LinearLayout.VERTICAL);
-        contenedor.setPadding(margen, 0, margen, 0);
-        contenedor.addView(campoContrasena);
+        MaterialButton btnCancelarDialogo =
+                dialogo.findViewById(R.id.btnCancelarContrasena);
 
-        AlertDialog dialogo = new AlertDialog.Builder(requireContext())
-                .setTitle("Confirma tu identidad")
-                .setMessage(
-                        "Para cambiar tu correo electrónico, " +
-                                "escribe tu contraseña actual."
-                )
-                .setView(contenedor)
-                .setPositiveButton("Continuar", null)
-                .setNegativeButton("Cancelar", (dialog, which) ->
-                        restaurarBoton())
-                .create();
+        btnCancelarDialogo.setOnClickListener(v -> {
+            dialogo.dismiss();
+            restaurarBoton();
+        });
 
-        dialogo.setOnShowListener(dialog -> {
-            dialogo.getButton(AlertDialog.BUTTON_POSITIVE)
-                    .setOnClickListener(v -> {
+        btnContinuar.setOnClickListener(v -> {
 
-                        String contrasena =
-                                campoContrasena.getText()
-                                        .toString();
+            String contrasena =
+                    campoContrasena.getText().toString();
 
-                        if (contrasena.trim().isEmpty()) {
-                            campoContrasena.setError(
-                                    "Escribe tu contraseña actual."
+            if (contrasena.trim().isEmpty()) {
+                campoContrasena.setError(
+                        "Escribe tu contraseña actual."
+                );
+                campoContrasena.requestFocus();
+                return;
+            }
+
+            // Ocultar el teclado antes de autenticar.
+            InputMethodManager teclado =
+                    (InputMethodManager) requireContext()
+                            .getSystemService(
+                                    Context.INPUT_METHOD_SERVICE
                             );
-                            campoContrasena.requestFocus();
+
+            if (teclado != null) {
+                teclado.hideSoftInputFromWindow(
+                        campoContrasena.getWindowToken(), 0
+                );
+            }
+
+            btnContinuar.setEnabled(false);
+            btnContinuar.setText("Verificando...");
+
+            AuthCredential credencial =
+                    EmailAuthProvider.getCredential(
+                            user.getEmail(),
+                            contrasena
+                    );
+
+            user.reauthenticate(credencial)
+                    .addOnSuccessListener(resultado -> {
+                        if (!isAdded()) {
                             return;
                         }
 
-                        // Ocultar el teclado antes de autenticar.
-                        InputMethodManager teclado =
-                                (InputMethodManager) requireContext()
-                                        .getSystemService(
-                                                Context.INPUT_METHOD_SERVICE
-                                        );
+                        dialogo.dismiss();
 
-                        if (teclado != null) {
-                            teclado.hideSoftInputFromWindow(
-                                    campoContrasena.getWindowToken(), 0
-                            );
+                        cambiarCorreoConfirmado(
+                                nombre, nuevoCorreo
+                        );
+                    })
+                    .addOnFailureListener(error -> {
+                        if (!isAdded()) {
+                            return;
                         }
 
-                        dialogo.getButton(
-                                AlertDialog.BUTTON_POSITIVE
-                        ).setEnabled(false);
+                        btnContinuar.setEnabled(true);
+                        btnContinuar.setText("Continuar");
 
-                        AuthCredential credencial =
-                                EmailAuthProvider.getCredential(
-                                        user.getEmail(),
-                                        contrasena
-                                );
-
-                        user.reauthenticate(credencial)
-                                .addOnSuccessListener(resultado -> {
-                                    if (!isAdded()) {
-                                        return;
-                                    }
-
-                                    dialogo.dismiss();
-
-                                    cambiarCorreoConfirmado(
-                                            nombre, nuevoCorreo
-                                    );
-                                })
-                                .addOnFailureListener(error -> {
-                                    if (!isAdded()) {
-                                        return;
-                                    }
-
-                                    dialogo.getButton(
-                                            AlertDialog.BUTTON_POSITIVE
-                                    ).setEnabled(true);
-
-                                    Toast.makeText(
-                                            requireContext(),
-                                            "No se pudo confirmar tu identidad. " +
-                                                    "Verifica tu contraseña actual.",
-                                            Toast.LENGTH_LONG
-                                    ).show();
-                                });
+                        ButiAviso.mostrar(
+                                EditarPerfilFragment.this,
+                                "No se pudo confirmar tu identidad. " +
+                                        "Verifica tu contraseña actual.",
+                                ButiAviso.Tipo.ERROR
+                        );
                     });
         });
 
@@ -408,6 +409,15 @@ public class EditarPerfilFragment extends Fragment {
                 restaurarBoton());
 
         dialogo.show();
+
+        if (dialogo.getWindow() != null) {
+            dialogo.getWindow().setBackgroundDrawable(
+                    new ColorDrawable(Color.TRANSPARENT));
+            dialogo.getWindow().setDimAmount(0.6f);
+            dialogo.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
     }
 
     private void cambiarCorreoConfirmado(
@@ -419,15 +429,32 @@ public class EditarPerfilFragment extends Fragment {
             return;
         }
 
-        user.updateEmail(nuevoCorreo)
+        // Firebase ya no permite cambiar el correo directamente
+        // (updateEmail). Ahora envía un enlace al correo nuevo y
+        // el cambio se hace cuando la persona lo abre.
+        user.verifyBeforeUpdateEmail(nuevoCorreo)
                 .addOnSuccessListener(resultado -> {
                     if (!isAdded()) {
                         return;
                     }
 
-                    // Authentication cambió el correo.
-                    // Ahora guardamos nombre y correo en la base de datos.
-                    actualizarNombre(nombre, nuevoCorreo);
+                    // El nombre sí se guarda de inmediato.
+                    // El correo se actualiza en la base de datos
+                    // la próxima vez que inicie sesión.
+                    String correoActual = user.getEmail() != null
+                            ? user.getEmail()
+                            : nuevoCorreo;
+
+                    // Mensaje personalizado de B'ÜTI (antes AlertDialog).
+                    new ButiDialogo(requireContext()).mostrarExito(
+                            "Revisa tu correo nuevo",
+                            "Te enviamos un enlace a:\n" + nuevoCorreo
+                                    + "\n\nÁbrelo para confirmar el cambio. "
+                                    + "Después vuelve a iniciar sesión "
+                                    + "con tu correo nuevo.\n\n"
+                                    + "Si no lo ves, revisa la carpeta de spam.",
+                            () -> actualizarNombre(nombre, correoActual)
+                    );
                 })
                 .addOnFailureListener(error -> {
                     if (!isAdded()) {
@@ -436,17 +463,31 @@ public class EditarPerfilFragment extends Fragment {
 
                     restaurarBoton();
 
-                    String detalle = error.getLocalizedMessage();
+                    String detalle = error.getMessage() == null
+                            ? ""
+                            : error.getMessage().toLowerCase();
 
-                    if (TextUtils.isEmpty(detalle)) {
-                        detalle = "Inténtalo de nuevo.";
+                    String mensaje;
+
+                    if (detalle.contains("already in use")
+                            || detalle.contains("email-already-in-use")) {
+                        mensaje = "Ese correo ya está registrado en otra cuenta.";
+                    } else if (detalle.contains("network")) {
+                        mensaje = "Revisa tu conexión a internet e inténtalo de nuevo.";
+                    } else if (detalle.contains("recent")) {
+                        mensaje = "Por seguridad, cierra sesión, vuelve a entrar e inténtalo de nuevo.";
+                    } else {
+                        mensaje = "No se pudo cambiar el correo. Inténtalo de nuevo.";
                     }
 
-                    Toast.makeText(
-                            requireContext(),
-                            "No se pudo cambiar el correo: " + detalle,
-                            Toast.LENGTH_LONG
-                    ).show();
+                    android.util.Log.e("EditarPerfil",
+                            "Error al cambiar correo", error);
+
+                    ButiAviso.mostrar(
+                            EditarPerfilFragment.this,
+                            mensaje,
+                            ButiAviso.Tipo.ERROR
+                    );
                 });
     }
 
@@ -470,12 +511,12 @@ public class EditarPerfilFragment extends Fragment {
                     if (!tarea.isSuccessful()) {
                         restaurarBoton();
 
-                        Toast.makeText(
-                                requireContext(),
+                        ButiAviso.mostrar(
+                                EditarPerfilFragment.this,
                                 "No se pudo actualizar el nombre " +
                                         "de la cuenta. Revisa tu conexión.",
-                                Toast.LENGTH_LONG
-                        ).show();
+                                ButiAviso.Tipo.ERROR
+                        );
 
                         return;
                     }
@@ -491,11 +532,11 @@ public class EditarPerfilFragment extends Fragment {
                                 }
 
                                 if (tareaBD.isSuccessful()) {
-                                    Toast.makeText(
-                                            requireContext(),
+                                    ButiAviso.mostrar(
+                                            EditarPerfilFragment.this,
                                             "Perfil actualizado correctamente.",
-                                            Toast.LENGTH_SHORT
-                                    ).show();
+                                            ButiAviso.Tipo.EXITO
+                                    );
 
                                     NavController nav =
                                             Navigation.findNavController(
@@ -507,15 +548,15 @@ public class EditarPerfilFragment extends Fragment {
                                 } else {
                                     restaurarBoton();
 
-                                    Toast.makeText(
-                                            requireContext(),
+                                    ButiAviso.mostrar(
+                                            EditarPerfilFragment.this,
                                             "La cuenta se actualizó, pero " +
                                                     "no se pudieron guardar " +
                                                     "los datos en Realtime " +
                                                     "Database. Revisa los " +
                                                     "permisos de Firebase.",
-                                            Toast.LENGTH_LONG
-                                    ).show();
+                                            ButiAviso.Tipo.ERROR
+                                    );
                                 }
                             });
                 });

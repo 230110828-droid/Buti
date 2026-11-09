@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-
-    <solid android:color="#C96B2C" />
-
-    <corners android:radius="18dp" />
-
-    <stroke
-        android:width="1dp"
-        android:color="#B85A24" />
-
-    <padding
-        android:left="12dp"
-        android:top="8dp"
-        android:right="12dp"
-        android:bottom="8dp" />
-
-</shape>
+<!-- Botón Comenzar MODO CLARO: vino a vino vivo, más oscuro al presionar. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <solid android:color="#3A0008" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <gradient
+                android:angle="0"
+                android:startColor="#4F000B"
+                android:endColor="#9E1E33" />
+        </shape>
+    </item>
+</selector>

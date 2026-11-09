@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fondo del icono de cada reto MODO OSCURO:
+     crema cálido con borde dorado para que los iconos se lean y resalten. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="18dp" />
+    <solid android:color="#F5E6D3" />
+    <stroke android:width="1.5dp" android:color="#FFC857" />
+</shape>

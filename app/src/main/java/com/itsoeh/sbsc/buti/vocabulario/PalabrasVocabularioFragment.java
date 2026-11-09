@@ -2,9 +2,7 @@ package com.itsoeh.sbsc.buti.vocabulario;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,13 +13,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.R;
 
 import java.util.ArrayList;
@@ -317,9 +316,10 @@ public class PalabrasVocabularioFragment extends Fragment {
 
         tarjeta.setOrientation(LinearLayout.HORIZONTAL);
         tarjeta.setGravity(Gravity.CENTER_VERTICAL);
-        tarjeta.setPadding(dp(13), dp(13), dp(13), dp(13));
+        tarjeta.setPadding(dp(16), dp(13), dp(12), dp(13));
 
-        tarjeta.setBackgroundResource(R.drawable.bg_tarjeta_vocab);
+        tarjeta.setBackgroundResource(R.drawable.bg_palabra_tarjeta);
+        tarjeta.setElevation(dp(2));
 
         LinearLayout.LayoutParams parametrosTarjeta =
                 new LinearLayout.LayoutParams(
@@ -327,7 +327,7 @@ public class PalabrasVocabularioFragment extends Fragment {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        parametrosTarjeta.setMargins(0, 0, 0, dp(13));
+        parametrosTarjeta.setMargins(0, 0, 0, dp(12));
 
         tarjeta.setLayoutParams(parametrosTarjeta);
 
@@ -335,16 +335,12 @@ public class PalabrasVocabularioFragment extends Fragment {
         TextView numeroPalabra = new TextView(contexto);
 
         numeroPalabra.setText(String.format(Locale.getDefault(), "%02d", numero));
-        numeroPalabra.setTextColor(Color.WHITE);
+        numeroPalabra.setTextColor(color(R.color.buti_crema));
         numeroPalabra.setTextSize(13);
         numeroPalabra.setTypeface(null, Typeface.BOLD);
         numeroPalabra.setGravity(Gravity.CENTER);
 
-        GradientDrawable fondoNumero = new GradientDrawable();
-        fondoNumero.setShape(GradientDrawable.OVAL);
-        fondoNumero.setColor(Color.rgb(140, 74, 47));
-
-        numeroPalabra.setBackground(fondoNumero);
+        numeroPalabra.setBackgroundResource(R.drawable.bg_numero_palabra);
 
         tarjeta.addView(numeroPalabra,
                 new LinearLayout.LayoutParams(dp(39), dp(39)));
@@ -366,7 +362,7 @@ public class PalabrasVocabularioFragment extends Fragment {
         TextView etiquetaEspanol = new TextView(contexto);
 
         etiquetaEspanol.setText("ESPAÑOL");
-        etiquetaEspanol.setTextColor(Color.rgb(174, 105, 72));
+        etiquetaEspanol.setTextColor(color(R.color.buti_resalte));
         etiquetaEspanol.setTextSize(9);
         etiquetaEspanol.setTypeface(null, Typeface.BOLD);
         etiquetaEspanol.setLetterSpacing(0.12f);
@@ -377,7 +373,7 @@ public class PalabrasVocabularioFragment extends Fragment {
         TextView textoEspanol = new TextView(contexto);
 
         textoEspanol.setText(espanol);
-        textoEspanol.setTextColor(Color.rgb(79, 0, 11));
+        textoEspanol.setTextColor(color(R.color.buti_titulo));
         textoEspanol.setTextSize(19);
         textoEspanol.setTypeface(null, Typeface.BOLD);
 
@@ -394,7 +390,7 @@ public class PalabrasVocabularioFragment extends Fragment {
         // Separador decorativo
         View separador = new View(contexto);
 
-        separador.setBackgroundColor(Color.rgb(226, 194, 166));
+        separador.setBackgroundColor(color(R.color.buti_borde));
 
         contenido.addView(separador,
                 new LinearLayout.LayoutParams(
@@ -406,7 +402,8 @@ public class PalabrasVocabularioFragment extends Fragment {
         TextView textoHnahnu = new TextView(contexto);
 
         textoHnahnu.setText(hnahnu);
-        textoHnahnu.setTextColor(Color.rgb(107, 75, 49));
+        // El hñähñu resalta en rosa (más brillante en modo oscuro).
+        textoHnahnu.setTextColor(color(R.color.nivel_rosa));
         textoHnahnu.setTextSize(17);
         textoHnahnu.setTypeface(null, Typeface.BOLD);
 
@@ -428,7 +425,7 @@ public class PalabrasVocabularioFragment extends Fragment {
 
         tarjeta.addView(controles,
                 new LinearLayout.LayoutParams(
-                        dp(42),
+                        dp(44),
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 ));
 
@@ -438,11 +435,13 @@ public class PalabrasVocabularioFragment extends Fragment {
         botonFavorito.setImageResource(R.drawable.ic_favorito_bordado);
         botonFavorito.setScaleType(ImageView.ScaleType.FIT_CENTER);
         botonFavorito.setContentDescription("Agregar a favoritos");
+        botonFavorito.setBackgroundResource(R.drawable.bg_control_palabra);
+        botonFavorito.setPadding(dp(6), dp(6), dp(6), dp(6));
 
         botonFavorito.setAlpha(esFavorito ? 1f : 0.55f);
 
         controles.addView(botonFavorito,
-                new LinearLayout.LayoutParams(dp(34), dp(34)));
+                new LinearLayout.LayoutParams(dp(40), dp(40)));
 
         botonFavorito.setOnClickListener(v -> {
 
@@ -476,9 +475,11 @@ public class PalabrasVocabularioFragment extends Fragment {
         botonAudio.setImageResource(R.drawable.ic_audio_bordado);
         botonAudio.setScaleType(ImageView.ScaleType.FIT_CENTER);
         botonAudio.setContentDescription("Escuchar pronunciación");
+        botonAudio.setBackgroundResource(R.drawable.bg_control_palabra);
+        botonAudio.setPadding(dp(6), dp(6), dp(6), dp(6));
 
         LinearLayout.LayoutParams margenAudio =
-                new LinearLayout.LayoutParams(dp(36), dp(36));
+                new LinearLayout.LayoutParams(dp(40), dp(40));
 
         margenAudio.setMargins(0, dp(8), 0, 0);
 
@@ -500,12 +501,19 @@ public class PalabrasVocabularioFragment extends Fragment {
         contenedor.setGravity(Gravity.CENTER);
         contenedor.setPadding(dp(20), dp(28), dp(20), dp(28));
 
-        GradientDrawable fondo = new GradientDrawable();
-        fondo.setColor(Color.rgb(255, 249, 241));
-        fondo.setCornerRadius(dp(20));
-        fondo.setStroke(dp(1), Color.rgb(232, 203, 181));
+        contenedor.setBackgroundResource(R.drawable.bg_practicar_tarjeta);
 
-        contenedor.setBackground(fondo);
+        // Colibrí descansando para el mensaje vacío.
+        ImageView colibri = new ImageView(requireContext());
+        colibri.setImageResource(R.drawable.ic_colibri_descansando);
+        colibri.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        colibri.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+
+        LinearLayout.LayoutParams margenColibri =
+                new LinearLayout.LayoutParams(dp(84), dp(72));
+        margenColibri.setMargins(0, 0, 0, dp(10));
+
+        contenedor.addView(colibri, margenColibri);
 
         TextView titulo = new TextView(requireContext());
 
@@ -515,7 +523,7 @@ public class PalabrasVocabularioFragment extends Fragment {
                         : "¡Sigamos buscando!"
         );
 
-        titulo.setTextColor(Color.rgb(79, 0, 11));
+        titulo.setTextColor(color(R.color.buti_titulo));
         titulo.setTextSize(18);
         titulo.setTypeface(null, Typeface.BOLD);
         titulo.setGravity(Gravity.CENTER);
@@ -530,7 +538,7 @@ public class PalabrasVocabularioFragment extends Fragment {
                         : "Prueba con otra palabra o escríbela en Hñähñu."
         );
 
-        mensaje.setTextColor(Color.rgb(120, 86, 65));
+        mensaje.setTextColor(color(R.color.buti_texto_secundario));
         mensaje.setTextSize(13);
         mensaje.setGravity(Gravity.CENTER);
         mensaje.setPadding(0, dp(8), 0, 0);
@@ -619,11 +627,11 @@ public class PalabrasVocabularioFragment extends Fragment {
         );
 
         if (audio == 0) {
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "Audio no disponible para esta palabra",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
 
             return;
         }
@@ -646,11 +654,11 @@ public class PalabrasVocabularioFragment extends Fragment {
 
         } else {
 
-            Toast.makeText(
-                    requireContext(),
+            ButiAviso.mostrar(
+                    this,
                     "No se pudo reproducir el audio",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    ButiAviso.Tipo.ERROR
+            );
         }
     }
 
@@ -670,6 +678,11 @@ public class PalabrasVocabularioFragment extends Fragment {
 
             reproductor = null;
         }
+    }
+
+    private int color(int recurso) {
+
+        return ContextCompat.getColor(requireContext(), recurso);
     }
 
     private int dp(int valor) {

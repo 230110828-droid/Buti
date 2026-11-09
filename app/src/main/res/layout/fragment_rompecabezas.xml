@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Rompecabezas · B'ÜTI
+    Solo diseño: ids iguales. Modo claro y oscuro.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/buti_crema"
+    android:background="@color/buti_fondo"
     android:fillViewport="true"
     android:scrollbars="none">
 
@@ -10,92 +15,176 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="18dp">
+        android:padding="16dp">
 
+        <!-- Encabezado -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
+            <ImageView
                 android:id="@+id/btnVolverRompecabezas"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="@drawable/ic_fondo1"
-                android:gravity="center"
-                android:text="‹"
-                android:textColor="@color/buti_vino"
-                android:textSize="32sp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_boton_volver"
                 android:clickable="true"
-                android:focusable="true" />
+                android:contentDescription="Regresar"
+                android:focusable="true"
+                android:padding="11dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_flecha_atras" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:letterSpacing="0.08"
                 android:text="ROMPECABEZAS"
-                android:textColor="@color/buti_vino"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:textColor="@color/buti_titulo"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:src="@drawable/ic_colibri_feliz"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:contentDescription="Colibrí B'ÜTI"
                 android:scaleType="fitCenter"
-                android:contentDescription="Colibrí B'ÜTI" />
+                android:src="@drawable/ic_colibri_feliz" />
 
         </LinearLayout>
 
-        <TextView
+        <!-- Banner -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="TESOROS DE IXMIQUILPAN"
-            android:textColor="@color/buti_naranja"
-            android:textStyle="bold"
-            android:textSize="15sp" />
+            android:background="@drawable/bg_banner_juegos"
+            android:elevation="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="18dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="Arma las postales bordadas del Valle del Mezquital"
-            android:textColor="@color/buti_cafe"
-            android:textSize="14sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_rombo1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:letterSpacing="0.1"
+                        android:text="TESOROS DE IXMIQUILPAN"
+                        android:textColor="@color/buti_dorado"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Arma las postales bordadas"
+                    android:textColor="@color/buti_crema"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Lugares del Valle del Mezquital en punto de cruz."
+                    android:textColor="#F5DCCB"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="78dp"
+                android:layout_height="78dp"
+                android:layout_marginStart="8dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_juego_rompecabezas" />
+
+        </LinearLayout>
 
         <!-- SELECCIÓN DE IMÁGENES -->
-
         <LinearLayout
             android:id="@+id/layoutSeleccionRompecabezas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="Elige tu lugar favorito"
-                android:textColor="@color/buti_vino"
-                android:textStyle="bold"
-                android:textSize="19sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="34dp"
+                    android:background="@drawable/bg_barra_seccion" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="11dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Elige tu lugar favorito"
+                        android:textColor="@color/buti_titulo"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Toca una postal y elige la dificultad."
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/contenedorImagenesRompecabezas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="12dp" />
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" />
 
         </LinearLayout>
 
         <!-- JUEGO -->
-
         <LinearLayout
             android:id="@+id/layoutJuegoRompecabezas"
             android:layout_width="match_parent"
@@ -110,90 +199,183 @@
                 android:layout_marginTop="18dp"
                 android:gravity="center"
                 android:text="Lugar seleccionado"
-                android:textColor="@color/buti_vino"
-                android:textStyle="bold"
-                android:textSize="19sp" />
+                android:textColor="@color/buti_titulo"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtDificultadRompecabezas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="Dificultad: Fácil"
-                android:textColor="@color/buti_cafe"
-                android:textSize="14sp" />
-
+            <!-- Dificultad y movimientos -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtMovimientosRompecabezas"
+                    android:id="@+id/txtDificultadRompecabezas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_fondo1"
-                    android:padding="12dp"
-                    android:text="Movimientos: 0"
-                    android:textColor="@color/buti_vino"
-                    android:textStyle="bold"
-                    android:textSize="13sp" />
+                    android:background="@drawable/bg_practicar_etiqueta"
+                    android:paddingStart="12dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="7dp"
+                    android:text="Dificultad: Fácil"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_stat_juego"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="6dp">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_movimientos" />
+
+                    <TextView
+                        android:id="@+id/txtMovimientosRompecabezas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="Movimientos: 0"
+                        android:textColor="@color/buti_titulo"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
+            <!-- Instrucción -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:gravity="center"
-                android:text="Arrastra una pieza sobre otra para intercambiarlas"
-                android:textColor="@color/buti_cafe"
-                android:textSize="13sp" />
+                android:orientation="horizontal">
 
-            <GridLayout
-                android:id="@+id/gridRompecabezas"
-                android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_movimientos" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="Mantén presionada una pieza y suéltala sobre otra"
+                    android:textColor="@color/buti_texto_secundario"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- Tablero -->
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:alignmentMode="alignMargins"
-                android:columnCount="3"
-                android:rowCount="3"
-                android:useDefaultMargins="false" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_tablero_juego"
+                android:padding="8dp">
 
-            <Button
+                <GridLayout
+                    android:id="@+id/gridRompecabezas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alignmentMode="alignMargins"
+                    android:columnCount="3"
+                    android:rowCount="3"
+                    android:useDefaultMargins="false" />
+
+            </FrameLayout>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnReiniciarRompecabezas"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
                 android:layout_marginTop="18dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="Mezclar piezas nuevamente"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/buti_vino" />
+                android:textColor="@color/buti_sobre_acento"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/buti_acento"
+                app:cornerRadius="18dp"
+                app:icon="@drawable/ic_reiniciar"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconSize="24dp"
+                app:iconTint="@null" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCambiarImagenRompecabezas"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="10dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="Elegir otro lugar"
                 android:textAllCaps="false"
-                android:textColor="@color/buti_vino"
-                android:backgroundTint="@color/buti_dorado" />
+                android:textColor="@color/buti_titulo"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/buti_superficie"
+                app:cornerRadius="18dp"
+                app:icon="@drawable/ic_cambiar_imagen"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconSize="24dp"
+                app:iconTint="@null"
+                app:strokeColor="@color/buti_dorado"
+                app:strokeWidth="1.5dp" />
 
         </LinearLayout>
 
-        <TextView
+        <!-- Pie decorativo -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="B'ÜTI · Nuestra cultura, nuestro orgullo"
-            android:textColor="@color/buti_naranja"
-            android:textSize="12sp" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="B'ÜTI · Nuestra cultura, nuestro orgullo"
+                android:textColor="@color/buti_resalte"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Carta con pareja encontrada MODO OSCURO: borde verde brillante -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="16dp" />
+    <solid android:color="#F1F5E8" />
+    <stroke android:width="3dp" android:color="#9DB36A" />
+</shape>

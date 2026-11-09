@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Acerca de · B'ÜTI
+    Solo diseño: el id txtVersionAcercaDe se conserva. Modo claro y oscuro.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/buti_crema"
+    android:background="@color/buti_fondo"
     android:fillViewport="true"
     android:scrollbars="none">
 
@@ -11,241 +15,672 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="22dp"
+        android:paddingStart="16dp"
         android:paddingTop="12dp"
+        android:paddingEnd="16dp"
         android:paddingBottom="28dp">
 
-        <!-- LOGO Y NOMBRE -->
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/principla_logo"
-            android:scaleType="fitCenter"
-            android:contentDescription="Logo de B'ÜTI" />
-
-        <TextView
+        <!-- ENCABEZADO: logo, nombre y versión -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:text="B'ÜTI"
-            android:textColor="@color/buti_vino"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:background="@drawable/bg_practicar_encabezado"
+            android:elevation="4dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
-        <TextView
-            android:id="@+id/txtVersionAcercaDe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Versión 1.0.0"
-            android:textColor="@color/buti_naranja"
-            android:textSize="13sp" />
+            <FrameLayout
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                android:background="@drawable/bg_avatar_crema"
+                android:elevation="3dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Logo de B'ÜTI"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/principla_logo" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:letterSpacing="0.06"
+                android:text="B'ÜTI"
+                android:textColor="@color/buti_crema"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Lengua y cultura hñähñu de Ixmiquilpan"
+                android:textColor="#F5DCCB"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txtVersionAcercaDe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_buti_pastilla"
+                android:paddingStart="14dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="5dp"
+                android:text="Versión 1.0.0"
+                android:textColor="@color/buti_vino"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="32dp"
             android:layout_marginTop="14dp"
-            android:src="@drawable/ic_margen_otomi_verde"
+            android:importantForAccessibility="no"
             android:scaleType="fitXY"
-            android:importantForAccessibility="no" />
+            android:src="@drawable/ic_margen_otomi_verde" />
 
-        <!-- ¿QUÉ ES? -->
-
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardBackgroundColor="#FFFAF0"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/buti_naranja"
-            app:strokeWidth="1dp">
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_practicar_tarjeta"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icono_reto"
+                    android:importantForAccessibility="no"
+                    android:padding="7dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_libro2" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:text="¿Qué es B'ÜTI?"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="17sp"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:lineSpacingExtra="3dp"
-                    android:text="B'ÜTI es una aplicación para aprender la lengua hñähñu (otomí) y conocer la cultura de Ixmiquilpan, Hidalgo. Incluye vocabulario con audio grabado por un hablante nativo, lecciones por niveles, juegos de reforzamiento e información de las comunidades de El Dexthi, El Nith y Panales."
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="3dp"
+                android:text="B'ÜTI es una aplicación para aprender la lengua hñähñu (otomí) y conocer la cultura de Ixmiquilpan, Hidalgo. Incluye vocabulario con audio grabado por un hablante nativo, lecciones por niveles, juegos de reforzamiento e información de las comunidades de El Dexthi, El Nith y Panales."
+                android:textColor="@color/buti_texto"
+                android:textSize="14sp" />
 
-        <!-- OBJETIVO -->
+        </LinearLayout>
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#FFFAF0"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/buti_naranja"
-            app:strokeWidth="1dp">
+            android:background="@drawable/bg_practicar_tarjeta"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icono_reto"
+                    android:importantForAccessibility="no"
+                    android:padding="7dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_maguey2" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:text="Objetivo"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="17sp"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:lineSpacingExtra="3dp"
-                    android:text="Apoyar el aprendizaje y la difusión de la lengua y la cultura hñähñu del Valle del Mezquital de una forma práctica y divertida."
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="3dp"
+                android:text="Apoyar el aprendizaje y la difusión de la lengua y la cultura hñähñu del Valle del Mezquital de una forma práctica y divertida."
+                android:textColor="@color/buti_texto"
+                android:textSize="14sp" />
 
-        <!-- CRÉDITOS -->
+        </LinearLayout>
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#FFFAF0"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/buti_naranja"
-            app:strokeWidth="1dp">
+            android:background="@drawable/bg_practicar_tarjeta"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icono_reto"
+                    android:importantForAccessibility="no"
+                    android:padding="7dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_bordado3" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:text="Créditos"
-                    android:textColor="@color/buti_vino"
-                    android:textSize="17sp"
+                    android:textColor="@color/buti_titulo"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
-
-                <!-- Hablante -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Hablante y asesor de lengua hñähñu"
-                    android:textColor="@color/buti_naranja"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="Evaristo García Martín"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="14sp" />
-
-                <!-- Asesores -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Asesores"
-                    android:textColor="@color/buti_naranja"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:lineSpacingExtra="3dp"
-                    android:text="Mtro. Mario Pérez Bautista · Aplicaciones Móviles 1\nMtra. Lorena Mendoza Guzmán · Diseño UX/UI"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="14sp" />
-
-                <!-- Equipo -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Equipo de desarrollo"
-                    android:textColor="@color/buti_naranja"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <!-- TODO: escribir los nombres de los 6 integrantes -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:lineSpacingExtra="3dp"
-                    android:text="Integrante 1\nIntegrante 2\nIntegrante 3\nIntegrante 4\nIntegrante 5\nIntegrante 6"
-                    android:textColor="@color/buti_cafe"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_practicar_etiqueta"
+                android:letterSpacing="0.08"
+                android:paddingStart="10dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="4dp"
+                android:text="HABLANTE Y ASESOR DE LENGUA HÑÄHÑU"
+                android:textColor="@color/buti_resalte"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_verde"
+                    android:gravity="center"
+                    android:text="EG"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Evaristo García Martín"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_practicar_etiqueta"
+                android:letterSpacing="0.08"
+                android:paddingStart="10dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="4dp"
+                android:text="ASESORES"
+                android:textColor="@color/buti_resalte"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_azul"
+                    android:gravity="center"
+                    android:text="MP"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mtro. Mario Pérez Bautista"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aplicaciones Móviles 1"
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_rosa"
+                    android:gravity="center"
+                    android:text="LM"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mtra. Lorena Mendoza Guzmán"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diseño UX/UI"
+                        android:textColor="@color/buti_texto_secundario"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_practicar_etiqueta"
+                android:letterSpacing="0.08"
+                android:paddingStart="10dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="4dp"
+                android:text="EQUIPO DE DESARROLLO"
+                android:textColor="@color/buti_resalte"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_rosa"
+                    android:gravity="center"
+                    android:text="AM"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ariel Jesus Mota Gonzalez"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_naranja"
+                    android:gravity="center"
+                    android:text="CM"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Citlalli Mera Almaraz"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_verde"
+                    android:gravity="center"
+                    android:text="DC"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Daniela Montserrat Cortés Sánchez"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_azul"
+                    android:gravity="center"
+                    android:text="JM"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jonathan Martinez Mejia"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_siena"
+                    android:gravity="center"
+                    android:text="SS"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sherlyn Brizet Soto Cruz"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_punto_categoria"
+                    android:backgroundTint="@color/nivel_vino"
+                    android:gravity="center"
+                    android:text="YI"
+                    android:textColor="@color/buti_superficie"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yelitza Guadalupe Isidro Granados"
+                        android:textColor="@color/buti_texto"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <!-- INSTITUCIÓN -->
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:lineSpacingExtra="3dp"
-            android:text="Proyecto integrador · 7.º semestre, grupo A\nIngeniería en Sistemas Computacionales\nInstituto Tecnológico Superior del Occidente del Estado de Hidalgo (ITSOEH)\n2026"
-            android:textColor="@color/buti_cafe"
-            android:textSize="12sp" />
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_practicar_etiqueta"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.08"
+                android:text="PROYECTO INTEGRADOR · 7.º SEMESTRE, GRUPO A"
+                android:textColor="@color/buti_titulo"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:text="Ingeniería en Sistemas Computacionales\nInstituto Tecnológico Superior del Occidente del Estado de Hidalgo (ITSOEH)\n2026"
+                android:textColor="@color/buti_texto"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="32dp"
             android:layout_marginTop="16dp"
+            android:importantForAccessibility="no"
             android:rotation="180"
-            android:src="@drawable/ic_margen_otomi_verde"
             android:scaleType="fitXY"
-            android:importantForAccessibility="no" />
+            android:src="@drawable/ic_margen_otomi_verde" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="B'ÜTI · Nuestra cultura, nuestro orgullo"
-            android:textColor="@color/buti_naranja"
-            android:textSize="12sp" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="B'ÜTI · Nuestra cultura, nuestro orgullo"
+                android:textColor="@color/buti_resalte"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo2" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
