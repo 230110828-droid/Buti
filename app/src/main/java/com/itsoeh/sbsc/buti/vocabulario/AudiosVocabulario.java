@@ -258,6 +258,76 @@ public final class AudiosVocabulario {
             return new int[0];
         }
 
+        List<String> nombres;
+
+        // 1) Si la palabra ya está en Firebase, se usan los audios guardados ahí.
+        PalabraButi enNube = VocabularioNube.buscar(categoria, palabra);
+
+        if (enNube != null) {
+
+            nombres = new ArrayList<>();
+
+            if (!enNube.audio.isEmpty()) nombres.add(enNube.audio);
+            if (!enNube.audio2.isEmpty()) nombres.add(enNube.audio2);
+
+        } else {
+
+            // 2) Si no, se buscan con la lista original de la app.
+            nombres = nombresPorDefecto(categoria, palabra);
+        }
+
+        List<Integer> resultados = new ArrayList<>();
+
+        for (String nombre : nombres) {
+            agregarAudio(context, resultados, nombre);
+        }
+
+        int[] audios = new int[resultados.size()];
+
+        for (int i = 0; i < resultados.size(); i++) {
+            audios[i] = resultados.get(i);
+        }
+
+        return audios;
+    }
+
+    /**
+     * Nombres de los audios que trae la app para esa palabra y que sí existen
+     * en res/raw. Lo usa el Admin al importar el vocabulario a Firebase.
+     */
+    public static List<String> nombresDeLaApp(
+            Context context,
+            String categoria,
+            String palabra
+    ) {
+
+        List<String> existentes = new ArrayList<>();
+
+        if (context == null) return existentes;
+
+        for (String nombre : nombresPorDefecto(categoria, palabra)) {
+
+            List<Integer> prueba = new ArrayList<>();
+            agregarAudio(context, prueba, nombre);
+
+            if (!prueba.isEmpty()) existentes.add(nombre.toLowerCase(Locale.ROOT));
+        }
+
+        return existentes;
+    }
+
+    // Busca los nombres de los audios con la lista original (por posición).
+    private static List<String> nombresPorDefecto(
+            String categoria,
+            String palabra
+    ) {
+
+        List<String> nombres = new ArrayList<>();
+
+        if (categoria == null || palabra == null) {
+            return nombres;
+        }
+
         String cat = normalizar(categoria);
 
         String[][] datos;
@@ -323,7 +393,7 @@ public final class AudiosVocabulario {
                 break;
 
             default:
-                return new int[0];
+                return nombres;
         }
 
         int indice = -1;
@@ -342,37 +412,28 @@ public final class AudiosVocabulario {
         }
 
         if (indice == -1) {
-            return new int[0];
+            return nombres;
         }
 
-        List<Integer> resultados = new ArrayList<>();
-
-        // Agregar audio principal.
-        agregarAudio(context, resultados, archivos[indice]);
+        // Audio principal.
+        nombres.add(archivos[indice]);
 
         // Pronunciaciones alternativas.
         if (cat.equals("animales")
                 && (indice == 6 || indice == 17 || indice == 23)) {
 
-            agregarAudio(context, resultados, archivos[indice] + "2");
+            nombres.add(archivos[indice] + "2");
         }
 
         if (cat.equals("colores") && indice == 2) {
-            agregarAudio(context, resultados, archivos[indice] + "2");
+            nombres.add(archivos[indice] + "2");
         }
 
         if (cat.equals("objetos") && indice == 14) {
-            agregarAudio(context, resultados, archivos[indice] + "2");
+            nombres.add(archivos[indice] + "2");
         }
 
-        // Convertir la lista a un arreglo de enteros.
-        int[] audios = new int[resultados.size()];
-
-        for (int i = 0; i < resultados.size(); i++) {
-            audios[i] = resultados.get(i);
-        }
-
-        return audios;
+        return nombres;
     }
 
 

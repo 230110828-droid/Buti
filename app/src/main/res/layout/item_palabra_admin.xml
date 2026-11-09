@@ -1,109 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Una palabra en el panel de Admin: imagen, hñähñu, español y acciones -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/white">
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/buti_superficie_alt"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/buti_borde"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
+        <!-- Imagen de la palabra -->
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/bg_avatar_crema"
+            android:clipToOutline="true">
+
+            <ImageView
+                android:id="@+id/imgPalabraAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:padding="4dp"
+                android:scaleType="fitCenter" />
+
+        </FrameLayout>
+
+        <!-- Textos -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/tvLeccionAdmin"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Lección 1: Saludos"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="@color/buti_siena" />
-
-            <TextView
-                android:id="@+id/tvCategoriaAdmin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
-                android:background="@drawable/bg_boton_login"
-                android:text="Categoría"
-                android:textSize="11sp"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvPalabraHnahnuAdmin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hñähñu"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/buti_rosa" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
-                android:text="—"
-                android:textColor="@color/buti_siena" />
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/buti_titulo"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvPalabraEspanolAdmin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Español"
-                android:textSize="14sp"
-                android:textColor="@color/buti_negro" />
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/buti_texto"
+                android:textSize="14sp" />
+
+            <!-- Categoría · imagen · audio -->
+            <TextView
+                android:id="@+id/tvDetallePalabraAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/buti_texto_secundario"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+        <!-- Acciones -->
+        <ImageButton
+            android:id="@+id/btnEscucharPalabraAdmin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Escuchar"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_audio_bordado" />
 
-            <TextView
-                android:id="@+id/tvAudioAdmin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Audio: audio_gui.mp3"
-                android:textSize="11sp"
-                android:textColor="@color/buti_verde" />
+        <ImageButton
+            android:id="@+id/btnEditarPalabraAdmin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Editar"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_editar" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:text="|"
-                android:textSize="11sp"
-                android:textColor="@color/buti_siena" />
-
-            <TextView
-                android:id="@+id/tvImagenAdmin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Imagen: img_gui.png"
-                android:textSize="11sp"
-                android:textColor="@color/buti_naranja" />
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/btnEliminarPalabraAdmin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Eliminar"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_equis" />
 
     </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>

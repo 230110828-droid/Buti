@@ -1,5 +1,6 @@
 package com.itsoeh.sbsc.buti;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
@@ -24,8 +25,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * Muestra la foto de perfil (o las iniciales) en cualquier pantalla.
+ * Muestra la foto de perfil, el avatar elegido o las iniciales en cualquier pantalla.
+ *
+ * Firebase: usuarios/{uid}/fotoPerfilBase64 (foto de la galería)
+ *           usuarios/{uid}/avatar           (nombre del dibujo, ej. "img_animales_conejo")
+ * Se usa uno u otro: al elegir avatar se borra la foto y al subir foto se borra el avatar.
  *
  * Escucha Firebase en vivo: si el usuario cambia su foto o su nombre,
  * se actualiza solo en el menú lateral, Inicio, Progreso, etc.
@@ -40,7 +50,127 @@ public final class FotoPerfil {
     private static String ultimoBase64;
     private static Bitmap ultimoBitmap;
 
+    /** Avatares disponibles (dibujos en punto de cruz que ya están en drawable). */
+    public static final String[][] AVATARES = {
+            // {nombre del dibujo, cómo se lee}
+            {"avatar_nina_trenzas", "Niña con trenzas"},
+            {"avatar_nino_gorra", "Niño con gorra"},
+            {"avatar_joven_rebozo", "Joven con rebozo"},
+            {"avatar_abuela", "Abuela"},
+            {"avatar_abuelo", "Abuelo"},
+            {"ic_colibri_feliz", "Colibrí"},
+            {"ic_nina_feliz", "Niña"},
+            {"ic_nino_feliz", "Niño"},
+            {"ic_nina_normal", "Niña tranquila"},
+            {"ic_nino_normal", "Niño tranquilo"},
+            {"img_animales_conejo", "Conejo"},
+            {"img_animales_ardilla", "Ardilla"},
+            {"img_animales_buho", "Búho"},
+            {"img_animales_lechuza", "Lechuza"},
+            {"img_animales_coyote", "Coyote"},
+            {"img_animales_zorro", "Zorro"},
+            {"img_animales_armadillo", "Armadillo"},
+            {"img_animales_tlacuache", "Tlacuache"},
+            {"img_animales_gato", "Gato"},
+            {"img_animales_perro", "Perro"},
+            {"img_animales_burro", "Burro"},
+            {"img_animales_aguila", "Águila"},
+            {"img_animales_guajolote", "Guajolote"},
+            {"ic_venado", "Venado"},
+            {"ic_paloma", "Paloma"},
+            {"ic_pajaroverde", "Pájaro verde"},
+            {"ic_maguey", "Maguey"},
+            {"ic_nopal", "Nopal"},
+            {"ic_flor", "Flor"},
+            {"ic_jarronazul", "Jarrón"},
+            {"ic_calabaza", "Calabaza"}
+    };
+
+    public interface AlGuardar {
+        void listo(boolean exito);
+    }
+
     private FotoPerfil() {
+    }
+
+    /** Solo los avatares cuyo dibujo sí existe en el proyecto. */
+    public static List<String[]> avataresDisponibles(Context context) {
+
+        List<String[]> lista = new ArrayList<>();
+
+        for (String[] avatar : AVATARES) {
+            if (recursoAvatar(context, avatar[0]) != 0) lista.add(avatar);
+        }
+
+        return lista;
+    }
+
+    public static int recursoAvatar(Context context, @Nullable String nombre) {
+
+        if (context == null || TextUtils.isEmpty(nombre)) return 0;
+
+        return context.getResources().getIdentifier(nombre, "drawable", context.getPackageName());
+    }
+
+    /** Guarda el avatar elegido y quita la foto de galería. */
+    public static void guardarAvatar(@NonNull String avatar, @Nullable AlGuardar alGuardar) {
+        guardar(avatar, alGuardar);
+    }
+
+    /** Quita foto y avatar: se ven las iniciales. */
+    public static void quitarFotoYAvatar(@Nullable AlGuardar alGuardar) {
+        guardar(null, alGuardar);
+    }
+
+    private static void guardar(@Nullable String avatar, @Nullable AlGuardar alGuardar) {
+
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (usuario == null) {
+            if (alGuardar != null) alGuardar.listo(false);
+            return;
+        }
+
+        Map<String, Object> cambios = new HashMap<>();
+        cambios.put("avatar", avatar);
+        cambios.put("fotoPerfilBase64", null);
+
+        FirebaseDatabase.getInstance()
+                .getReference("usuarios")
+                .child(usuario.getUid())
+                .updateChildren(cambios)
+                .addOnCompleteListener(t -> {
+                    if (alGuardar != null) alGuardar.listo(t.isSuccessful());
+                });
+    }
+
+    /**
+     * Pone foto, avatar o iniciales en una vista (lo usan Perfil y el Admin).
+     * Devuelve true si mostró una imagen.
+     */
+    public static boolean ponerEn(
+            @Nullable ImageView foto,
+            @Nullable TextView iniciales,
+            @Nullable String nombre,
+            @Nullable String base64,
+            @Nullable String avatar) {
+
+        Bitmap bitmap = decodificar(base64);
+
+        if (bitmap != null) {
+            ponerFoto(foto, iniciales, bitmap);
+            return true;
+        }
+
+        int recurso = foto == null ? 0 : recursoAvatar(foto.getContext(), avatar);
+
+        if (recurso != 0) {
+            ponerDibujo(foto, iniciales, recurso);
+            return true;
+        }
+
+        ponerIniciales(foto, iniciales, null, TextUtils.isEmpty(nombre) ? "Usuario" : nombre);
+        return false;
     }
 
     public static void mostrar(
@@ -74,15 +204,17 @@ public final class FotoPerfil {
 
         DatabaseReference refFoto = referencia.child("fotoPerfilBase64");
         DatabaseReference refNombre = referencia.child("nombre");
+        DatabaseReference refAvatar = referencia.child("avatar");
 
-        final String[] estado = {nombreCuenta, null};
+        // {nombre, foto Base64, avatar}
+        final String[] estado = {nombreCuenta, null, null};
 
         ValueEventListener escuchaNombre = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String valor = snapshot.getValue(String.class);
                 if (!TextUtils.isEmpty(valor)) estado[0] = valor;
-                aplicar(foto, iniciales, nombre, estado[0], estado[1]);
+                aplicar(foto, iniciales, nombre, estado[0], estado[1], estado[2]);
             }
 
             @Override
@@ -94,7 +226,19 @@ public final class FotoPerfil {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 estado[1] = snapshot.getValue(String.class);
-                aplicar(foto, iniciales, nombre, estado[0], estado[1]);
+                aplicar(foto, iniciales, nombre, estado[0], estado[1], estado[2]);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        };
+
+        ValueEventListener escuchaAvatar = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                estado[2] = snapshot.getValue(String.class);
+                aplicar(foto, iniciales, nombre, estado[0], estado[1], estado[2]);
             }
 
             @Override
@@ -108,12 +252,14 @@ public final class FotoPerfil {
 
         refNombre.addValueEventListener(escuchaNombre);
         refFoto.addValueEventListener(escuchaFoto);
+        refAvatar.addValueEventListener(escuchaAvatar);
 
         duenio.getLifecycle().addObserver(new DefaultLifecycleObserver() {
             @Override
             public void onDestroy(@NonNull LifecycleOwner owner) {
                 refNombre.removeEventListener(escuchaNombre);
                 refFoto.removeEventListener(escuchaFoto);
+                refAvatar.removeEventListener(escuchaAvatar);
             }
         });
     }
@@ -141,17 +287,12 @@ public final class FotoPerfil {
             @Nullable TextView iniciales,
             @Nullable TextView nombre,
             String textoNombre,
-            @Nullable String base64) {
+            @Nullable String base64,
+            @Nullable String avatar) {
 
         if (nombre != null) nombre.setText(textoNombre);
 
-        Bitmap bitmap = decodificar(base64);
-
-        if (bitmap != null) {
-            ponerFoto(foto, iniciales, bitmap);
-        } else {
-            ponerIniciales(foto, iniciales, null, textoNombre);
-        }
+        ponerEn(foto, iniciales, textoNombre, base64, avatar);
     }
 
     @Nullable
@@ -195,7 +336,26 @@ public final class FotoPerfil {
                 RoundedBitmapDrawableFactory.create(foto.getResources(), recortarCuadrado(bitmap));
         circular.setCircular(true);
 
+        foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        foto.setPadding(0, 0, 0, 0);
         foto.setImageDrawable(circular);
+        foto.setVisibility(View.VISIBLE);
+
+        if (iniciales != null) iniciales.setVisibility(View.GONE);
+    }
+
+    private static void ponerDibujo(
+            @Nullable ImageView foto,
+            @Nullable TextView iniciales,
+            int recurso) {
+
+        if (foto == null) return;
+
+        // El avatar se ve completo dentro del círculo.
+        int margen = Math.round(foto.getResources().getDisplayMetrics().density * 6);
+        foto.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        foto.setPadding(margen, margen, margen, margen);
+        foto.setImageResource(recurso);
         foto.setVisibility(View.VISIBLE);
 
         if (iniciales != null) iniciales.setVisibility(View.GONE);

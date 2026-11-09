@@ -137,7 +137,17 @@ public class PalabrasVocabularioFragment extends Fragment {
         });
 
         cargarCategoria();
+
+        // Si el Admin cambia algo, la lista se actualiza sola.
+        VocabularioNube.escuchar(alCambiarVocabulario);
     }
+
+    private final VocabularioNube.AlCambiar alCambiarVocabulario = () -> {
+        if (isAdded() && getView() != null) {
+            palabrasCategoria = obtenerPalabras(categoriaSeleccionada);
+            actualizarLista();
+        }
+    };
 
     // CONFIGURAR ENCABEZADO Y CATEGORÍA
     private void cargarCategoria() {
@@ -558,45 +568,8 @@ public class PalabrasVocabularioFragment extends Fragment {
     // OBTENER PALABRAS DE CADA CATEGORÍA
     private ArrayList<String[]> obtenerPalabras(String categoria) {
 
-        switch (categoria) {
-
-            case "Colores":
-                return convertir(VocabularioDatos.COLORES);
-
-            case "Números":
-            case "Numeros":
-                return convertir(VocabularioDatos.NUMEROS);
-
-            case "Saludos":
-                return convertir(VocabularioDatos.SALUDOS);
-
-            case "Tiempo":
-                return convertir(VocabularioDatos.TIEMPO);
-
-            case "Plantas":
-                return convertir(VocabularioDatos.PLANTAS);
-
-            case "Animales":
-                return convertir(VocabularioDatos.ANIMALES);
-
-            case "Objetos":
-                return convertir(VocabularioDatos.OBJETOS);
-
-            case "Cuerpo":
-                return convertir(VocabularioDatos.CUERPO);
-
-            case "Comida":
-                return convertir(VocabularioDatos.COMIDA);
-
-            case "Naturaleza":
-                return convertir(VocabularioDatos.NATURALEZA);
-
-            case "Lugares":
-                return convertir(VocabularioDatos.LUGARES);
-
-            default:
-                return convertir(VocabularioDatos.SALUDOS);
-        }
+        // Las palabras vienen de Firebase (o de la app si aún no hay nada).
+        return convertir(VocabularioNube.arreglo(categoria));
     }
 
     private ArrayList<String[]> convertir(String[][] datos) {
@@ -620,25 +593,14 @@ public class PalabrasVocabularioFragment extends Fragment {
     // REPRODUCIR AUDIO
     private void reproducirAudio(String palabra) {
 
-        int audio = AudiosVocabulario.obtenerAudio(
+        liberarReproductor();
+
+        // Audio subido desde el Admin o el que trae la app.
+        reproductor = VocabularioNube.crearReproductor(
                 requireContext(),
                 categoriaSeleccionada,
                 palabra
         );
-
-        if (audio == 0) {
-            ButiAviso.mostrar(
-                    this,
-                    "Audio no disponible para esta palabra",
-                    ButiAviso.Tipo.ERROR
-            );
-
-            return;
-        }
-
-        liberarReproductor();
-
-        reproductor = MediaPlayer.create(requireContext(), audio);
 
         if (reproductor != null) {
 
@@ -656,7 +618,7 @@ public class PalabrasVocabularioFragment extends Fragment {
 
             ButiAviso.mostrar(
                     this,
-                    "No se pudo reproducir el audio",
+                    "Audio no disponible para esta palabra",
                     ButiAviso.Tipo.ERROR
             );
         }
@@ -696,6 +658,8 @@ public class PalabrasVocabularioFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+
+        VocabularioNube.dejarDeEscuchar(alCambiarVocabulario);
 
         liberarReproductor();
 

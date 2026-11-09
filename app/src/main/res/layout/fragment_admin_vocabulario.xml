@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Admin · Vocabulario: agregar, editar, eliminar e importar palabras -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingTop="14dp"
+    android:paddingEnd="16dp">
+
+    <!-- Total y botón agregar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtTotalVocabAdmin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cargando palabras…"
+            android:textColor="@color/buti_titulo"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAgregarPalabraAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Agregar"
+            android:textAllCaps="false"
+            android:textColor="@color/buti_sobre_acento"
+            android:textStyle="bold"
+            app:backgroundTint="@color/buti_exito"
+            app:cornerRadius="14dp" />
+
+    </LinearLayout>
+
+    <!-- Importar (solo aparece si falta alguna categoría) -->
+    <LinearLayout
+        android:id="@+id/contenedorImportarAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_practicar_etiqueta"
+        android:orientation="vertical"
+        android:padding="14dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pasar el vocabulario de la app a Firebase"
+            android:textColor="@color/buti_titulo"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Sube las palabras que ya vienen en B\'ÜTI. Solo se suben las categorías vacías, así que no se duplica nada."
+            android:textColor="@color/buti_texto"
+            android:textSize="13sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnImportarVocabAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:text="Importar vocabulario de la app"
+            android:textAllCaps="false"
+            android:textColor="@color/buti_sobre_acento"
+            android:textStyle="bold"
+            app:backgroundTint="@color/buti_acento"
+            app:cornerRadius="14dp" />
+
+    </LinearLayout>
+
+    <!-- Categorías -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipsCategoriasAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true" />
+
+    </HorizontalScrollView>
+
+    <!-- Buscador -->
+    <EditText
+        android:id="@+id/edtBuscarPalabraAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:background="@drawable/bg_campo_busqueda"
+        android:hint="Buscar en todas las categorías"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/buti_texto"
+        android:textColorHint="@color/buti_texto_secundario"
+        android:textSize="15sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPalabrasAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="12dp" />
+
+    <TextView
+        android:id="@+id/txtVacioVocabAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="No hay palabras aquí todavía."
+        android:textColor="@color/buti_texto_secundario"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+</LinearLayout>

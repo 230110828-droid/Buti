@@ -78,7 +78,7 @@
                     android:background="@drawable/bg_avatar_crema"
                     android:clickable="true"
                     android:clipToOutline="true"
-                    android:contentDescription="Cambiar fotografía de perfil"
+                    android:contentDescription="Elegir avatar o fotografía de perfil"
                     android:elevation="3dp"
                     android:focusable="true">
 
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Toca tu foto para cambiarla"
+                android:text="Toca tu foto para elegir un avatar"
                 android:textColor="#F5DCCB"
                 android:textSize="12sp" />
 

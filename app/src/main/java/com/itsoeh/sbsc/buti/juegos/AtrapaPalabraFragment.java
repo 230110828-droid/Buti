@@ -5,27 +5,33 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.itsoeh.sbsc.buti.ProgresoButi;
 import androidx.annotation.NonNull;
+import com.itsoeh.sbsc.buti.ResultadoButi;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
-import com.itsoeh.sbsc.buti.ResultadoButi;
 import com.itsoeh.sbsc.buti.vocabulario.VocabularioDatos;
 
 import java.util.ArrayList;
@@ -81,26 +87,28 @@ public class AtrapaPalabraFragment extends Fragment {
 
         String nombre;
         String[][] palabras;
+        int imagen;
 
-        Categoria(String nombre, String[][] palabras) {
+        Categoria(String nombre, String[][] palabras, int imagen) {
             this.nombre = nombre;
             this.palabras = palabras;
+            this.imagen = imagen;
         }
     }
 
     private final Categoria[] categorias = {
 
-            new Categoria("Animales", VocabularioDatos.ANIMALES),
-            new Categoria("Plantas", VocabularioDatos.PLANTAS),
-            new Categoria("Números", VocabularioDatos.NUMEROS),
-            new Categoria("Colores", VocabularioDatos.COLORES),
-            new Categoria("Saludos", VocabularioDatos.SALUDOS),
-            new Categoria("Tiempo", VocabularioDatos.TIEMPO),
-            new Categoria("Objetos", VocabularioDatos.OBJETOS),
-            new Categoria("Cuerpo", VocabularioDatos.CUERPO),
-            new Categoria("Comida", VocabularioDatos.COMIDA),
-            new Categoria("Naturaleza", VocabularioDatos.NATURALEZA),
-            new Categoria("Lugares", VocabularioDatos.LUGARES)
+            new Categoria("Animales", VocabularioDatos.ANIMALES, R.drawable.img_cat_animales),
+            new Categoria("Plantas", VocabularioDatos.PLANTAS, R.drawable.img_cat_plantas),
+            new Categoria("Números", VocabularioDatos.NUMEROS, R.drawable.img_cat_numeros),
+            new Categoria("Colores", VocabularioDatos.COLORES, R.drawable.img_cat_colores),
+            new Categoria("Saludos", VocabularioDatos.SALUDOS, R.drawable.img_cat_saludos),
+            new Categoria("Tiempo", VocabularioDatos.TIEMPO, R.drawable.img_cat_tiempo),
+            new Categoria("Objetos", VocabularioDatos.OBJETOS, R.drawable.img_cat_objetos),
+            new Categoria("Cuerpo", VocabularioDatos.CUERPO, R.drawable.img_cat_cuerpo),
+            new Categoria("Comida", VocabularioDatos.COMIDA, R.drawable.img_cat_comida),
+            new Categoria("Naturaleza", VocabularioDatos.NATURALEZA, R.drawable.img_cat_naturaleza),
+            new Categoria("Lugares", VocabularioDatos.LUGARES, R.drawable.img_cat_lugares)
     };
 
     public AtrapaPalabraFragment() {
@@ -136,7 +144,7 @@ public class AtrapaPalabraFragment extends Fragment {
         btnRepetir = view.findViewById(R.id.btnRepetirAtrapa);
         btnCategorias = view.findViewById(R.id.btnCategoriasAtrapa);
 
-        TextView btnVolver = view.findViewById(R.id.btnVolverAtrapa);
+        View btnVolver = view.findViewById(R.id.btnVolverAtrapa);
 
         btnVolver.setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigateUp());
@@ -171,26 +179,42 @@ public class AtrapaPalabraFragment extends Fragment {
                 continue;
             }
 
-            TextView boton = new TextView(requireContext());
+            // Tarjeta con la ilustración de la categoría.
+            LinearLayout boton = new LinearLayout(requireContext());
 
-            boton.setText(categoria.nombre);
-            boton.setTextColor(Color.rgb(79, 0, 11));
-            boton.setTextSize(15);
-            boton.setTypeface(null, Typeface.BOLD);
+            boton.setOrientation(LinearLayout.VERTICAL);
             boton.setGravity(Gravity.CENTER);
+            boton.setBackgroundResource(R.drawable.bg_reto_tarjeta);
+            boton.setElevation(dp(2));
+            boton.setPadding(dp(8), dp(10), dp(8), dp(10));
+            boton.setClickable(true);
+            boton.setFocusable(true);
 
-            boton.setBackground(crearFondo(
-                    Color.rgb(255, 249, 240),
-                    Color.rgb(230, 196, 122)));
+            ImageView icono = new ImageView(requireContext());
 
-            boton.setElevation(dp(3));
-            boton.setPadding(dp(8), dp(12), dp(8), dp(12));
+            icono.setImageResource(categoria.imagen);
+            icono.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            icono.setBackgroundResource(R.drawable.bg_icono_reto);
+            icono.setPadding(dp(4), dp(4), dp(4), dp(4));
+
+            boton.addView(icono, new LinearLayout.LayoutParams(dp(56), dp(56)));
+
+            TextView nombre = new TextView(requireContext());
+
+            nombre.setText(categoria.nombre);
+            nombre.setTextColor(color(R.color.buti_titulo));
+            nombre.setTextSize(15);
+            nombre.setTypeface(null, Typeface.BOLD);
+            nombre.setGravity(Gravity.CENTER);
+            nombre.setPadding(0, dp(6), 0, 0);
+
+            boton.addView(nombre);
 
             GridLayout.LayoutParams params =
                     new GridLayout.LayoutParams();
 
             params.width = 0;
-            params.height = dp(62);
+            params.height = dp(112);
 
             params.columnSpec =
                     GridLayout.spec(GridLayout.UNDEFINED, 1f);
@@ -322,11 +346,11 @@ public class AtrapaPalabraFragment extends Fragment {
 
         if (tiempoRestante <= 10) {
 
-            txtTiempo.setTextColor(Color.RED);
+            txtTiempo.setTextColor(color(R.color.nivel_rosa));
 
         } else {
 
-            txtTiempo.setTextColor(Color.rgb(79, 0, 11));
+            txtTiempo.setTextColor(color(R.color.buti_titulo));
         }
     }
 
@@ -336,19 +360,39 @@ public class AtrapaPalabraFragment extends Fragment {
 
     private void actualizarPuntos() {
 
-        txtPuntos.setText("★ " + puntos);
+        // La estrella ahora es un icono (drawableStart).
+        txtPuntos.setText(String.valueOf(puntos));
     }
 
     private void actualizarVidas() {
 
-        StringBuilder corazones = new StringBuilder();
+        // Corazones reales (antes eran los símbolos ♥ y ♡).
+        SpannableStringBuilder corazones = new SpannableStringBuilder();
+
+        int tamano = dp(26);
 
         for (int i = 0; i < 3; i++) {
 
-            corazones.append(i < vidas ? "♥  " : "♡  ");
+            Drawable corazon = ContextCompat.getDrawable(
+                    requireContext(),
+                    i < vidas ? R.drawable.ic_corazon : R.drawable.ic_corazon_vacio);
+
+            if (corazon == null) continue;
+
+            corazon.setBounds(0, 0, tamano, tamano);
+
+            int inicio = corazones.length();
+            corazones.append("♥");
+            corazones.setSpan(
+                    new ImageSpan(corazon, ImageSpan.ALIGN_BOTTOM),
+                    inicio,
+                    inicio + 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            if (i < 2) corazones.append("   ");
         }
 
-        txtVidas.setText(corazones.toString());
+        txtVidas.setText(corazones);
     }
 
     // Descuenta una sola vida por ronda.
@@ -491,7 +535,7 @@ public class AtrapaPalabraFragment extends Fragment {
                 TextView burbuja = new TextView(requireContext());
 
                 burbuja.setText(palabra);
-                burbuja.setTextColor(Color.rgb(79, 0, 11));
+                burbuja.setTextColor(color(R.color.buti_titulo));
                 burbuja.setTextSize(15);
                 burbuja.setTypeface(null, Typeface.BOLD);
                 burbuja.setGravity(Gravity.CENTER);
@@ -500,9 +544,9 @@ public class AtrapaPalabraFragment extends Fragment {
 
                 burbuja.setBackground(crearFondo(
                         i % 2 == 0
-                                ? Color.rgb(255, 249, 240)
-                                : Color.rgb(232, 237, 220),
-                        Color.rgb(205, 166, 103)));
+                                ? color(R.color.buti_superficie)
+                                : color(R.color.buti_superficie_alt),
+                        color(R.color.buti_dorado)));
 
                 burbuja.setElevation(dp(5));
 
@@ -771,9 +815,14 @@ public class AtrapaPalabraFragment extends Fragment {
 
         fondo.setCornerRadius(dp(18));
 
-        fondo.setStroke(dp(1), borde);
+        fondo.setStroke(dp(2), borde);
 
         return fondo;
+    }
+
+    private int color(int recurso) {
+
+        return ContextCompat.getColor(requireContext(), recurso);
     }
 
     private int dp(float valor) {

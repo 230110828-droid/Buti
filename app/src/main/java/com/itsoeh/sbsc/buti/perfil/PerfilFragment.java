@@ -31,6 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ButiDialogo;
 import com.itsoeh.sbsc.buti.LoginActivity;
+import com.itsoeh.sbsc.buti.ElegirAvatar;
+import com.itsoeh.sbsc.buti.FotoPerfil;
 import com.itsoeh.sbsc.buti.R;
 import com.itsoeh.sbsc.buti.RecuperarContrasenaActivity;
 
@@ -49,6 +51,10 @@ public class PerfilFragment extends Fragment {
     private ValueEventListener listenerUsuario;
 
     private ActivityResultLauncher<String> selectorImagen;
+
+    // Avatar elegido (nombre del dibujo) y nombre para las iniciales.
+    private String avatarActual;
+    private String nombreActual = "Usuario";
 
     public PerfilFragment() {
         super(R.layout.fragment_perfil);
@@ -114,9 +120,14 @@ public class PerfilFragment extends Fragment {
 
         cargarDatosUsuario();
 
-        // Abrir la galería al tocar la foto.
+        // Al tocar la foto: elegir avatar, subir foto o quitarla.
         contenedorAvatarPerfil.setOnClickListener(v ->
-                selectorImagen.launch("image/*"));
+                ElegirAvatar.mostrar(
+                        requireContext(),
+                        avatarActual,
+                        nombreActual,
+                        () -> selectorImagen.launch("image/*")
+                ));
 
         // Editar perfil.
         btnEditarPerfil.setOnClickListener(v ->
@@ -190,15 +201,19 @@ public class PerfilFragment extends Fragment {
                     mostrarNombre(nombreAuth);
                 }
 
-                // Recuperar la fotografía guardada como Base64.
+                // Foto de la galería, avatar elegido o iniciales.
                 String fotoBase64 = snapshot.child("fotoPerfilBase64")
                         .getValue(String.class);
 
-                if (!TextUtils.isEmpty(fotoBase64)) {
-                    mostrarFotoBase64(fotoBase64);
-                } else {
-                    mostrarIniciales();
-                }
+                avatarActual = snapshot.child("avatar").getValue(String.class);
+
+                FotoPerfil.ponerEn(
+                        imgFotoPerfil,
+                        txtInicialesPerfil,
+                        nombreActual,
+                        fotoBase64,
+                        avatarActual
+                );
             }
 
             @Override
@@ -244,6 +259,9 @@ public class PerfilFragment extends Fragment {
     }
 
     private void mostrarNombre(String nombre) {
+
+        if (!TextUtils.isEmpty(nombre)) nombreActual = nombre;
+
 
         if (txtNombrePerfil == null) {
             return;
@@ -318,6 +336,9 @@ public class PerfilFragment extends Fragment {
                 }
                 return;
             }
+
+            // La foto reemplaza al avatar.
+            referenciaUsuario.child("avatar").removeValue();
 
             referenciaFoto.setValue(fotoBase64)
                     .addOnCompleteListener(task -> {
@@ -498,6 +519,8 @@ public class PerfilFragment extends Fragment {
         }
 
         try {
+            imgFotoPerfil.setPadding(0, 0, 0, 0);
+            imgFotoPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imgFotoPerfil.setImageURI(uri);
 
             if (imgFotoPerfil.getDrawable() != null) {

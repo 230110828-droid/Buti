@@ -1,342 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Panel de administrador: encabezado + sección actual + menú inferior -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/buti_crema"
-    android:fillViewport="true">
+    android:background="@color/buti_fondo"
+    android:orientation="vertical">
 
+    <!-- ENCABEZADO -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:background="@drawable/bg_header_lecciones"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
 
-        <!-- CABECERA DE ADMINISTRADOR -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_avatar_crema">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_colibri_feliz" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
-            app:cardBackgroundColor="@color/white">
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
+                android:text="B'ÜTI · Administrador"
+                android:textColor="@color/buti_dorado"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_maguey" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="12dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Panel de Administrador"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/buti_negro" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gestión de B'ÚTI"
-                        android:textSize="13sp"
-                        android:textColor="@color/buti_siena" />
-                </LinearLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnCerrarSesionAdmin"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Salir"
-                    android:textColor="@color/buti_rosa" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- MODULO 1: MODO MANTENIMIENTO -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtSeccionAdmin"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:text="Reportes"
+                android:textColor="@color/buti_crema"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Modo Mantenimiento"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/buti_negro" />
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switchMantenimiento"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvEstadoMantenimiento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Estado: Sistema Operativo (Normal)"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/buti_verde" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- MODULO 2: REPORTES DE PROGRESO Y GRÁFICAS -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtDescripcionSeccionAdmin"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:text="Así va B'ÜTI"
+                android:textColor="@color/buti_crema"
+                android:textSize="13sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reportes de Progreso del Sistema"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/buti_negro" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Métricas de completitud de lecciones"
-                    android:textSize="12sp"
-                    android:textColor="@color/buti_siena" />
-
-                <!-- Gráfica 1: Saludos -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Unidad 1: Saludos y Presentación"
-                            android:textSize="13sp"
-                            android:textColor="@color/buti_negro" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="85%"
-                            android:textStyle="bold"
-                            android:textSize="13sp"
-                            android:textColor="@color/buti_verde" />
-                    </LinearLayout>
-
-                    <com.google.android.material.progressindicator.LinearProgressIndicator
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:progress="85"
-                        app:trackCornerRadius="4dp"
-                        app:indicatorColor="@color/buti_verde" />
-                </LinearLayout>
-
-                <!-- Gráfica 2: Familia -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Unidad 2: La Familia y Números"
-                            android:textSize="13sp"
-                            android:textColor="@color/buti_negro" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="65%"
-                            android:textStyle="bold"
-                            android:textSize="13sp"
-                            android:textColor="@color/buti_naranja" />
-                    </LinearLayout>
-
-                    <com.google.android.material.progressindicator.LinearProgressIndicator
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:progress="65"
-                        app:trackCornerRadius="4dp"
-                        app:indicatorColor="@color/buti_naranja" />
-                </LinearLayout>
-
-                <!-- Gráfica 3: Cultura & Maguey -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Unidad 3: Cultura y Maguey"
-                            android:textSize="13sp"
-                            android:textColor="@color/buti_negro" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="40%"
-                            android:textStyle="bold"
-                            android:textSize="13sp"
-                            android:textColor="@color/buti_rosa" />
-                    </LinearLayout>
-
-                    <com.google.android.material.progressindicator.LinearProgressIndicator
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:progress="40"
-                        app:trackCornerRadius="4dp"
-                        app:indicatorColor="@color/buti_rosa" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- MODULO 3: USUARIOS REGISTRADOS -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Usuarios Registrados"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/buti_negro" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvUsuariosAdmin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:nestedScrollingEnabled="false" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- MODULO 4: ADMINISTRADOR DE LECCIONES Y VOCABULARIO -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Gestor de Lecciones y Vocabulario"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/buti_negro" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnAgregarPalabraAdmin"
-                        style="@style/Widget.Material3.Button.TonalButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+ Agregar"
-                        app:backgroundTint="@color/buti_verde"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvPalabrasAdmin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:nestedScrollingEnabled="false" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+    <!-- SECCIÓN ACTUAL -->
+    <FrameLayout
+        android:id="@+id/contenedorAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- MENÚ INFERIOR (mismo estilo que la app) -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/bg_nav_inferior"
+        android:elevation="8dp"
+        android:minHeight="64dp"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconSize="26dp"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemPaddingBottom="6dp"
+        app:itemPaddingTop="6dp"
+        app:itemTextColor="@color/nav_item_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_admin"
+        app:paddingBottomSystemWindowInsets="false"
+        app:paddingLeftSystemWindowInsets="false"
+        app:paddingRightSystemWindowInsets="false"
+        app:paddingTopSystemWindowInsets="false" />
+
+    <!-- CENEFA -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_margen_otomi_verde" />
+
+</LinearLayout>

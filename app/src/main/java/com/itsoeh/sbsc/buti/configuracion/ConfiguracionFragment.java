@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.itsoeh.sbsc.buti.LectorVoz;
@@ -36,9 +35,10 @@ public class ConfiguracionFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
+        // Funciona igual en la app y en el panel de administrador.
         view.findViewById(R.id.btnVolverConfiguracion)
                 .setOnClickListener(v ->
-                        NavHostFragment.findNavController(this).navigateUp());
+                        requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         RadioGroup rgTema = view.findViewById(R.id.rgTemaConfiguracion);
         RadioGroup rgLetra = view.findViewById(R.id.rgLetraConfiguracion);

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Secciones del panel de administrador -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/adminReportes"
+        android:icon="@drawable/ic_trofeo"
+        android:title="Reportes" />
+
+    <item
+        android:id="@+id/adminUsuarios"
+        android:icon="@drawable/ic_usuario"
+        android:title="Usuarios" />
+
+    <item
+        android:id="@+id/adminVocabulario"
+        android:icon="@drawable/ic_libro1"
+        android:title="Vocabulario" />
+
+    <item
+        android:id="@+id/adminAjustes"
+        android:icon="@drawable/ic_configuracion"
+        android:title="Ajustes" />
+
+</menu>

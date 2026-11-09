@@ -31,8 +31,7 @@ import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.ResultadoButi;
 import com.itsoeh.sbsc.buti.R;
-import com.itsoeh.sbsc.buti.vocabulario.AudiosVocabulario;
-import com.itsoeh.sbsc.buti.vocabulario.VocabularioDatos;
+import com.itsoeh.sbsc.buti.vocabulario.VocabularioNube;
 
 import java.text.BreakIterator;
 import java.text.Normalizer;
@@ -437,57 +436,57 @@ public class ActividadLeccionFragment extends Fragment {
         switch (numeroNivel) {
 
             case 1:
-                vocabulario = VocabularioDatos.SALUDOS;
+                vocabulario = VocabularioNube.arreglo("saludos");
                 categoriaAudio = "Saludos";
                 break;
 
             case 2:
-                vocabulario = VocabularioDatos.NUMEROS;
+                vocabulario = VocabularioNube.arreglo("numeros");
                 categoriaAudio = "Números";
                 break;
 
             case 3:
-                vocabulario = VocabularioDatos.COLORES;
+                vocabulario = VocabularioNube.arreglo("colores");
                 categoriaAudio = "Colores";
                 break;
 
             case 4:
-                vocabulario = VocabularioDatos.ANIMALES;
+                vocabulario = VocabularioNube.arreglo("animales");
                 categoriaAudio = "Animales";
                 break;
 
             case 5:
-                vocabulario = VocabularioDatos.PLANTAS;
+                vocabulario = VocabularioNube.arreglo("plantas");
                 categoriaAudio = "Plantas";
                 break;
 
             case 6:
-                vocabulario = VocabularioDatos.OBJETOS;
+                vocabulario = VocabularioNube.arreglo("objetos");
                 categoriaAudio = "Objetos";
                 break;
 
             case 7:
-                vocabulario = VocabularioDatos.CUERPO;
+                vocabulario = VocabularioNube.arreglo("cuerpo");
                 categoriaAudio = "Cuerpo";
                 break;
 
             case 8:
-                vocabulario = VocabularioDatos.COMIDA;
+                vocabulario = VocabularioNube.arreglo("comida");
                 categoriaAudio = "Comida";
                 break;
 
             case 9:
-                vocabulario = VocabularioDatos.TIEMPO;
+                vocabulario = VocabularioNube.arreglo("tiempo");
                 categoriaAudio = "Tiempo";
                 break;
 
             case 10:
-                vocabulario = VocabularioDatos.NATURALEZA;
+                vocabulario = VocabularioNube.arreglo("naturaleza");
                 categoriaAudio = "Naturaleza";
                 break;
 
             case 11:
-                vocabulario = VocabularioDatos.LUGARES;
+                vocabulario = VocabularioNube.arreglo("lugares");
                 categoriaAudio = "Lugares";
                 break;
 
@@ -757,13 +756,13 @@ public class ActividadLeccionFragment extends Fragment {
 
             int imagen = obtenerRecursoImagen(espanol);
 
-            int audio = AudiosVocabulario.obtenerAudio(
+            boolean audio = VocabularioNube.tieneAudio(
                     requireContext(),
                     categoriaAudio,
                     espanol
             );
 
-            if (imagen != 0 && audio != 0) {
+            if (imagen != 0 && audio) {
                 preguntasDescubre.add(indice);
             }
         }
@@ -2826,13 +2825,14 @@ public class ActividadLeccionFragment extends Fragment {
 
         String palabra = vocabulario[indicePalabra][0];
 
-        int audio = AudiosVocabulario.obtenerAudio(
+        // Audio subido desde el Admin o el que trae la app.
+        MediaPlayer nuevo = VocabularioNube.crearReproductor(
                 requireContext(),
                 categoriaAudio,
                 palabra
         );
 
-        if (audio == 0) {
+        if (nuevo == null) {
 
             ButiAviso.mostrar(
                     this,
@@ -2844,11 +2844,6 @@ public class ActividadLeccionFragment extends Fragment {
         }
 
         try {
-
-            MediaPlayer nuevo = MediaPlayer.create(
-                    requireContext(),
-                    audio
-            );
 
             if (nuevo != null) {
 
@@ -2916,6 +2911,13 @@ public class ActividadLeccionFragment extends Fragment {
             return 0;
         }
 
+        // Primero la imagen guardada en Firebase para esa palabra.
+        int deNube = VocabularioNube.recursoImagen(requireContext(), categoriaAudio, palabra);
+
+        if (deNube != 0) {
+            return deNube;
+        }
+
         String categoria = obtenerNombreCategoriaImagen();
 
         String nombre = "img_"
@@ -2931,6 +2933,15 @@ public class ActividadLeccionFragment extends Fragment {
     }
 
     private void configurarImagen(String palabra) {
+
+        // Imagen subida desde el Admin.
+        android.graphics.Bitmap subida = VocabularioNube.imagenSubida(categoriaAudio, palabra);
+
+        if (subida != null) {
+            imgActividad.setImageBitmap(subida);
+            imgActividad.setVisibility(View.VISIBLE);
+            return;
+        }
 
         int recurso = obtenerRecursoImagen(palabra);
 

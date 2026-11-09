@@ -228,11 +228,25 @@ public final class ProgresoButi {
         void listo(int racha);
     }
 
+    // true cuando la racha se acaba de registrar por primera vez hoy.
+    private static volatile boolean rachaNuevaHoy = false;
+
+    /**
+     * ¿La última actividad fue la primera del día? (para mostrar la
+     * pantalla de racha). Se "consume": solo devuelve true una vez.
+     */
+    public static boolean tomarRachaNueva() {
+        boolean nueva = rachaNuevaHoy;
+        rachaNuevaHoy = false;
+        return nueva;
+    }
+
     private static void registrarRacha(DatabaseReference ref, AlRacha alRacha) {
 
         final String hoy = hoy();
         final String ayer = ayer();
-        final int[] resultado = {0};
+        // {racha, 1 si es la primera actividad de hoy}
+        final int[] resultado = {0, 0};
 
         ref.child("racha").runTransaction(new Transaction.Handler() {
 
@@ -249,6 +263,7 @@ public final class ProgresoButi {
                 // Ya contaba hoy: no sube otra vez.
                 if (hoy.equals(ultima)) {
                     resultado[0] = Math.max(1, actuales);
+                    resultado[1] = 0;
                     return Transaction.success(datos);
                 }
 
@@ -260,6 +275,7 @@ public final class ProgresoButi {
                 datos.child("mejorRacha").setValue(Math.max(mejor == null ? 0 : mejor, nueva));
 
                 resultado[0] = nueva;
+                resultado[1] = 1;
                 return Transaction.success(datos);
             }
 
@@ -267,6 +283,9 @@ public final class ProgresoButi {
             public void onComplete(@Nullable DatabaseError error,
                                    boolean confirmado,
                                    @Nullable DataSnapshot snapshot) {
+                if (error == null && confirmado && resultado[1] == 1) {
+                    rachaNuevaHoy = true;
+                }
                 alRacha.listo(resultado[0]);
             }
         });

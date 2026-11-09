@@ -36,8 +36,7 @@ import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.ResultadoButi;
 import com.itsoeh.sbsc.buti.R;
-import com.itsoeh.sbsc.buti.vocabulario.AudiosVocabulario;
-import com.itsoeh.sbsc.buti.vocabulario.VocabularioDatos;
+import com.itsoeh.sbsc.buti.vocabulario.VocabularioNube;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -642,67 +641,67 @@ public class PracticarFragment extends Fragment {
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.SALUDOS,
+                VocabularioNube.arreglo("saludos"),
                 "Saludos"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.NUMEROS,
+                VocabularioNube.arreglo("numeros"),
                 "Números"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.COLORES,
+                VocabularioNube.arreglo("colores"),
                 "Colores"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.ANIMALES,
+                VocabularioNube.arreglo("animales"),
                 "Animales"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.PLANTAS,
+                VocabularioNube.arreglo("plantas"),
                 "Plantas"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.OBJETOS,
+                VocabularioNube.arreglo("objetos"),
                 "Objetos"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.COMIDA,
+                VocabularioNube.arreglo("comida"),
                 "Alimentos"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.CUERPO,
+                VocabularioNube.arreglo("cuerpo"),
                 "Cuerpo"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.TIEMPO,
+                VocabularioNube.arreglo("tiempo"),
                 "Tiempo"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.NATURALEZA,
+                VocabularioNube.arreglo("naturaleza"),
                 "Naturaleza"
         );
 
         agregarPalabras(
                 palabras,
-                VocabularioDatos.LUGARES,
+                VocabularioNube.arreglo("lugares"),
                 "Lugares"
         );
 
@@ -719,17 +718,17 @@ public class PracticarFragment extends Fragment {
 
         List<String[]> palabras = new ArrayList<>();
 
-        agregarPalabras(palabras, VocabularioDatos.COLORES, "Colores");
-        agregarPalabras(palabras, VocabularioDatos.NUMEROS, "Números");
-        agregarPalabras(palabras, VocabularioDatos.SALUDOS, "Saludos");
-        agregarPalabras(palabras, VocabularioDatos.TIEMPO, "Tiempo");
-        agregarPalabras(palabras, VocabularioDatos.PLANTAS, "Plantas");
-        agregarPalabras(palabras, VocabularioDatos.ANIMALES, "Animales");
-        agregarPalabras(palabras, VocabularioDatos.OBJETOS, "Objetos");
-        agregarPalabras(palabras, VocabularioDatos.CUERPO, "Cuerpo");
-        agregarPalabras(palabras, VocabularioDatos.COMIDA, "Alimentos");
-        agregarPalabras(palabras, VocabularioDatos.NATURALEZA, "Naturaleza");
-        agregarPalabras(palabras, VocabularioDatos.LUGARES, "Lugares");
+        agregarPalabras(palabras, VocabularioNube.arreglo("colores"), "Colores");
+        agregarPalabras(palabras, VocabularioNube.arreglo("numeros"), "Números");
+        agregarPalabras(palabras, VocabularioNube.arreglo("saludos"), "Saludos");
+        agregarPalabras(palabras, VocabularioNube.arreglo("tiempo"), "Tiempo");
+        agregarPalabras(palabras, VocabularioNube.arreglo("plantas"), "Plantas");
+        agregarPalabras(palabras, VocabularioNube.arreglo("animales"), "Animales");
+        agregarPalabras(palabras, VocabularioNube.arreglo("objetos"), "Objetos");
+        agregarPalabras(palabras, VocabularioNube.arreglo("cuerpo"), "Cuerpo");
+        agregarPalabras(palabras, VocabularioNube.arreglo("comida"), "Alimentos");
+        agregarPalabras(palabras, VocabularioNube.arreglo("naturaleza"), "Naturaleza");
+        agregarPalabras(palabras, VocabularioNube.arreglo("lugares"), "Lugares");
 
         modoImagenes = true;
         modoEscuchar = false;
@@ -746,17 +745,17 @@ public class PracticarFragment extends Fragment {
 
         List<String[]> palabras = new ArrayList<>();
 
-        agregarPalabras(palabras, VocabularioDatos.COLORES, "Colores");
-        agregarPalabras(palabras, VocabularioDatos.NUMEROS, "Números");
-        agregarPalabras(palabras, VocabularioDatos.SALUDOS, "Saludos");
-        agregarPalabras(palabras, VocabularioDatos.TIEMPO, "Tiempo");
-        agregarPalabras(palabras, VocabularioDatos.PLANTAS, "Plantas");
-        agregarPalabras(palabras, VocabularioDatos.ANIMALES, "Animales");
-        agregarPalabras(palabras, VocabularioDatos.OBJETOS, "Objetos");
-        agregarPalabras(palabras, VocabularioDatos.CUERPO, "Cuerpo");
-        agregarPalabras(palabras, VocabularioDatos.COMIDA, "Alimentos");
-        agregarPalabras(palabras, VocabularioDatos.NATURALEZA, "Naturaleza");
-        agregarPalabras(palabras, VocabularioDatos.LUGARES, "Lugares");
+        agregarPalabras(palabras, VocabularioNube.arreglo("colores"), "Colores");
+        agregarPalabras(palabras, VocabularioNube.arreglo("numeros"), "Números");
+        agregarPalabras(palabras, VocabularioNube.arreglo("saludos"), "Saludos");
+        agregarPalabras(palabras, VocabularioNube.arreglo("tiempo"), "Tiempo");
+        agregarPalabras(palabras, VocabularioNube.arreglo("plantas"), "Plantas");
+        agregarPalabras(palabras, VocabularioNube.arreglo("animales"), "Animales");
+        agregarPalabras(palabras, VocabularioNube.arreglo("objetos"), "Objetos");
+        agregarPalabras(palabras, VocabularioNube.arreglo("cuerpo"), "Cuerpo");
+        agregarPalabras(palabras, VocabularioNube.arreglo("comida"), "Alimentos");
+        agregarPalabras(palabras, VocabularioNube.arreglo("naturaleza"), "Naturaleza");
+        agregarPalabras(palabras, VocabularioNube.arreglo("lugares"), "Lugares");
 
         modoImagenes = false;
         modoEscuchar = true;
@@ -836,7 +835,7 @@ public class PracticarFragment extends Fragment {
             Collections.shuffle(opciones);
 
             // pregunta[5] conserva la palabra en español porque
-            // AudiosVocabulario usa esa palabra para localizar su audio hñähñu.
+            // VocabularioNube usa esa palabra para localizar su audio hñähñu.
             resultado.add(new String[]{
                     "Escucha la palabra en hñähñu. ¿Qué significa?",
                     opciones.get(0),
@@ -852,6 +851,13 @@ public class PracticarFragment extends Fragment {
     }
 
     private int obtenerImagenPalabra(String espanol, String categoria) {
+
+        // Primero la imagen guardada en Firebase para esa palabra.
+        int deNube = VocabularioNube.recursoImagen(requireContext(), categoria, espanol);
+
+        if (deNube != 0) {
+            return deNube;
+        }
 
         String prefijo;
 
@@ -1077,39 +1083,39 @@ public class PracticarFragment extends Fragment {
 
             case "saludos":
             case "frases":
-                return VocabularioDatos.SALUDOS;
+                return VocabularioNube.arreglo("saludos");
 
             case "numeros":
-                return VocabularioDatos.NUMEROS;
+                return VocabularioNube.arreglo("numeros");
 
             case "colores":
-                return VocabularioDatos.COLORES;
+                return VocabularioNube.arreglo("colores");
 
             case "animales":
-                return VocabularioDatos.ANIMALES;
+                return VocabularioNube.arreglo("animales");
 
             case "plantas":
-                return VocabularioDatos.PLANTAS;
+                return VocabularioNube.arreglo("plantas");
 
             case "objetos":
-                return VocabularioDatos.OBJETOS;
+                return VocabularioNube.arreglo("objetos");
 
             case "alimento":
             case "alimentos":
             case "comida":
-                return VocabularioDatos.COMIDA;
+                return VocabularioNube.arreglo("comida");
 
             case "cuerpo":
-                return VocabularioDatos.CUERPO;
+                return VocabularioNube.arreglo("cuerpo");
 
             case "tiempo":
-                return VocabularioDatos.TIEMPO;
+                return VocabularioNube.arreglo("tiempo");
 
             case "naturaleza":
-                return VocabularioDatos.NATURALEZA;
+                return VocabularioNube.arreglo("naturaleza");
 
             case "lugares":
-                return VocabularioDatos.LUGARES;
+                return VocabularioNube.arreglo("lugares");
 
             default:
                 return null;
@@ -1303,7 +1309,12 @@ public class PracticarFragment extends Fragment {
                     pregunta[6]
             );
 
-            if (imagen != 0) {
+            android.graphics.Bitmap imagenSubida =
+                    VocabularioNube.imagenSubida(pregunta[6], pregunta[5]);
+
+            if (imagenSubida != null) {
+                imgImagenPregunta.setImageBitmap(imagenSubida);
+            } else if (imagen != 0) {
                 imgImagenPregunta.setImageResource(imagen);
             } else {
                 imgImagenPregunta.setImageResource(R.drawable.ic_practicar_categoria);
@@ -1373,13 +1384,14 @@ public class PracticarFragment extends Fragment {
 
         liberarReproductor();
 
-        int audioId = AudiosVocabulario.obtenerAudio(
+        // Audio subido desde el Admin o el que trae la app.
+        MediaPlayer nuevoReproductor = VocabularioNube.crearReproductor(
                 requireContext(),
                 categoriaAudioActual,
                 palabraActualAudio
         );
 
-        if (audioId == 0) {
+        if (nuevoReproductor == null) {
 
             ButiAviso.mostrar(
                     this,
@@ -1392,10 +1404,7 @@ public class PracticarFragment extends Fragment {
 
         try {
 
-            reproductorAudio = MediaPlayer.create(
-                    requireContext(),
-                    audioId
-            );
+            reproductorAudio = nuevoReproductor;
 
             if (reproductorAudio != null) {
 

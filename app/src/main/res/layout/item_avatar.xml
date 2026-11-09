@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Un avatar en la cuadrícula (se marca con borde dorado al elegirlo) -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <FrameLayout
+        android:id="@+id/marcoAvatar"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_avatar_crema"
+        android:clickable="true"
+        android:clipToOutline="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="3dp">
+
+        <ImageView
+            android:id="@+id/imgAvatarOpcion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            android:padding="5dp"
+            android:scaleType="fitCenter" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imgPalomitaAvatar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="6dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_req_ok"
+        android:visibility="gone" />
+
+</FrameLayout>
