@@ -312,11 +312,13 @@ public class LoginActivity extends AppCompatActivity {
 
         String correoAdmin1 = "yelitzagranados002@gmail.com";
         String correoAdmin2 = "admin@buti.com";
-        String correoIngresado = edtCorreoLogin != null ? edtCorreoLogin.getText().toString().trim() : "";
+        String correoIngresado = "";
 
         FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
         if (usuarioActual != null && usuarioActual.getEmail() != null) {
-            correoIngresado = usuarioActual.getEmail();
+            correoIngresado = usuarioActual.getEmail().trim();
+        } else if (edtCorreoLogin != null) {
+            correoIngresado = edtCorreoLogin.getText().toString().trim();
         }
 
         boolean esAdmin = !correoIngresado.isEmpty() && (
@@ -343,6 +345,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void verificarMantenimientoYNavegar() {
+        // Doble verificación por seguridad: si es admin, nunca mandar a mantenimiento
+        FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
+        if (usuarioActual != null && usuarioActual.getEmail() != null) {
+            String email = usuarioActual.getEmail().trim();
+            if (email.equalsIgnoreCase("yelitzagranados002@gmail.com") || email.equalsIgnoreCase("admin@buti.com")) {
+                Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        }
+
         boolean mantenimientoLocal = getSharedPreferences("buti_prefs", MODE_PRIVATE)
                 .getBoolean("modo_mantenimiento", false);
 

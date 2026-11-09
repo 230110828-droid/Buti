@@ -230,25 +230,6 @@ public class AdminActivity extends AppCompatActivity {
             }
         }
 
-        // 4. Asegurar la presencia de usuarios registrados en el sistema
-        String[][] usuariosBase = {
-            {"María González", "maria.gonzalez@gmail.com", "18", "5"},
-            {"Carlos López", "carlos.lopez@gmail.com", "7", "2"},
-            {"Ana Rodríguez", "ana.rodriguez@gmail.com", "30", "8"},
-            {"Juan Pérez", "juan.perez@gmail.com", "12", "4"}
-        };
-
-        for (String[] user : usuariosBase) {
-            String nombre = user[0];
-            String correo = user[1];
-            if (!correosProcesados.contains(correo.toLowerCase())) {
-                correosProcesados.add(correo.toLowerCase());
-                int racha = Integer.parseInt(user[2]);
-                int nivel = Integer.parseInt(user[3]);
-                listaUsuarios.add(new UsuarioSimulado(nombre, correo, racha, nivel));
-            }
-        }
-
         usuariosAdapter.notifyDataSetChanged();
     }
 
