@@ -61,6 +61,15 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".admin.AdminActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".MantenimientoActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

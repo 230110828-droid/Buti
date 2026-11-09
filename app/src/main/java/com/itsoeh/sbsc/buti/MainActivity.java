@@ -22,12 +22,19 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.annotation.NonNull;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         super.attachBaseContext(PreferenciasButi.contextoConLetra(base));
     }
 
+    private DatabaseReference refMantenimiento;
+    private ValueEventListener listenerMantenimiento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+
+        // Escuchar Modo Mantenimiento en tiempo real
+        escucharModoMantenimiento();
 
         // ---------------------------------------------
         // REFERENCIAS
@@ -668,5 +681,54 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    // =================================================
+    // MODO MANTENIMIENTO EN TIEMPO REAL
+    // =================================================
+
+    private void escucharModoMantenimiento() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null && user.getEmail() != null) {
+            String email = user.getEmail().toLowerCase();
+            if (email.equalsIgnoreCase("yelitzagranados002@gmail.com") || email.equalsIgnoreCase("admin@buti.com")) {
+                // El usuario administrador no es bloqueado por el mantenimiento
+                return;
+            }
+        }
+
+        refMantenimiento = FirebaseDatabase.getInstance().getReference("config/mantenimiento");
+        listenerMantenimiento = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Boolean enMantenimiento = snapshot.getValue(Boolean.class);
+                if (enMantenimiento != null && enMantenimiento) {
+                    getSharedPreferences("buti_prefs", MODE_PRIVATE)
+                            .edit().putBoolean("modo_mantenimiento", true).apply();
+
+                    Toast.makeText(MainActivity.this, "El sistema ha entrado en modo mantenimiento", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this, MantenimientoActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    getSharedPreferences("buti_prefs", MODE_PRIVATE)
+                            .edit().putBoolean("modo_mantenimiento", false).apply();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        };
+
+        refMantenimiento.addValueEventListener(listenerMantenimiento);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (refMantenimiento != null && listenerMantenimiento != null) {
+            refMantenimiento.removeEventListener(listenerMantenimiento);
+        }
     }
 }
