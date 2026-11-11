@@ -483,6 +483,21 @@ public class MainActivity extends AppCompatActivity {
 
             int id = item.getItemId();
 
+            // INICIO
+            if (id == R.id.inicioFragment) {
+
+                drawerLayout.closeDrawer(GravityCompat.START);
+
+                if (navController.getCurrentDestination() == null
+                        || navController.getCurrentDestination().getId()
+                        != R.id.inicioFragment) {
+
+                    navController.navigate(R.id.inicioFragment);
+                }
+
+                return true;
+            }
+
             // CONFIGURACIÓN
             if (id == R.id.itemConfiguracion) {
 
@@ -625,6 +640,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean esDestinoDelMenu(int id) {
 
         return id == R.id.inicioFragment
+                || id == R.id.leccionesFragment
                 || id == R.id.perfilFragment
                 || id == R.id.culturaFragment
                 || id == R.id.vocabularioFragment
