@@ -226,7 +226,7 @@ public class CulturaFragment extends Fragment {
 
                 mostrarInfoFlotante(
                         "Cultura de " + titulo,
-                        R.drawable.ic_info_cultura,
+                        R.drawable.ic_tema_cultura_grande,
                         R.drawable.bg_tag_naranja,
                         obtenerInformacion(titulo, "cultura")
                 );
@@ -240,7 +240,7 @@ public class CulturaFragment extends Fragment {
 
                 mostrarInfoFlotante(
                         "Tradiciones de " + titulo,
-                        R.drawable.ic_info_tradiciones,
+                        R.drawable.ic_tema_tradiciones_grande,
                         R.drawable.bg_tag_verde,
                         obtenerInformacion(titulo, "tradiciones")
                 );
@@ -254,7 +254,7 @@ public class CulturaFragment extends Fragment {
 
                 mostrarInfoFlotante(
                         "Ubicación de " + titulo,
-                        R.drawable.ic_info_ubicacion,
+                        R.drawable.ic_tema_ubicacion_grande,
                         R.drawable.bg_tag_siena,
                         obtenerInformacion(titulo, "ubicacion")
                 );

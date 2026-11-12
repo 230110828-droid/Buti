@@ -78,7 +78,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAvatares"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:padding="10dp" />
 
@@ -111,9 +111,9 @@
                 android:layout_marginTop="8dp"
                 android:text="Mejor subo una foto de mi galería"
                 android:textAllCaps="false"
-                android:textColor="@color/buti_acento"
+                android:textColor="@color/buti_titulo"
                 app:cornerRadius="16dp"
-                app:strokeColor="@color/buti_acento" />
+                app:strokeColor="@color/buti_dorado" />
 
             <LinearLayout
                 android:layout_width="match_parent"

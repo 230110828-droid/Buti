@@ -23,8 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.itsoeh.sbsc.buti.FotoPerfil;
 import com.itsoeh.sbsc.buti.ProgresoButi;
+import com.itsoeh.sbsc.buti.MainActivity;
 import com.itsoeh.sbsc.buti.R;
 import com.itsoeh.sbsc.buti.RachaMaguey;
+import com.itsoeh.sbsc.buti.vocabulario.VocabularioNube;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,26 @@ public class InicioFragment extends Fragment {
     private TextView txtPuntos;
     private TextView txtMensajeRacha;
     private ImageView imgRacha;
+
+    // Lección pendiente (la siguiente que toca).
+    private int nivelPendiente = 1;
+    private int etapaPendiente = 1;
+    private boolean todoCompleto = false;
+
+    // {nombre en Lecciones, nombre en Vocabulario, descripción, imagen}
+    private static final String[][] TEMAS = {
+            {"Saludos", "Saludos", "Aprende a saludar y responder de forma amable.", "img_cat_saludos"},
+            {"Números", "Números", "Aprende a contar en hñähñu.", "img_cat_numeros"},
+            {"Colores", "Colores", "Nombra los colores que ves a tu alrededor.", "img_cat_colores"},
+            {"Animales", "Animales", "Conoce los animales del Valle del Mezquital.", "img_cat_animales"},
+            {"Plantas", "Plantas", "Maguey, nopal, maíz y más plantas de la región.", "img_cat_plantas"},
+            {"Objetos", "Objetos", "Objetos de la casa y de la cocina tradicional.", "img_cat_objetos"},
+            {"Cuerpo", "Cuerpo", "Aprende las partes del cuerpo.", "img_cat_cuerpo"},
+            {"Comida", "Comida", "Tortillas, tamales, barbacoa y más.", "img_cat_comida"},
+            {"Tiempo y celebraciones", "Tiempo", "Hoy, mañana, ayer: habla del tiempo.", "img_cat_tiempo"},
+            {"Naturaleza", "Naturaleza", "El sol, la luna, el agua y los cerros.", "img_cat_naturaleza"},
+            {"Lugares", "Lugares", "El mercado, la escuela y otros lugares de la comunidad.", "img_cat_lugares"}
+    };
 
     private ProgressBar pbProgreso;
 
@@ -140,15 +162,24 @@ public class InicioFragment extends Fragment {
         Button btnContinuarLeccion =
                 view.findViewById(R.id.btnContinuarLeccion);
 
+        // Abre las etapas del nivel en el que va el usuario.
         btnContinuarLeccion.setOnClickListener(v ->
-                animarYCambiar(
-                        v,
-                        () -> navegar(
-                                navController,
-                                R.id.practicarFragment
-                        )
-                )
+                animarYCambiar(v, () -> abrirLeccionPendiente(navController))
         );
+
+        // -----------------------------------------
+        // APRENDE HOY: vocabulario del tema que sigue
+        // -----------------------------------------
+
+        View cardAprendeHoy = view.findViewById(R.id.cardAprendeHoy);
+
+        if (cardAprendeHoy != null) {
+            cardAprendeHoy.setOnClickListener(v ->
+                    animarYCambiar(v, () -> abrirVocabularioDelTema(navController))
+            );
+        }
+
+        mostrarAprendeHoy();
 
         // -----------------------------------------
         // TARJETA IXMIQUILPAN
@@ -393,6 +424,12 @@ public class InicioFragment extends Fragment {
         // ACTUALIZAR LECCIÓN ACTUAL
         // -----------------------------------------
 
+        nivelPendiente = siguienteNivel;
+        etapaPendiente = siguienteEtapa;
+        todoCompleto = etapasCompletadas >= TOTAL_ETAPAS;
+
+        mostrarAprendeHoy();
+
         if (etapasCompletadas >= TOTAL_ETAPAS) {
 
             txtLeccionActual.setText(
@@ -407,6 +444,87 @@ public class InicioFragment extends Fragment {
                             " · Etapa " + siguienteEtapa +
                             " de " + ETAPAS_POR_NIVEL
             );
+        }
+    }
+
+    // ---------------------------------------------
+    // CONTINUAR LECCIÓN Y APRENDE HOY
+    // ---------------------------------------------
+
+    private void abrirLeccionPendiente(NavController navController) {
+
+        if (!isAdded() || navController.getCurrentDestination() == null
+                || navController.getCurrentDestination().getId() != R.id.inicioFragment) {
+            return;
+        }
+
+        // Si ya terminó todo, se muestran todas las lecciones.
+        if (todoCompleto) {
+            navController.navigate(R.id.leccionesFragment);
+            return;
+        }
+
+        String nombre = TEMAS[nivelPendiente - 1][0];
+
+        Bundle argumentos = new Bundle();
+        argumentos.putInt("numeroNivel", nivelPendiente);
+        argumentos.putString("nivelSeleccionado", nombre);
+        argumentos.putString("temaSeleccionado", nombre);
+        argumentos.putInt("etapaPendiente", etapaPendiente);
+
+        navController.navigate(R.id.etapasLeccionFragment, argumentos);
+    }
+
+    private void abrirVocabularioDelTema(NavController navController) {
+
+        if (!isAdded() || navController.getCurrentDestination() == null
+                || navController.getCurrentDestination().getId() != R.id.inicioFragment) {
+            return;
+        }
+
+        String categoria = TEMAS[nivelPendiente - 1][1];
+
+        Bundle argumentos = new Bundle();
+        argumentos.putString("temaSeleccionado", categoria);
+        argumentos.putString("categoriaSeleccionada", categoria);
+
+        navController.navigate(R.id.palabrasVocabularioFragment, argumentos);
+    }
+
+    /** La tarjeta "Aprende hoy" muestra el tema de la lección que sigue. */
+    private void mostrarAprendeHoy() {
+
+        View raiz = getView();
+
+        if (!isAdded() || raiz == null) return;
+
+        String[] tema = TEMAS[Math.max(0, Math.min(TEMAS.length - 1, nivelPendiente - 1))];
+
+        TextView titulo = raiz.findViewById(R.id.txtTituloAprendeHoy);
+        TextView descripcion = raiz.findViewById(R.id.txtDescripcionAprendeHoy);
+        TextView duracion = raiz.findViewById(R.id.txtDuracionAprendeHoy);
+        ImageView imagen = raiz.findViewById(R.id.imgAprendeHoy);
+        View tarjeta = raiz.findViewById(R.id.cardAprendeHoy);
+
+        if (titulo != null) titulo.setText(tema[1] + " en hñähñu");
+        if (descripcion != null) descripcion.setText(tema[2]);
+
+        int palabras = VocabularioNube.arreglo(tema[1]).length;
+
+        if (duracion != null) {
+            duracion.setText(palabras > 0
+                    ? palabras + " palabras · " + Math.max(3, palabras / 4) + " min"
+                    : "5 min");
+        }
+
+        if (imagen != null) {
+            int recurso = getResources().getIdentifier(tema[3], "drawable", requireContext().getPackageName());
+            imagen.setImageResource(recurso != 0 ? recurso : R.drawable.ic_manitas);
+        }
+
+        if (tarjeta != null) {
+            tarjeta.setContentDescription("Aprende hoy: " + tema[1]
+                    + " en hñähñu. " + tema[2] + " Toca para ver las palabras.");
         }
     }
 
@@ -549,7 +667,14 @@ public class InicioFragment extends Fragment {
             return;
         }
 
-        if (navController.getCurrentDestination().getId() != destino) {
+        if (navController.getCurrentDestination().getId() == destino) {
+            return;
+        }
+
+        // Las secciones principales se abren igual que desde el menú.
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).irASeccion(destino);
+        } else {
             navController.navigate(destino);
         }
     }

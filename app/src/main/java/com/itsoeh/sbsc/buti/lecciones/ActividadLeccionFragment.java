@@ -7,8 +7,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
+import android.widget.ScrollView;
 import android.widget.ImageButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -19,6 +25,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -37,9 +44,11 @@ import java.text.BreakIterator;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 public class ActividadLeccionFragment extends Fragment {
@@ -52,12 +61,22 @@ public class ActividadLeccionFragment extends Fragment {
     private TextView txtInstruccion, txtDescripcion;
     private TextView txtPalabra, txtTraduccion;
     private TextView txtPregunta, txtResultado, txtTemporizador;
-    private TextView txtEspaciosPalabra, txtPistaReto;
+    private TextView txtPistaReto;
+    private LinearLayout contenedorEspacios;
+
+    // Completar palabra: qué botón del banco llenó cada casilla,
+    // la última casilla que se llenó (para animarla) y si ya se revisó.
+    private final Map<Integer, View> botonPorPosicion = new HashMap<>();
+    private int ultimaPosicionColocada = -1;
+    private boolean palabraRevisada = false;
 
     private ImageView imgActividad, imgReto;
     private ImageView imgPersonajeActividad, imgColibriActividad;
     private TextView txtMensajeReaccionActividad;
     private FrameLayout contenedorProgresoColibri;
+    private ScrollView scrollActividad;
+    private View panelRespuesta;
+    private int fondoPanelNormal;
 
     private ImageButton btnVolver, btnEscuchar;
 
@@ -136,6 +155,8 @@ public class ActividadLeccionFragment extends Fragment {
     private boolean personajeNina = true;
     private int totalPreguntasVisual = 1;
     private int progresoVisual = 0;
+    private int baseRepasoVisual = 0;
+    private int respondidasRepaso = 0;
     private final Runnable limpiarReaccion = () -> {
         if (isAdded() && imgPersonajeActividad != null) {
             imgPersonajeActividad.setImageResource(
@@ -187,6 +208,38 @@ public class ActividadLeccionFragment extends Fragment {
         recibirDatos();
         configurarBotonVolver();
         configurarActividad();
+
+        ocultarBarraSuperior(true);
+    }
+
+    // En la actividad solo se usa la flecha de regresar: se esconden la cenefa,
+    // la barra con el menú de hamburguesa y el menú lateral para ganar espacio.
+    private void ocultarBarraSuperior(boolean ocultar) {
+
+        if (getActivity() == null) return;
+
+        View toolbar = getActivity().findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+
+            int visibilidad = ocultar ? View.GONE : View.VISIBLE;
+            toolbar.setVisibility(visibilidad);
+
+            // La cenefa bordada está justo antes de la barra.
+            if (toolbar.getParent() instanceof ViewGroup) {
+                ViewGroup padre = (ViewGroup) toolbar.getParent();
+                int posicion = padre.indexOfChild(toolbar);
+                if (posicion > 0) padre.getChildAt(posicion - 1).setVisibility(visibilidad);
+            }
+        }
+
+        View cajon = getActivity().findViewById(R.id.drawer_layout);
+
+        if (cajon instanceof DrawerLayout) {
+            ((DrawerLayout) cajon).setDrawerLockMode(ocultar
+                    ? DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+                    : DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
     }
 
     // =========================================================
@@ -232,6 +285,14 @@ public class ActividadLeccionFragment extends Fragment {
         imgColibriActividad = view.findViewById(R.id.imgColibriActividad);
         txtMensajeReaccionActividad = view.findViewById(R.id.txtMensajeReaccionActividad);
         contenedorProgresoColibri = view.findViewById(R.id.contenedorProgresoColibri);
+        scrollActividad = view.findViewById(R.id.scrollActividad);
+        panelRespuesta = view.findViewById(R.id.panelRespuestaActividad);
+        fondoPanelNormal = ContextCompat.getColor(requireContext(), R.color.buti_fondo);
+
+        // Cuando ya se conoce el ancho de la barra, colocar el colibrí en su lugar.
+        if (contenedorProgresoColibri != null) {
+            contenedorProgresoColibri.post(() -> actualizarColibriActividad(false));
+        }
 
         txtPalabra = view.findViewById(R.id.txtPalabraActividad);
         txtTraduccion = view.findViewById(R.id.txtTraduccionActividad);
@@ -244,7 +305,7 @@ public class ActividadLeccionFragment extends Fragment {
         txtResultado = view.findViewById(R.id.txtResultadoActividad);
         txtTemporizador = view.findViewById(R.id.txtTemporizadorActividad);
 
-        txtEspaciosPalabra = view.findViewById(R.id.txtEspaciosPalabra);
+        contenedorEspacios = view.findViewById(R.id.contenedorEspaciosPalabra);
         txtPistaReto = view.findViewById(R.id.txtPistaRetoActividad);
 
         barraProgreso = view.findViewById(R.id.barraProgresoActividad);
@@ -355,8 +416,7 @@ public class ActividadLeccionFragment extends Fragment {
         actualizarColibriActividad();
         mostrarPersonajePensando();
 
-        txtResultado.setVisibility(View.GONE);
-        txtResultado.setText("");
+        reiniciarPanelRespuesta();
 
         txtTraduccion.setVisibility(View.GONE);
         txtTemporizador.setVisibility(View.GONE);
@@ -562,12 +622,62 @@ public class ActividadLeccionFragment extends Fragment {
 
     private void mostrarResultado(String mensaje, int color) {
 
+        // Los mensajes en café son solo indicaciones: no son ni acierto ni error.
+        if (color == CAFE) {
+            mostrarResultadoDirecto(mensaje);
+            return;
+        }
+
+        boolean acierto = color == VERDE;
+
         txtResultado.setVisibility(View.VISIBLE);
         txtResultado.setText(mensaje);
         txtResultado.setTextColor(color);
 
-        boolean acierto = color == VERDE;
+        // El panel de abajo se pinta verde (bien) o rosa (mal) y "sube".
+        pintarPanelRespuesta(acierto ? FONDO_ACIERTO : FONDO_ERROR, true);
+
         mostrarReaccionActividad(acierto, mensaje);
+    }
+
+    // Panel fijo de abajo: color de fondo y pequeña animación de entrada.
+    private void pintarPanelRespuesta(int colorFondo, boolean animar) {
+
+        if (panelRespuesta == null) return;
+
+        panelRespuesta.setBackgroundColor(colorFondo);
+
+        if (animar) {
+            panelRespuesta.animate().cancel();
+            panelRespuesta.setTranslationY(dp(24));
+            panelRespuesta.setAlpha(0.6f);
+            panelRespuesta.animate()
+                    .translationY(0f)
+                    .alpha(1f)
+                    .setDuration(280)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .start();
+        }
+    }
+
+    // Deja el panel limpio y sube el contenido al inicio para la siguiente pregunta.
+    private void reiniciarPanelRespuesta() {
+
+        if (txtResultado != null) {
+            txtResultado.setVisibility(View.GONE);
+            txtResultado.setText("");
+        }
+
+        if (panelRespuesta != null) {
+            panelRespuesta.animate().cancel();
+            panelRespuesta.setTranslationY(0f);
+            panelRespuesta.setAlpha(1f);
+            panelRespuesta.setBackgroundColor(fondoPanelNormal);
+        }
+
+        if (scrollActividad != null) {
+            scrollActividad.post(() -> scrollActividad.scrollTo(0, 0));
+        }
     }
 
     // Guarda las palabras que presentaron dificultad durante la etapa.
@@ -594,6 +704,8 @@ public class ActividadLeccionFragment extends Fragment {
     // Suma puntos por una respuesta correcta y actualiza el marcador.
     private void sumarAcierto() {
         aciertos++;
+        // El colibrí solo avanza cuando la respuesta es correcta.
+        registrarAvanceVisual();
         puntosObtenidos += PUNTOS_ACIERTO;
         txtPuntos.setText(String.valueOf(puntosObtenidos));
         animarMarcador();
@@ -612,7 +724,20 @@ public class ActividadLeccionFragment extends Fragment {
     private void registrarAvanceVisual() {
         int total = Math.max(1, totalPreguntasVisual);
         progresoVisual = Math.min(progresoVisual + 1, total);
-        actualizarColibriActividad();
+        actualizarColibriActividad(true);
+    }
+
+    // Reparte lo que le falta al colibrí entre las palabras del repaso,
+    // así con la última respuesta llega justo a la meta.
+    private void avanzarRepasoVisual() {
+        int total = Math.max(1, totalPreguntasVisual);
+        int palabras = Math.max(1, palabrasFallidas.size());
+        respondidasRepaso = Math.min(respondidasRepaso + 1, palabras);
+        int faltante = Math.max(0, total - baseRepasoVisual);
+        progresoVisual = baseRepasoVisual
+                + Math.round(faltante * (respondidasRepaso / (float) palabras));
+        progresoVisual = Math.min(progresoVisual, total);
+        actualizarColibriActividad(true);
     }
 
     private int obtenerTotalPreguntasEtapa() {
@@ -624,7 +749,7 @@ public class ActividadLeccionFragment extends Fragment {
                 return Math.min(TOTAL_DESCUBRE, preguntas.size());
 
             case 3:
-                return Math.max(1, obtenerTotalRelacion() / 2);
+                return Math.max(1, obtenerTotalRelacion());
 
             case 4:
                 return Math.min(TOTAL_MEMORIA, preguntas.size());
@@ -658,14 +783,65 @@ public class ActividadLeccionFragment extends Fragment {
                     ? "¡Muy bien! Cada respuesta te acerca a la meta."
                     : "¡No te rindas! Equivocarse también ayuda a aprender.");
         }
+        // La personita "brinca" de gusto o se sacude para animarte.
         imgPersonajeActividad.animate().cancel();
-        imgPersonajeActividad.setScaleX(0.88f);
-        imgPersonajeActividad.setScaleY(0.88f);
-        imgPersonajeActividad.animate().scaleX(1f).scaleY(1f).setDuration(260).start();
-        handlerReacciones.postDelayed(limpiarReaccion, 1800);
+        imgPersonajeActividad.setTranslationX(0f);
+        imgPersonajeActividad.setTranslationY(0f);
+        imgPersonajeActividad.setRotation(0f);
+        imgPersonajeActividad.setScaleX(0.75f);
+        imgPersonajeActividad.setScaleY(0.75f);
+
+        if (acierto) {
+            imgPersonajeActividad.animate()
+                    .scaleX(1.12f).scaleY(1.12f)
+                    .translationY(-dp(10))
+                    .setDuration(220)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .withEndAction(() -> imgPersonajeActividad.animate()
+                            .scaleX(1f).scaleY(1f)
+                            .translationY(0f)
+                            .setDuration(260)
+                            .setInterpolator(new OvershootInterpolator(2.5f))
+                            .start())
+                    .start();
+        } else {
+            imgPersonajeActividad.animate()
+                    .scaleX(1f).scaleY(1f)
+                    .setDuration(180)
+                    .withEndAction(() -> sacudir(imgPersonajeActividad, 0))
+                    .start();
+        }
+
+        // La burbuja del mensaje también aparece con un pequeño salto.
+        if (txtMensajeReaccionActividad != null) {
+            txtMensajeReaccionActividad.setAlpha(0f);
+            txtMensajeReaccionActividad.setTranslationX(dp(12));
+            txtMensajeReaccionActividad.animate()
+                    .alpha(1f).translationX(0f)
+                    .setDuration(260)
+                    .start();
+        }
+
+        // Se queda un rato para que se alcance a ver.
+        handlerReacciones.postDelayed(limpiarReaccion, 3000);
+    }
+
+    private void sacudir(View vista, int paso) {
+        if (vista == null || !isAdded()) return;
+        float[] movimientos = {-dp(8), dp(8), -dp(5), dp(5), 0};
+        if (paso >= movimientos.length) return;
+        vista.animate()
+                .translationX(movimientos[paso])
+                .setDuration(60)
+                .withEndAction(() -> sacudir(vista, paso + 1))
+                .start();
     }
 
     private void actualizarColibriActividad() {
+        actualizarColibriActividad(false);
+    }
+
+    private void actualizarColibriActividad(boolean animar) {
         if (barraProgreso == null || imgColibriActividad == null) return;
         int total = Math.max(1, totalPreguntasVisual);
         barraProgreso.setMax(total);
@@ -679,7 +855,32 @@ public class ActividadLeccionFragment extends Fragment {
             float recorrido = Math.max(0, contenedorProgresoColibri.getWidth()
                     - imgColibriActividad.getWidth());
             float fraccion = total == 0 ? 0f : progresoVisual / (float) total;
-            imgColibriActividad.setTranslationX(recorrido * fraccion);
+            float destino = recorrido * fraccion;
+
+            imgColibriActividad.animate().cancel();
+
+            if (animar && recorrido > 0) {
+                // El colibrí vuela hasta su nuevo lugar dando un saltito.
+                imgColibriActividad.setTranslationY(0f);
+                imgColibriActividad.animate()
+                        .translationX(destino)
+                        .translationY(-dp(8))
+                        .scaleX(1.25f).scaleY(1.25f)
+                        .setDuration(450)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .withEndAction(() -> imgColibriActividad.animate()
+                                .translationY(0f)
+                                .scaleX(1f).scaleY(1f)
+                                .setDuration(280)
+                                .setInterpolator(new OvershootInterpolator(3f))
+                                .start())
+                        .start();
+            } else {
+                imgColibriActividad.setTranslationX(destino);
+                imgColibriActividad.setTranslationY(0f);
+                imgColibriActividad.setScaleX(1f);
+                imgColibriActividad.setScaleY(1f);
+            }
         }
     }
 
@@ -801,6 +1002,8 @@ public class ActividadLeccionFragment extends Fragment {
     }
 
     private void mostrarPreguntaDescubre() {
+
+        reiniciarPanelRespuesta();
 
         detenerAudio();
 
@@ -962,7 +1165,6 @@ public class ActividadLeccionFragment extends Fragment {
 
         // Una sola oportunidad: bien o mal, se pasa a la siguiente.
         respondida = true;
-        registrarAvanceVisual();
 
         String espanol = vocabulario[correcta][0];
         String hnahnu = primeraVariante(vocabulario[correcta][1]);
@@ -1087,6 +1289,8 @@ public class ActividadLeccionFragment extends Fragment {
 
     private void mostrarPalabraIncompleta() {
 
+        reiniciarPanelRespuesta();
+
         int total = Math.min(TOTAL_DESCUBRE, preguntas.size());
 
         if (indicePregunta >= total) {
@@ -1183,6 +1387,9 @@ public class ActividadLeccionFragment extends Fragment {
 
         int cantidad = letras.size();
 
+        palabraRevisada = false;
+        ultimaPosicionColocada = -1;
+
         letrasColocadas = new String[cantidad];
         posicionesFijas = new boolean[cantidad];
 
@@ -1222,45 +1429,175 @@ public class ActividadLeccionFragment extends Fragment {
 
     private void actualizarEspacios() {
 
-        if (letrasColocadas == null) {
+        if (letrasColocadas == null || contenedorEspacios == null) {
             return;
         }
 
-        StringBuilder resultado = new StringBuilder();
+        contenedorEspacios.removeAllViews();
+
+        List<String> correctas = separarGrafemas(palabraObjetivo == null ? "" : palabraObjetivo);
         StringBuilder construida = new StringBuilder();
 
+        int cantidad = letrasColocadas.length;
         int colocadas = 0;
+        int siguienteVacia = -1;
 
-        for (int i = 0; i < letrasColocadas.length; i++) {
-
+        for (int i = 0; i < cantidad; i++) {
             if (letrasColocadas[i] != null) {
-
-                resultado.append("[")
-                        .append(letrasColocadas[i])
-                        .append("]");
-
                 construida.append(letrasColocadas[i]);
-
                 colocadas++;
-
-            } else {
-
-                resultado.append("[＿]");
+            } else if (siguienteVacia == -1) {
+                siguienteVacia = i;
             }
-
-            resultado.append("  ");
         }
 
         palabraConstruida = construida.toString();
 
-        txtEspaciosPalabra.setText(
-                resultado.toString().trim()
-        );
+        // Repartir las casillas en filas parejas que quepan en la pantalla.
+        int anchoCasilla = dp(42);
+        int separacion = dp(3);
+        int porFila = calcularPorFila(anchoCasilla + separacion * 2, dp(56));
+        int filas = (int) Math.ceil(cantidad / (double) porFila);
+        int enCadaFila = (int) Math.ceil(cantidad / (double) Math.max(1, filas));
+
+        LinearLayout fila = null;
+
+        for (int i = 0; i < cantidad; i++) {
+
+            if (i % enCadaFila == 0) {
+                fila = new LinearLayout(requireContext());
+                fila.setOrientation(LinearLayout.HORIZONTAL);
+                fila.setGravity(Gravity.CENTER);
+                fila.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+                contenedorEspacios.addView(fila);
+            }
+
+            String letra = letrasColocadas[i];
+            boolean fija = posicionesFijas != null && posicionesFijas[i];
+            Boolean bien = null;
+
+            if (palabraRevisada && letra != null && i < correctas.size()) {
+                bien = Normalizer.normalize(letra, Normalizer.Form.NFC)
+                        .equalsIgnoreCase(Normalizer.normalize(correctas.get(i), Normalizer.Form.NFC));
+            }
+
+            TextView casilla = crearCasilla(letra, fija, i == siguienteVacia && !palabraRevisada, bien);
+
+            LinearLayout.LayoutParams parametros =
+                    new LinearLayout.LayoutParams(anchoCasilla, dp(52));
+            parametros.setMargins(separacion, separacion, separacion, separacion);
+            casilla.setLayoutParams(parametros);
+
+            // Tocar una letra puesta por el alumno la regresa al banco.
+            final int posicion = i;
+            if (letra != null && !fija && !palabraRevisada) {
+                casilla.setOnClickListener(v -> quitarLetra(posicion));
+            }
+
+            fila.addView(casilla);
+
+            // La letra recién puesta "salta" a su casilla.
+            if (i == ultimaPosicionColocada) {
+                casilla.setScaleX(0.6f);
+                casilla.setScaleY(0.6f);
+                casilla.animate().scaleX(1f).scaleY(1f).setDuration(240)
+                        .setInterpolator(new OvershootInterpolator(3f)).start();
+            }
+        }
+
+        ultimaPosicionColocada = -1;
 
         txtPregunta.setText(
                 "Letras colocadas: " + colocadas
-                        + " de " + letrasColocadas.length
+                        + " de " + cantidad
         );
+    }
+
+    // Una casilla con diseño de ficha: pista, vacía, siguiente, colocada o revisada.
+    private TextView crearCasilla(String letra, boolean fija, boolean siguiente, Boolean bien) {
+
+        TextView casilla = new TextView(requireContext());
+        casilla.setGravity(Gravity.CENTER);
+        casilla.setTextSize(22);
+        casilla.setTypeface(Typeface.DEFAULT_BOLD);
+        casilla.setIncludeFontPadding(false);
+
+        GradientDrawable fondo = new GradientDrawable();
+        fondo.setCornerRadius(dp(12));
+
+        int texto = CAFE;
+
+        if (bien != null) {
+            // Después de comprobar: verde si va bien en ese lugar, rosa si no.
+            fondo.setColor(bien ? FONDO_ACIERTO : FONDO_ERROR);
+            fondo.setStroke(dp(2), bien ? VERDE : ROSA);
+            texto = bien ? VERDE : ROSA;
+            casilla.setText(letra);
+
+        } else if (fija) {
+            // Letra de pista: ya viene puesta, más tenue y sin borde.
+            fondo.setColor(ContextCompat.getColor(requireContext(), R.color.buti_superficie_alt));
+            texto = ContextCompat.getColor(requireContext(), R.color.buti_texto_secundario);
+            casilla.setText(letra);
+
+        } else if (letra != null) {
+            // Letra que puso el alumno.
+            fondo.setColor(FONDO_OPCION);
+            fondo.setStroke(dp(2), doradoBorde());
+            casilla.setText(letra.trim().isEmpty() ? "␣" : letra);
+
+        } else if (siguiente) {
+            // La casilla que se va a llenar: punteada en dorado.
+            int dorado = doradoBorde();
+            fondo.setColor(Color.argb(45, Color.red(dorado), Color.green(dorado), Color.blue(dorado)));
+            fondo.setStroke(dp(2), dorado, dp(5), dp(4));
+            casilla.setText("");
+
+        } else {
+            // Casilla vacía: solo un contorno punteado suave.
+            fondo.setColor(Color.TRANSPARENT);
+            fondo.setStroke(dp(2), BORDE, dp(5), dp(4));
+            casilla.setText("");
+        }
+
+        casilla.setTextColor(texto);
+        casilla.setBackground(fondo);
+        casilla.setContentDescription(letra == null ? "Espacio vacío" : "Letra " + letra);
+
+        return casilla;
+    }
+
+    // Dorado brillante para bordes (se ve bien en claro y en oscuro).
+    private int doradoBorde() {
+        return ContextCompat.getColor(requireContext(), R.color.buti_dorado);
+    }
+
+    // Regresa al banco la letra de una casilla.
+    private void quitarLetra(int posicion) {
+
+        if (respondida || letrasColocadas == null) return;
+        if (posicionesFijas != null && posicionesFijas[posicion]) return;
+
+        letrasColocadas[posicion] = null;
+
+        View boton = botonPorPosicion.remove(posicion);
+        if (boton != null) {
+            boton.setEnabled(true);
+            boton.setAlpha(1f);
+            boton.setScaleX(0.7f);
+            boton.setScaleY(0.7f);
+            boton.animate().scaleX(1f).scaleY(1f).setDuration(200).start();
+        }
+
+        actualizarEspacios();
+    }
+
+    // Cuántos elementos caben en una fila, según el ancho de la pantalla.
+    private int calcularPorFila(int anchoElemento, int margenes) {
+        int ancho = getResources().getDisplayMetrics().widthPixels - dp(40) - margenes;
+        return Math.max(3, ancho / Math.max(1, anchoElemento));
     }
 
     // =========================================================
@@ -1282,6 +1619,8 @@ public class ActividadLeccionFragment extends Fragment {
             return;
         }
 
+        botonPorPosicion.clear();
+
         List<String> letrasObjetivo = separarGrafemas(palabraObjetivo);
 
         // El banco solo tendrá las letras que todavía faltan.
@@ -1302,9 +1641,14 @@ public class ActividadLeccionFragment extends Fragment {
         LinearLayout fila = null;
         int contador = 0;
 
+        // Filas parejas que quepan completas en la pantalla (ya no se cortan).
+        int porFila = calcularPorFila(dp(52), dp(16));
+        int filasBanco = (int) Math.ceil(letrasFaltantes.size() / (double) porFila);
+        int enCadaFila = (int) Math.ceil(letrasFaltantes.size() / (double) Math.max(1, filasBanco));
+
         for (String letra : letrasFaltantes) {
 
-            if (contador % 6 == 0) {
+            if (contador % Math.max(1, enCadaFila) == 0) {
 
                 fila = new LinearLayout(requireContext());
 
@@ -1332,11 +1676,12 @@ public class ActividadLeccionFragment extends Fragment {
                     ColorStateList.valueOf(CREMA)
             );
 
-            boton.setCornerRadius(dp(16));
+            boton.setCornerRadius(dp(12));
             boton.setStrokeWidth(dp(2));
+            boton.setTypeface(Typeface.DEFAULT_BOLD);
 
             boton.setStrokeColor(
-                    ColorStateList.valueOf(ROSA)
+                    ColorStateList.valueOf(doradoBorde())
             );
 
             boton.setInsetTop(0);
@@ -1345,14 +1690,14 @@ public class ActividadLeccionFragment extends Fragment {
 
             LinearLayout.LayoutParams parametros =
                     new LinearLayout.LayoutParams(
-                            dp(48),
-                            dp(48)
+                            dp(46),
+                            dp(50)
                     );
 
             parametros.setMargins(
+                    dp(3),
                     dp(4),
-                    dp(4),
-                    dp(4),
+                    dp(3),
                     dp(4)
             );
 
@@ -1383,6 +1728,8 @@ public class ActividadLeccionFragment extends Fragment {
 
                 // Colocar la letra en el siguiente espacio disponible.
                 letrasColocadas[siguientePosicion] = letraSeleccionada;
+                botonPorPosicion.put(siguientePosicion, boton);
+                ultimaPosicionColocada = siguientePosicion;
 
                 // Desactivar el botón para evitar reutilizar esa letra.
                 boton.setEnabled(false);
@@ -1449,7 +1796,6 @@ public class ActividadLeccionFragment extends Fragment {
 
         // Una sola oportunidad: bien o mal, se pasa a la siguiente.
         respondida = true;
-        registrarAvanceVisual();
 
         String espanol = vocabulario[indicePalabra][0];
 
@@ -1480,6 +1826,10 @@ public class ActividadLeccionFragment extends Fragment {
         }
 
         txtTraduccion.setVisibility(View.VISIBLE);
+
+        // Pintar cada casilla: verde si la letra va ahí, rosa si no.
+        palabraRevisada = true;
+        actualizarEspacios();
 
         bloquearBancoLetras();
 
@@ -1547,6 +1897,8 @@ public class ActividadLeccionFragment extends Fragment {
     }
 
     private void prepararRelacion() {
+
+        reiniciarPanelRespuesta();
 
         int total = obtenerTotalRelacion();
 
@@ -1727,7 +2079,6 @@ public class ActividadLeccionFragment extends Fragment {
 
         // Una sola oportunidad por palabra: bien o mal, la pareja se cierra.
         parejasCompletadas.add(espanol);
-        registrarAvanceVisual();
 
         restaurarColoresRelacion(columnaEspanol);
         restaurarColoresRelacion(columnaHnahnu);
@@ -1955,6 +2306,8 @@ public class ActividadLeccionFragment extends Fragment {
 
     private void mostrarPreguntaMemoria() {
 
+        reiniciarPanelRespuesta();
+
         detenerAudio();
 
         if (indicePregunta >= palabrasMemoria.size()) {
@@ -2060,7 +2413,6 @@ public class ActividadLeccionFragment extends Fragment {
         }
 
         respondida = true;
-        registrarAvanceVisual();
 
         boolean esCorrecta = opcion.equalsIgnoreCase(correcta);
 
@@ -2137,6 +2489,7 @@ public class ActividadLeccionFragment extends Fragment {
         txtResultado.setVisibility(View.VISIBLE);
         txtResultado.setText(mensaje);
         txtResultado.setTextColor(CAFE);
+        pintarPanelRespuesta(fondoPanelNormal, false);
 
         mostrarPersonajePensando();
     }
@@ -2160,6 +2513,8 @@ public class ActividadLeccionFragment extends Fragment {
     }
 
     private void mostrarPreguntaEvaluacion() {
+
+        reiniciarPanelRespuesta();
 
         detenerTemporizador();
         detenerAudio();
@@ -2291,7 +2646,6 @@ public class ActividadLeccionFragment extends Fragment {
         if (respondida) return;
 
         respondida = true;
-        registrarAvanceVisual();
 
         detenerTemporizador();
 
@@ -2402,7 +2756,6 @@ public class ActividadLeccionFragment extends Fragment {
                 }
 
                 respondida = true;
-                registrarAvanceVisual();
 
                 String correcta = respuestaCorrectaEvaluacion;
                 registrarPalabraParaRepasar(indicePalabra);
@@ -2534,19 +2887,21 @@ public class ActividadLeccionFragment extends Fragment {
                         + "y cada acierto vale " + PUNTOS_REPASO + " puntos."
         );
 
-        // El colibrí vuelve a recorrer la barra durante el repaso.
-        progresoVisual = 0;
-        totalPreguntasVisual = palabrasFallidas.size();
-        actualizarColibriActividad();
-
-        mostrarResultado(
-                "¡Segunda oportunidad! Tienes " + palabrasFallidas.size()
-                        + (palabrasFallidas.size() == 1 ? " palabra" : " palabras")
-                        + " para repasar.",
-                CAFE
-        );
+        // El colibrí NO se reinicia: sigue desde donde iba y en el repaso avanza
+        // con cada respuesta (buena o mala) hasta llegar a la meta al terminar.
+        baseRepasoVisual = progresoVisual;
+        respondidasRepaso = 0;
 
         mostrarPreguntaRepaso();
+
+        // Se muestra después de preparar la pregunta para que no se borre.
+        String avisoRepaso = "¡Segunda oportunidad! Tienes " + palabrasFallidas.size()
+                + (palabrasFallidas.size() == 1 ? " palabra" : " palabras")
+                + " para repasar.";
+        mostrarResultadoDirecto(avisoRepaso);
+        if (txtMensajeReaccionActividad != null) {
+            txtMensajeReaccionActividad.setText(avisoRepaso);
+        }
     }
 
     // La etapa 1 reemplaza los botones de opción por tarjetas con imagen;
@@ -2573,6 +2928,8 @@ public class ActividadLeccionFragment extends Fragment {
     }
 
     private void mostrarPreguntaRepaso() {
+
+        reiniciarPanelRespuesta();
 
         detenerAudio();
 
@@ -2647,7 +3004,9 @@ public class ActividadLeccionFragment extends Fragment {
         if (respondida) return;
 
         respondida = true;
-        registrarAvanceVisual();
+
+        // En el repaso el colibrí avanza bien o mal: al terminar llega a la meta.
+        avanzarRepasoVisual();
 
         if (opcion.equalsIgnoreCase(correcta)) {
 
@@ -3100,6 +3459,8 @@ public class ActividadLeccionFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+
+        ocultarBarraSuperior(false);
 
         handlerReacciones.removeCallbacksAndMessages(null);
 

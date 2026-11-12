@@ -117,6 +117,10 @@ public final class PreferenciasButi {
      */
     public static Context contextoConLetra(Context base) {
 
+        // Seguro extra: aplicar el tema guardado antes de dibujar la pantalla,
+        // aunque ButiApp no esté registrada en el AndroidManifest.
+        aplicarTemaGuardado(base);
+
         float escala = ESCALAS[obtenerLetra(base)];
 
         if (escala == 1.0f) {

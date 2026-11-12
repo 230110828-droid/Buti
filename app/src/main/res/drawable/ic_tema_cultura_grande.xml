@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cultura: jarrón de barro (ventana de información) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Círculo crema para que el bordado resalte sobre el color -->
+    <item
+        android:width="46dp"
+        android:height="46dp"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="@color/buti_crema" />
+        </shape>
+    </item>
+
+    <!-- Icono en punto de cruz -->
+    <item
+        android:width="36dp"
+        android:height="36dp"
+        android:gravity="center"
+        android:drawable="@drawable/ic_jarronazul" />
+
+</layer-list>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ubicación (botón) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Círculo crema para que el bordado resalte sobre el color -->
+    <item
+        android:width="32dp"
+        android:height="32dp"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="@color/buti_crema" />
+        </shape>
+    </item>
+
+    <!-- Icono en punto de cruz -->
+    <item
+        android:width="25dp"
+        android:height="25dp"
+        android:gravity="center"
+        android:drawable="@drawable/ic_ubicacion" />
+
+</layer-list>

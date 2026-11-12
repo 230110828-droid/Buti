@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
@@ -27,6 +30,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -35,6 +39,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.ResultadoButi;
+import com.itsoeh.sbsc.buti.MainActivity;
 import com.itsoeh.sbsc.buti.R;
 import com.itsoeh.sbsc.buti.vocabulario.VocabularioNube;
 
@@ -71,6 +76,14 @@ public class PracticarFragment extends Fragment {
     // =========================================
 
     private ProgressBar pbPreguntas;
+    private FrameLayout contenedorColibri;
+
+    // Avance del colibrí: en la ronda normal solo con aciertos;
+    // en el repaso avanza con cada respuesta hasta llegar a la meta.
+    private int progresoVisual = 0;
+    private int totalVisual = 1;
+    private int baseRepasoVisual = 0;
+    private int respondidasRepaso = 0;
 
     private TextView txtContadorPreguntas;
     private TextView txtPreguntaQuiz;
@@ -85,6 +98,8 @@ public class PracticarFragment extends Fragment {
     private ImageView btnCerrarQuiz;
     private ImageView btnAudioPregunta;
     private ImageView imgPersonaje;
+    private TextView txtMensajePersonaje;
+    private View encabezadoCuestionario;
     private ImageView imgColibri;
     private ImageView imgPersonajeResultado;
 
@@ -139,6 +154,7 @@ public class PracticarFragment extends Fragment {
 
     private Runnable avanzarRunnable;
     private Runnable siguientePreguntaRunnable;
+    private Runnable ventanaRunnable;
 
     private Dialog dialogResultadoRespuesta;
 
@@ -213,13 +229,13 @@ public class PracticarFragment extends Fragment {
         btnContinuarRacha.setOnClickListener(v -> {
             cancelarAvanceAutomatico();
             liberarReproductor();
-            navController.navigate(R.id.inicioFragment);
+            irASeccion(R.id.inicioFragment);
         });
 
         btnSeguirAprendiendo.setOnClickListener(v -> {
             cancelarAvanceAutomatico();
             liberarReproductor();
-            navController.navigate(R.id.leccionesFragment);
+            irASeccion(R.id.leccionesFragment);
         });
 
         btnAudioPregunta.setOnClickListener(v ->
@@ -285,6 +301,9 @@ public class PracticarFragment extends Fragment {
         layoutResultado =
                 view.findViewById(R.id.layoutResultado);
 
+        contenedorColibri =
+                view.findViewById(R.id.contenedorColibriPractica);
+
         pbPreguntas =
                 view.findViewById(R.id.pbPreguntas);
 
@@ -320,6 +339,12 @@ public class PracticarFragment extends Fragment {
 
         imgPersonaje =
                 view.findViewById(R.id.imgPersonaje);
+
+        txtMensajePersonaje =
+                view.findViewById(R.id.txtMensajePersonajePractica);
+
+        encabezadoCuestionario =
+                view.findViewById(R.id.encabezadoCuestionario);
 
         imgColibri =
                 view.findViewById(R.id.imgColibri);
@@ -394,7 +419,10 @@ public class PracticarFragment extends Fragment {
 
         layoutSeleccionPractica.setVisibility(View.VISIBLE);
         layoutCuestionario.setVisibility(View.GONE);
+        if (encabezadoCuestionario != null) encabezadoCuestionario.setVisibility(View.GONE);
         layoutResultado.setVisibility(View.GONE);
+
+        ocultarBarraSuperior(false);
 
         layoutCategoriasPractica.setVisibility(View.GONE);
 
@@ -1006,6 +1034,11 @@ public class PracticarFragment extends Fragment {
 
         totalPreguntasIniciales = preguntas.length;
 
+        progresoVisual = 0;
+        totalVisual = Math.max(1, preguntas.length);
+        baseRepasoVisual = 0;
+        respondidasRepaso = 0;
+
         personajeNina = random.nextBoolean();
 
         preguntaActual = 0;
@@ -1026,7 +1059,11 @@ public class PracticarFragment extends Fragment {
 
         layoutSeleccionPractica.setVisibility(View.GONE);
         layoutCuestionario.setVisibility(View.VISIBLE);
+        if (encabezadoCuestionario != null) encabezadoCuestionario.setVisibility(View.VISIBLE);
         layoutResultado.setVisibility(View.GONE);
+
+        // Durante el reto solo se usa la X para salir: se esconde el menú de arriba.
+        ocultarBarraSuperior(true);
 
         actualizarPuntos();
 
@@ -1296,12 +1333,14 @@ public class PracticarFragment extends Fragment {
             );
         }
 
-        pbPreguntas.setMax(total);
-        pbPreguntas.setProgress(preguntaActual);
+        pintarProgreso(false);
 
         if (modoImagenes) {
 
-            imgPersonaje.setVisibility(View.GONE);
+            imgPersonaje.setVisibility(View.VISIBLE);
+            imgPersonaje.setImageResource(
+                    personajesPensando[personajeNina ? 0 : 1]
+            );
             imgImagenPregunta.setVisibility(View.VISIBLE);
 
             int imagen = obtenerImagenPalabra(
@@ -1345,6 +1384,10 @@ public class PracticarFragment extends Fragment {
                     personajesPensando[personajeNina ? 0 : 1]
             );
         }
+
+        ponerMensajePersonaje(rondaRepaso
+                ? "¡Vamos a reforzar esta palabra!"
+                : "¿Cuál es la respuesta? ¡Tú puedes!");
 
         actualizarColibri();
 
@@ -1594,9 +1637,27 @@ public class PracticarFragment extends Fragment {
 
         actualizarPuntos();
 
-        pbPreguntas.setProgress(preguntaActual + 1);
+        if (rondaRepaso) {
+            // En el repaso avanza bien o mal: al terminar llega a la meta.
+            avanzarRepasoVisual();
+        } else if (acierto) {
+            // En la ronda normal solo avanza si la respuesta es correcta.
+            progresoVisual = Math.min(progresoVisual + 1, totalVisual);
+            pintarProgreso(true);
+        }
 
-        mostrarVentanaRespuesta(acierto, puntosGanados);
+        // Primero se ve al colibrí volar y al personaje reaccionar;
+        // después aparece la ventana con el resultado.
+        final boolean aciertoFinal = acierto;
+        final int puntosFinal = puntosGanados;
+
+        ventanaRunnable = () -> {
+            ventanaRunnable = null;
+            if (isAdded() && getView() != null) {
+                mostrarVentanaRespuesta(aciertoFinal, puntosFinal);
+            }
+        };
+        handler.postDelayed(ventanaRunnable, 1000);
 
         programarAvanceAutomatico(acierto);
     }
@@ -1940,7 +2001,9 @@ public class PracticarFragment extends Fragment {
                     android.R.color.transparent
             );
 
-            dialog.getWindow().setDimAmount(0.65f);
+            dialog.getWindow().setDimAmount(0.35f);
+
+            dialog.getWindow().setGravity(Gravity.BOTTOM);
 
             dialog.getWindow().addFlags(
                     WindowManager.LayoutParams.FLAG_DIM_BEHIND
@@ -2032,7 +2095,7 @@ public class PracticarFragment extends Fragment {
 
         cancelarAvanceAutomatico();
 
-        long tiempo = acierto ? 1900 : 2900;
+        long tiempo = acierto ? 2900 : 3900;
 
         avanzarRunnable = () -> {
 
@@ -2069,6 +2132,11 @@ public class PracticarFragment extends Fragment {
     }
 
     private void cancelarAvanceAutomatico() {
+
+        if (ventanaRunnable != null) {
+            handler.removeCallbacks(ventanaRunnable);
+            ventanaRunnable = null;
+        }
 
         if (avanzarRunnable != null) {
 
@@ -2120,8 +2188,10 @@ public class PracticarFragment extends Fragment {
 
         txtRetroalimentacion.setVisibility(View.GONE);
 
-        pbPreguntas.setMax(preguntas.length);
-        pbPreguntas.setProgress(0);
+        // El colibrí NO se reinicia: sigue desde donde iba.
+        baseRepasoVisual = progresoVisual;
+        respondidasRepaso = 0;
+        pintarProgreso(false);
 
         imgColibri.setImageResource(
                 R.drawable.ic_colibri_volando
@@ -2146,6 +2216,95 @@ public class PracticarFragment extends Fragment {
     // PUNTOS Y PERSONAJES
     // =========================================
 
+    // Reparte lo que le falta al colibrí entre las preguntas del repaso.
+    private void avanzarRepasoVisual() {
+        int palabras = Math.max(1, preguntas.length);
+        respondidasRepaso = Math.min(respondidasRepaso + 1, palabras);
+        int faltante = Math.max(0, totalVisual - baseRepasoVisual);
+        progresoVisual = Math.min(totalVisual, baseRepasoVisual
+                + Math.round(faltante * (respondidasRepaso / (float) palabras)));
+        pintarProgreso(true);
+    }
+
+    // Barra y colibrí: el colibrí vuela sobre la barra hasta donde vas.
+    private void pintarProgreso(boolean animar) {
+
+        if (pbPreguntas == null || imgColibri == null) return;
+
+        pbPreguntas.setMax(totalVisual);
+        pbPreguntas.setProgress(Math.min(progresoVisual, totalVisual));
+
+        if (contenedorColibri == null) return;
+
+        if (contenedorColibri.getWidth() == 0) {
+            contenedorColibri.post(() -> pintarProgreso(false));
+            return;
+        }
+
+        float recorrido = Math.max(0, contenedorColibri.getWidth() - imgColibri.getWidth());
+        float destino = recorrido * (progresoVisual / (float) Math.max(1, totalVisual));
+
+        imgColibri.animate().cancel();
+
+        if (animar) {
+            imgColibri.animate()
+                    .translationX(destino)
+                    .translationY(-dp(8))
+                    .scaleX(1.25f).scaleY(1.25f)
+                    .setDuration(450)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .withEndAction(() -> imgColibri.animate()
+                            .translationY(0f)
+                            .scaleX(1f).scaleY(1f)
+                            .setDuration(280)
+                            .setInterpolator(new OvershootInterpolator(3f))
+                            .start())
+                    .start();
+        } else {
+            imgColibri.setTranslationX(destino);
+            imgColibri.setTranslationY(0f);
+            imgColibri.setScaleX(1f);
+            imgColibri.setScaleY(1f);
+        }
+    }
+
+    // Esconde la cenefa, la barra con el menú de hamburguesa y bloquea el menú lateral.
+    private void ocultarBarraSuperior(boolean ocultar) {
+
+        if (getActivity() == null) return;
+
+        View toolbar = getActivity().findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+
+            int visibilidad = ocultar ? View.GONE : View.VISIBLE;
+            toolbar.setVisibility(visibilidad);
+
+            if (toolbar.getParent() instanceof ViewGroup) {
+                ViewGroup padre = (ViewGroup) toolbar.getParent();
+                int posicion = padre.indexOfChild(toolbar);
+                if (posicion > 0) padre.getChildAt(posicion - 1).setVisibility(visibilidad);
+            }
+        }
+
+        View cajon = getActivity().findViewById(R.id.drawer_layout);
+
+        if (cajon instanceof DrawerLayout) {
+            ((DrawerLayout) cajon).setDrawerLockMode(ocultar
+                    ? DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+                    : DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+    }
+
+    // Ir a Inicio o a Lecciones sin amontonar pantallas.
+    private void irASeccion(int destino) {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).irASeccion(destino);
+        } else if (getView() != null) {
+            androidx.navigation.Navigation.findNavController(getView()).navigate(destino);
+        }
+    }
+
     private void actualizarPuntos() {
 
         txtPuntosActuales.setText(
@@ -2165,13 +2324,13 @@ public class PracticarFragment extends Fragment {
                     R.drawable.ic_colibri_volando
             );
 
-        } else if (preguntaActual == 0) {
+        } else if (progresoVisual <= 0) {
 
             imgColibri.setImageResource(
                     R.drawable.ic_colibri_normal
             );
 
-        } else if (preguntaActual >= total - 1) {
+        } else if (progresoVisual >= totalVisual) {
 
             imgColibri.setImageResource(
                     R.drawable.ic_colibri_meta
@@ -2193,6 +2352,8 @@ public class PracticarFragment extends Fragment {
                 personajesFelices[personajeNina ? 0 : 1]
         );
 
+        ponerMensajePersonaje("¡Muy bien! El colibrí avanza contigo.");
+
         animarCelebracion(imgPersonaje);
     }
 
@@ -2202,7 +2363,31 @@ public class PracticarFragment extends Fragment {
                 personajesAnimando[personajeNina ? 0 : 1]
         );
 
+        ponerMensajePersonaje(rondaRepaso
+                ? "¡Ya casi! La seguiremos practicando."
+                : "¡No te rindas! La repasaremos al final.");
+
         animarElemento(imgPersonaje);
+        sacudir(imgPersonaje);
+    }
+
+    private void ponerMensajePersonaje(String mensaje) {
+        if (txtMensajePersonaje == null) return;
+        txtMensajePersonaje.setText(mensaje);
+        txtMensajePersonaje.setAlpha(0f);
+        txtMensajePersonaje.setTranslationX(dp(12));
+        txtMensajePersonaje.animate().alpha(1f).translationX(0f).setDuration(260).start();
+    }
+
+    // Sacudida suave del personaje cuando la respuesta no fue correcta.
+    private void sacudir(View vista) {
+        if (vista == null) return;
+        vista.animate().cancel();
+        vista.setTranslationX(0f);
+        android.animation.ObjectAnimator.ofFloat(vista, View.TRANSLATION_X,
+                        0, -dp(8), dp(8), -dp(5), dp(5), 0)
+                .setDuration(380)
+                .start();
     }
 
     private void animarElemento(View elemento) {
@@ -2256,6 +2441,7 @@ public class PracticarFragment extends Fragment {
 
         layoutSeleccionPractica.setVisibility(View.GONE);
         layoutCuestionario.setVisibility(View.GONE);
+        if (encabezadoCuestionario != null) encabezadoCuestionario.setVisibility(View.GONE);
         layoutResultado.setVisibility(View.VISIBLE);
 
         imgPersonajeResultado.setImageResource(
@@ -2297,6 +2483,9 @@ public class PracticarFragment extends Fragment {
                         + ".\n\n"
                         + "¡Cada palabra que aprendes cuenta!"
         );
+
+        progresoVisual = totalVisual;
+        pintarProgreso(false);
 
         imgColibri.setImageResource(
                 R.drawable.ic_colibri_meta
@@ -2360,6 +2549,8 @@ public class PracticarFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+
+        ocultarBarraSuperior(false);
 
         cancelarAvanceAutomatico();
 

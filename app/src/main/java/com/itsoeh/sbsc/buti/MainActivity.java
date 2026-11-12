@@ -3,6 +3,8 @@ package com.itsoeh.sbsc.buti;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -21,8 +23,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -197,10 +200,14 @@ public class MainActivity extends AppCompatActivity {
         // BARRA INFERIOR
         // ---------------------------------------------
 
-        NavigationUI.setupWithNavController(
-                bottomNav,
-                navController
-        );
+        // Navegación propia (sin guardar/restaurar pilas viejas):
+        // así cada botón siempre lleva a su sección y se marca bien.
+        bottomNav.setOnItemSelectedListener(item -> {
+            irASeccion(item.getItemId());
+            return true;
+        });
+
+        bottomNav.setOnItemReselectedListener(item -> irASeccion(item.getItemId()));
 
         bottomNav.setItemHorizontalTranslationEnabled(false);
 
@@ -229,9 +236,8 @@ public class MainActivity extends AppCompatActivity {
                             !primeraCarga
                     );
 
-                    if (esDestinoDelMenu(id)) {
-                        navView.setCheckedItem(id);
-                    }
+                    // Marcar en los dos menús la sección donde estás.
+                    marcarSeccion(id);
 
                     if (!primeraCarga) {
                         animarCambioPantalla();
@@ -483,32 +489,12 @@ public class MainActivity extends AppCompatActivity {
 
             int id = item.getItemId();
 
-            // INICIO
-            if (id == R.id.inicioFragment) {
-
-                drawerLayout.closeDrawer(GravityCompat.START);
-
-                if (navController.getCurrentDestination() == null
-                        || navController.getCurrentDestination().getId()
-                        != R.id.inicioFragment) {
-
-                    navController.navigate(R.id.inicioFragment);
-                }
-
-                return true;
-            }
-
             // CONFIGURACIÓN
             if (id == R.id.itemConfiguracion) {
 
                 drawerLayout.closeDrawer(GravityCompat.START);
 
-                if (navController.getCurrentDestination() == null
-                        || navController.getCurrentDestination().getId()
-                        != R.id.configuracionFragment) {
-
-                    navController.navigate(R.id.configuracionFragment);
-                }
+                irASeccion(R.id.configuracionFragment);
 
                 return true;
             }
@@ -535,19 +521,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
-            // NAVEGACIÓN
-            boolean navegacionRealizada =
-                    NavigationUI.onNavDestinationSelected(
-                            item,
-                            navController
-                    );
+            // NAVEGACIÓN: siempre cierra el menú y lleva a la sección.
+            drawerLayout.closeDrawer(GravityCompat.START);
 
-            if (navegacionRealizada) {
+            irASeccion(id);
 
-                drawerLayout.closeDrawer(GravityCompat.START);
-            }
-
-            return navegacionRealizada;
+            return true;
         });
     }
 
@@ -594,12 +573,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        if (navController != null
-                && (navController.getCurrentDestination() == null
-                || navController.getCurrentDestination().getId() != R.id.perfilFragment)) {
-
-            navController.navigate(R.id.perfilFragment);
-        }
+        irASeccion(R.id.perfilFragment);
     }
 
     private void actualizarResumenMenu(TextView txtResumen) {
@@ -634,19 +608,118 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // =================================================
-    // DESTINOS DEL MENÚ LATERAL
+    // IR A UNA SECCIÓN (menú lateral, barra inferior y botones)
     // =================================================
 
-    private boolean esDestinoDelMenu(int id) {
+    /**
+     * Lleva a una sección principal de la app.
+     * La pila siempre queda: Inicio → sección. Así "atrás" regresa a Inicio,
+     * no se amontonan pantallas repetidas y nunca se abre una pantalla vieja.
+     * Los fragments pueden usarlo:  ((MainActivity) requireActivity()).irASeccion(R.id.leccionesFragment);
+     */
+    public void irASeccion(int destino) {
 
-        return id == R.id.inicioFragment
-                || id == R.id.leccionesFragment
-                || id == R.id.perfilFragment
-                || id == R.id.culturaFragment
-                || id == R.id.vocabularioFragment
-                || id == R.id.practicarFragment
-                || id == R.id.juegosFragment
-                || id == R.id.progresoFragment;
+        if (navController == null) return;
+
+        NavDestination actual = navController.getCurrentDestination();
+
+        // Ya estás ahí: no se vuelve a abrir.
+        if (actual != null && actual.getId() == destino) {
+            marcarSeccion(destino);
+            return;
+        }
+
+        try {
+
+            if (destino == R.id.inicioFragment) {
+
+                // Regresar a Inicio quitando lo que haya encima.
+                if (!navController.popBackStack(R.id.inicioFragment, false)) {
+                    navController.navigate(R.id.inicioFragment);
+                }
+                return;
+            }
+
+            NavOptions opciones = new NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .setPopUpTo(R.id.inicioFragment, false)
+                    .build();
+
+            navController.navigate(destino, null, opciones);
+
+        } catch (IllegalArgumentException | IllegalStateException error) {
+
+            ButiAviso.mostrar(
+                    this,
+                    "No se pudo abrir esa sección. Inténtalo de nuevo.",
+                    ButiAviso.Tipo.ERROR
+            );
+        }
+    }
+
+    // =================================================
+    // MARCAR LA SECCIÓN ACTUAL EN LOS MENÚS
+    // =================================================
+
+    /** A qué opción del menú lateral pertenece cada pantalla (0 = ninguna). */
+    private int seccionMenuLateral(int id) {
+
+        if (id == R.id.inicioFragment) return R.id.inicioFragment;
+
+        if (id == R.id.perfilFragment
+                || id == R.id.editarPerfilFragment) return R.id.perfilFragment;
+
+        if (id == R.id.culturaFragment
+                || id == R.id.mapaFragment) return R.id.culturaFragment;
+
+        if (id == R.id.vocabularioFragment
+                || id == R.id.palabrasVocabularioFragment) return R.id.vocabularioFragment;
+
+        if (id == R.id.practicarFragment) return R.id.practicarFragment;
+
+        if (id == R.id.juegosFragment
+                || id == R.id.memoramaFragment
+                || id == R.id.rompecabezasFragment
+                || id == R.id.atrapaPalabraFragment
+                || id == R.id.diferenciasFragment) return R.id.juegosFragment;
+
+        if (id == R.id.progresoFragment) return R.id.progresoFragment;
+
+        return 0;
+    }
+
+    private void marcarSeccion(int id) {
+
+        // Menú lateral: se marca solo una opción, o ninguna
+        // (por ejemplo en Lecciones, Configuración o Acerca de).
+        if (navView != null) {
+
+            int seccion = seccionMenuLateral(id);
+            Menu menu = navView.getMenu();
+
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem opcion = menu.getItem(i);
+                if (opcion.isCheckable()) opcion.setChecked(false);
+            }
+
+            if (seccion != 0) {
+                MenuItem opcion = menu.findItem(seccion);
+                if (opcion != null) opcion.setChecked(true);
+            }
+        }
+
+        // Barra inferior: Inicio, Lecciones o Perfil.
+        if (bottomNav != null) {
+
+            int seccionAbajo =
+                    id == R.id.editarPerfilFragment ? R.id.perfilFragment : id;
+
+            MenuItem opcion = bottomNav.getMenu().findItem(seccionAbajo);
+
+            if (opcion != null && !opcion.isChecked()) {
+                opcion.setChecked(true);
+            }
+        }
     }
 
     // =================================================

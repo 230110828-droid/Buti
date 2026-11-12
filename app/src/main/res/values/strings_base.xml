@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_titulo">B\'úti</string>
-    <string name="drawer_subtitulo">Cultura y lengua hñäñu</string>
+    <string name="app_titulo">B’ÜTI</string>
+    <string name="drawer_subtitulo">Cultura y lengua hñähñu</string>
 
     <string name="menu_inicio">Inicio</string>
     <string name="menu_lecciones">Lecciones</string>

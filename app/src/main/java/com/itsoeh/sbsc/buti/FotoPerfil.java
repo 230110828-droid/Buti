@@ -50,40 +50,14 @@ public final class FotoPerfil {
     private static String ultimoBase64;
     private static Bitmap ultimoBitmap;
 
-    /** Avatares disponibles (dibujos en punto de cruz que ya están en drawable). */
+    /** Avatares para elegir: solo los personajes propios de B'ÜTI. */
     public static final String[][] AVATARES = {
             // {nombre del dibujo, cómo se lee}
             {"avatar_nina_trenzas", "Niña con trenzas"},
             {"avatar_nino_gorra", "Niño con gorra"},
             {"avatar_joven_rebozo", "Joven con rebozo"},
             {"avatar_abuela", "Abuela"},
-            {"avatar_abuelo", "Abuelo"},
-            {"ic_colibri_feliz", "Colibrí"},
-            {"ic_nina_feliz", "Niña"},
-            {"ic_nino_feliz", "Niño"},
-            {"ic_nina_normal", "Niña tranquila"},
-            {"ic_nino_normal", "Niño tranquilo"},
-            {"img_animales_conejo", "Conejo"},
-            {"img_animales_ardilla", "Ardilla"},
-            {"img_animales_buho", "Búho"},
-            {"img_animales_lechuza", "Lechuza"},
-            {"img_animales_coyote", "Coyote"},
-            {"img_animales_zorro", "Zorro"},
-            {"img_animales_armadillo", "Armadillo"},
-            {"img_animales_tlacuache", "Tlacuache"},
-            {"img_animales_gato", "Gato"},
-            {"img_animales_perro", "Perro"},
-            {"img_animales_burro", "Burro"},
-            {"img_animales_aguila", "Águila"},
-            {"img_animales_guajolote", "Guajolote"},
-            {"ic_venado", "Venado"},
-            {"ic_paloma", "Paloma"},
-            {"ic_pajaroverde", "Pájaro verde"},
-            {"ic_maguey", "Maguey"},
-            {"ic_nopal", "Nopal"},
-            {"ic_flor", "Flor"},
-            {"ic_jarronazul", "Jarrón"},
-            {"ic_calabaza", "Calabaza"}
+            {"avatar_abuelo", "Abuelo"}
     };
 
     public interface AlGuardar {
