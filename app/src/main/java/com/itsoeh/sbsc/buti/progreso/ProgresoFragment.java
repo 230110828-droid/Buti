@@ -226,14 +226,15 @@ public class ProgresoFragment extends Fragment {
                 // RACHA
                 // -----------------------------------------
 
-                // Si dejó pasar un día sin practicar, la racha vuelve a 0.
-                int diasRacha = ProgresoButi.rachaVigente(snapshot);
+                // Racha con 1 día de gracia: congelada sigue contando, perdida es 0.
+                ProgresoButi.EstadoRacha estadoRacha = ProgresoButi.estadoRacha(snapshot);
+                int diasRacha = estadoRacha.dias;
 
-                txtRacha.setText(String.valueOf(diasRacha));
+                txtRacha.setText(estadoRacha.estado == ProgresoButi.Estado.CONGELADA
+                        ? diasRacha + " ❄"
+                        : String.valueOf(diasRacha));
 
-                imgRacha.setImageResource(
-                        RachaMaguey.dibujoPorRacha(diasRacha)
-                );
+                imgRacha.setImageResource(RachaMaguey.dibujo(estadoRacha));
 
                 // -----------------------------------------
                 // PROGRESO DE LECCIONES

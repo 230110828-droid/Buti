@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.SonidosJuego;
 import com.itsoeh.sbsc.buti.vocabulario.VocabularioDatos;
 
 import java.util.ArrayList;
@@ -121,6 +122,9 @@ public class AtrapaPalabraFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
+        // Carga los sonidos para que suenen sin retraso.
+        SonidosJuego.preparar(requireContext());
 
         layoutSeleccion = view.findViewById(R.id.layoutSeleccionAtrapa);
         layoutPartida = view.findViewById(R.id.layoutPartidaAtrapa);
@@ -589,6 +593,7 @@ public class AtrapaPalabraFragment extends Fragment {
                     } else {
 
                         // Respuesta incorrecta.
+                        SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.ERROR);
                         descontarVida();
 
                         txtMensaje.setText(
@@ -696,7 +701,12 @@ public class AtrapaPalabraFragment extends Fragment {
 
             actualizarPuntos();
 
-            txtMensaje.setText("¡Muy bien! +" + ProgresoButi.PUNTOS_ATRAPA_POR_ACIERTO + " puntos");
+            txtMensaje.setText("¡Muy bien! " + preguntaActual[0] + " = " + preguntaActual[1]
+                    + "  +" + ProgresoButi.PUNTOS_ATRAPA_POR_ACIERTO + " puntos");
+
+            // Premio: campanita y la palabra en hñähñu.
+            SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.ACIERTO);
+            SonidosJuego.decirPalabra(requireContext(), categoriaActual.nombre, preguntaActual[0], 400);
 
         } else {
 
@@ -704,6 +714,7 @@ public class AtrapaPalabraFragment extends Fragment {
             // significa que todas las palabras cayeron sin seleccionarse.
             descontarVida();
 
+            SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.ERROR);
             txtMensaje.setText("¡Se escapó la palabra!");
 
             if (vidas <= 0) {
@@ -723,7 +734,8 @@ public class AtrapaPalabraFragment extends Fragment {
             siguienteRondaRunnable = this::siguienteRonda;
         }
 
-        handler.postDelayed(siguienteRondaRunnable, 500);
+        // Si acertó, se espera a que se escuche la palabra en hñähñu.
+        handler.postDelayed(siguienteRondaRunnable, correcta ? 1500 : 500);
     }
 
     // ------------------------------------------------
@@ -793,6 +805,8 @@ public class AtrapaPalabraFragment extends Fragment {
         datos.puntos = puntos;
         datos.exito = acertadas >= 5;
 
+        if (datos.exito) SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.VICTORIA);
+
         ResultadoButi.mostrarYGuardar(
                 requireContext(),
                 datos,
@@ -838,6 +852,7 @@ public class AtrapaPalabraFragment extends Fragment {
     @Override
     public void onDestroyView() {
 
+        SonidosJuego.detener();
         detenerTemporizador();
 
         handler.removeCallbacksAndMessages(null);

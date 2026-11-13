@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.itsoeh.sbsc.buti.AudioButi;
 import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.R;
 
@@ -605,6 +606,7 @@ public class PalabrasVocabularioFragment extends Fragment {
         if (reproductor != null) {
 
             reproductor.setOnCompletionListener(mp -> {
+                AudioButi.termino(mp);
                 mp.release();
 
                 if (reproductor == mp) {
@@ -612,6 +614,7 @@ public class PalabrasVocabularioFragment extends Fragment {
                 }
             });
 
+            AudioButi.empezar(reproductor);
             reproductor.start();
 
         } else {
@@ -627,6 +630,8 @@ public class PalabrasVocabularioFragment extends Fragment {
     private void liberarReproductor() {
 
         if (reproductor != null) {
+
+            AudioButi.termino(reproductor);
 
             try {
                 if (reproductor.isPlaying()) {

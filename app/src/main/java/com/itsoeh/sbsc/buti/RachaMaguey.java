@@ -5,6 +5,18 @@ import com.itsoeh.sbsc.buti.R;
 /** Devuelve el dibujo del maguey segun los dias de racha. */
 public class RachaMaguey {
 
+    /** Dibujo según el estado: congelado, seco o el que toca por los días. */
+    public static int dibujo(com.itsoeh.sbsc.buti.ProgresoButi.EstadoRacha racha) {
+        switch (racha.estado) {
+            case CONGELADA:
+                return R.drawable.ic_maguey_congelado;
+            case PERDIDA:
+                return racha.diasPerdidos > 0 ? R.drawable.ic_maguey_seco : dibujoPorRacha(0);
+            default:
+                return dibujoPorRacha(racha.dias);
+        }
+    }
+
     public static int dibujoPorRacha(int racha) {
         if (racha >= 30) return R.drawable.ic_maguey;          // florecido (ya lo tienes)
         if (racha >= 14) return R.drawable.ic_maguey2;         // grande   (ya lo tienes)

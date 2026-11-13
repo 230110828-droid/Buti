@@ -36,6 +36,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.itsoeh.sbsc.buti.AudioButi;
 import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.ResultadoButi;
@@ -1455,6 +1456,7 @@ public class PracticarFragment extends Fragment {
 
                 reproductorActual.setOnCompletionListener(mp -> {
 
+                    AudioButi.termino(mp);
                     mp.release();
 
                     if (reproductorAudio == mp) {
@@ -1462,6 +1464,7 @@ public class PracticarFragment extends Fragment {
                     }
                 });
 
+                AudioButi.empezar(reproductorActual);
                 reproductorActual.start();
 
             } else {
@@ -1488,6 +1491,8 @@ public class PracticarFragment extends Fragment {
     private void liberarReproductor() {
 
         if (reproductorAudio != null) {
+
+            AudioButi.termino(reproductorAudio);
 
             try {
 

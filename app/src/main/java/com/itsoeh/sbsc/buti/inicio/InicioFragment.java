@@ -1,5 +1,6 @@
 package com.itsoeh.sbsc.buti.inicio;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import com.itsoeh.sbsc.buti.FotoPerfil;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.MainActivity;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.RachaButi;
 import com.itsoeh.sbsc.buti.RachaMaguey;
 import com.itsoeh.sbsc.buti.vocabulario.VocabularioNube;
 
@@ -310,10 +312,12 @@ public class InicioFragment extends Fragment {
                 // RACHA DEL USUARIO
                 // ---------------------------------
 
-                // Si dejó pasar un día sin practicar, la racha vuelve a 0.
-                int racha = ProgresoButi.rachaVigente(snapshot);
+                // Racha con 1 día de gracia: activa, congelada o perdida.
+                ProgresoButi.EstadoRacha estadoRacha = ProgresoButi.estadoRacha(snapshot);
+                int racha = estadoRacha.dias;
 
-                actualizarRacha(racha);
+                actualizarRacha(estadoRacha);
+                avisarEstadoRacha(estadoRacha);
 
                 // ---------------------------------
                 // PUNTOS TOTALES
@@ -325,20 +329,32 @@ public class InicioFragment extends Fragment {
                     txtPuntos.setText(puntos == 1 ? "1 punto" : puntos + " puntos");
                 }
 
-                // ¿Ya practicó hoy?
+                // Mensaje según cómo está el maguey.
                 if (txtMensajeRacha != null) {
 
-                    boolean practicoHoy = ProgresoButi.hoy().equals(
-                            snapshot.child("racha").child("ultimaFecha").getValue(String.class)
-                    );
+                    String mensajeRacha;
 
-                    txtMensajeRacha.setText(
-                            practicoHoy
-                                    ? "¡Ya practicaste hoy! Vuelve mañana para que crezca."
-                                    : racha > 0
-                                      ? "Practica hoy para no perder tu racha."
-                                      : "Completa una lección, práctica o juego para empezar."
-                    );
+                    switch (estadoRacha.estado) {
+                        case ACTIVA:
+                            mensajeRacha = "¡Ya practicaste hoy! Vuelve mañana para que crezca.";
+                            break;
+                        case PENDIENTE:
+                            mensajeRacha = "Practica hoy para no perder tu racha.";
+                            break;
+                        case CONGELADA:
+                            mensajeRacha = "❄ Tu maguey se congeló. Practica hoy para salvar tu racha.";
+                            break;
+                        case PERDIDA:
+                            mensajeRacha = estadoRacha.diasPerdidos > 0
+                                    ? "Tu maguey se secó. ¡Haz una actividad para empezar una racha nueva!"
+                                    : "Completa una lección, práctica o juego para empezar.";
+                            break;
+                        default:
+                            mensajeRacha = "Completa una lección, práctica o juego para empezar.";
+                            break;
+                    }
+
+                    txtMensajeRacha.setText(mensajeRacha);
                 }
 
                 // ---------------------------------
@@ -532,11 +548,9 @@ public class InicioFragment extends Fragment {
     // ACTUALIZAR RACHA
     // ---------------------------------------------
 
-    private void actualizarRacha(int dias) {
+    private void actualizarRacha(ProgresoButi.EstadoRacha estado) {
 
-        if (dias < 0) {
-            dias = 0;
-        }
+        int dias = Math.max(0, estado.dias);
 
         if (dias == 1) {
 
@@ -547,9 +561,48 @@ public class InicioFragment extends Fragment {
             txtRacha.setText("Racha de " + dias + " días");
         }
 
-        // El maguey crece con la racha.
+        if (estado.estado == ProgresoButi.Estado.CONGELADA) {
+            txtRacha.setText(txtRacha.getText() + " · en pausa");
+        }
+
+        // El maguey crece con la racha; congelado o seco si toca.
         if (imgRacha != null) {
-            imgRacha.setImageResource(RachaMaguey.dibujoPorRacha(dias));
+            imgRacha.setImageResource(RachaMaguey.dibujo(estado));
+        }
+    }
+
+    // ---------------------------------------------
+    // AVISO DE RACHA CONGELADA O PERDIDA (una vez)
+    // ---------------------------------------------
+
+    private void avisarEstadoRacha(ProgresoButi.EstadoRacha estado) {
+
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+        if (usuario == null || !isAdded()) return;
+
+        String clave;
+
+        if (estado.estado == ProgresoButi.Estado.CONGELADA) {
+            // Una vez al día mientras está congelada.
+            clave = "aviso_congelada_" + usuario.getUid() + "_" + ProgresoButi.hoy();
+        } else if (estado.estado == ProgresoButi.Estado.PERDIDA && estado.diasPerdidos > 0) {
+            // Una sola vez por cada racha perdida.
+            clave = "aviso_perdida_" + usuario.getUid() + "_" + estado.ultimaFecha;
+        } else {
+            return;
+        }
+
+        android.content.SharedPreferences preferencias = requireContext()
+                .getSharedPreferences("buti_prefs", Context.MODE_PRIVATE);
+
+        if (preferencias.getBoolean(clave, false)) return;
+
+        preferencias.edit().putBoolean(clave, true).apply();
+
+        if (estado.estado == ProgresoButi.Estado.CONGELADA) {
+            RachaButi.mostrarCongelada(requireContext(), estado.dias, null);
+        } else {
+            RachaButi.mostrarPerdida(requireContext(), estado.diasPerdidos, estado.mejor, null);
         }
     }
 

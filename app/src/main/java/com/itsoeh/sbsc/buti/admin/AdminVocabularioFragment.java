@@ -34,6 +34,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.itsoeh.sbsc.buti.AudioButi;
 import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ButiDialogo;
 import com.itsoeh.sbsc.buti.R;
@@ -219,10 +220,10 @@ public class AdminVocabularioFragment extends Fragment {
 
         txtTotalVocab.setText(total == 0
                 ? (VocabularioNube.listoDesdeFirebase()
-                ? "Firebase todavía no tiene palabras"
-                : error != null
-                ? "Firebase no respondió: " + error
-                : "Conectando con Firebase…")
+                   ? "Firebase todavía no tiene palabras"
+                   : error != null
+                     ? "Firebase no respondió: " + error
+                     : "Conectando con Firebase…")
                 : total + " palabras en Firebase");
 
         // Contador en cada categoría.
@@ -273,8 +274,8 @@ public class AdminVocabularioFragment extends Fragment {
         rvPalabrasAdmin.setVisibility(resultado.isEmpty() ? View.GONE : View.VISIBLE);
         txtVacioVocab.setText(busqueda.isEmpty()
                 ? (VocabularioNube.total() == 0
-                ? "Firebase está vacío. Usa «Importar vocabulario de la app»."
-                : "No hay palabras en esta categoría. Toca «+ Agregar».")
+                   ? "Firebase está vacío. Usa «Importar vocabulario de la app»."
+                   : "No hay palabras en esta categoría. Toca «+ Agregar».")
                 : "No se encontró ninguna palabra con ese texto.");
     }
 
@@ -643,12 +644,15 @@ public class AdminVocabularioFragment extends Fragment {
 
         reproductor = nuevo;
         reproductor.setOnCompletionListener(mp -> detenerAudio());
+        AudioButi.empezar(reproductor);
         reproductor.start();
     }
 
     private void detenerAudio() {
 
         if (reproductor == null) return;
+
+        AudioButi.termino(reproductor);
 
         try {
             if (reproductor.isPlaying()) reproductor.stop();

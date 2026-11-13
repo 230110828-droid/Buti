@@ -18,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.SonidosJuego;
 import com.itsoeh.sbsc.buti.ResultadoButi;
 
 import java.util.ArrayList;
@@ -64,6 +65,17 @@ public class MemoramaFragment extends Fragment {
             R.drawable.img_objetos_molcajete
     };
 
+    // Palabra de cada imagen (mismo orden): categoría y español,
+    // para decirla en hñähñu al encontrar la pareja.
+    private final String[][] palabras = {
+            {"animales", "Zorro"},
+            {"animales", "Conejo"},
+            {"plantas", "Maguey"},
+            {"plantas", "Nopal"},
+            {"objetos", "Olla"},
+            {"objetos", "Molcajete"}
+    };
+
     private final Runnable actualizarTiempo = new Runnable() {
         @Override
         public void run() {
@@ -108,6 +120,9 @@ public class MemoramaFragment extends Fragment {
         btnVolver = view.findViewById(R.id.btnVolverMemorama);
 
         btnReiniciar.setOnClickListener(v -> reiniciarJuego());
+
+        // Carga los sonidos para que suenen sin retraso.
+        SonidosJuego.preparar(requireContext());
 
         btnVolver.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).popBackStack();
@@ -228,6 +243,7 @@ public class MemoramaFragment extends Fragment {
         iniciarTemporizador();
 
         mostrarCarta(carta);
+        SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.TIC);
 
         if (primeraCarta == null) {
 
@@ -281,20 +297,41 @@ public class MemoramaFragment extends Fragment {
                     parejasEncontradas + " / " + TOTAL_PAREJAS
             );
 
-            txtMensaje.setText("¡Encontraste una pareja!");
+            // Premio: campanita y la palabra en hñähñu.
+            String[] palabra = palabraDe(primeraCarta.imagen);
+            SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.ACIERTO);
+
+            if (palabra != null) {
+                String hnahnu = SonidosJuego.hnahnu(palabra[0], palabra[1]);
+                txtMensaje.setText(hnahnu != null
+                        ? "¡" + palabra[1] + "! En hñähñu: " + hnahnu
+                        : "¡Encontraste una pareja!");
+                SonidosJuego.decirPalabra(requireContext(), palabra[0], palabra[1], 450);
+            } else {
+                txtMensaje.setText("¡Encontraste una pareja!");
+            }
 
             primeraCarta = null;
             segundaCarta = null;
 
             if (parejasEncontradas == TOTAL_PAREJAS) {
 
-                terminarJuego();
+                // Se espera a que se escuche la última palabra.
+                bloqueado = true;
+                handler.removeCallbacks(actualizarTiempo);
+                handler.postDelayed(() -> {
+                    // Esa espera no cuenta en el tiempo del juego.
+                    tiempoInicial += 1800;
+                    if (isAdded()) terminarJuego();
+                }, 1800);
             }
 
         } else {
 
             // Las imágenes son diferentes.
             bloqueado = true;
+
+            SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.ERROR);
 
             txtMensaje.setText("¡Inténtalo nuevamente!");
 
@@ -351,6 +388,8 @@ public class MemoramaFragment extends Fragment {
 
         txtMensaje.setText("¡Completaste el memorama!");
 
+        SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.VICTORIA);
+
         // Pantalla del colibrí: muestra el resultado y guarda puntos y racha.
         ResultadoButi.Datos datos = new ResultadoButi.Datos();
         datos.etiqueta = "MEMORAMA";
@@ -376,7 +415,16 @@ public class MemoramaFragment extends Fragment {
         );
     }
 
+    private String[] palabraDe(int imagen) {
+        for (int i = 0; i < imagenes.length && i < palabras.length; i++) {
+            if (imagenes[i] == imagen) return palabras[i];
+        }
+        return null;
+    }
+
     private void reiniciarJuego() {
+
+        SonidosJuego.detener();
 
         handler.removeCallbacks(actualizarTiempo);
 
@@ -395,6 +443,7 @@ public class MemoramaFragment extends Fragment {
     public void onDestroyView() {
 
         handler.removeCallbacksAndMessages(null);
+        SonidosJuego.detener();
 
         super.onDestroyView();
 

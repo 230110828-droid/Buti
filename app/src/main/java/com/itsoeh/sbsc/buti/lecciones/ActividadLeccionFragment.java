@@ -34,6 +34,7 @@ import com.google.android.material.card.MaterialCardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.itsoeh.sbsc.buti.AudioButi;
 import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.ResultadoButi;
@@ -3215,6 +3216,7 @@ public class ActividadLeccionFragment extends Fragment {
                     }
                 });
 
+                AudioButi.empezar(nuevo);
                 nuevo.start();
 
             } else {
@@ -3244,6 +3246,8 @@ public class ActividadLeccionFragment extends Fragment {
 
             MediaPlayer anterior = reproductor;
             reproductor = null;
+
+            AudioButi.termino(anterior);
 
             try {
 

@@ -26,6 +26,13 @@ import java.util.Locale;
  *   puntosPorDia/{yyyy-MM-dd}         -> puntos ganados ese día (gráfica semanal)
  *   racha/diasActuales, ultimaFecha, mejorRacha
  *
+ * Racha con 1 día de gracia (maguey congelado):
+ *   0 días sin actividad  → ACTIVA     (ya practicó hoy)
+ *   1 día                 → PENDIENTE  (practicó ayer, hoy aún no)
+ *   2 días                → CONGELADA  (faltó ayer: la racha se pausa)
+ *   3 o más               → PERDIDA    (la racha vuelve a 0)
+ * Si practica con la racha CONGELADA, se descongela y sigue (+1).
+ *
  * Puntos totales = suma del mejor puntaje de cada etapa + puntosActividades.
  * Repetir una etapa solo suma si mejoras tu puntaje (no se pueden "inflar").
  */
@@ -67,6 +74,24 @@ public final class ProgresoButi {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_YEAR, -1);
         return new SimpleDateFormat(FORMATO_DIA, Locale.US).format(c.getTime());
+    }
+
+    /** Días completos entre una fecha yyyy-MM-dd y hoy (-1 si no se puede leer). */
+    public static int diasDesde(@Nullable String fecha) {
+
+        if (fecha == null) return -1;
+
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat(FORMATO_DIA, Locale.US);
+            Date dia = formato.parse(fecha);
+            Date hoy = formato.parse(hoy());
+            if (dia == null || hoy == null) return -1;
+            long diferencia = hoy.getTime() - dia.getTime();
+            // Se redondea por si un día tuvo 23 o 25 horas (horario de verano).
+            return (int) Math.round(diferencia / 86_400_000d);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public static String diaDe(Calendar calendario) {
@@ -231,6 +256,16 @@ public final class ProgresoButi {
     // true cuando la racha se acaba de registrar por primera vez hoy.
     private static volatile boolean rachaNuevaHoy = false;
 
+    // true cuando la actividad de hoy descongeló el maguey.
+    private static volatile boolean rachaDescongeladaHoy = false;
+
+    /** ¿La actividad de hoy salvó una racha congelada? Solo devuelve true una vez. */
+    public static boolean tomarDescongelada() {
+        boolean descongelada = rachaDescongeladaHoy;
+        rachaDescongeladaHoy = false;
+        return descongelada;
+    }
+
     /**
      * ¿La última actividad fue la primera del día? (para mostrar la
      * pantalla de racha). Se "consume": solo devuelve true una vez.
@@ -244,9 +279,8 @@ public final class ProgresoButi {
     private static void registrarRacha(DatabaseReference ref, AlRacha alRacha) {
 
         final String hoy = hoy();
-        final String ayer = ayer();
-        // {racha, 1 si es la primera actividad de hoy}
-        final int[] resultado = {0, 0};
+        // {racha, 1 si es la primera actividad de hoy, 1 si se descongeló}
+        final int[] resultado = {0, 0, 0};
 
         ref.child("racha").runTransaction(new Transaction.Handler() {
 
@@ -267,8 +301,21 @@ public final class ProgresoButi {
                     return Transaction.success(datos);
                 }
 
-                // Ayer sí practicó: sigue la racha. Si no, empieza de nuevo.
-                int nueva = ayer.equals(ultima) ? actuales + 1 : 1;
+                int sinPracticar = diasDesde(ultima);
+
+                // Practicó ayer → sigue la racha.
+                // Faltó solo ayer (maguey congelado) → se descongela y sigue.
+                // Faltó más días → empieza de nuevo.
+                int nueva;
+
+                if (sinPracticar == 1) {
+                    nueva = actuales + 1;
+                } else if (sinPracticar == 2 && actuales > 0) {
+                    nueva = actuales + 1;
+                    resultado[2] = 1;
+                } else {
+                    nueva = 1;
+                }
 
                 datos.child("diasActuales").setValue(nueva);
                 datos.child("ultimaFecha").setValue(hoy);
@@ -285,6 +332,7 @@ public final class ProgresoButi {
                                    @Nullable DataSnapshot snapshot) {
                 if (error == null && confirmado && resultado[1] == 1) {
                     rachaNuevaHoy = true;
+                    rachaDescongeladaHoy = resultado[2] == 1;
                 }
                 alRacha.listo(resultado[0]);
             }
@@ -317,24 +365,61 @@ public final class ProgresoButi {
         return total;
     }
 
-    /**
-     * Racha que se debe mostrar: si el último día con actividad
-     * no fue hoy ni ayer, la racha ya se rompió y se muestra 0.
-     */
-    public static int rachaVigente(DataSnapshot usuario) {
+    // =========================================
+    // ESTADO DE LA RACHA (maguey activo, congelado o seco)
+    // =========================================
+
+    public enum Estado { SIN_RACHA, ACTIVA, PENDIENTE, CONGELADA, PERDIDA }
+
+    /** Cómo está la racha hoy. */
+    public static final class EstadoRacha {
+        public final Estado estado;
+        /** Días que se muestran (0 si se perdió). */
+        public final int dias;
+        /** Días que tenía antes de perderse (solo en PERDIDA). */
+        public final int diasPerdidos;
+        public final int mejor;
+        @Nullable public final String ultimaFecha;
+
+        EstadoRacha(Estado estado, int dias, int diasPerdidos, int mejor, @Nullable String ultimaFecha) {
+            this.estado = estado;
+            this.dias = dias;
+            this.diasPerdidos = diasPerdidos;
+            this.mejor = mejor;
+            this.ultimaFecha = ultimaFecha;
+        }
+    }
+
+    public static EstadoRacha estadoRacha(DataSnapshot usuario) {
 
         DataSnapshot racha = usuario.child("racha");
 
         String ultima = racha.child("ultimaFecha").getValue(String.class);
-        Long dias = racha.child("diasActuales").getValue(Long.class);
+        Long diasLeidos = racha.child("diasActuales").getValue(Long.class);
+        Long mejorLeida = racha.child("mejorRacha").getValue(Long.class);
 
-        if (dias == null || ultima == null) return 0;
+        int dias = diasLeidos == null ? 0 : diasLeidos.intValue();
+        int mejor = Math.max(dias, mejorLeida == null ? 0 : mejorLeida.intValue());
 
-        if (ultima.equals(hoy()) || ultima.equals(ayer())) {
-            return dias.intValue();
+        if (dias <= 0 || ultima == null) {
+            return new EstadoRacha(Estado.SIN_RACHA, 0, 0, mejor, ultima);
         }
 
-        return 0;
+        int sinPracticar = diasDesde(ultima);
+
+        if (sinPracticar == 0) return new EstadoRacha(Estado.ACTIVA, dias, 0, mejor, ultima);
+        if (sinPracticar == 1) return new EstadoRacha(Estado.PENDIENTE, dias, 0, mejor, ultima);
+        if (sinPracticar == 2) return new EstadoRacha(Estado.CONGELADA, dias, 0, mejor, ultima);
+
+        return new EstadoRacha(Estado.PERDIDA, 0, dias, mejor, ultima);
+    }
+
+    /**
+     * Racha que se debe mostrar. Congelada sigue contando (está en pausa);
+     * solo se muestra 0 cuando ya se perdió.
+     */
+    public static int rachaVigente(DataSnapshot usuario) {
+        return estadoRacha(usuario).dias;
     }
 
     /** Puntos ganados en un día (yyyy-MM-dd). */

@@ -29,6 +29,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.SonidosJuego;
 import com.itsoeh.sbsc.buti.ResultadoButi;
 
 import java.util.ArrayList;
@@ -141,6 +142,9 @@ public class DiferenciasFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
+        // Carga los sonidos para que suenen sin retraso.
+        SonidosJuego.preparar(requireContext());
 
         layoutSeleccion = view.findViewById(R.id.layoutSeleccionDiferencias);
         layoutJuego = view.findViewById(R.id.layoutJuegoDiferencias);
@@ -372,6 +376,8 @@ public class DiferenciasFragment extends Fragment {
 
                 encontradas[i] = true;
 
+                SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.ACIERTO);
+
                 RectF circulo = zonaNormalizada(zonasEscenario[i]);
                 marcasOriginal.agregarEncontrada(circulo);
                 marcasCambios.agregarEncontrada(circulo);
@@ -391,6 +397,7 @@ public class DiferenciasFragment extends Fragment {
         }
 
         // No había ninguna diferencia en ese lugar.
+        SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.ERROR);
         errores++;
         actualizarContadores();
         marcasOriginal.mostrarFallo(x, y);
@@ -426,6 +433,8 @@ public class DiferenciasFragment extends Fragment {
         if (!isAdded()) {
             return;
         }
+
+        SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.VICTORIA);
 
         // Pantalla del colibrí: muestra el resultado y guarda puntos y racha.
         ResultadoButi.Datos datos = new ResultadoButi.Datos();
@@ -562,6 +571,8 @@ public class DiferenciasFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+
+        SonidosJuego.detener();
         liberarBitmaps();
         super.onDestroyView();
     }

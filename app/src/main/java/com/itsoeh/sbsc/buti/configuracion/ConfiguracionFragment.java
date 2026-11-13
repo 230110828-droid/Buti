@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.itsoeh.sbsc.buti.LectorVoz;
+import com.itsoeh.sbsc.buti.SonidosJuego;
 import com.itsoeh.sbsc.buti.PreferenciasButi;
 import com.itsoeh.sbsc.buti.R;
 
@@ -123,6 +124,24 @@ public class ConfiguracionFragment extends Fragment {
                 LectorVoz.detener();
             }
         });
+
+        // SONIDOS DE LOS JUEGOS: al activarlos suena la campanita.
+        SwitchMaterial swSonidos = view.findViewById(R.id.swSonidosJuegos);
+
+        if (swSonidos != null) {
+
+            swSonidos.setChecked(SonidosJuego.activos(requireContext()));
+
+            swSonidos.setOnCheckedChangeListener((boton, activo) -> {
+                SonidosJuego.guardarActivos(requireContext(), activo);
+                if (activo) {
+                    SonidosJuego.preparar(requireContext());
+                    boton.postDelayed(() -> {
+                        if (isAdded()) SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.ACIERTO);
+                    }, 200);
+                }
+            });
+        }
 
         // TEXTO EN NEGRITA: se guarda y se vuelve a abrir la pantalla.
         swNegrita.setOnCheckedChangeListener((boton, activo) -> {

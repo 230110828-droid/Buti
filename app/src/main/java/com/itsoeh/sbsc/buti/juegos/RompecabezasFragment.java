@@ -29,6 +29,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
+import com.itsoeh.sbsc.buti.SonidosJuego;
 import com.itsoeh.sbsc.buti.ResultadoButi;
 
 import java.util.ArrayList;
@@ -66,6 +67,16 @@ public class RompecabezasFragment extends Fragment {
             "Paisaje agrícola del Valle"
     };
 
+    // Palabra en hñähñu que se dice al completar cada lugar
+    // (categoría y español; null si no hay una palabra que le quede).
+    private final String[][] palabrasLugar = {
+            {"naturaleza", "Cerro"},
+            {"lugares", "Iglesia"},
+            null,
+            {"lugares", "Iglesia"},
+            null
+    };
+
     private int imagenSeleccionada;
     private int dificultad = 3;
     private int movimientos = 0;
@@ -86,6 +97,9 @@ public class RompecabezasFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
+        // Carga los sonidos para que suenen sin retraso.
+        SonidosJuego.preparar(requireContext());
 
         layoutSeleccion = view.findViewById(
                 R.id.layoutSeleccionRompecabezas);
@@ -522,6 +536,8 @@ public class RompecabezasFragment extends Fragment {
 
         Collections.swap(piezas, origen, destino);
 
+        SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.TIC);
+
         movimientos++;
 
         actualizarContadores();
@@ -564,13 +580,28 @@ public class RompecabezasFragment extends Fragment {
 
         if (!isAdded()) return;
 
+        // Melodía de victoria y, si el lugar tiene palabra, se dice en hñähñu.
+        SonidosJuego.tocar(requireContext(), SonidosJuego.Efecto.VICTORIA);
+
+        String[] palabra = imagenSeleccionada >= 0 && imagenSeleccionada < palabrasLugar.length
+                ? palabrasLugar[imagenSeleccionada] : null;
+
+        String extra = "";
+
+        if (palabra != null) {
+            SonidosJuego.decirPalabra(requireContext(), palabra[0], palabra[1], 1300);
+            String hnahnu = SonidosJuego.hnahnu(palabra[0], palabra[1]);
+            if (hnahnu != null) extra = "\n" + palabra[1] + " en hñähñu: " + hnahnu;
+        }
+
         // Pantalla del colibrí: más piezas = más puntos (3x3=10, 4x4=20, 5x5=30).
         ResultadoButi.Datos datos = new ResultadoButi.Datos();
         datos.etiqueta = "ROMPECABEZAS " + dificultad + "×" + dificultad;
         datos.titulo = "¡Excelente trabajo!";
         datos.mensaje = "¡Completaste el rompecabezas!\n"
                 + "Lugar: " + nombres[imagenSeleccionada]
-                + " · Movimientos: " + movimientos;
+                + " · Movimientos: " + movimientos
+                + extra;
         datos.correctas = dificultad * dificultad;
         datos.total = dificultad * dificultad;
         datos.puntos = ProgresoButi.PUNTOS_ROMPECABEZAS_POR_NIVEL * Math.max(1, dificultad - 2);
@@ -629,6 +660,8 @@ public class RompecabezasFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+
+        SonidosJuego.detener();
 
         if (imagenOriginal != null
                 && !imagenOriginal.isRecycled()) {

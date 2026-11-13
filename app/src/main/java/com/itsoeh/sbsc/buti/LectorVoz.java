@@ -1,6 +1,8 @@
 package com.itsoeh.sbsc.buti;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,6 +23,12 @@ public final class LectorVoz {
     private static TextToSpeech voz;
     private static boolean lista = false;
     private static String pendiente = null;
+
+    // Para no encimarse con los audios en hñähñu.
+    private static final Handler principal = new Handler(Looper.getMainLooper());
+    private static Runnable programado = null;
+    private static String esperaAudio = null;
+    private static Context contextoApp = null;
 
     private LectorVoz() {
     }
@@ -56,14 +64,76 @@ public final class LectorVoz {
         });
     }
 
-    /** Lee el texto solo si el lector está activo en Configuración. */
+    /**
+     * Lee el texto solo si el lector está activo en Configuración.
+     * Si está sonando un audio en hñähñu, espera a que termine.
+     * Se lee con una pausa muy corta: si lo que se tocó es el botón de
+     * audio, el audio empieza y esta lectura se cancela (no se enciman).
+     */
     public static void hablar(Context context, CharSequence texto) {
 
-        if (context == null || !PreferenciasButi.lectorActivo(context)) {
+        if (context == null || !PreferenciasButi.lectorActivo(context)
+                || TextUtils.isEmpty(texto)) {
             return;
         }
 
-        hablarSiempre(context, texto);
+        contextoApp = context.getApplicationContext();
+        String limpio = limpiar(texto.toString());
+
+        if (limpio.isEmpty()) return;
+
+        cancelarProgramado();
+
+        if (AudioButi.sonando()) {
+            // Se lee cuando termine el audio (solo lo último que se tocó).
+            esperaAudio = limpio;
+            return;
+        }
+
+        programar(limpio, 180);
+    }
+
+    /** Lo llama AudioButi cuando empieza un audio: el lector se calla. */
+    public static void callarPorAudio() {
+        cancelarProgramado();
+        esperaAudio = null;
+        pendiente = null;
+        detener();
+    }
+
+    /** Lo llama AudioButi cuando termina el audio. */
+    public static void leerLoQueEsperaba() {
+
+        if (esperaAudio == null || contextoApp == null
+                || !PreferenciasButi.lectorActivo(contextoApp)) {
+            esperaAudio = null;
+            return;
+        }
+
+        String texto = esperaAudio;
+        esperaAudio = null;
+        programar(texto, 300);
+    }
+
+    private static void programar(String texto, long retraso) {
+
+        cancelarProgramado();
+
+        programado = () -> {
+            programado = null;
+            if (contextoApp != null && !AudioButi.sonando()) {
+                hablarSiempre(contextoApp, texto);
+            }
+        };
+
+        principal.postDelayed(programado, retraso);
+    }
+
+    private static void cancelarProgramado() {
+        if (programado != null) {
+            principal.removeCallbacks(programado);
+            programado = null;
+        }
     }
 
     /** Lee el texto aunque el lector esté apagado (para confirmar al activarlo). */
