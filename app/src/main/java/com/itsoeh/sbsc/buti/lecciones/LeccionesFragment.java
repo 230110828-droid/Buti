@@ -37,7 +37,7 @@ import com.itsoeh.sbsc.buti.ButiAviso;
 import com.itsoeh.sbsc.buti.ButiDialogo;
 import com.itsoeh.sbsc.buti.ProgresoButi;
 import com.itsoeh.sbsc.buti.R;
-import com.itsoeh.sbsc.buti.admin.UsuarioAdmin;
+
 
 /**
  * Camino de niveles.
@@ -65,7 +65,6 @@ public class LeccionesFragment extends Fragment {
     // Hasta qué nivel está abierto (1 = solo el primero).
     private int nivelDesbloqueado = 1;
     private boolean[] completados = new boolean[TOTAL_NIVELES];
-    private boolean esAdmin = false;
 
     private ObjectAnimator latido;
     private NavController navController;
@@ -104,12 +103,9 @@ public class LeccionesFragment extends Fragment {
             tarjetas[i].setOnClickListener(v -> alTocarNivel(nivel));
         }
 
-        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-        esAdmin = usuario != null && UsuarioAdmin.esAdmin(usuario.getEmail());
-
         // Primero se pinta con lo último que se sabía (para que no "parpadee")
         // y luego se actualiza con Firebase.
-        nivelDesbloqueado = esAdmin ? TOTAL_NIVELES : leerNivelGuardado();
+        nivelDesbloqueado = leerNivelGuardado();
         pintarNiveles(-1);
 
         cargarProgreso(view.findViewById(R.id.txtPuntosLecciones));
@@ -177,14 +173,12 @@ public class LeccionesFragment extends Fragment {
                             abierto++;
                         }
 
-                        if (esAdmin) abierto = TOTAL_NIVELES;
-
                         int anterior = leerNivelGuardado();
                         nivelDesbloqueado = abierto;
                         guardarNivel(abierto);
 
                         // Si se acaba de abrir un nivel nuevo, festejarlo.
-                        int recienAbierto = (!esAdmin && abierto > anterior) ? abierto : -1;
+                        int recienAbierto = (abierto > anterior) ? abierto : -1;
                         pintarNiveles(recienAbierto);
 
                         if (recienAbierto > 0) {

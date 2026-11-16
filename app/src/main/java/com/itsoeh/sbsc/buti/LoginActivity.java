@@ -37,7 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.itsoeh.sbsc.buti.admin.AdminActivity;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -514,54 +514,10 @@ public class LoginActivity extends AppCompatActivity {
     // =========================================
 
     private void abrirPantallaPrincipal() {
-
-        String correoAdmin1 = "yelitzagranados002@gmail.com";
-        String correoAdmin2 = "admin@buti.com";
-        String correoIngresado = "";
-
-        FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
-        if (usuarioActual != null && usuarioActual.getEmail() != null) {
-            correoIngresado = usuarioActual.getEmail().trim();
-        } else if (edtCorreoLogin != null) {
-            correoIngresado = edtCorreoLogin.getText().toString().trim();
-        }
-
-        boolean esAdmin = !correoIngresado.isEmpty() && (
-                correoIngresado.equalsIgnoreCase(correoAdmin1) ||
-                correoIngresado.equalsIgnoreCase(correoAdmin2)
-        );
-
-        if (esAdmin) {
-            Intent intent = new Intent(
-                    LoginActivity.this,
-                    AdminActivity.class
-            );
-            intent.addFlags(
-                    Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
-            );
-            startActivity(intent);
-            finish();
-            return;
-        }
-
-        // Si es usuario normal, verificar si el sistema está en modo mantenimiento
         verificarMantenimientoYNavegar();
     }
 
     private void verificarMantenimientoYNavegar() {
-        // Doble verificación por seguridad: si es admin, nunca mandar a mantenimiento
-        FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
-        if (usuarioActual != null && usuarioActual.getEmail() != null) {
-            String email = usuarioActual.getEmail().trim();
-            if (email.equalsIgnoreCase("yelitzagranados002@gmail.com") || email.equalsIgnoreCase("admin@buti.com")) {
-                Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-                return;
-            }
-        }
 
         boolean mantenimientoLocal = getSharedPreferences("buti_prefs", MODE_PRIVATE)
                 .getBoolean("modo_mantenimiento", false);

@@ -771,15 +771,6 @@ public class MainActivity extends AppCompatActivity {
     // =================================================
 
     private void escucharModoMantenimiento() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null && user.getEmail() != null) {
-            String email = user.getEmail().toLowerCase();
-            if (email.equalsIgnoreCase("yelitzagranados002@gmail.com") || email.equalsIgnoreCase("admin@buti.com")) {
-                // El usuario administrador no es bloqueado por el mantenimiento
-                return;
-            }
-        }
-
         refMantenimiento = FirebaseDatabase.getInstance().getReference("config/mantenimiento");
         listenerMantenimiento = new ValueEventListener() {
             @Override
